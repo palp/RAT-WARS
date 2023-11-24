@@ -2,20 +2,42 @@ on:
   push:
     branches:
       - main
+  pull_request:
+
+env:
+  GODOT_VERSION: 4.1.3
+  EXPORT_NAME: RAT-WARS
 
 jobs:
-  export:
-    runs-on: ubuntu-latest
-    permissions: write-all
-    name: Export
+  export-web:
+    runs-on: ubuntu-20.04
+    container:
+      image: barichello/godot-ci:3.3.4
+    name: Web Export
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Export
-        id: export
-        uses: firebelley/godot-export@v5.2.1
         with:
-          godot_executable_download_url: https://downloads.tuxfamily.org/godotengine/4.0/Godot_v4.0-stable_linux.x86_64.zip
-          godot_export_templates_download_url: https://downloads.tuxfamily.org/godotengine/4.0/Godot_v4.0-stable_export_templates.tpz
-          relative_project_path: ./
-          archive_output: true
+          lfs: true
+      - name: Setup
+        run: |
+          mkdir -v -p ~/.local/share/godot/templates
+          mv /root/.local/share/godot/templates/${GODOT_VERSION}.stable ~/.local/share/godot/templates/${GODOT_VERSION}.stable
+      - name: Web Build
+        run: |
+          mkdir -v -p dist/web
+          godot -v --export "Web" dist/web/index.html
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: web
+          path: dist/web
+      - name: Install rsync
+        run: |
+          sudo apt-get update
+          sudo apt-get install rsync
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@releases/v4
+        with:
+          branch: gh-pages
+          folder: dist/web
