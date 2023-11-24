@@ -1,0 +1,19 @@
+on:
+  push:
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    permissions: write-all
+    name: Build & Export
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Export
+        id: export
+        uses: firebelley/godot-export@v5.2.1
+        with:
+          godot_executable_download_url: https://downloads.tuxfamily.org/godotengine/4.0/Godot_v4.0-stable_linux.x86_64.zip
+          godot_export_templates_download_url: https://downloads.tuxfamily.org/godotengine/4.0/Godot_v4.0-stable_export_templates.tpz
+          relative_project_path: ./
+          archive_output: true
