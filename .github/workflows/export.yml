@@ -1,11 +1,13 @@
 on:
   push:
+    branches:
+      - main
 
 jobs:
   export:
     runs-on: ubuntu-latest
     permissions: write-all
-    name: Build & Export
+    name: Export
     steps:
       - name: Checkout
         uses: actions/checkout@v3
