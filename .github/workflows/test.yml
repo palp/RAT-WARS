@@ -8,6 +8,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Test
-        uses: ceceppa/godot-gut-ci@main
+        uses: croconut/godot-tester@v5
         with:
-          godot_version: 4.1.3
+          version: 4.1.3
