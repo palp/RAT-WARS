@@ -26,7 +26,7 @@ jobs:
       - name: Web Build
         run: |
           mkdir -v -p dist/web
-          godot -v --export "Web" dist/web/index.html
+          godot --headless --export-release "Web" dist/web/index.html
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
