@@ -2,7 +2,6 @@ on:
   push:
     branches:
       - main
-  pull_request:
 
 jobs:
   export:
@@ -24,14 +23,6 @@ jobs:
           archive_output: false
       - name: Setup Pages
         uses: actions/configure-pages@v3
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v2
-        with:
-          # Upload entire repository
-          path: "./dist/web/Web"
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v2
       - name: Set up butler
         uses: jdno/setup-butler@v1
       - name: Push to Itch.io
