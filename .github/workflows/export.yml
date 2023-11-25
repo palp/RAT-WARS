@@ -33,6 +33,6 @@ jobs:
         env:
           BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
       - name: Push to Itch.io (windows)
-        run: butler push ${{ steps.export.outputs.build_directory }}/windows palp/rat-wars:windows
+        run: butler push ${{ steps.export.outputs.build_directory }}/win palp/rat-wars:win
         env:
           BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
