@@ -22,18 +22,13 @@ jobs:
           relative_project_path: ./
           use_preset_export_path: true
           archive_output: false
-      - name: Publish Artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: web
-          path: dist/web
       - name: Setup Pages
         uses: actions/configure-pages@v3
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
         with:
           # Upload entire repository
-          path: "./dist/web"
+          path: "./dist/web/Web"
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v2
