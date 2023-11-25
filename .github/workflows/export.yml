@@ -21,7 +21,7 @@ jobs:
           cache: true
           relative_project_path: ./
           use_preset_export_path: true
-          archive_output: true
+          archive_output: false
       - name: Publish Artifact
         uses: actions/upload-artifact@v2
         with:
