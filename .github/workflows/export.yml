@@ -24,9 +24,9 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: web
-          path: dist/web
+          path: builds/Web
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@releases/v4
         with:
           branch: gh-pages
-          folder: dist/web
+          folder: builds/Web
