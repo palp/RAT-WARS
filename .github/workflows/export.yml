@@ -32,10 +32,6 @@ jobs:
         with:
           name: web
           path: dist/web
-      - name: Install rsync
-        run: |
-          sudo apt-get update
-          sudo apt-get install rsync
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@releases/v4
         with:
