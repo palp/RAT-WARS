@@ -20,6 +20,10 @@ config/icon="res://icon.svg"
 window/size/viewport_width=1600
 window/size/viewport_height=900
 
+[dotnet]
+
+project/assembly_name="RAT WARS"
+
 [editor]
 
 version_control/plugin_name="GitPlugin"
