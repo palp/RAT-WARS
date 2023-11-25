@@ -18,15 +18,17 @@ jobs:
         with:
           godot_executable_download_url: https://downloads.tuxfamily.org/godotengine/4.0/Godot_v4.0-stable_linux.x86_64.zip
           godot_export_templates_download_url: https://downloads.tuxfamily.org/godotengine/4.0/Godot_v4.0-stable_export_templates.tpz
+          cache: true
           relative_project_path: ./
+          use_preset_export_path: true
           archive_output: true
       - name: Publish Artifact
         uses: actions/upload-artifact@v2
         with:
           name: web
-          path: builds/Web
+          path: dist/web
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@releases/v4
         with:
           branch: gh-pages
-          folder: builds/Web
+          folder: dist/web
