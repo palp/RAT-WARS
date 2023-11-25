@@ -35,6 +35,6 @@ jobs:
       - name: Set up butler
         uses: jdno/setup-butler@v1
       - name: Push to Itch.io
-        run: butler push ./dist/web/Web palp/RAT-WARS:web
+        run: butler push ./dist/web/Web palp/rat-wars:web
         env:
           BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
