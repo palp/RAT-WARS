@@ -1,11 +1,13 @@
 on:
   push:
+    branches:
+      - main
 
 jobs:
   export:
     runs-on: ubuntu-latest
     permissions: write-all
-    name: Build & Export
+    name: Export
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -15,5 +17,15 @@ jobs:
         with:
           godot_executable_download_url: https://downloads.tuxfamily.org/godotengine/4.0/Godot_v4.0-stable_linux.x86_64.zip
           godot_export_templates_download_url: https://downloads.tuxfamily.org/godotengine/4.0/Godot_v4.0-stable_export_templates.tpz
+          cache: true
           relative_project_path: ./
-          archive_output: true
+          use_preset_export_path: true
+          archive_output: false
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
+      - name: Set up butler
+        uses: jdno/setup-butler@v1
+      - name: Push to Itch.io
+        run: butler push ./dist/web/Web palp/rat-wars:web
+        env:
+          BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}

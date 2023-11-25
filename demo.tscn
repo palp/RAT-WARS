@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://bbkmjcn6ordk6"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+offset_right = 799.0
+offset_bottom = 243.0
+theme_override_font_sizes/normal_font_size = 150
+text = "RAT WARS"
