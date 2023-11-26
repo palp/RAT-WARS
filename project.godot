@@ -21,6 +21,10 @@ window/size/viewport_width=1536
 window/size/viewport_height=864
 window/stretch/mode="canvas_items"
 
+[dotnet]
+
+project/assembly_name="RAT WARS"
+
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/gdUnit4/plugin.cfg")
