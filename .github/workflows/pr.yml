@@ -14,6 +14,7 @@ concurrency:
 
 jobs:
   unit-test:
+    permissions: write-all
     strategy:
       fail-fast: false
       matrix:
