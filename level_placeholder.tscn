@@ -3,8 +3,8 @@
 [ext_resource type="Texture2D" uid="uid://qmoq3567fdm5" path="res://assets/world/floor_placeholder.png" id="1_b6mpg"]
 [ext_resource type="PackedScene" uid="uid://cs1tj6sprtojj" path="res://player.tscn" id="2_gtv4g"]
 [ext_resource type="PackedScene" uid="uid://c7620tt8o62fp" path="res://enemy_basic.tscn" id="3_gg7ph"]
-[ext_resource type="PackedScene" uid="uid://eno7xtkdwasd" path="res://ui/main_menu.tscn" id="4_ekipi"]
 [ext_resource type="Script" path="res://ui/pause_button.gd" id="5_8frvk"]
+[ext_resource type="PackedScene" uid="uid://do8nu166getvr" path="res://ui/pause_menu.tscn" id="5_e8x4x"]
 
 [node name="Node2D" type="Node2D"]
 process_mode = 1
@@ -37,17 +37,15 @@ position = Vector2(179, 130)
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 process_mode = 3
 
-[node name="pause_menu" parent="CanvasLayer" instance=ExtResource("4_ekipi")]
-unique_name_in_owner = true
-visible = false
-offset_left = 61.0
-offset_right = 61.0
-show_play_button = false
-show_main_menu_button = true
-
 [node name="pause_button" type="Button" parent="CanvasLayer"]
 offset_right = 8.0
 offset_bottom = 8.0
 text = "Pause
 "
 script = ExtResource("5_8frvk")
+
+[node name="pause_menu" parent="CanvasLayer" instance=ExtResource("5_e8x4x")]
+unique_name_in_owner = true
+visible = false
+offset_left = 61.0
+offset_right = 61.0

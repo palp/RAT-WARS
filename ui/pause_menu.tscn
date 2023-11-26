@@ -1,7 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://eno7xtkdwasd"]
+[gd_scene load_steps=3 format=3 uid="uid://do8nu166getvr"]
 
-[ext_resource type="Script" path="res://ui/main_menu.gd" id="1_d8lo5"]
-[ext_resource type="PackedScene" uid="uid://t6pr3p1c7edy" path="res://ui/options_menu.tscn" id="2_ij7nk"]
+[ext_resource type="Script" path="res://ui/pause_menu.gd" id="1_r8wdo"]
+[ext_resource type="PackedScene" uid="uid://t6pr3p1c7edy" path="res://ui/options_menu.tscn" id="2_p7c3u"]
 
 [node name="menu" type="Control"]
 layout_mode = 3
@@ -10,7 +10,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_d8lo5")
+script = ExtResource("1_r8wdo")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 0
@@ -20,22 +20,22 @@ offset_bottom = 40.0
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
 
-[node name="play_button" type="Button" parent="MarginContainer/VBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "Play"
-
 [node name="options_button" type="Button" parent="MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Options"
 
-[node name="options_menu" parent="." instance=ExtResource("2_ij7nk")]
+[node name="main_menu_button" type="Button" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Main Menu"
+
+[node name="options_menu" parent="." instance=ExtResource("2_p7c3u")]
 unique_name_in_owner = true
 visible = false
 layout_mode = 1
 offset_left = 114.0
 offset_right = 114.0
 
-[connection signal="pressed" from="MarginContainer/VBoxContainer/play_button" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/options_button" to="." method="_on_options_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/main_menu_button" to="." method="_on_main_menu_pressed"]
