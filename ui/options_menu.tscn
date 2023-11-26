@@ -1,0 +1,31 @@
+[gd_scene load_steps=2 format=3 uid="uid://t6pr3p1c7edy"]
+
+[ext_resource type="Script" path="res://ui/options_menu.gd" id="1_r40w1"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_r40w1")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="Volume" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Volume"
+
+[node name="Touchscreen Controls" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Touchscreen Controls"
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Volume" to="." method="_on_volume_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Touchscreen Controls" to="." method="_on_touchscreen_controls_pressed"]

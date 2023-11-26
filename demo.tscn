@@ -28,4 +28,8 @@ scale = Vector2(0.167781, 0.323374)
 theme_override_font_sizes/normal_font_size = 150
 text = "RAT WARS"
 
-[node name="Control" parent="CanvasLayer" instance=ExtResource("3_1vbbm")]
+[node name="main_menu" parent="CanvasLayer" instance=ExtResource("3_1vbbm")]
+offset_left = 27.0
+offset_top = 62.0
+offset_right = 27.0
+offset_bottom = 62.0
