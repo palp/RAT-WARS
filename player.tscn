@@ -24,9 +24,18 @@ position = Vector2(1, 56.875)
 shape = SubResource("RectangleShape2D_igg8v")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+position_smoothing_speed = 10.0
 drag_horizontal_enabled = true
 drag_vertical_enabled = true
-drag_left_margin = 0.75
-drag_top_margin = 0.5
-drag_right_margin = 0.75
-drag_bottom_margin = 0.5
+drag_left_margin = 0.01
+drag_top_margin = 0.01
+drag_right_margin = 0.01
+drag_bottom_margin = 0.01
+
+[node name="StateMachine" type="Node" parent="."]
+
+[node name="Idle" type="Node" parent="StateMachine"]
+
+[node name="Moving" type="Node" parent="StateMachine"]
+
+[node name="Levelup" type="Node" parent="StateMachine"]
