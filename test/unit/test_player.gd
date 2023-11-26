@@ -18,6 +18,7 @@ class TestMovement:
 		var position = _obj.global_position
 		# May take many frames for random walk to occur
 		gut.simulate(_obj, 100, .1)
+		yield(yield_for(1), YIELD)
 		assert_ne(position, _obj.global_position)
 	
 	# This test won't hold up as we add more logic, it's just a demo
@@ -30,7 +31,8 @@ class TestMovement:
 		var position = _obj.global_position
 		var enemy_position = enemy.global_position
 		var distance = position - enemy_position		
-		gut.simulate(_obj, 60, .1)
+		gut.simulate(_obj, 100, .1)
+		yield(yield_for(1), YIELD)
 		assert_ne(position, _obj.global_position)
 		# Check against the old position since enemies move
 		var new_distance = _obj.global_position - enemy_position
@@ -41,4 +43,5 @@ class TestMovement:
 		add_child_autofree(_obj)
 		var position = _obj.global_position
 		gut.simulate(_obj, 100, .1)
+		yield(yield_for(1), YIELD)
 		assert_eq(position, _obj.global_position)

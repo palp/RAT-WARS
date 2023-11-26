@@ -20,7 +20,6 @@ func get_autopilot_velocity():
 		var enemy_distance = enemy.global_position - global_position
 		var enemy_distance_total = abs(enemy_distance.x) + abs(enemy_distance.y)
 		if (enemy_distance_total < 100):
-			print_debug(enemy_distance_total)
 			var enemy_dir = enemy.global_position.direction_to(global_position)
 			dir += enemy_dir * 0.2
 
