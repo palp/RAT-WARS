@@ -1,3 +1,4 @@
+class_name Player
 extends CharacterBody2D
 
 @export var base_health = 100
@@ -21,7 +22,8 @@ func _physics_process(delta):
 		var dir = velocity.normalized()
 		velocity = get_autopilot_velocity(dir, enemies)
 	else:
-		velocity = get_input_velocity()
+		return
+		#velocity = get_input_velocity()
 	
 	move_and_slide()
 	Utility.set_facing(self)

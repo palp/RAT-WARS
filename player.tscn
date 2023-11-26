@@ -1,7 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://cs1tj6sprtojj"]
+[gd_scene load_steps=7 format=3 uid="uid://cs1tj6sprtojj"]
 
 [ext_resource type="Script" path="res://scripts/Player.gd" id="1_cllbq"]
 [ext_resource type="Texture2D" uid="uid://b7x3vvaudhjhi" path="res://assets/plug_player.png" id="2_ik2p2"]
+[ext_resource type="Script" path="res://scripts/Idle.gd" id="3_lcdk6"]
+[ext_resource type="Script" path="res://scripts/StateMachine.gd" id="3_r7o28"]
+[ext_resource type="Script" path="res://scripts/Moving.gd" id="4_67rv5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_igg8v"]
 size = Vector2(20, 11.75)
@@ -33,9 +36,10 @@ drag_right_margin = 0.01
 drag_bottom_margin = 0.01
 
 [node name="StateMachine" type="Node" parent="."]
+script = ExtResource("3_r7o28")
 
 [node name="Idle" type="Node" parent="StateMachine"]
+script = ExtResource("3_lcdk6")
 
 [node name="Moving" type="Node" parent="StateMachine"]
-
-[node name="Levelup" type="Node" parent="StateMachine"]
+script = ExtResource("4_67rv5")
