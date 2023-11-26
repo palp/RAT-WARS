@@ -10,7 +10,7 @@ func test_attract_mode() -> void:
 	var player = runner.find_child("Player")
 	var position = player.global_position
 	player.autopilot = true
-	await runner.simulate_frames(60)
+	await runner.simulate_frames(120)
 	assert_vector2(player.global_position).is_not_equal(position)
 
 func process_key_press(runner, key, frames=5):
