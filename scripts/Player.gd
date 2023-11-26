@@ -29,8 +29,10 @@ func _physics_process(delta):
 	Utility.set_facing(self)
 	var sprite = get_node("Sprite2D")
 	if invincibility > 0:
-		invincibility -= 1
-		if invincibility == 0:
+		invincibility -= 1				
+		if invincibility % 3 == 0 and invincibility > 0:
+			sprite.set_self_modulate(Color(1, 1, 1, 0))		
+		else:
 			sprite.set_self_modulate(Color(1, 1, 1, 1))
 		return
 	
