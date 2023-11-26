@@ -6,7 +6,25 @@ on:
   pull_request:
 
 jobs:
-  export-web:
+  export:
+    strategy:
+      fail-fast: false
+      matrix:
+        build:
+          - preset: web
+            path: build/web
+            output: build/web/index.html
+            tag: web
+          - preset: linux
+            path: build/linux
+            output: build/linux/RatWars.x86_64
+            tag: linux
+          - preset: windows
+            path: build/windows
+            output: build/windows/RatWars.exe
+            tag: windows
+
+        # platform: [web, linux, windows]
     name: Web Export
     runs-on: ubuntu-20.04
     container:
@@ -32,19 +50,13 @@ jobs:
         timeout-minutes: 10
         continue-on-error: true
         run: |
-          mkdir -v -p build/web
-          godot -v --headless --audio-driver Dummy --export-release "web" build/web/index.html
+          mkdir -v -p ${{matrix.build.path}}
+          godot -v --headless --audio-driver Dummy --export-release "${{matrix.build.preset}}" "${{matrix.build.output}}"
       - name: Set up butler
+        if: ${{ !cancelled() }}
         uses: jdno/setup-butler@v1
-      - name: Push to Itch.io (web)
-        run: butler push build/web palp/rat-wars:web
+      - name: Push to Itch.io (${{matrix.build.tag}}))
+        if: ${{ !cancelled() }}
+        run: butler push ${{matrix.build.path}} palp/rat-wars:${{matrix.build.tag}}
         env:
           BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
-      # - name: Push to Itch.io (linux)
-      #   run: butler push ${{ steps.export.outputs.build_directory }}/linux palp/rat-wars:linux
-      #   env:
-      #     BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
-      # - name: Push to Itch.io (windows)
-      #   run: butler push ${{ steps.export.outputs.build_directory }}/win palp/rat-wars:win
-      #   env:
-      #     BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
