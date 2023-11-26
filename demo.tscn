@@ -1,9 +1,25 @@
-[gd_scene format=3 uid="uid://bbkmjcn6ordk6"]
+[gd_scene load_steps=3 format=3 uid="uid://bbkmjcn6ordk6"]
+
+[ext_resource type="Script" path="res://scripts/Player.gd" id="1_hsq5r"]
+[ext_resource type="Texture2D" uid="uid://b7x3vvaudhjhi" path="res://assets/plug_player.png" id="2_q575h"]
 
 [node name="Node2D" type="Node2D"]
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
 offset_right = 799.0
 offset_bottom = 243.0
+scale = Vector2(0.167781, 0.323374)
 theme_override_font_sizes/normal_font_size = 150
 text = "RAT WARS"
+
+[node name="Player" type="CharacterBody2D" parent="."]
+position = Vector2(-1080, -876)
+motion_mode = 1
+script = ExtResource("1_hsq5r")
+
+[node name="PlayerSprite" type="Sprite2D" parent="Player"]
+position = Vector2(1376, 1124)
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("2_q575h")
+region_enabled = true
+region_rect = Rect2(0, 0, 159.533, 321.387)
