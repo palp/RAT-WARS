@@ -20,10 +20,17 @@ jobs:
         run: |
           mkdir -v -p ~/.local/share/godot/templates
           mv /root/.local/share/godot/templates/4.1.3.stable ~/.local/share/godot/templates/4.1.3.stable
+      - name: "Update Project"
+        if: ${{ !cancelled() }}
+        timeout-minutes: 1
+        continue-on-error: true # we still ignore the timeout, the script is not quit and we run into a timeout
+        shell: bash
+        run: |
+          godot -e --path . -s res://addons/gdUnit4/bin/ProjectScanner.gd --headless --audio-driver Dummy
       - name: Build
         run: |
           mkdir -v -p build/web
-          godot -v --headless --export-release "web" build/web/index.html
+          godot -v --headless --audio-driver Dummy --export-release "web" build/web/index.html
       - name: Set up butler
         uses: jdno/setup-butler@v1
       - name: Push to Itch.io (web)
