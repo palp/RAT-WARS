@@ -16,8 +16,6 @@ autopilot = true
 process_callback = 0
 autostart = true
 script = ExtResource("3_jp6gm")
-spawn_near = 1000
-spawn_far = 2000
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
