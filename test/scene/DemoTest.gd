@@ -13,9 +13,9 @@ func test_attract_mode() -> void:
 	await runner.simulate_frames(60)
 	assert_vector2(player.global_position).is_not_equal(position)
 
-func process_key_press(runner, key):
+func process_key_press(runner, key, frames=1):
 	runner.simulate_key_press(key)
-	await await_idle_frame()
+	await runner.simulate_frames(frames)
 	runner.simulate_key_release(key)
 	await await_idle_frame()
 	
