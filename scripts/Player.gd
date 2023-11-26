@@ -15,14 +15,14 @@ func _physics_process(delta):
 
 
 func get_autopilot_velocity(dir:Vector2, enemies:Array):
-	for enemy in enemies:
+	for enemy in enemies:		
 		var enemy_distance = enemy.global_position - global_position
-		var enemy_distance_total = abs(enemy_distance.x) + abs(enemy_distance.y)
+		var enemy_distance_total = abs(enemy_distance.x) + abs(enemy_distance.y)		
 		if (enemy_distance_total < 100):
 			var enemy_dir = enemy.global_position.direction_to(global_position)
-			dir += enemy_dir * 0.2
+			dir += enemy_dir * 0.5			
 
-	if randf() < 0.05:
+	if dir == Vector2(0,0) or randf() < 0.05:
 		var random_factor = Vector2(randf_range(-0.5, 0.5), randf_range(-0.5, 0.5))
 		dir += random_factor
 
