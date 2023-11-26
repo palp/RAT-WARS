@@ -1,10 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://bbkmjcn6ordk6"]
+[gd_scene load_steps=3 format=3 uid="uid://bbkmjcn6ordk6"]
 
-[ext_resource type="Script" path="res://scripts/Player.gd" id="1_hsq5r"]
-[ext_resource type="Texture2D" uid="uid://b7x3vvaudhjhi" path="res://assets/plug_player.png" id="2_q575h"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_igg8v"]
-size = Vector2(19, 101.5)
+[ext_resource type="PackedScene" uid="uid://cs1tj6sprtojj" path="res://player.tscn" id="1_pq62a"]
+[ext_resource type="PackedScene" uid="uid://c7620tt8o62fp" path="res://enemy_basic.tscn" id="3_iw0ik"]
 
 [node name="Node2D" type="Node2D"]
 
@@ -15,18 +12,14 @@ scale = Vector2(0.167781, 0.323374)
 theme_override_font_sizes/normal_font_size = 150
 text = "RAT WARS"
 
-[node name="Player" type="CharacterBody2D" parent="."]
-position = Vector2(-1030, -827)
-motion_mode = 1
-script = ExtResource("1_hsq5r")
+[node name="Player" parent="." instance=ExtResource("1_pq62a")]
+position = Vector2(642, 317)
 
-[node name="PlayerSprite" type="Sprite2D" parent="Player"]
-position = Vector2(1376, 1124)
-scale = Vector2(0.4, 0.4)
-texture = ExtResource("2_q575h")
-region_enabled = true
-region_rect = Rect2(0, 0, 159.533, 321.387)
+[node name="enemy_basic" parent="." instance=ExtResource("3_iw0ik")]
+position = Vector2(-251, -241)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
-position = Vector2(1377, 1125.75)
-shape = SubResource("RectangleShape2D_igg8v")
+[node name="enemy_basic2" parent="." instance=ExtResource("3_iw0ik")]
+position = Vector2(1119, -240)
+
+[node name="enemy_basic3" parent="." instance=ExtResource("3_iw0ik")]
+position = Vector2(857, 1109)

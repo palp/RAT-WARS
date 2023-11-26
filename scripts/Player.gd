@@ -1,14 +1,9 @@
 extends CharacterBody2D
 
-const SPEED = 8000
+@export var speed = 200
 
 func _physics_process(delta):
-	velocity.x = 0
-	velocity.y = 0
-	
-	velocity.x = Input.get_axis("ui_left", "ui_right")
-	velocity.y = Input.get_axis("ui_up", "ui_down")
-	
-	velocity = velocity.normalized() * delta * SPEED
+	var dir = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
+	velocity = dir.normalized() * speed
 	
 	move_and_slide()
