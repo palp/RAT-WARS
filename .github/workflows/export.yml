@@ -23,9 +23,11 @@ jobs:
             path: build/win
             output: build/win/RatWars.exe
             tag: win
-
-        # platform: [web, linux, windows]
-    name: Web Export
+          - preset: macos
+            path: build/macos
+            output: build/macos/RatWars.zip
+            tag: macos
+    name: Export ${{matrix.build.preset}}
     runs-on: ubuntu-20.04
     container:
       image: barichello/godot-ci:4.1.3
