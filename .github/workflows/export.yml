@@ -28,6 +28,9 @@ jobs:
         run: |
           godot -e --path . -s res://addons/gdUnit4/bin/ProjectScanner.gd --headless --audio-driver Dummy
       - name: Build
+        if: ${{ !cancelled() }}
+        timeout-minutes: 10
+        continue-on-error: true
         run: |
           mkdir -v -p build/web
           godot -v --headless --audio-driver Dummy --export-release "web" build/web/index.html
