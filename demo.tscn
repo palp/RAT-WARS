@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://c7620tt8o62fp" path="res://enemy_basic.tscn" id="3_iw0ik"]
 
 [node name="Node2D" type="Node2D"]
+y_sort_enabled = true
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
 offset_right = 799.0
