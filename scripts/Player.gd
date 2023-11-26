@@ -1,19 +1,48 @@
 extends CharacterBody2D
 
+@export var base_health = 100
+@export var damage_per_hit = 10
+@export var invincibility_frames = 20
+
+var health = base_health
+var invincibility = 0
+
 @export var speed = 200
 @export var autopilot = true
 
+const Utility = preload("res://scripts/utility.gd")
 
 func _physics_process(delta):
+	if health <= 0:
+		return
+
 	if autopilot:
 		var enemies = get_tree().get_nodes_in_group("enemy")
 		var dir = velocity.normalized()
 		velocity = get_autopilot_velocity(dir, enemies)
 	else:
 		velocity = get_input_velocity()
-
+	
 	move_and_slide()
+	Utility.set_facing(self)
+	var sprite = get_node("Sprite2D")
+	if invincibility > 0:
+		invincibility -= 1
+		if invincibility == 0:
+			sprite.set_self_modulate(Color(1, 1, 1, 1))
+		return
+	
+	if get_slide_collision_count() > 0:
+		invincibility = invincibility_frames
+		health -= damage_per_hit
+		var alpha = 1
+		if health <= 0:
+			alpha = 0
+		sprite.set_self_modulate(Color(1, 0, 0, alpha))
 
+	#for i in get_slide_collision_count():
+	#	var collision = get_slide_collision(i)
+	#	print("I collided with ", collision.get_collider().damage)
 
 func get_autopilot_velocity(dir: Vector2, enemies: Array):
 	for enemy in enemies:

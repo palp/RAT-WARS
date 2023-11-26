@@ -4,19 +4,20 @@
 [ext_resource type="Texture2D" uid="uid://cxxdyk6c06ar4" path="res://assets/rat_1.png" id="1_wrhfk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_amj0a"]
-size = Vector2(112, 36.5964)
+size = Vector2(133, 6.0241)
 
 [node name="enemy_basic" type="CharacterBody2D"]
-position = Vector2(2.08165e-12, 2.08165e-12)
+position = Vector2(2, -50)
 scale = Vector2(0.3, 0.3)
 motion_mode = 1
 script = ExtResource("1_oqnfs")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(-73.3333, 30)
+position = Vector2(2.08165e-12, 2.08165e-12)
 texture = ExtResource("1_wrhfk")
+offset = Vector2(-70, 17)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-6.66666, 30)
+position = Vector2(6.5, 160)
 scale = Vector2(1, 6.64)
 shape = SubResource("RectangleShape2D_amj0a")
