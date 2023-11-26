@@ -2,7 +2,8 @@
 
 [ext_resource type="PackedScene" uid="uid://cs1tj6sprtojj" path="res://player.tscn" id="1_pq62a"]
 [ext_resource type="PackedScene" uid="uid://eno7xtkdwasd" path="res://ui/main_menu.tscn" id="3_1vbbm"]
-[ext_resource type="PackedScene" uid="uid://c7620tt8o62fp" path="res://enemy_basic.tscn" id="3_iw0ik"]
+[ext_resource type="Script" path="res://scripts/enemy_manager.gd" id="3_jp6gm"]
+
 
 [node name="Node2D" type="Node2D"]
 y_sort_enabled = true
@@ -11,14 +12,12 @@ y_sort_enabled = true
 position = Vector2(642, 317)
 autopilot = true
 
-[node name="enemy_basic" parent="." groups=["enemy"] instance=ExtResource("3_iw0ik")]
-position = Vector2(-251, -241)
-
-[node name="enemy_basic2" parent="." groups=["enemy"] instance=ExtResource("3_iw0ik")]
-position = Vector2(1119, -240)
-
-[node name="enemy_basic3" parent="." groups=["enemy"] instance=ExtResource("3_iw0ik")]
-position = Vector2(857, 1109)
+[node name="enemy_manager" type="Timer" parent="."]
+process_callback = 0
+autostart = true
+script = ExtResource("3_jp6gm")
+spawn_near = 1000
+spawn_far = 2000
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -34,3 +33,5 @@ offset_left = 27.0
 offset_top = 62.0
 offset_right = 27.0
 offset_bottom = 62.0
+
+[connection signal="timeout" from="enemy_manager" to="enemy_manager" method="_on_timeout"]
