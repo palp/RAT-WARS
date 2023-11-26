@@ -5,25 +5,22 @@ extends CharacterBody2D
 
 func _physics_process(delta):
 	if autopilot:
-		velocity = get_autopilot_velocity()
+		var enemies = get_tree().get_nodes_in_group("enemy")
+		var dir = velocity.normalized()
+		velocity = get_autopilot_velocity(dir, enemies)
 	else:
 		velocity = get_input_velocity()
 
 	move_and_slide()
 
 
-func get_autopilot_velocity():
-	var dir = velocity.normalized()
-	var enemies = get_tree().get_nodes_in_group("enemy")
-
+func get_autopilot_velocity(dir:Vector2, enemies:Array):
 	for enemy in enemies:
 		var enemy_distance = enemy.global_position - global_position
 		var enemy_distance_total = abs(enemy_distance.x) + abs(enemy_distance.y)
 		if (enemy_distance_total < 100):
 			var enemy_dir = enemy.global_position.direction_to(global_position)
 			dir += enemy_dir * 0.2
-
-	dir = dir.normalized()
 
 	if randf() < 0.05:
 		var random_factor = Vector2(randf_range(-0.5, 0.5), randf_range(-0.5, 0.5))
