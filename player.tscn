@@ -21,3 +21,11 @@ region_rect = Rect2(0, 0, 159.533, 321.387)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(1377, 1125.75)
 shape = SubResource("RectangleShape2D_igg8v")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
+drag_left_margin = 0.75
+drag_top_margin = 0.5
+drag_right_margin = 0.75
+drag_bottom_margin = 0.5
