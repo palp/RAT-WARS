@@ -1,39 +1,36 @@
+name: Export
 on:
   push:
     branches:
       - main
+  pull_request:
 
 jobs:
-  export:
-    runs-on: ubuntu-latest
-    permissions: write-all
-    name: Export
+  export-web:
+    name: Web Export
+    runs-on: ubuntu-20.04
+    container:
+      image: barichello/godot-ci:4.1.3
     steps:
       - name: Checkout
         uses: actions/checkout@v3
         with:
           lfs: true
-      - name: Export
-        id: export
-        uses: firebelley/godot-export@v5.2.1
-        with:
-          godot_executable_download_url: https://downloads.tuxfamily.org/godotengine/4.1.3/Godot_v4.1.3-stable_linux.x86_64.zip
-          godot_export_templates_download_url: https://downloads.tuxfamily.org/godotengine/4.1.3/Godot_v4.1.3-stable_export_templates.tpz
-          cache: true
-          relative_project_path: ./
-      - name: Setup Pages
-        uses: actions/configure-pages@v3
+      - name: Build
+        run: |
+          mkdir -v -p build/web
+          godot -v --export-release "web" build/web/index.html
       - name: Set up butler
         uses: jdno/setup-butler@v1
       - name: Push to Itch.io (web)
-        run: butler push ${{ steps.export.outputs.build_directory }}/web palp/rat-wars:web
+        run: butler push build/web palp/rat-wars:web
         env:
           BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
-      - name: Push to Itch.io (linux)
-        run: butler push ${{ steps.export.outputs.build_directory }}/linux palp/rat-wars:linux
-        env:
-          BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
-      - name: Push to Itch.io (windows)
-        run: butler push ${{ steps.export.outputs.build_directory }}/win palp/rat-wars:win
-        env:
-          BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
+      # - name: Push to Itch.io (linux)
+      #   run: butler push ${{ steps.export.outputs.build_directory }}/linux palp/rat-wars:linux
+      #   env:
+      #     BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
+      # - name: Push to Itch.io (windows)
+      #   run: butler push ${{ steps.export.outputs.build_directory }}/win palp/rat-wars:win
+      #   env:
+      #     BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
