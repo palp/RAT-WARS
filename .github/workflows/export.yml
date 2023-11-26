@@ -6,7 +6,7 @@ on:
   pull_request:
 
 jobs:
-  export:
+  export-matrix:
     strategy:
       fail-fast: false
       matrix:
@@ -19,10 +19,10 @@ jobs:
             path: build/linux
             output: build/linux/RatWars.x86_64
             tag: linux
-          - preset: windows
-            path: build/windows
-            output: build/windows/RatWars.exe
-            tag: windows
+          - preset: win
+            path: build/win
+            output: build/win/RatWars.exe
+            tag: win
 
         # platform: [web, linux, windows]
     name: Web Export
