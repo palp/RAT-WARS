@@ -1,9 +1,9 @@
 extends Timer
 
 @export var initial_spawn_count = 10
-@export var tick_spawn_count = 0
-@export var spawn_near = 100
-@export var spawn_far = 200
+@export var tick_spawn_count = 2
+@export var spawn_near = 1000
+@export var spawn_far = 2000
 
 var enemy_basic = preload("res://enemy_basic.tscn")
 
