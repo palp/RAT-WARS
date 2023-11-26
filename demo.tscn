@@ -15,11 +15,11 @@ text = "RAT WARS"
 [node name="Player" parent="." instance=ExtResource("1_pq62a")]
 position = Vector2(642, 317)
 
-[node name="enemy_basic" parent="." instance=ExtResource("3_iw0ik")]
+[node name="enemy_basic" parent="." groups=["enemy"] instance=ExtResource("3_iw0ik")]
 position = Vector2(-251, -241)
 
-[node name="enemy_basic2" parent="." instance=ExtResource("3_iw0ik")]
+[node name="enemy_basic2" parent="." groups=["enemy"] instance=ExtResource("3_iw0ik")]
 position = Vector2(1119, -240)
 
-[node name="enemy_basic3" parent="." instance=ExtResource("3_iw0ik")]
+[node name="enemy_basic3" parent="." groups=["enemy"] instance=ExtResource("3_iw0ik")]
 position = Vector2(857, 1109)
