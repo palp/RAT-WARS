@@ -1,37 +1,63 @@
+name: Export
 on:
   push:
     branches:
       - main
 
 jobs:
-  export:
-    runs-on: ubuntu-latest
-    permissions: write-all
-    name: Export
+  export-matrix:
+    strategy:
+      fail-fast: false
+      matrix:
+        build:
+          - preset: web
+            path: build/web
+            output: build/web/index.html
+            tag: web
+          - preset: linux
+            path: build/linux
+            output: build/linux/RatWars.x86_64
+            tag: linux
+          - preset: win
+            path: build/win
+            output: build/win/RatWars.exe
+            tag: win
+          - preset: macos
+            path: build/macos
+            output: build/macos/RatWars.zip
+            tag: macos
+    name: Export ${{matrix.build.preset}}
+    runs-on: ubuntu-20.04
+    container:
+      image: barichello/godot-ci:4.1.3
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Export
-        id: export
-        uses: firebelley/godot-export@v5.2.1
         with:
-          godot_executable_download_url: https://downloads.tuxfamily.org/godotengine/4.1.3/Godot_v4.1.3-stable_linux.x86_64.zip
-          godot_export_templates_download_url: https://downloads.tuxfamily.org/godotengine/4.1.3/Godot_v4.1.3-stable_export_templates.tpz
-          cache: true
-          relative_project_path: ./
-      - name: Setup Pages
-        uses: actions/configure-pages@v3
+          lfs: true
+      - name: Setup
+        run: |
+          mkdir -v -p ~/.local/share/godot/export_templates
+          mv /root/.local/share/godot/export_templates/4.1.3.stable ~/.local/share/godot/export_templates/4.1.3.stable
+      - name: "Update Project"
+        if: ${{ !cancelled() }}
+        timeout-minutes: 1
+        continue-on-error: true # we still ignore the timeout, the script is not quit and we run into a timeout
+        shell: bash
+        run: |
+          godot -e --path . -s res://addons/gdUnit4/bin/ProjectScanner.gd --headless --audio-driver Dummy
+      - name: Build
+        if: ${{ !cancelled() }}
+        timeout-minutes: 10
+        continue-on-error: true
+        run: |
+          mkdir -v -p ${{matrix.build.path}}
+          godot -v --headless --audio-driver Dummy --export-release "${{matrix.build.preset}}" "${{matrix.build.output}}"
       - name: Set up butler
+        if: ${{ !cancelled() }}
         uses: jdno/setup-butler@v1
-      - name: Push to Itch.io (web)
-        run: butler push ${{ steps.export.outputs.build_directory }}/web palp/rat-wars:web
-        env:
-          BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
-      - name: Push to Itch.io (linux)
-        run: butler push ${{ steps.export.outputs.build_directory }}/linux palp/rat-wars:linux
-        env:
-          BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
-      - name: Push to Itch.io (windows)
-        run: butler push ${{ steps.export.outputs.build_directory }}/win palp/rat-wars:win
+      - name: Push to Itch.io (${{matrix.build.tag}}))
+        if: ${{ !cancelled() }}
+        run: butler push ${{matrix.build.path}} palp/rat-wars:${{matrix.build.tag}}
         env:
           BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
