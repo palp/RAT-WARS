@@ -21,8 +21,7 @@ func _physics_process(delta):
 		var enemies = get_tree().get_nodes_in_group("enemy")
 		var dir = velocity.normalized()
 		velocity = get_autopilot_velocity(dir, enemies)
-	else:
-		return
+
 		#velocity = get_input_velocity()
 	
 	move_and_slide()
@@ -63,6 +62,6 @@ func get_autopilot_velocity(dir: Vector2, enemies: Array):
 	return dir.normalized() * speed
 
 
-func get_input_velocity():
-	var dir = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
-	return dir.normalized() * speed
+#func get_input_velocity():
+#	var dir = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
+#	return dir.normalized() * speed
