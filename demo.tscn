@@ -4,7 +4,6 @@
 [ext_resource type="PackedScene" uid="uid://eno7xtkdwasd" path="res://ui/main_menu.tscn" id="3_1vbbm"]
 [ext_resource type="Script" path="res://scripts/enemy_manager.gd" id="3_jp6gm"]
 
-
 [node name="Node2D" type="Node2D"]
 y_sort_enabled = true
 
