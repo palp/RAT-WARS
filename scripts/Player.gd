@@ -25,6 +25,15 @@ var vinyl_level = 1
 var enemy_close = []
 
 const Utility = preload("res://scripts/utility.gd")
+@onready var sprite = get_node("Sprite2D")
+
+func hit():
+	invincibility = invincibility_frames
+	health -= damage_per_hit
+	var alpha = 1
+	if health <= 0:
+		alpha = 0
+	sprite.set_self_modulate(Color(1, 0, 0, alpha))
 
 func _ready():
 	attack()
@@ -42,22 +51,14 @@ func _physics_process(delta):
 	
 	move_and_slide()
 	Utility.set_facing(self)
-	var sprite = get_node("Sprite2D")
 	if invincibility > 0:
 		invincibility -= 1				
 		if invincibility % 3 == 0 and invincibility > 0:
 			sprite.set_self_modulate(Color(1, 1, 1, 0))		
 		else:
 			sprite.set_self_modulate(Color(1, 1, 1, 1))
-		return
-	
-	if get_slide_collision_count() > 0:
-		invincibility = invincibility_frames
-		health -= damage_per_hit
-		var alpha = 1
-		if health <= 0:
-			alpha = 0
-		sprite.set_self_modulate(Color(1, 0, 0, alpha))
+	elif get_slide_collision_count() > 0:
+		hit()
 
 	#for i in get_slide_collision_count():
 	#	var collision = get_slide_collision(i)

@@ -12,7 +12,7 @@ var target = Vector2.ZERO
 var angle = Vector2.ZERO
 var reset_pos = Vector2.ZERO
 
-var sprt = preload("res://assets/player/attacks/vinyl.png")
+#var sprt = preload("res://assets/player/attacks/vinyl.png")
 
 @onready var player = get_tree().get_first_node_in_group("player")
 @onready var sprite = $Sprite2D

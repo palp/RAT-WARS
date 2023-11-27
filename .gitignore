@@ -5,3 +5,6 @@ dist/*
 # Mac files
 *.DS_Store
 /.vs/RAT-WARS/FileContentIndex
+
+# VS
+.vs/
