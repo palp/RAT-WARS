@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://bvpqfca631e3d"]
+[gd_scene load_steps=7 format=3 uid="uid://bvpqfca631e3d"]
 
 [ext_resource type="Texture2D" uid="uid://qmoq3567fdm5" path="res://assets/world/floor_placeholder.png" id="1_b6mpg"]
 [ext_resource type="PackedScene" uid="uid://cs1tj6sprtojj" path="res://player.tscn" id="2_gtv4g"]
 [ext_resource type="PackedScene" uid="uid://c7620tt8o62fp" path="res://enemy_basic.tscn" id="3_gg7ph"]
+[ext_resource type="Theme" uid="uid://bwayc6rbhtvxj" path="res://assets/ui/theme/HEALTH_theme.tres" id="4_vnh2k"]
 [ext_resource type="Script" path="res://ui/pause_button.gd" id="5_8frvk"]
 [ext_resource type="PackedScene" uid="uid://do8nu166getvr" path="res://ui/pause_menu.tscn" id="5_e8x4x"]
 
@@ -38,8 +39,11 @@ position = Vector2(179, 130)
 process_mode = 3
 
 [node name="pause_button" type="Button" parent="CanvasLayer"]
-offset_right = 8.0
-offset_bottom = 8.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 108.0
+offset_bottom = 64.0
+theme = ExtResource("4_vnh2k")
 text = "Pause
 "
 script = ExtResource("5_8frvk")
@@ -47,5 +51,7 @@ script = ExtResource("5_8frvk")
 [node name="pause_menu" parent="CanvasLayer" instance=ExtResource("5_e8x4x")]
 unique_name_in_owner = true
 visible = false
-offset_left = 61.0
-offset_right = 61.0
+offset_left = 105.0
+offset_top = -3.0
+offset_right = 105.0
+offset_bottom = -3.0
