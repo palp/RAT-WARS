@@ -1,5 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://eno7xtkdwasd"]
+[gd_scene load_steps=4 format=3 uid="uid://eno7xtkdwasd"]
 
+[ext_resource type="Theme" uid="uid://bwayc6rbhtvxj" path="res://assets/ui/theme/HEALTH_theme.tres" id="1_6g7a4"]
 [ext_resource type="Script" path="res://ui/main_menu.gd" id="1_d8lo5"]
 [ext_resource type="PackedScene" uid="uid://t6pr3p1c7edy" path="res://ui/options_menu.tscn" id="2_ij7nk"]
 
@@ -10,12 +11,15 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_6g7a4")
 script = ExtResource("1_d8lo5")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = 15.0
+offset_top = 12.0
+offset_right = 151.0
+offset_bottom = 128.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
@@ -23,19 +27,23 @@ layout_mode = 2
 [node name="play_button" type="Button" parent="MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Play"
+text = "PLAY
+"
 
 [node name="options_button" type="Button" parent="MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Options"
+text = "OPTIONS
+"
 
 [node name="options_menu" parent="." instance=ExtResource("2_ij7nk")]
 unique_name_in_owner = true
 visible = false
 layout_mode = 1
-offset_left = 114.0
-offset_right = 114.0
+offset_left = 169.0
+offset_top = 76.0
+offset_right = 169.0
+offset_bottom = 76.0
 
 [connection signal="pressed" from="MarginContainer/VBoxContainer/play_button" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/options_button" to="." method="_on_options_pressed"]
