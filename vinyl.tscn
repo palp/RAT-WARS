@@ -7,8 +7,10 @@
 radius = 17.0294
 
 [node name="vinyl" type="Area2D" groups=["attacks"]]
-collision_layer = 2
-collision_mask = 2
+top_level = true
+z_index = 1
+collision_layer = 4
+collision_mask = 4
 script = ExtResource("1_1vbka")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -19,6 +21,17 @@ shape = SubResource("CircleShape2D_4y5cd")
 
 [node name="ChangeDirection" type="Timer" parent="."]
 unique_name_in_owner = true
+wait_time = 1.5
+one_shot = true
+autostart = true
 
 [node name="ResetPosTimer" type="Timer" parent="."]
 unique_name_in_owner = true
+
+[node name="FlightDuration" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="ChangeDirection" to="." method="_on_change_direction_timeout"]
+[connection signal="timeout" from="FlightDuration" to="." method="_on_flight_duration_timeout"]

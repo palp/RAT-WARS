@@ -9,6 +9,8 @@ size = Vector2(143, 13.5542)
 [node name="enemy_basic" type="CharacterBody2D"]
 position = Vector2(2, -50)
 scale = Vector2(0.3, 0.3)
+collision_layer = 5
+collision_mask = 5
 motion_mode = 1
 script = ExtResource("1_oqnfs")
 
