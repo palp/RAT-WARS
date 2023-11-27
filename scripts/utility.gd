@@ -24,4 +24,3 @@ static func set_facing(obj):
 		sprite.offset.x = -sprite.offset.x
 		
 		
-

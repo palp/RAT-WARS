@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://elvgq35o6fbi"]
+
+[ext_resource type="Texture2D" uid="uid://4kdtloqrww02" path="res://assets/fx/whitePuff24.png" id="1_7ce2t"]
+[ext_resource type="Script" path="res://scripts/balloon_explosion.gd" id="1_jj6e0"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qe5x2"]
+radius = 137.091
+
+[node name="balloon_explosion" type="Area2D"]
+scale = Vector2(1.5, 1.5)
+monitorable = false
+script = ExtResource("1_jj6e0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_qe5x2")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(14, -13)
+scale = Vector2(1.1, 1.1)
+texture = ExtResource("1_7ce2t")

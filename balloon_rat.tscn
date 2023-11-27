@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://what6ybd045w"]
+
+[ext_resource type="Script" path="res://scripts/enemy_basic.gd" id="1_d8g1e"]
+[ext_resource type="Texture2D" uid="uid://c838kg48ms2oc" path="res://assets/enemy/balloon_rat.png" id="1_o4tko"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6vuew"]
+radius = 220.025
+
+[node name="balloon_rat" type="CharacterBody2D"]
+scale = Vector2(0.3, 0.3)
+motion_mode = 1
+script = ExtResource("1_d8g1e")
+behavior = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = 1
+position = Vector2(0, 80)
+texture = ExtResource("1_o4tko")
+offset = Vector2(-40, 80)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(2.08165e-12, 2.08165e-12)
+shape = SubResource("CircleShape2D_6vuew")
