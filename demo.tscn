@@ -9,6 +9,7 @@ y_sort_enabled = true
 
 [node name="Player" parent="." instance=ExtResource("1_pq62a")]
 position = Vector2(642, 317)
+autopilot = true
 
 [node name="enemy_manager" type="Timer" parent="."]
 process_callback = 0

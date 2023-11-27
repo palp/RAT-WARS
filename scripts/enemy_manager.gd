@@ -53,6 +53,7 @@ func spawn_enemies(count):
 		var spawn_dist = rng.randf_range(spawn_near, spawn_far)
 		var spawn_offset = Vector2.from_angle(spawn_angle) * spawn_dist
 		enemy.position = player.global_position + spawn_offset
+		enemy.add_to_group("enemy")
 		add_child(enemy)
 
 # Called when the node enters the scene tree for the first time.
