@@ -8,7 +8,11 @@ const FACING_EPSILON = 0.1
 static func set_facing(obj):
 	# Setting scale doesn't work so we do this slightly
 	# more complicsted logic.
+	if obj == null:
+		return
 	var sprite = obj.get_node("Sprite2D")
+	if sprite == null:
+		return
 	var base_scale = abs(obj.scale.x)
 	var new_flip = false
 	if obj.velocity.x < -FACING_EPSILON:
