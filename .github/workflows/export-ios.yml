@@ -34,7 +34,7 @@ jobs:
           # echo "GODOT_HOME=$GODOT_HOME" >> "$GITHUB_ENV"
           # echo "GODOT_BIN=$GODOT_BIN" >> "$GITHUB_ENV"
 
-          brew install https://raw.githubusercontent.com/Homebrew/homebrew-cask/4ed2983b312044fd39cd3d321dbadc30bef78e1e/Casks/g/godot.rb
+          brew cask install https://raw.githubusercontent.com/Homebrew/homebrew-cask/4ed2983b312044fd39cd3d321dbadc30bef78e1e/Casks/g/godot.rb
 
           mkdir -v -p ~/.local/share/godot/export_templates
           GODOT_TEMPLATES_PACKAGE=Godot_v$GODOT_VERSION-stable_export_templates.tpz
