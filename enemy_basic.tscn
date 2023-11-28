@@ -1,10 +1,57 @@
-[gd_scene load_steps=4 format=3 uid="uid://c7620tt8o62fp"]
+[gd_scene load_steps=6 format=3 uid="uid://c7620tt8o62fp"]
 
 [ext_resource type="Script" path="res://scripts/enemy_basic.gd" id="1_oqnfs"]
-[ext_resource type="Texture2D" uid="uid://cxxdyk6c06ar4" path="res://assets/rat_1.png" id="1_wrhfk"]
+[ext_resource type="Texture2D" uid="uid://cr36w7ch6l5ve" path="res://assets/enemy/MutatedRat/MutatedRat_walk.png" id="2_r5dfq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_amj0a"]
 size = Vector2(143, 13.5542)
+
+[sub_resource type="Animation" id="Animation_1mn48"]
+resource_name = "walk"
+length = 1.41668
+loop_mode = 1
+step = 0.166667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.166667, 0.333333, 0.5, 0.666667, 0.833333, 1, 1.16667, 1.33333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:vframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [8]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:texture")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("2_r5dfq")]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_abw07"]
+_data = {
+"walk": SubResource("Animation_1mn48")
+}
 
 [node name="enemy_basic" type="CharacterBody2D"]
 position = Vector2(2, -50)
@@ -14,12 +61,18 @@ collision_mask = 5
 motion_mode = 1
 script = ExtResource("1_oqnfs")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(2.08165e-12, 2.08165e-12)
-texture = ExtResource("1_wrhfk")
-offset = Vector2(-70, 17)
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(1.5, 135)
 scale = Vector2(1, 6.64)
 shape = SubResource("RectangleShape2D_amj0a")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_abw07")
+}
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -153.333)
+scale = Vector2(3, 3)
+texture = ExtResource("2_r5dfq")
+vframes = 8
