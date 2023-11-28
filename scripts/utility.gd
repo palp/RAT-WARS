@@ -4,6 +4,7 @@ extends Node
 # that may happen for AI
 const FACING_EPSILON = 0.1
 
+
 static func set_facing(obj):
 	# Setting scale doesn't work so we do this slightly
 	# more complicsted logic.
@@ -17,10 +18,8 @@ static func set_facing(obj):
 	else:
 		# Just keep previous flip value
 		return
-		
+
 	# Also flip offset if needed
 	if new_flip != sprite.is_flipped_h():
 		sprite.set_flip_h(new_flip)
 		sprite.offset.x = -sprite.offset.x
-		
-		

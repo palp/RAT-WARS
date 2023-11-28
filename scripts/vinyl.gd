@@ -22,6 +22,7 @@ var reset_pos = Vector2.ZERO
 
 signal remove_from_array(object)
 
+
 func _ready():
 	angle = global_position.direction_to(target)
 	#update_vinyl()
@@ -32,14 +33,16 @@ func _ready():
 			damage = 10
 			knockback = 100
 			attack_size = 1.0
-	
+
+
 func _physics_process(delta):
 	if angle.angle() >= 0:
 		rotation += .1
 	if angle.angle() < 0:
 		rotation -= .1
 	position += angle * speed * delta
-	
+
+
 # Not Necessary for vinyl since it has absurd HP, keeping in for other weapons
 func enemy_hit(charge = 1):
 	hp -= charge

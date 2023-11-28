@@ -13,6 +13,7 @@ var invincibility = 0
 
 const Utility = preload("res://scripts/utility.gd")
 
+
 func _physics_process(delta):
 	if health <= 0:
 		return
@@ -21,20 +22,18 @@ func _physics_process(delta):
 		var enemies = get_tree().get_nodes_in_group("enemy")
 		var dir = velocity.normalized()
 		velocity = get_autopilot_velocity(dir, enemies)
-	
-	
-	
+
 	move_and_slide()
 	Utility.set_facing(self)
 	var sprite = get_node("Sprite2D")
 	if invincibility > 0:
-		invincibility -= 1				
+		invincibility -= 1
 		if invincibility % 3 == 0 and invincibility > 0:
-			sprite.set_self_modulate(Color(1, 1, 1, 0))		
+			sprite.set_self_modulate(Color(1, 1, 1, 0))
 		else:
 			sprite.set_self_modulate(Color(1, 1, 1, 1))
 		return
-	
+
 	if get_slide_collision_count() > 0:
 		invincibility = invincibility_frames
 		health -= damage_per_hit
@@ -46,6 +45,7 @@ func _physics_process(delta):
 	#for i in get_slide_collision_count():
 	#	var collision = get_slide_collision(i)
 	#	print("I collided with ", collision.get_collider().damage)
+
 
 func get_autopilot_velocity(dir: Vector2, enemies: Array):
 	for enemy in enemies:
@@ -60,7 +60,6 @@ func get_autopilot_velocity(dir: Vector2, enemies: Array):
 		dir += random_factor
 
 	return dir.normalized() * speed
-
 
 #func get_input_velocity():
 #	var dir = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
