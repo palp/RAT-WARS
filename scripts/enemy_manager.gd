@@ -8,27 +8,28 @@ extends Timer
 var enemy_basic = preload("res://enemy_basic.tscn")
 var enemy_balloon = preload("res://balloon_rat.tscn")
 
+
 class EnemyType:
-	var scene : PackedScene
-	var probability : float
-	
+	var scene: PackedScene
+	var probability: float
+
 	func _init(scene_, prob):
 		scene = scene_
 		probability = prob
 
+
 # List of possible enemies to spawn and their relative probability
-var enemies = [
-	EnemyType.new(enemy_basic, 1),
-	EnemyType.new(enemy_balloon, 0.3)
-]
+var enemies = [EnemyType.new(enemy_basic, 1), EnemyType.new(enemy_balloon, 0.3)]
 
 var prob_max = 0
 
 @onready var player = get_tree().get_first_node_in_group("player")
 var rng = RandomNumberGenerator.new()
 
+
 func enemy_prob_comp(enemy, val):
 	return enemy.probability < val
+
 
 func pick_enemy():
 	# In onready we modifify enemy probabilities to include the sum of
@@ -43,8 +44,9 @@ func pick_enemy():
 	if index >= enemies.size():
 		print("unexpected enemies out-of-bounds!!!")
 		index = enemies.size() - 1
-		
+
 	return enemies[index]
+
 
 func spawn_enemies(count):
 	for i in count:
@@ -56,6 +58,7 @@ func spawn_enemies(count):
 		enemy.add_to_group("enemy")
 		add_child(enemy)
 
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	for enemy in enemies:
@@ -63,13 +66,13 @@ func _ready():
 		prob_max = enemy.probability
 	rng.seed = 0
 	spawn_enemies(initial_spawn_count)
-	pass # Replace with function body.
-	
+	pass  # Replace with function body.
+
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
-	
+
+
 func _on_timeout():
 	spawn_enemies(tick_spawn_count)
-	

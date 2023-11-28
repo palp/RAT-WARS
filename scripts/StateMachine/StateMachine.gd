@@ -14,24 +14,29 @@ signal transitioned(state_name)
 
 
 func _ready() -> void:
-	await owner.ready
+	if owner != null:
+		await owner.ready
 	# The state machine assigns itself to the State objects' state_machine property.
 	for child in get_children():
 		child.state_machine = self
-	state.enter()
+	if state != null:
+		state.enter()
 
 
 # The state machine subscribes to node callbacks and delegates them to the state objects.
 func _unhandled_input(event: InputEvent) -> void:
-	state.handle_input(event)
+	if state != null:
+		state.handle_input(event)
 
 
 func _process(delta: float) -> void:
-	state.update(delta)
+	if state != null:
+		state.update(delta)
 
 
 func _physics_process(delta: float) -> void:
-	state.physics_update(delta)
+	if state != null:
+		state.physics_update(delta)
 
 
 # This function calls the current state's exit() function, then changes the active state,
@@ -42,7 +47,9 @@ func transition_to(target_state_name: String, msg: Dictionary = {}) -> void:
 	if not has_node(target_state_name):
 		return
 
-	state.exit()
+	if state != null:
+		state.exit()
+
 	state = get_node(target_state_name)
 	state.enter(msg)
 	emit_signal("transitioned", state.name)
