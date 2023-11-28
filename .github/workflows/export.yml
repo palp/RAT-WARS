@@ -24,7 +24,7 @@ jobs:
             tag: win
           - preset: macos
             path: build/macos
-            output: build/macos/RatWars.zip
+            output: build/macos/rat-wars-macos.zip
             tag: macos
     name: Export ${{matrix.build.preset}}
     runs-on: ubuntu-20.04
