@@ -1,6 +1,6 @@
 name: Export iOS
 on:
-  push:
+  workflow_dispatch:
 
 jobs:
   export-ios:
