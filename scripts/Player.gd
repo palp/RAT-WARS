@@ -21,8 +21,8 @@ func _physics_process(delta):
 		var enemies = get_tree().get_nodes_in_group("enemy")
 		var dir = velocity.normalized()
 		velocity = get_autopilot_velocity(dir, enemies)
-
-		#velocity = get_input_velocity()
+	
+	
 	
 	move_and_slide()
 	Utility.set_facing(self)
