@@ -38,3 +38,6 @@ func test_transition_to():
 	state_machine.transition_to("state1")
 	await assert_signal(state_machine).is_emitted("transitioned", ["state1"])
 	assert_object(state_machine.state).is_same(state1)
+	state_machine.transition_to("invalid_state")
+	await assert_signal(state_machine).is_not_emitted("transitioned")
+	assert_object(state_machine.state).is_same(state1)
