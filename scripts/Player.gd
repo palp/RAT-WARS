@@ -8,6 +8,7 @@ extends CharacterBody2D
 var health = base_health
 var invincibility = 0
 var disable_pathing_input = false
+var nearby_enemies = []
 
 @export var speed = 200
 @export var autopilot = true
@@ -40,6 +41,19 @@ func _physics_process(delta):
 	#	var collision = get_slide_collision(i)
 	#	print("I collided with ", collision.get_collider().damage)
 
+
+func _on_enemy_detection_area_body_entered(body):
+	if not body.is_in_group("enemy"):
+		return
+	if not nearby_enemies.has(body):		
+		nearby_enemies.append(body)
+
+
+func _on_enemy_detection_area_body_exited(body):
+	if not body.is_in_group("enemy"):
+		return
+	if nearby_enemies.has(body):		
+		nearby_enemies.erase(body)
 
 # These could be abstracted to an input manager
 func check_movement_input():
