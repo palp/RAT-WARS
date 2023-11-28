@@ -5,7 +5,7 @@
 [ext_resource type="Script" path="res://scripts/StateMachine/Idle.gd" id="3_lcdk6"]
 [ext_resource type="Script" path="res://scripts/StateMachine/StateMachine.gd" id="3_r7o28"]
 [ext_resource type="Script" path="res://scripts/StateMachine/Moving.gd" id="4_67rv5"]
-[ext_resource type="Script" path="res://Autopilot.gd" id="6_arvxl"]
+[ext_resource type="Script" path="res://scripts/StateMachine/Autopilot.gd" id="6_arvxl"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_igg8v"]
 size = Vector2(20, 11.75)
