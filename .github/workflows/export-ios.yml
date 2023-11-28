@@ -68,7 +68,7 @@ jobs:
           GODOT_TEMPLATES_PACKAGE=Godot_v$GODOT_VERSION-stable_export_templates.tpz          
           wget -q https://github.com/godotengine/godot/releases/download/$GODOT_VERSION-stable/$GODOT_TEMPLATES_PACKAGE -P ${{ runner.temp }}
           unzip ${{ runner.temp }}/$GODOT_TEMPLATES_PACKAGE -d "~/Library/Application Support/Godot/export_templates"
-          mv "~/Library/Application Support/Godot/export_templates/templates" "~/Library/Application Support/Godot/export_templates/$GODOT_VERSION-stable"
+          mv "~/Library/Application Support/Godot/export_templates/templates" "~/Library/Application Support/Godot/export_templates/$GODOT_VERSION.stable"
       - name: "Update Project"
         if: ${{ !cancelled() }}
         timeout-minutes: 1
