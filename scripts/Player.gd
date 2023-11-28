@@ -7,6 +7,7 @@ extends CharacterBody2D
 
 var health = base_health
 var invincibility = 0
+var disable_pathing_input = false
 
 @export var speed = 200
 @export var autopilot = true
@@ -18,8 +19,6 @@ func _physics_process(delta):
 	if health <= 0:
 		return
 
-	move_and_slide()
-	Utility.set_facing(self)
 	var sprite = get_node("Sprite2D")
 	if invincibility > 0:
 		invincibility -= 1
@@ -41,6 +40,24 @@ func _physics_process(delta):
 	#	var collision = get_slide_collision(i)
 	#	print("I collided with ", collision.get_collider().damage)
 
-#func get_input_velocity():
-#	var dir = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
-#	return dir.normalized() * speed
+
+# These could be abstracted to an input manager
+func check_movement_input():
+	return (
+		Input.is_action_just_pressed("ui_up")
+		or Input.is_action_just_pressed("ui_down")
+		or Input.is_action_just_pressed("ui_right")
+		or Input.is_action_just_pressed("ui_left")
+	)
+
+
+func check_pathing_input():
+	return not disable_pathing_input and Input.is_action_pressed("click") 
+
+
+func get_movement_vector():
+	return Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
+
+
+func get_pathing_target():
+	return get_global_mouse_position()

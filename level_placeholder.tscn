@@ -55,3 +55,6 @@ offset_left = 105.0
 offset_top = -3.0
 offset_right = 105.0
 offset_bottom = -3.0
+
+[connection signal="mouse_entered" from="CanvasLayer/pause_button" to="CanvasLayer/pause_button" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="CanvasLayer/pause_button" to="CanvasLayer/pause_button" method="_on_mouse_exited"]

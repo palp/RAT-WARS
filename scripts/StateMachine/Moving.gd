@@ -10,8 +10,11 @@ func physics_update(delta: float) -> void:
 
 	if player.velocity == Vector2.ZERO:
 		state_machine.transition_to("Idle")
+	else:
+		player.move_and_slide()
+		player.Utility.set_facing(player)
 
 
 func get_input_velocity():
-	var dir = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
+	var dir = player.get_movement_vector()
 	return dir.normalized() * player.speed
