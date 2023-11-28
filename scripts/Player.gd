@@ -7,6 +7,7 @@ extends CharacterBody2D
 
 var health = base_health
 var invincibility = 0
+var disable_pathing_input = false
 
 @export var speed = 200
 @export var autopilot = true
@@ -51,7 +52,7 @@ func check_movement_input():
 
 
 func check_pathing_input():
-	return Input.is_action_pressed("click")
+	return not disable_pathing_input and Input.is_action_pressed("click") 
 
 
 func get_movement_vector():
