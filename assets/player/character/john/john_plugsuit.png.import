@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dul8cciw2ysy0"
-path="res://.godot/imported/John.png-8a6eb2b8fd831aa91c00024ca452dfc8.ctex"
+uid="uid://b7x3vvaudhjhi"
+path="res://.godot/imported/john_plugsuit.png-bbef4838e165499d3ccc8e334f5c9502.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/player/John.png"
-dest_files=["res://.godot/imported/John.png-8a6eb2b8fd831aa91c00024ca452dfc8.ctex"]
+source_file="res://assets/player/character/john/john_plugsuit.png"
+dest_files=["res://.godot/imported/john_plugsuit.png-bbef4838e165499d3ccc8e334f5c9502.ctex"]
 
 [params]
 

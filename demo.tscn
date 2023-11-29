@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://civ1884rxua1q"]
+[gd_scene load_steps=27 format=3 uid="uid://bbkmjcn6ordk6"]
 
 [ext_resource type="Texture2D" uid="uid://b6umklllf2jsl" path="res://Textures/dirt_full_new.png" id="1_3v41d"]
 [ext_resource type="PackedScene" uid="uid://6rkaprmq4ect" path="res://Player/player.tscn" id="2_40uwv"]
@@ -158,5 +158,3 @@ offset_left = 79.0
 offset_top = 101.0
 offset_right = 79.0
 offset_bottom = 101.0
-
-[connection signal="playerdeath" from="Player" to="snd_Music" method="_on_player_playerdeath"]

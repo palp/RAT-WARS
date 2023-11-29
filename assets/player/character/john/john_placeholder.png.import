@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b7x3vvaudhjhi"
-path="res://.godot/imported/plug_player.png-f554229f3ca8290bedbb852416075d67.ctex"
+uid="uid://bd1dsmqbq3l7"
+path="res://.godot/imported/john_placeholder.png-dafe341ec3d7b4f0ee5005e8ff9e04d7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/plug_player.png"
-dest_files=["res://.godot/imported/plug_player.png-f554229f3ca8290bedbb852416075d67.ctex"]
+source_file="res://assets/player/character/john/john_placeholder.png"
+dest_files=["res://.godot/imported/john_placeholder.png-dafe341ec3d7b4f0ee5005e8ff9e04d7.ctex"]
 
 [params]
 
