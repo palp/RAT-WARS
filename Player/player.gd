@@ -138,7 +138,7 @@ func _ready():
 	
 func _on_content_unlocked(content):
 	if content == "plugsuit":
-		get_node(NodePath("Sprite2D")).texture = load("res://assets/plug_player.png")
+		get_node(NodePath("Sprite2D")).texture = load("res://assets/player/character/john/john_plugsuit.png")
 	
 
 
