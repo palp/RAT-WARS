@@ -138,6 +138,7 @@ process_mode = 3
 stream = ExtResource("10_rk3we")
 volume_db = -15.0
 autoplay = true
+bus = &"Music"
 script = ExtResource("11_ovtx6")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]

@@ -28,5 +28,6 @@ autostart = true
 [node name="snd_attack" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_ihvf8")
 autoplay = true
+bus = &"SFX"
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

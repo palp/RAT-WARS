@@ -96,6 +96,7 @@ shape = SubResource("RectangleShape2D_ucec4")
 [node name="snd_hit" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("5_867w5")
 volume_db = -20.0
+bus = &"SFX"
 
 [connection signal="hurt" from="HurtBox" to="." method="_on_hurt_box_hurt"]
 
