@@ -1,11 +1,15 @@
 [gd_scene load_steps=8 format=3 uid="uid://what6ybd045w"]
 
 [ext_resource type="Script" path="res://scripts/enemy_basic.gd" id="1_d8g1e"]
+[ext_resource type="PackedScene" uid="uid://7m05hw2hc8m7" path="res://hurt_box.tscn" id="3_ivxq8"]
 [ext_resource type="Texture2D" uid="uid://chjoqtsegrpiq" path="res://assets/enemy/BallonRat/ballon_rat_walk_7.png" id="2_6qfiv"]
 [ext_resource type="Texture2D" uid="uid://y3cyx8ixt3ow" path="res://assets/enemy/BallonRat/ballon_rat_death_12.png" id="2_hq5fu"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_6vuew"]
 radius = 220.025
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_n3lwc"]
+radius = 226.887
 
 [sub_resource type="Animation" id="Animation_lqp1w"]
 resource_name = "walk"
@@ -99,11 +103,6 @@ _data = {
 scale = Vector2(0.3, 0.3)
 motion_mode = 1
 script = ExtResource("1_d8g1e")
-behavior = 1
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(2.08165e-12, 2.08165e-12)
-shape = SubResource("CircleShape2D_6vuew")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 z_index = 1
@@ -113,7 +112,20 @@ texture = ExtResource("2_6qfiv")
 offset = Vector2(-40, 80)
 vframes = 7
 
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(2.08165e-12, 2.08165e-12)
+shape = SubResource("CircleShape2D_6vuew")
+
+[node name="HurtBox" parent="." instance=ExtResource("3_ivxq8")]
+collision_layer = 5
+collision_mask = 5
+
+[node name="CollisionShape2D" parent="HurtBox" index="0"]
+shape = SubResource("CircleShape2D_n3lwc")
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_2bjk2")
 }
+
+[editable path="HurtBox"]
