@@ -101,17 +101,13 @@ func check_movement_input():
 
 const FACING_EPSILON = 0.1
 
-static func set_facing(obj):
+func set_facing():
 	# Setting scale doesn't work so we do this slightly
 	# more complicsted logic.
-	if obj == null:
-		return
-	if sprite == null:
-		return
 	var new_flip = false
-	if obj.velocity.x < -FACING_EPSILON:
+	if velocity.x < -FACING_EPSILON:
 		new_flip = true
-	elif obj.velocity.x > FACING_EPSILON:
+	elif velocity.x > FACING_EPSILON:
 		new_flip = false
 	else:
 		# Just keep previous flip value

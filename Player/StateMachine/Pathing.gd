@@ -17,7 +17,7 @@ func physics_update(delta: float) -> void:
 	else:
 		player.velocity = Vector2.ZERO
 
-	player.set_facing(player)
+	player.set_facing()
 
 	if player.check_movement_input():
 		state_machine.transition_to("Moving")

@@ -10,7 +10,7 @@ func physics_update(delta: float) -> void:
 	#var enemies = get_tree().get_nodes_in_group("enemy")
 	player.velocity = get_autopilot_velocity(player.velocity.normalized(), player.enemy_close)
 	player.move_and_slide()
-	player.set_facing(player)
+	player.set_facing()
 
 	if player.autopilot == false:
 		state_machine.transition_to("Idle")
