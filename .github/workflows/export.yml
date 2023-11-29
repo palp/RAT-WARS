@@ -11,22 +11,22 @@ jobs:
       fail-fast: false
       matrix:
         build:
-          - preset: web
-            path: build/web
-            output: build/web/index.html
-            tag: web
-          - preset: linux
-            path: build/linux
-            output: build/linux/RatWars.x86_64
-            tag: linux
-          - preset: win
-            path: build/win
-            output: build/win/RatWars.exe
-            tag: win
-          - preset: macos
-            path: build/macos
-            output: build/macos/rat-wars-macos.zip
-            tag: macos
+          # - preset: web
+          #   path: build/web
+          #   output: build/web/index.html
+          #   tag: web
+          # - preset: linux
+          #   path: build/linux
+          #   output: build/linux/RatWars.x86_64
+          #   tag: linux
+          # - preset: win
+          #   path: build/win
+          #   output: build/win/RatWars.exe
+          #   tag: win
+          # - preset: macos
+          #   path: build/macos
+          #   output: build/macos/rat-wars-macos.zip
+          #   tag: macos
           - preset: android
             path: build/android
             output: build/android/rat-wars.apk
@@ -57,9 +57,9 @@ jobs:
           sed 's@keystore/release=".*"@keystore/release="'/root/release.keystore'"@g' -i export_presets.cfg
           sed 's@keystore/release_user=".*"@keystore/release_user="'$SECRET_RELEASE_KEYSTORE_USER'"@g' -i export_presets.cfg
           sed 's@keystore/release_password=".*"@keystore/release_password="'$SECRET_RELEASE_KEYSTORE_PASSWORD'"@g' -i export_presets.cfg
-          sed 's|export/android/android_sdk_path = ".*"|export/android/android_sdk_path = "'/usr/lib/android-sdk'"|g' -i /root/.config/godot/editor_settings-3.tres
+          sed 's|export/android/android_sdk_path = ".*"|export/android/android_sdk_path = "'/usr/lib/android-sdk'"|g' -i /root/.config/godot/editor_settings-4.tres
           mkdir -v -p ~/.config/godot
-          cp -v /root/.config/godot/editor_settings-3.tres ~/.config/godot/
+          cp -v /root/.config/godot/editor_settings-4.tres ~/.config/godot/
       - name: Build
         if: ${{ !cancelled() }}
         timeout-minutes: 10
