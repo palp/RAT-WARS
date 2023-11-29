@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dl8xjc15okuks"
-path="res://.godot/imported/SpitterRat1_walk_SPRITESHEET.png-a2506a04aae3b4b738636e9e803134ed.ctex"
+uid="uid://y3cyx8ixt3ow"
+path="res://.godot/imported/ballon_rat_death_12.png-578045126f05c672927ee6d6596ee95f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/enemy/SpitterRat1/SpitterRat1_walk_SPRITESHEET.png"
-dest_files=["res://.godot/imported/SpitterRat1_walk_SPRITESHEET.png-a2506a04aae3b4b738636e9e803134ed.ctex"]
+source_file="res://assets/enemy/BallonRat/ballon_rat_death_12.png"
+dest_files=["res://.godot/imported/ballon_rat_death_12.png-578045126f05c672927ee6d6596ee95f.ctex"]
 
 [params]
 
