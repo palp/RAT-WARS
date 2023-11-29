@@ -1,0 +1,37 @@
+[gd_scene load_steps=4 format=3 uid="uid://dcuk4g4jvfo3n"]
+
+[ext_resource type="Script" path="res://Player/Attack/vinyl.gd" id="1_qefyo"]
+[ext_resource type="Texture2D" uid="uid://c8aj2q43pxt8k" path="res://assets/player/attacks/vinyl.png" id="2_ba5yw"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7laxo"]
+
+[node name="Vinyl" type="Area2D" groups=["attack"]]
+top_level = true
+z_index = 1
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_qefyo")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(1.64, 1.64)
+shape = SubResource("CircleShape2D_7laxo")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_ba5yw")
+
+[node name="ChangeDirection" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 1.5
+one_shot = true
+autostart = true
+
+[node name="ResetPosTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+
+[node name="FlightDuration" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="ChangeDirection" to="." method="_on_change_direction_timeout"]
+[connection signal="timeout" from="FlightDuration" to="." method="_on_flight_duration_timeout"]
