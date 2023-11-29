@@ -67,9 +67,6 @@ jobs:
         run: |
           mkdir -v -p ${{matrix.build.path}}
           godot -v --headless --audio-driver Dummy --export-release "${{matrix.build.preset}}" "${{matrix.build.output}}"
-      - name: Set up butler
-        if: ${{ !cancelled() }}
-        uses: jdno/setup-butler@v1
       - name: Push to Itch.io (${{matrix.build.tag}}))
         if: ${{ !cancelled() }}
         run: butler push ${{matrix.build.path}} palp/rat-wars:${{matrix.build.tag}}
