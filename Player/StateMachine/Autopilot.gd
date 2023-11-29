@@ -18,7 +18,6 @@ func physics_update(delta: float) -> void:
 
 func get_autopilot_velocity(dir: Vector2, enemies: Array):
 	for enemy in enemies:
-		print("enemy")
 		var enemy_distance = enemy.global_position - player.global_position
 		var enemy_distance_total = abs(enemy_distance.x) + abs(enemy_distance.y)
 		if enemy_distance_total < 100:
