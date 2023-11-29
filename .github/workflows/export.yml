@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - main
+      - android
 
 jobs:
   export-matrix:
@@ -26,6 +27,9 @@ jobs:
             path: build/macos
             output: build/macos/rat-wars-macos.zip
             tag: macos
+          - preset: android
+            path: build/android
+            output: build/android/rat-wars.apk
     name: Export ${{matrix.build.preset}}
     runs-on: ubuntu-20.04
     container:
@@ -46,6 +50,13 @@ jobs:
         shell: bash
         run: |
           godot -e --path . -s res://addons/gdUnit4/bin/ProjectScanner.gd --headless --audio-driver Dummy
+      - name: Setup Android Keystore
+        if: ${{matrix.build.preset == 'android'}}
+        run: |
+          echo ${{ secrets.ANDROID_RELEASE_KEYSTORE_BASE64 }} | base64 --decode > release.keystore
+          sed 's@keystore/release=".*"@keystore/release="'/root/release.keystore'"@g' -i export_presets.cfg
+          sed 's@keystore/release_user=".*"@keystore/release_user="'$SECRET_RELEASE_KEYSTORE_USER'"@g' -i export_presets.cfg
+          sed 's@keystore/release_password=".*"@keystore/release_password="'$SECRET_RELEASE_KEYSTORE_PASSWORD'"@g' -i export_presets.cfg
       - name: Build
         if: ${{ !cancelled() }}
         timeout-minutes: 10
