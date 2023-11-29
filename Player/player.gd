@@ -283,7 +283,10 @@ func set_expbar(set_value = 1, set_max_value = 100):
 func levelup():
 	sndLevelUp.play()
 	lblLevel.text = str("Level: ",experience_level)
-	var tween = levelPanel.create_tween()
+	if autopilot:
+		upgrade_character(get_random_item())
+		return
+	var tween = levelPanel.create_tween()		
 	tween.tween_property(levelPanel,"position",Vector2(220,50),0.2).set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_IN)
 	tween.play()
 	levelPanel.visible = true
