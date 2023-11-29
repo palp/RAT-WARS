@@ -4,7 +4,7 @@ extends GdUnitTestSuite
 @warning_ignore("unused_parameter")
 @warning_ignore("return_value_discarded")
 # TestSuite generated from
-const __source = "res://scripts/enemy_manager.gd"
+const __source = "res://old/enemy_manager.gd"
 
 
 func test_enemy_prob_comp() -> void:

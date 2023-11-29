@@ -2,8 +2,8 @@ class_name StateMachineTest
 extends GdUnitTestSuite
 @warning_ignore("unused_parameter")
 @warning_ignore("return_value_discarded")
-const __source = "res://scripts/StateMachine/StateMachine.gd"
-const __stateSource = "res://scripts/StateMachine/State.gd"
+const __source = "res://Player/StateMachine/StateMachine.gd"
+const __stateSource = "res://Player/StateMachine/State.gd"
 
 
 func test_ready():

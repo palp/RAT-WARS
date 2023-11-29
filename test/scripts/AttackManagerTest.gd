@@ -5,7 +5,7 @@ extends GdUnitTestSuite
 @warning_ignore('return_value_discarded')
 
 # TestSuite generated from
-const __source = 'res://scripts/AttackManager.gd'
+const __source = 'res://old/AttackManager.gd'
 
 
 # Just a basic test of spawning for now
