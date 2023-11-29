@@ -1,11 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://bi44xullqeakj"]
+[gd_scene load_steps=4 format=3 uid="uid://dcuk4g4jvfo3n"]
 
 [ext_resource type="Script" path="res://Player/Attack/vinyl.gd" id="1_qefyo"]
 [ext_resource type="Texture2D" uid="uid://c8aj2q43pxt8k" path="res://assets/player/attacks/vinyl.png" id="2_ba5yw"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_7laxo"]
 
-[node name="Area2D" type="Area2D"]
+[node name="Vinyl" type="Area2D" groups=["attack"]]
 top_level = true
 z_index = 1
 collision_layer = 4

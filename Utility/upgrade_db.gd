@@ -3,6 +3,7 @@ extends Node
 
 const ICON_PATH = "res://Textures/Items/Upgrades/"
 const WEAPON_PATH = "res://Textures/Items/Weapons/"
+const RAT_WEAPON_PATH = "res://assets/player/attacks/"
 const UPGRADES = {
 	"icespear1": {
 		"icon": WEAPON_PATH + "ice_spear.png",
@@ -101,7 +102,7 @@ const UPGRADES = {
 		"type": "weapon"
 	},
 	"vinyl1": {
-		"icon": WEAPON_PATH + "vinyl.png",
+		"icon": RAT_WEAPON_PATH + "vinyl.png",
 		"displayname": "Tornado",
 		"details": "A vinyl is created and random heads somewhere in the players direction",
 		"level": "Level: 1",
@@ -109,7 +110,7 @@ const UPGRADES = {
 		"type": "weapon"
 	},
 	"vinyl2": {
-		"icon": WEAPON_PATH + "vinyl.png",
+		"icon": RAT_WEAPON_PATH + "vinyl.png",
 		"displayname": "Tornado",
 		"details": "An additional Tornado is created",
 		"level": "Level: 2",
@@ -117,7 +118,7 @@ const UPGRADES = {
 		"type": "weapon"
 	},
 	"vinyl3": {
-		"icon": WEAPON_PATH + "vinyl.png",
+		"icon": RAT_WEAPON_PATH + "vinyl.png",
 		"displayname": "Tornado",
 		"details": "The Tornado cooldown is reduced by 0.5 seconds",
 		"level": "Level: 3",
@@ -125,7 +126,7 @@ const UPGRADES = {
 		"type": "weapon"
 	},
 	"vinyl4": {
-		"icon": WEAPON_PATH + "vinyl.png",
+		"icon": RAT_WEAPON_PATH + "vinyl.png",
 		"displayname": "Tornado",
 		"details": "An additional vinyl is created and the knockback is increased by 25%",
 		"level": "Level: 4",

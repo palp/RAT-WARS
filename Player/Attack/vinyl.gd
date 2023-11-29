@@ -51,7 +51,6 @@ func _ready():
 			knockback_amount = 125
 			attack_size = 1.0
 
-
 func _physics_process(delta):
 	if angle.angle() >= 0:
 		rotation += .1
@@ -62,7 +61,6 @@ func _physics_process(delta):
 func _on_flight_duration_timeout():
 	if level < 8:
 		queue_free()
-
 
 func _on_change_direction_timeout():
 	angle = angle.rotated(PI)
