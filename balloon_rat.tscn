@@ -1,16 +1,19 @@
-[gd_scene load_steps=4 format=3 uid="uid://what6ybd045w"]
+[gd_scene load_steps=6 format=3 uid="uid://what6ybd045w"]
 
 [ext_resource type="Script" path="res://scripts/enemy_basic.gd" id="1_d8g1e"]
 [ext_resource type="Texture2D" uid="uid://c838kg48ms2oc" path="res://assets/enemy/balloon_rat.png" id="1_o4tko"]
+[ext_resource type="PackedScene" uid="uid://7m05hw2hc8m7" path="res://hurt_box.tscn" id="3_ivxq8"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_6vuew"]
 radius = 220.025
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_n3lwc"]
+radius = 226.887
 
 [node name="balloon_rat" type="CharacterBody2D"]
 scale = Vector2(0.3, 0.3)
 motion_mode = 1
 script = ExtResource("1_d8g1e")
-behavior = 1
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 z_index = 1
@@ -21,3 +24,12 @@ offset = Vector2(-40, 80)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(2.08165e-12, 2.08165e-12)
 shape = SubResource("CircleShape2D_6vuew")
+
+[node name="HurtBox" parent="." instance=ExtResource("3_ivxq8")]
+collision_layer = 5
+collision_mask = 5
+
+[node name="CollisionShape2D" parent="HurtBox" index="0"]
+shape = SubResource("CircleShape2D_n3lwc")
+
+[editable path="HurtBox"]

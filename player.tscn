@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://cs1tj6sprtojj"]
+[gd_scene load_steps=13 format=3 uid="uid://cs1tj6sprtojj"]
 
 [ext_resource type="Script" path="res://scripts/Player.gd" id="1_cllbq"]
 [ext_resource type="Texture2D" uid="uid://b7x3vvaudhjhi" path="res://assets/plug_player.png" id="2_ik2p2"]
@@ -8,12 +8,16 @@
 [ext_resource type="Script" path="res://scripts/StateMachine/Autopilot.gd" id="6_arvxl"]
 [ext_resource type="Script" path="res://scripts/StateMachine/Pathing.gd" id="7_xn56v"]
 [ext_resource type="Script" path="res://scripts/AttackManager.gd" id="8_88ac7"]
+[ext_resource type="PackedScene" uid="uid://7m05hw2hc8m7" path="res://hurt_box.tscn" id="9_ttjxn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_igg8v"]
 size = Vector2(20, 11.75)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_xw4x6"]
 radius = 885.946
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ryaxv"]
+size = Vector2(16, 12)
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 position = Vector2(-1, -58)
@@ -67,5 +71,21 @@ script = ExtResource("7_xn56v")
 [node name="AttackManager" type="Node" parent="."]
 script = ExtResource("8_88ac7")
 
+[node name="PlugController" type="Node2D" parent="AttackManager"]
+
+[node name="PulseTimer" type="Timer" parent="AttackManager/PlugController"]
+
+[node name="HurtBox" parent="." instance=ExtResource("9_ttjxn")]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" parent="HurtBox" index="0"]
+position = Vector2(1, 1)
+shape = SubResource("RectangleShape2D_ryaxv")
+
 [connection signal="body_entered" from="EnemyDetectionArea" to="." method="_on_enemy_detection_area_body_entered"]
 [connection signal="body_exited" from="EnemyDetectionArea" to="." method="_on_enemy_detection_area_body_exited"]
+[connection signal="hurt" from="HurtBox" to="." method="_on_hurt_box_hurt"]
+[connection signal="timeout" from="HurtBox/DisableTimer" to="." method="_on_disable_timer_timeout"]
+
+[editable path="HurtBox"]

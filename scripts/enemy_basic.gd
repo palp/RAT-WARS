@@ -3,7 +3,10 @@ extends CharacterBody2D
 enum Behavior { BASIC, BALLOON }
 
 @export var behavior = Behavior.BASIC
+@export var health = 40
 @export var speed = 100
+@export var knockback_recovery = 3.5
+var knockback = Vector2.ZERO
 @export var explode_dist = 140
 @onready var player = get_tree().get_first_node_in_group("player")
 
@@ -30,17 +33,21 @@ func balloon():
 
 		hit()
 
-	# TODO: Check whether we collided with weapon or player
-	#for i in get_slide_collision_count():
-	#	var collision = get_slide_collision(i)
-	#	print("I collided with ", collision.get_collider().damage)
-
-
 func _physics_process(delta):
+	knockback = knockback.move_toward(Vector2.ZERO, knockback_recovery)
 	var direction = global_position.direction_to(player.global_position)
 	velocity = direction * speed
+	velocity += knockback
 	move_and_slide()
 	Utility.set_facing(self)
 
 	if behavior == Behavior.BALLOON:
 		balloon()
+
+
+func _on_hurt_box_hurt(damage, angle, knockback_amount):
+	health -= damage
+	knockback = angle * knockback_amount
+	if health <= 0:
+		queue_free()
+	

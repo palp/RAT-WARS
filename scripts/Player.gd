@@ -2,11 +2,9 @@ class_name Player
 extends CharacterBody2D
 
 @export var base_health = 100
-@export var damage_per_hit = 10
-@export var invincibility_frames = 20
 
 var health = base_health
-var invincibility = 0
+var invincibility = 0 # used for invincible animation 
 var disable_pathing_input = false
 var nearby_enemies = []
 
@@ -29,13 +27,14 @@ func _physics_process(delta):
 			sprite.set_self_modulate(Color(1, 1, 1, 1))
 		return
 
-	if get_slide_collision_count() > 0:
-		invincibility = invincibility_frames
-		health -= damage_per_hit
-		var alpha = 1
-		if health <= 0:
-			alpha = 0
-		sprite.set_self_modulate(Color(1, 0, 0, alpha))
+# Offloaded to hurt box 
+#	if get_slide_collision_count() > 0:
+#		invincibility = invincibility_frames
+#		health -= damage_per_hit
+#		var alpha = 1
+#		if health <= 0:
+#			alpha = 0
+#		sprite.set_self_modulate(Color(1, 0, 0, alpha))
 
 	#for i in get_slide_collision_count():
 	#	var collision = get_slide_collision(i)
@@ -75,3 +74,12 @@ func get_movement_vector():
 
 func get_pathing_target():
 	return get_global_mouse_position()
+
+
+func _on_hurt_box_hurt(damage, _angle, _knockback_amount):
+		health -= damage
+		invincibility = 1
+
+
+func _on_disable_timer_timeout():
+	invincibility = 0

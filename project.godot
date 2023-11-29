@@ -62,6 +62,12 @@ click={
 ]
 }
 
+[layer_names]
+
+2d_render/layer_3="World"
+2d_render/layer_4="Player"
+2d_render/layer_5="Enemies"
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"
