@@ -3,7 +3,6 @@ on:
   push:
     branches:
       - main
-      - android
 
 jobs:
   export-matrix:
@@ -11,22 +10,22 @@ jobs:
       fail-fast: false
       matrix:
         build:
-          # - preset: web
-          #   path: build/web
-          #   output: build/web/index.html
-          #   tag: web
-          # - preset: linux
-          #   path: build/linux
-          #   output: build/linux/RatWars.x86_64
-          #   tag: linux
-          # - preset: win
-          #   path: build/win
-          #   output: build/win/RatWars.exe
-          #   tag: win
-          # - preset: macos
-          #   path: build/macos
-          #   output: build/macos/rat-wars-macos.zip
-          #   tag: macos
+          - preset: web
+            path: build/web
+            output: build/web/index.html
+            tag: web
+          - preset: linux
+            path: build/linux
+            output: build/linux/RatWars.x86_64
+            tag: linux
+          - preset: win
+            path: build/win
+            output: build/win/RatWars.exe
+            tag: win
+          - preset: macos
+            path: build/macos
+            output: build/macos/rat-wars-macos.zip
+            tag: macos
           - preset: android
             path: build/android
             output: build/android/rat-wars.apk
