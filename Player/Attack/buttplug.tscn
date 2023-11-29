@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://8b7hny6er2k"]
 
-[ext_resource type="Script" path="res://scripts/buttplug.gd" id="1_8cxng"]
+[ext_resource type="Script" path="res://Enemy/enemy.gd" id="1_8cxng"]
 [ext_resource type="Texture2D" uid="uid://c5a7tjqwgiil5" path="res://assets/player/attacks/buttplug.png" id="2_fp7qq"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3gd5q"]
