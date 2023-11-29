@@ -28,7 +28,7 @@ jobs:
             tag: macos
           - preset: android
             path: build/android
-            output: build/android/RAT WARS.apk
+            output: build/android/RatWars.apk
             tag: android
     name: Export ${{matrix.build.preset}}
     runs-on: ubuntu-20.04
@@ -70,7 +70,7 @@ jobs:
       - name: Check build
         if: ${{ !cancelled() }}
         run: |
-          if [ ! -f ${{matrix.build.output}} ]; then
+          if [ ! -f "${{matrix.build.output}}" ]; then
             echo "Build failed"
             exit 1
           fi
