@@ -1,14 +1,103 @@
-[gd_scene load_steps=6 format=3 uid="uid://what6ybd045w"]
+[gd_scene load_steps=8 format=3 uid="uid://what6ybd045w"]
 
 [ext_resource type="Script" path="res://scripts/enemy_basic.gd" id="1_d8g1e"]
-[ext_resource type="Texture2D" uid="uid://c838kg48ms2oc" path="res://assets/enemy/balloon_rat.png" id="1_o4tko"]
 [ext_resource type="PackedScene" uid="uid://7m05hw2hc8m7" path="res://hurt_box.tscn" id="3_ivxq8"]
+[ext_resource type="Texture2D" uid="uid://chjoqtsegrpiq" path="res://assets/enemy/BallonRat/ballon_rat_walk_7.png" id="2_6qfiv"]
+[ext_resource type="Texture2D" uid="uid://y3cyx8ixt3ow" path="res://assets/enemy/BallonRat/ballon_rat_death_12.png" id="2_hq5fu"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_6vuew"]
 radius = 220.025
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_n3lwc"]
 radius = 226.887
+
+[sub_resource type="Animation" id="Animation_lqp1w"]
+resource_name = "walk"
+length = 1.16668
+loop_mode = 1
+step = 0.166667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.166667, 0.333333, 0.5, 0.666667, 0.833333, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:vframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [7]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:texture")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("2_6qfiv")]
+}
+
+[sub_resource type="Animation" id="Animation_htcwb"]
+resource_name = "death"
+step = 0.0833333
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0833333, 0.166667, 0.25, 0.333333, 0.416667, 0.5, 0.583333, 0.666667, 0.75, 0.833333, 0.916667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 9, 5, 10, 11]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:vframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [12]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:texture")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("2_hq5fu")]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2bjk2"]
+_data = {
+"death": SubResource("Animation_htcwb"),
+"walk": SubResource("Animation_lqp1w")
+}
 
 [node name="balloon_rat" type="CharacterBody2D"]
 scale = Vector2(0.3, 0.3)
@@ -17,9 +106,11 @@ script = ExtResource("1_d8g1e")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 z_index = 1
-position = Vector2(0, 80)
-texture = ExtResource("1_o4tko")
+position = Vector2(106.667, -266.667)
+scale = Vector2(3, 3)
+texture = ExtResource("2_6qfiv")
 offset = Vector2(-40, 80)
+vframes = 7
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(2.08165e-12, 2.08165e-12)
@@ -31,5 +122,10 @@ collision_mask = 5
 
 [node name="CollisionShape2D" parent="HurtBox" index="0"]
 shape = SubResource("CircleShape2D_n3lwc")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_2bjk2")
+}
 
 [editable path="HurtBox"]

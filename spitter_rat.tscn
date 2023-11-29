@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://dhucglqau1jbg"]
 
-[ext_resource type="Texture2D" uid="uid://dl8xjc15okuks" path="res://assets/enemy/spitterRat1/SpitterRat1_walk_SPRITESHEET.png" id="1_p38jk"]
+[ext_resource type="Texture2D" uid="uid://dl8xjc15okuks" path="res://assets/enemy/SpitterRat1/SpitterRat1_walk_SPRITESHEET.png" id="1_p38jk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yrkus"]
 
