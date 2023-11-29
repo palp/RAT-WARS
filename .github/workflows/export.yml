@@ -28,7 +28,7 @@ jobs:
             tag: macos
           - preset: android
             path: build/android
-            output: build/android/rat-wars.apk
+            output: build/android/RatWars.apk
             tag: android
     name: Export ${{matrix.build.preset}}
     runs-on: ubuntu-20.04
@@ -67,8 +67,19 @@ jobs:
         run: |
           mkdir -v -p ${{matrix.build.path}}
           godot -v --headless --audio-driver Dummy --export-release "${{matrix.build.preset}}" "${{matrix.build.output}}"
-      - name: Push to Itch.io (${{matrix.build.tag}}))
+      - name: Check build
         if: ${{ !cancelled() }}
+        run: |
+          if [ ! -f "${{matrix.build.output}}" ]; then
+            echo "Build failed"
+            exit 1
+          fi
+      - name: Publish Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: ratwars-${{matrix.build.tag}}
+          path: ${{matrix.build.path}}
+      - name: Push to Itch.io (${{matrix.build.tag}}))
         run: butler push ${{matrix.build.path}} palp/rat-wars:${{matrix.build.tag}}
         env:
           BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}

@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://what6ybd045w"]
 
-[ext_resource type="Script" path="res://scripts/enemy_basic.gd" id="1_d8g1e"]
-[ext_resource type="PackedScene" uid="uid://7m05hw2hc8m7" path="res://hurt_box.tscn" id="3_ivxq8"]
+[ext_resource type="Script" path="res://Enemy/enemy.gd" id="1_d8g1e"]
+[ext_resource type="PackedScene" uid="uid://7m05hw2hc8m7" path="res://Utility/hurt_box.tscn" id="3_ivxq8"]
 [ext_resource type="Texture2D" uid="uid://chjoqtsegrpiq" path="res://assets/enemy/BallonRat/ballon_rat_walk_7.png" id="2_6qfiv"]
 [ext_resource type="Texture2D" uid="uid://y3cyx8ixt3ow" path="res://assets/enemy/BallonRat/ballon_rat_death_12.png" id="2_hq5fu"]
 
