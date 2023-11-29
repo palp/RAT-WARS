@@ -1,8 +1,8 @@
 name: Export
 on:
   push:
-    # branches:
-    #   - main
+    branches:
+      - main
 
 jobs:
   export-matrix:
@@ -77,9 +77,9 @@ jobs:
       - name: Publish Artifact
         uses: actions/upload-artifact@v2
         with:
-          name: ${{matrix.build.tag}}
+          name: ratwars-${{matrix.build.tag}}
           path: ${{matrix.build.path}}
-      # - name: Push to Itch.io (${{matrix.build.tag}}))
-      #   run: butler push ${{matrix.build.path}} palp/rat-wars:${{matrix.build.tag}}
-      #   env:
-      #     BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
+      - name: Push to Itch.io (${{matrix.build.tag}}))
+        run: butler push ${{matrix.build.path}} palp/rat-wars:${{matrix.build.tag}}
+        env:
+          BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
