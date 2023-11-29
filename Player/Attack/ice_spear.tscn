@@ -32,5 +32,6 @@ stream = ExtResource("3_esswn")
 volume_db = -10.0
 pitch_scale = 5.0
 autoplay = true
+bus = &"SFX"
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

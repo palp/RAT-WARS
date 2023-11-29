@@ -213,6 +213,7 @@ offset_bottom = 100.0
 unique_name_in_owner = true
 stream = ExtResource("7_wl7d2")
 volume_db = -10.0
+bus = &"SFX"
 
 [node name="DeathPanel" type="Panel" parent="GUILayer/GUI"]
 unique_name_in_owner = true
@@ -240,11 +241,13 @@ vertical_alignment = 1
 unique_name_in_owner = true
 stream = ExtResource("10_rwm3p")
 volume_db = -10.0
+bus = &"SFX"
 
 [node name="snd_lose" type="AudioStreamPlayer" parent="GUILayer/GUI/DeathPanel"]
 unique_name_in_owner = true
 stream = ExtResource("11_28kfi")
 volume_db = -10.0
+bus = &"SFX"
 
 [node name="btn_menu" parent="GUILayer/GUI/DeathPanel" instance=ExtResource("12_i8esf")]
 layout_mode = 0

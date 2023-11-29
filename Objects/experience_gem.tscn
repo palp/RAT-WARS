@@ -23,5 +23,6 @@ shape = SubResource("RectangleShape2D_wytta")
 [node name="snd_collected" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_g1t57")
 volume_db = -10.0
+bus = &"SFX"
 
 [connection signal="finished" from="snd_collected" to="." method="_on_snd_collected_finished"]
