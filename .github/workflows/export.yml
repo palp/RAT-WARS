@@ -28,7 +28,7 @@ jobs:
             tag: macos
           - preset: android
             path: build/android
-            output: build/android/rat-wars.apk
+            output: build/android/RAT WARS.apk
             tag: android
     name: Export ${{matrix.build.preset}}
     runs-on: ubuntu-20.04
