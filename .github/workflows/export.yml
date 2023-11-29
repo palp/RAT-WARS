@@ -50,13 +50,16 @@ jobs:
         shell: bash
         run: |
           godot -e --path . -s res://addons/gdUnit4/bin/ProjectScanner.gd --headless --audio-driver Dummy
-      - name: Setup Android Keystore
+      - name: Setup (Android)
         if: ${{matrix.build.preset == 'android'}}
         run: |
           echo ${{ secrets.ANDROID_RELEASE_KEYSTORE_BASE64 }} | base64 --decode > release.keystore
           sed 's@keystore/release=".*"@keystore/release="'/root/release.keystore'"@g' -i export_presets.cfg
           sed 's@keystore/release_user=".*"@keystore/release_user="'$SECRET_RELEASE_KEYSTORE_USER'"@g' -i export_presets.cfg
           sed 's@keystore/release_password=".*"@keystore/release_password="'$SECRET_RELEASE_KEYSTORE_PASSWORD'"@g' -i export_presets.cfg
+          sed 's|export/android/android_sdk_path = ".*"|export/android/android_sdk_path = "'/usr/lib/android-sdk'"|g' -i /root/.config/godot/editor_settings-3.tres
+          mkdir -v -p ~/.config/godot
+          cp -v /root/.config/godot/editor_settings-3.tres ~/.config/godot/
       - name: Build
         if: ${{ !cancelled() }}
         timeout-minutes: 10
