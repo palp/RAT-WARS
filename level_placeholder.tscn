@@ -1,60 +1,133 @@
-[gd_scene load_steps=7 format=3 uid="uid://bvpqfca631e3d"]
+[gd_scene load_steps=23 format=3 uid="uid://b4kwl8s8nbbnh"]
 
-[ext_resource type="Texture2D" uid="uid://qmoq3567fdm5" path="res://assets/world/floor_placeholder.png" id="1_b6mpg"]
-[ext_resource type="PackedScene" uid="uid://cs1tj6sprtojj" path="res://player.tscn" id="2_gtv4g"]
-[ext_resource type="PackedScene" uid="uid://c7620tt8o62fp" path="res://enemy_basic.tscn" id="3_gg7ph"]
-[ext_resource type="Theme" uid="uid://bwayc6rbhtvxj" path="res://assets/ui/theme/HEALTH_theme.tres" id="4_vnh2k"]
-[ext_resource type="Script" path="res://ui/pause_button.gd" id="5_8frvk"]
-[ext_resource type="PackedScene" uid="uid://do8nu166getvr" path="res://ui/pause_menu.tscn" id="5_e8x4x"]
+[ext_resource type="Texture2D" uid="uid://b6umklllf2jsl" path="res://Textures/dirt_full_new.png" id="1_3v41d"]
+[ext_resource type="PackedScene" uid="uid://dncgepmkc4jf4" path="res://Player/player.tscn" id="2_40uwv"]
+[ext_resource type="PackedScene" uid="uid://eno7xtkdwasd" path="res://ui/main_menu.tscn" id="3_1vbbm"]
+[ext_resource type="Theme" uid="uid://bwayc6rbhtvxj" path="res://assets/ui/theme/HEALTH_theme.tres" id="3_8j42b"]
+[ext_resource type="PackedScene" uid="uid://ba2claihwes2y" path="res://Utility/enemy_spawner.tscn" id="3_p01g4"]
+[ext_resource type="PackedScene" uid="uid://gvm5jcbbgwdv" path="res://Enemy/enemy_kobold_weak.tscn" id="4_ee8bm"]
+[ext_resource type="Script" path="res://Utility/spawn_info.gd" id="5_jj7s8"]
+[ext_resource type="PackedScene" uid="uid://bbvhxvk65o8el" path="res://Enemy/enemy_kobold_strong.tscn" id="6_rumbx"]
+[ext_resource type="PackedScene" uid="uid://bok7kd2psi5gl" path="res://Enemy/enemy_cyclops.tscn" id="7_unri0"]
+[ext_resource type="PackedScene" uid="uid://hcjnrdsb563h" path="res://Enemy/enemy_juggernaut.tscn" id="8_ltymd"]
+[ext_resource type="PackedScene" uid="uid://btf7clk4jja87" path="res://Enemy/enemy_super.tscn" id="9_xs42h"]
+[ext_resource type="AudioStream" uid="uid://bbufl4r1ou1rw" path="res://Audio/Music/battleThemeA.mp3" id="10_rk3we"]
+[ext_resource type="Script" path="res://Audio/Music/snd_Music.gd" id="11_ovtx6"]
 
-[node name="Node2D" type="Node2D"]
-process_mode = 1
+[sub_resource type="Resource" id="Resource_03m25"]
+script = ExtResource("5_jj7s8")
+time_start = null
+time_end = 30
+enemy = ExtResource("4_ee8bm")
+enemy_num = 1
+enemy_spawn_delay = null
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture_filter = 1
+[sub_resource type="Resource" id="Resource_ij20a"]
+script = ExtResource("5_jj7s8")
+time_start = 30
+time_end = 210
+enemy = ExtResource("4_ee8bm")
+enemy_num = 2
+enemy_spawn_delay = null
+
+[sub_resource type="Resource" id="Resource_68oxv"]
+script = ExtResource("5_jj7s8")
+time_start = 60
+time_end = 180
+enemy = ExtResource("6_rumbx")
+enemy_num = 1
+enemy_spawn_delay = 1
+
+[sub_resource type="Resource" id="Resource_l8y0x"]
+script = ExtResource("5_jj7s8")
+time_start = 180
+time_end = 210
+enemy = ExtResource("7_unri0")
+enemy_num = 1
+enemy_spawn_delay = 2
+
+[sub_resource type="Resource" id="Resource_daq1w"]
+script = ExtResource("5_jj7s8")
+time_start = 210
+time_end = 240
+enemy = ExtResource("6_rumbx")
+enemy_num = 2
+enemy_spawn_delay = null
+
+[sub_resource type="Resource" id="Resource_0gpiy"]
+script = ExtResource("5_jj7s8")
+time_start = 240
+time_end = 270
+enemy = ExtResource("7_unri0")
+enemy_num = 1
+enemy_spawn_delay = null
+
+[sub_resource type="Resource" id="Resource_4teun"]
+script = ExtResource("5_jj7s8")
+time_start = 240
+time_end = 240
+enemy = ExtResource("8_ltymd")
+enemy_num = 1
+enemy_spawn_delay = null
+
+[sub_resource type="Resource" id="Resource_rx6id"]
+script = ExtResource("5_jj7s8")
+time_start = 270
+time_end = 300
+enemy = ExtResource("6_rumbx")
+enemy_num = 4
+enemy_spawn_delay = null
+
+[sub_resource type="Resource" id="Resource_t2np8"]
+script = ExtResource("5_jj7s8")
+time_start = 300
+time_end = 300
+enemy = ExtResource("9_xs42h")
+enemy_num = 1
+enemy_spawn_delay = null
+
+[node name="World" type="Node2D"]
+y_sort_enabled = true
+
+[node name="Background" type="Sprite2D" parent="."]
+z_index = -1
+texture_filter = 2
 texture_repeat = 2
-texture = ExtResource("1_b6mpg")
+texture = ExtResource("1_3v41d")
 region_enabled = true
-region_rect = Rect2(0, 0, 10000, 5000)
+region_rect = Rect2(-4000, -4000, 4000, 4000)
 
-[node name="Player" parent="." instance=ExtResource("2_gtv4g")]
-position = Vector2(769, 432)
+[node name="Player" parent="." instance=ExtResource("2_40uwv")]
+autopilot = false
 
-[node name="enemy_basic" parent="." groups=["enemy"] instance=ExtResource("3_gg7ph")]
-position = Vector2(1397, 299)
+[node name="EnemySpawner" parent="." instance=ExtResource("3_p01g4")]
+spawns = Array[ExtResource("5_jj7s8")]([SubResource("Resource_03m25"), SubResource("Resource_ij20a"), SubResource("Resource_68oxv"), SubResource("Resource_l8y0x"), SubResource("Resource_daq1w"), SubResource("Resource_0gpiy"), SubResource("Resource_4teun"), SubResource("Resource_rx6id"), SubResource("Resource_t2np8")])
 
-[node name="enemy_basic2" parent="." groups=["enemy"] instance=ExtResource("3_gg7ph")]
-position = Vector2(1069, 1020)
+[node name="Loot" type="Node2D" parent="." groups=["loot"]]
 
-[node name="enemy_basic3" parent="." groups=["enemy"] instance=ExtResource("3_gg7ph")]
-position = Vector2(171, 622)
-
-[node name="enemy_basic4" parent="." groups=["enemy"] instance=ExtResource("3_gg7ph")]
-position = Vector2(846, -204)
-
-[node name="enemy_basic5" parent="." groups=["enemy"] instance=ExtResource("3_gg7ph")]
-position = Vector2(179, 130)
+[node name="snd_Music" type="AudioStreamPlayer" parent="."]
+process_mode = 3
+stream = ExtResource("10_rk3we")
+volume_db = -15.0
+autoplay = true
+script = ExtResource("11_ovtx6")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
-process_mode = 3
 
-[node name="pause_button" type="Button" parent="CanvasLayer"]
-offset_left = 8.0
-offset_top = 8.0
-offset_right = 108.0
-offset_bottom = 64.0
-theme = ExtResource("4_vnh2k")
-text = "Pause
-"
-script = ExtResource("5_8frvk")
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer"]
+offset_left = 47.0
+offset_top = 10.0
+offset_right = 1471.0
+offset_bottom = 452.0
+scale = Vector2(0.167781, 0.323374)
+theme = ExtResource("3_8j42b")
+theme_override_font_sizes/normal_font_size = 255
+text = "RAT WARS"
 
-[node name="pause_menu" parent="CanvasLayer" instance=ExtResource("5_e8x4x")]
-unique_name_in_owner = true
-visible = false
-offset_left = 105.0
-offset_top = -3.0
-offset_right = 105.0
-offset_bottom = -3.0
+[node name="main_menu" parent="CanvasLayer" instance=ExtResource("3_1vbbm")]
+offset_left = 79.0
+offset_top = 101.0
+offset_right = 79.0
+offset_bottom = 101.0
 
-[connection signal="mouse_entered" from="CanvasLayer/pause_button" to="CanvasLayer/pause_button" method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="CanvasLayer/pause_button" to="CanvasLayer/pause_button" method="_on_mouse_exited"]
+[connection signal="playerdeath" from="Player" to="snd_Music" method="_on_player_playerdeath"]
