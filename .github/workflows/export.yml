@@ -1,8 +1,8 @@
 name: Export
 on:
   push:
-    branches:
-      - main
+    # branches:
+    #   - main
 
 jobs:
   export-matrix:
@@ -67,8 +67,19 @@ jobs:
         run: |
           mkdir -v -p ${{matrix.build.path}}
           godot -v --headless --audio-driver Dummy --export-release "${{matrix.build.preset}}" "${{matrix.build.output}}"
-      - name: Push to Itch.io (${{matrix.build.tag}}))
+      - name: Check build
         if: ${{ !cancelled() }}
-        run: butler push ${{matrix.build.path}} palp/rat-wars:${{matrix.build.tag}}
-        env:
-          BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
+        run: |
+          if [ ! -f ${{matrix.build.output}} ]; then
+            echo "Build failed"
+            exit 1
+          fi
+      - name: Publish Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{matrix.build.tag}}
+          path: ${{matrix.build.path}}
+      # - name: Push to Itch.io (${{matrix.build.tag}}))
+      #   run: butler push ${{matrix.build.path}} palp/rat-wars:${{matrix.build.tag}}
+      #   env:
+      #     BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
