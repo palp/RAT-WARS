@@ -132,6 +132,15 @@ func _ready():
 	attack()
 	set_expbar(experience, calculate_experiencecap())
 	_on_hurt_box_hurt(0,0,0)
+	for content in Unlocks.unlocked_content:
+		_on_content_unlocked(content)
+	Unlocks.content_unlocked.connect(_on_content_unlocked)
+	
+func _on_content_unlocked(content):
+	if content == "plugsuit":
+		get_node(NodePath("Sprite2D")).texture = load("res://assets/plug_player.png")
+	
+
 
 func _physics_process(delta):
 	pass
