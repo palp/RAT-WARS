@@ -30,6 +30,7 @@ jobs:
           - preset: android
             path: build/android
             output: build/android/rat-wars.apk
+            tag: android
     name: Export ${{matrix.build.preset}}
     runs-on: ubuntu-20.04
     container:
