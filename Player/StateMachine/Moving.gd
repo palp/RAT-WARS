@@ -12,7 +12,7 @@ func physics_update(delta: float) -> void:
 		state_machine.transition_to("Idle")
 	else:
 		player.move_and_slide()
-		player.set_facing(player)
+		player.set_facing()
 
 
 func get_input_velocity():

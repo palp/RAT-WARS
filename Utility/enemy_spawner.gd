@@ -22,7 +22,7 @@ func spawn_enemies():
 				while  counter < i.enemy_num:
 					var enemy_spawn = new_enemy.instantiate()
 					enemy_spawn.global_position = get_random_position()
-					add_sibling(enemy_spawn)
+					add_sibling.call_deferred(enemy_spawn)
 					counter += 1
 	
 

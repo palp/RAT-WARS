@@ -10,7 +10,7 @@ func physics_update(delta: float) -> void:
 	#var enemies = get_tree().get_nodes_in_group("enemy")
 	player.velocity = get_autopilot_velocity(player.velocity.normalized(), player.enemy_close)
 	player.move_and_slide()
-	player.set_facing(player)
+	player.set_facing()
 
 	if player.autopilot == false:
 		state_machine.transition_to("Idle")
@@ -18,7 +18,6 @@ func physics_update(delta: float) -> void:
 
 func get_autopilot_velocity(dir: Vector2, enemies: Array):
 	for enemy in enemies:
-		print("enemy")
 		var enemy_distance = enemy.global_position - player.global_position
 		var enemy_distance_total = abs(enemy_distance.x) + abs(enemy_distance.y)
 		if enemy_distance_total < 100:

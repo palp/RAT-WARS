@@ -4,7 +4,7 @@ extends GdUnitTestSuite
 @warning_ignore("unused_parameter")
 @warning_ignore("return_value_discarded")
 # TestSuite generated from
-const __source = "res://scripts/StateMachine/Autopilot.gd"
+const __source = "res://Player/StateMachine/Autopilot.gd"
 
 var autopilot
 

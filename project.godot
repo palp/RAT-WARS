@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="RAT WARS (beta)"
+config/name="RAT WARS"
 run/main_scene="res://demo.tscn"
 config/features=PackedStringArray("4.1", "Mobile")
 config/icon="res://icon.svg"
