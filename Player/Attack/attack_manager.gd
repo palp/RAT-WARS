@@ -11,6 +11,7 @@ var spell_size = 0
 var additional_attacks = 0
 
 @onready var attacker = owner
+@onready var javelin_base = Node2D.new()
 
 class AttackType:
 	func _init(scene_:PackedScene, attack_speed_:float, replenish_speed_:float):
@@ -32,12 +33,12 @@ var attacks = {
 	"vinyl":AttackType.new(vinyl, 0.2, 3),
 	"icespear":AttackType.new(icespear, 0.075, 1.5),
 	"tornado":AttackType.new(tornado, 0.2, 3),
-	#"javelin":AttackType.new(javelin, 0.5, 0.5),
+	"javelin":AttackType.new(javelin, 0.5, 0.5),
 }
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	add_child(javelin_base)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -46,6 +47,8 @@ func _process(delta):
 	if attacker.hp <= 0:
 		return
 	for attack_type in attacks.keys():
+		if attack_type == 'javelin':
+			continue
 		var attack = attacks[attack_type]
 		if attack.level <= 0:
 			continue
@@ -69,3 +72,19 @@ func _process(delta):
 			add_child(instance)
 			attack.ammo -= 1
 			attack.elapsed_since_attack -= resolved_attack_speed
+
+
+func spawn_javelin():
+	var get_javelin_total = javelin_base.get_child_count()
+	var calc_spawns = (attacks['javelin'].ammo + attacker.additional_attacks) - get_javelin_total
+	while calc_spawns > 0:
+		var javelin_spawn = javelin.instantiate()
+		javelin_spawn.global_position = attacker.global_position
+		javelin_base.add_child(javelin_spawn)
+		calc_spawns -= 1
+	#Upgrade Javelin
+	var get_javelins = javelin_base.get_children()
+	for i in get_javelins:
+		if i.has_method("update_javelin"):
+			i.update_javelin()
+			

@@ -111,8 +111,7 @@ func get_pathing_target():
 
 
 func _ready():
-	upgrade_character("vinyl1")
-	attack()
+	upgrade_character("vinyl1")	
 	set_expbar(experience, calculate_experiencecap())
 	_on_hurt_box_hurt(0, 0, 0)
 	for content in Unlocks.unlocked_content:
@@ -133,11 +132,6 @@ func _on_content_unlocked(content):
 
 func _physics_process(delta):
 	pass
-
-
-func attack():
-	if javelin_level > 0:
-		spawn_javelin()
 
 
 func _on_hurt_box_hurt(damage, _angle, _knockback):
@@ -287,14 +281,14 @@ func upgrade_character(upgrade):
 			attackManager.attacks['vinyl'].level = 4
 			attackManager.attacks['vinyl'].base_ammo += 1
 		"javelin1":
-			javelin_level = 1
-			javelin_ammo = 1
+			attackManager.attacks['javelin'].level = 1
+			attackManager.attacks['javelin'].ammo = 1
 		"javelin2":
-			javelin_level = 2
+			attackManager.attacks['javelin'].level = 2
 		"javelin3":
-			javelin_level = 3
+			attackManager.attacks['javelin'].level = 3
 		"javelin4":
-			javelin_level = 4
+			attackManager.attacks['javelin'].level = 4
 		"armor1", "armor2", "armor3", "armor4":
 			armor += 1
 		"speed1", "speed2", "speed3", "speed4":
@@ -309,7 +303,8 @@ func upgrade_character(upgrade):
 			hp += 20
 			hp = clamp(hp, 0, maxhp)
 	adjust_gui_collection(upgrade)
-	attack()
+	if attackManager.attacks['javelin'].level > 0:
+		attackManager.spawn_javelin()
 	var option_children = upgradeOptions.get_children()
 	for i in option_children:
 		i.queue_free()

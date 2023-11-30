@@ -57,11 +57,6 @@ position = Vector2(1, 76)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_nffdp")
 
-[node name="walkTimer" type="Timer" parent="."]
-unique_name_in_owner = true
-wait_time = 0.2
-one_shot = true
-
 [node name="HurtBox" parent="." instance=ExtResource("3_gs51i")]
 position = Vector2(-5, 70)
 scale = Vector2(3, 1.64)
@@ -88,12 +83,7 @@ script = ExtResource("6_arvxl")
 [node name="Pathing" type="Node" parent="StateMachine"]
 script = ExtResource("7_xn56v")
 
-[node name="Attack" type="Node2D" parent="."]
-
-[node name="JavelinBase" type="Node2D" parent="Attack"]
-unique_name_in_owner = true
-
-[node name="AttackManager" type="Node" parent="Attack"]
+[node name="AttackManager" type="Node" parent="."]
 unique_name_in_owner = true
 script = ExtResource("9_e47dm")
 
