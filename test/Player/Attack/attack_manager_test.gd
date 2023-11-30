@@ -1,5 +1,5 @@
 # GdUnit generated TestSuite
-class_name AttackManagerTest
+class_name attack_manager_test
 extends GdUnitTestSuite
 @warning_ignore('unused_parameter')
 @warning_ignore('return_value_discarded')
