@@ -13,6 +13,7 @@ var time = 0
 var experience = 0
 var experience_level = 1
 var collected_experience = 0
+var score = 0
 
 #Attacks
 var iceSpear = preload("res://Player/Attack/ice_spear.tscn")
@@ -86,6 +87,10 @@ var enemy_close = []
 @onready var sndVictory = get_node("%snd_victory")
 @onready var sndLose = get_node("%snd_lose")
 
+#Game session
+@onready var sessionUpdateTimer = get_node("%SessionUpdateTimer") as Timer
+var game_session = {}
+
 #Signal
 signal playerdeath
 
@@ -135,6 +140,10 @@ func _ready():
 	for content in Unlocks.unlocked_content:
 		_on_content_unlocked(content)
 	Unlocks.content_unlocked.connect(_on_content_unlocked)
+		
+	# TODO Disable when autopilot is enabled, also make autopilot state cancel session
+	game_session = await Server.create_game_session()
+	sessionUpdateTimer.start(45)
 	
 func _on_content_unlocked(content):
 	if content == "plugsuit":
@@ -262,6 +271,7 @@ func _on_collect_area_area_entered(area):
 func calculate_experience(gem_exp):
 	var exp_required = calculate_experiencecap()
 	collected_experience += gem_exp
+	score += collected_experience
 	if experience + collected_experience >= exp_required: #level up
 		collected_experience -= exp_required-experience
 		experience_level += 1
@@ -438,13 +448,25 @@ func death():
 	tween.tween_property(deathPanel,"position",Vector2(220,50),3.0).set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_OUT)
 	tween.play()
 	if time >= 300:
-		lblResult.text = "You Win"
+		lblResult.text = "You Win"		
 		sndVictory.play()
 	else:
 		lblResult.text = "You Lose"
 		sndLose.play()
+		
+	# TODO Only submit scores on win, prompt for name
+	if game_session.has('id'):
+		# Random names for now
+		var names = ["Johnny", "Jake", "Beej"]		
+		var leaderboard = await Server.submit_game_session(score, names.pick_random())
+
 
 
 func _on_btn_menu_click_end():
 	get_tree().paused = false
 	var _level = get_tree().change_scene_to_file("res://TitleScreen/menu.tscn")
+
+
+func _on_session_update_timer_timeout():
+	if game_session.has('id'):
+		game_session = await Server.update_game_session(score)

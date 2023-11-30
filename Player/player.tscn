@@ -290,6 +290,10 @@ offset_bottom = 56.0
 scale = Vector2(3, 3)
 columns = 10
 
+[node name="SessionUpdateTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 45.0
+
 [connection signal="hurt" from="HurtBox" to="." method="_on_hurt_box_hurt"]
 [connection signal="timeout" from="Attack/IceSpearTimer" to="." method="_on_ice_spear_timer_timeout"]
 [connection signal="timeout" from="Attack/IceSpearTimer/IceSpearAttackTimer" to="." method="_on_ice_spear_attack_timer_timeout"]
@@ -302,5 +306,6 @@ columns = 10
 [connection signal="area_entered" from="GrabArea" to="." method="_on_grab_area_area_entered"]
 [connection signal="area_entered" from="CollectArea" to="." method="_on_collect_area_area_entered"]
 [connection signal="click_end" from="GUILayer/GUI/DeathPanel/btn_menu" to="." method="_on_btn_menu_click_end"]
+[connection signal="timeout" from="SessionUpdateTimer" to="." method="_on_session_update_timer_timeout"]
 
 [editable path="HurtBox"]

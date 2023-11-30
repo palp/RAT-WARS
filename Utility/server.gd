@@ -7,6 +7,8 @@ signal submit_session_request_complete
 
 const API_URL = "https://ratwars-server.palp.workers.dev/api"
 
+var logger = LogStream.new("Server", LogStream.LogLevel.WARN)
+
 var leaderboard:Array
 var session:Dictionary
 
@@ -16,6 +18,7 @@ var session:Dictionary
 @onready var submit_session_http_request = HTTPRequest.new()
 
 func _ready():	
+	process_mode = Node.PROCESS_MODE_ALWAYS
 	get_leaderboard_http_request.request_completed.connect(_on_leaderboard_response)
 	add_child(get_leaderboard_http_request)
 	create_session_http_request.request_completed.connect(_on_create_session_response)
@@ -26,29 +29,29 @@ func _ready():
 	add_child(submit_session_http_request)
 
 func create_game_session():
-	if session != null:
-		print_debug("Not replacing existing session!")
-		return {}
-	create_session_http_request.request(API_URL + '/sesson', PackedStringArray([]), HTTPClient.METHOD_POST)
-	await create_session_request_complete
+	if session.has('id'):
+		logger.warn("create_session: Not replacing existing session!")
+		return {}	
+	create_session_http_request.request(API_URL + '/session', PackedStringArray([]), HTTPClient.METHOD_POST)
+	await create_session_request_complete	
 	return session
 
 func update_game_session(score):
-	if session.keys().size() == 0:
-		print_debug("No session!")
+	if not session.has('id'):
+		logger.warn("update_game_session: Not replacing existing session!")
 		return {}
 	update_session_http_request.request(API_URL + '/session/%s' % session.id, PackedStringArray([]), HTTPClient.METHOD_POST, JSON.stringify({"score": score}))
-	await update_session_request_complete
+	await update_session_request_complete	
 	return session
 
 func end_game_session():
 	session = {}
 
-func submit_game_session(name):
-	if session.keys().size() == 0:
-		print_debug("No session!")
+func submit_game_session(score, name):
+	if not session.has('id'):
+		logger.warn("submit_game_session: Not replacing existing session!")
 		return {}
-	submit_session_http_request.request(API_URL + '/session/%s/submit' % session.id, PackedStringArray([]), HTTPClient.METHOD_POST, JSON.stringify({"name": name}))
+	submit_session_http_request.request(API_URL + '/session/%s/submit' % session.id, PackedStringArray([]), HTTPClient.METHOD_POST, JSON.stringify({"score": score, "name": name}))
 	await submit_session_request_complete
 	session = {}
 	return leaderboard
@@ -60,21 +63,47 @@ func get_leaderboard():
 	return leaderboard
 
 func _on_create_session_response(result, response_code, headers, body):
+	var body_string = body.get_string_from_utf8()
+	logger.debug("create_session_response: ", {"result": result, "response_code": response_code, "headers": headers, "body": body_string})
 	if response_code == 200:
-		session = JSON.parse_string(body.get_string_from_utf8())
-	emit_signal("create_session_request_complete")
+		session = JSON.parse_string(body_string)
+	elif response_code >= 400 and response_code < 500:
+		logger.warn("create_session_error: ", {"response_code": response_code, "body": JSON.parse_string(body_string)})
+	else:
+		logger.warn("create_session_error: ", {"response_code": response_code, "body": body_string})
+		
+	emit_signal("create_session_request_complete")	
 
 func _on_leaderboard_response(result, response_code, headers, body):	
+	var body_string = body.get_string_from_utf8()
+	logger.debug("get_leaderboard_response: ", {"result": result, "response_code": response_code, "headers": headers, "body": body_string})
 	if response_code == 200:
-		leaderboard = JSON.parse_string(body.get_string_from_utf8())
+		leaderboard = JSON.parse_string(body_string)
+	elif response_code >= 400 and response_code < 500:
+		logger.warn("get_leaderboard_error: ", {"response_code": response_code, "body": JSON.parse_string(body_string)})
+	else:
+		logger.warn("get_leaderboard_error: ", {"response_code": response_code, "body": body_string})
+		
 	emit_signal("get_leaderboard_request_complete")
 	
 func _on_update_session_response(result, response_code, headers, body):
+	var body_string = body.get_string_from_utf8()
+	logger.debug("update_session_response: ", {"result": result, "response_code": response_code, "headers": headers, "body": body_string})
 	if response_code == 200:
-		session = JSON.parse_string(body.get_string_from_utf8())
+		session = JSON.parse_string(body_string)
+	elif response_code >= 400 and response_code < 500:
+		logger.warn("update_session_error: ", {"response_code": response_code, "body": JSON.parse_string(body_string)})
+	else:
+		logger.warn("uopdate_session_error: ", {"response_code": response_code, "body": body_string})
 	emit_signal("update_session_request_complete")
 
 func _on_submit_session_response(result, response_code, headers, body):
+	var body_string = body.get_string_from_utf8()
+	logger.debug("submit_session_response: ", {"result": result, "response_code": response_code, "headers": headers, "body": body_string})
 	if response_code == 200:
-		leaderboard = JSON.parse_string(body.get_string_from_utf8())
+		leaderboard = JSON.parse_string(body_string)
+	elif response_code >= 400 and response_code < 500:
+		logger.warn("submit_session_error: ", {"response_code": response_code, "body": JSON.parse_string(body_string)})
+	else:
+		logger.warn("submit_session_error: ", {"response_code": response_code, "body": body_string})
 	emit_signal("submit_session_request_complete")
