@@ -61,10 +61,8 @@ var vinyl_level = 0
 var javelin_ammo = 0
 var javelin_level = 0
 
-
 #Enemy Related
 var enemy_close = []
-
 
 @onready var sprite = $Sprite2D
 @onready var walkTimer = get_node("%walkTimer")
@@ -104,7 +102,9 @@ func check_movement_input():
 		or Input.is_action_just_pressed("ui_left")
 	)
 
+
 const FACING_EPSILON = 0.1
+
 
 func set_facing():
 	# Setting scale doesn't work so we do this slightly
@@ -123,59 +123,68 @@ func set_facing():
 		sprite.set_flip_h(new_flip)
 		sprite.offset.x = -sprite.offset.x
 
+
 func check_pathing_input():
-	return not disable_pathing_input and Input.is_action_pressed("click") 
+	return not disable_pathing_input and Input.is_action_pressed("click")
+
 
 func get_movement_vector():
 	return Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
 
+
 func get_pathing_target():
 	return get_global_mouse_position()
+
 
 func _ready():
 	upgrade_character("vinyl1")
 	attack()
 	set_expbar(experience, calculate_experiencecap())
-	_on_hurt_box_hurt(0,0,0)
+	_on_hurt_box_hurt(0, 0, 0)
 	for content in Unlocks.unlocked_content:
 		_on_content_unlocked(content)
 	Unlocks.content_unlocked.connect(_on_content_unlocked)
-		
+
 	# TODO Disable when autopilot is enabled, also make autopilot state cancel session
 	game_session = await Server.create_game_session()
 	sessionUpdateTimer.start(45)
-	
+
+
 func _on_content_unlocked(content):
 	if content == "plugsuit":
-		get_node(NodePath("Sprite2D")).texture = load("res://assets/player/character/john/john_plugsuit.png")
-	
+		get_node(NodePath("Sprite2D")).texture = load(
+			"res://assets/player/character/john/john_plugsuit.png"
+		)
 
 
 func _physics_process(delta):
 	pass
 
+
 func attack():
 	if icespear_level > 0:
-		iceSpearTimer.wait_time = icespear_attackspeed * (1-spell_cooldown)
+		iceSpearTimer.wait_time = icespear_attackspeed * (1 - spell_cooldown)
 		if iceSpearTimer.is_stopped():
 			iceSpearTimer.start()
 	if tornado_level > 0:
-		tornadoTimer.wait_time = tornado_attackspeed * (1-spell_cooldown)
+		tornadoTimer.wait_time = tornado_attackspeed * (1 - spell_cooldown)
 		if tornadoTimer.is_stopped():
 			tornadoTimer.start()
 	if vinyl_level > 0:
-		vinylTimer.wait_time = vinyl_attackspeed * (1-spell_cooldown)
+		vinylTimer.wait_time = vinyl_attackspeed * (1 - spell_cooldown)
 		if vinylTimer.is_stopped():
 			vinylTimer.start()
 	if javelin_level > 0:
 		spawn_javelin()
 
+
 func _on_hurt_box_hurt(damage, _angle, _knockback):
-	hp -= clamp(damage-armor, 1.0, 999.0)
+	hp -= clamp(damage - armor, 1.0, 999.0)
 	healthBar.max_value = maxhp
 	healthBar.value = hp
 	if hp <= 0:
 		death()
+
 
 func _on_ice_spear_timer_timeout():
 	icespear_ammo += icespear_baseammo + additional_attacks
@@ -195,9 +204,11 @@ func _on_ice_spear_attack_timer_timeout():
 		else:
 			iceSpearAttackTimer.stop()
 
+
 func _on_vinyl_timer_timeout():
 	vinyl_ammo += vinyl_baseammo + additional_attacks
 	vinylAttackTimer.start()
+
 
 func _on_vinyl_attack_timer_timeout():
 	if vinyl_ammo > 0:
@@ -212,9 +223,11 @@ func _on_vinyl_attack_timer_timeout():
 		else:
 			vinylAttackTimer.stop()
 
+
 func _on_tornado_timer_timeout():
 	tornado_ammo += tornado_baseammo + additional_attacks
 	tornadoAttackTimer.start()
+
 
 func _on_tornado_attack_timer_timeout():
 	if tornado_ammo > 0:
@@ -228,6 +241,7 @@ func _on_tornado_attack_timer_timeout():
 			tornadoAttackTimer.start()
 		else:
 			tornadoAttackTimer.stop()
+
 
 func spawn_javelin():
 	var get_javelin_total = javelinBase.get_child_count()
@@ -243,6 +257,7 @@ func spawn_javelin():
 		if i.has_method("update_javelin"):
 			i.update_javelin()
 
+
 func get_random_target():
 	if enemy_close.size() > 0:
 		return enemy_close.pick_random().global_position
@@ -254,6 +269,7 @@ func _on_enemy_detection_area_body_entered(body):
 	if not enemy_close.has(body):
 		enemy_close.append(body)
 
+
 func _on_enemy_detection_area_body_exited(body):
 	if enemy_close.has(body):
 		enemy_close.erase(body)
@@ -263,17 +279,19 @@ func _on_grab_area_area_entered(area):
 	if area.is_in_group("loot"):
 		area.target = self
 
+
 func _on_collect_area_area_entered(area):
 	if area.is_in_group("loot"):
 		var gem_exp = area.collect()
 		calculate_experience(gem_exp)
 
+
 func calculate_experience(gem_exp):
 	var exp_required = calculate_experiencecap()
 	collected_experience += gem_exp
 	score += collected_experience
-	if experience + collected_experience >= exp_required: #level up
-		collected_experience -= exp_required-experience
+	if experience + collected_experience >= exp_required:  #level up
+		collected_experience -= exp_required - experience
 		experience_level += 1
 		experience = 0
 		exp_required = calculate_experiencecap()
@@ -281,32 +299,40 @@ func calculate_experience(gem_exp):
 	else:
 		experience += collected_experience
 		collected_experience = 0
-	
+
 	set_expbar(experience, exp_required)
+
 
 func calculate_experiencecap():
 	var exp_cap = experience_level
 	if experience_level < 20:
-		exp_cap = experience_level*5
+		exp_cap = experience_level * 5
 	elif experience_level < 40:
-		exp_cap + 95 * (experience_level-19)*8
+		exp_cap + 95 * (experience_level - 19) * 8
 	else:
-		exp_cap = 255 + (experience_level-39)*12
-		
+		exp_cap = 255 + (experience_level - 39) * 12
+
 	return exp_cap
-		
+
+
 func set_expbar(set_value = 1, set_max_value = 100):
 	expBar.value = set_value
 	expBar.max_value = set_max_value
 
+
 func levelup():
 	sndLevelUp.play()
-	lblLevel.text = str("Level: ",experience_level)
+	lblLevel.text = str("Level: ", experience_level)
 	if autopilot:
 		upgrade_character(get_random_item())
 		return
-	var tween = levelPanel.create_tween()		
-	tween.tween_property(levelPanel,"position",Vector2(220,50),0.2).set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_IN)
+	var tween = levelPanel.create_tween()
+	(
+		tween
+		. tween_property(levelPanel, "position", Vector2(220, 50), 0.2)
+		. set_trans(Tween.TRANS_QUINT)
+		. set_ease(Tween.EASE_IN)
+	)
 	tween.play()
 	levelPanel.visible = true
 	var options = 0
@@ -317,6 +343,7 @@ func levelup():
 		upgradeOptions.add_child(option_choice)
 		options += 1
 	get_tree().paused = true
+
 
 func upgrade_character(upgrade):
 	match upgrade:
@@ -364,19 +391,19 @@ func upgrade_character(upgrade):
 			javelin_level = 3
 		"javelin4":
 			javelin_level = 4
-		"armor1","armor2","armor3","armor4":
+		"armor1", "armor2", "armor3", "armor4":
 			armor += 1
-		"speed1","speed2","speed3","speed4":
+		"speed1", "speed2", "speed3", "speed4":
 			movement_speed += 20.0
-		"tome1","tome2","tome3","tome4":
+		"tome1", "tome2", "tome3", "tome4":
 			spell_size += 0.10
-		"scroll1","scroll2","scroll3","scroll4":
+		"scroll1", "scroll2", "scroll3", "scroll4":
 			spell_cooldown += 0.05
-		"ring1","ring2":
+		"ring1", "ring2":
 			additional_attacks += 1
 		"food":
 			hp += 20
-			hp = clamp(hp,0,maxhp)
+			hp = clamp(hp, 0, maxhp)
 	adjust_gui_collection(upgrade)
 	attack()
 	var option_children = upgradeOptions.get_children()
@@ -385,20 +412,21 @@ func upgrade_character(upgrade):
 	upgrade_options.clear()
 	collected_upgrades.append(upgrade)
 	levelPanel.visible = false
-	levelPanel.position = Vector2(800,50)
+	levelPanel.position = Vector2(800, 50)
 	get_tree().paused = false
 	calculate_experience(0)
-	
+
+
 func get_random_item():
 	var dblist = []
 	for i in UpgradeDb.UPGRADES:
-		if i in collected_upgrades: #Find already collected upgrades
+		if i in collected_upgrades:  #Find already collected upgrades
 			pass
-		elif i in upgrade_options: #If the upgrade is already an option
+		elif i in upgrade_options:  #If the upgrade is already an option
 			pass
-		elif UpgradeDb.UPGRADES[i]["type"] == "item": #Don't pick food
+		elif UpgradeDb.UPGRADES[i]["type"] == "item":  #Don't pick food
 			pass
-		elif UpgradeDb.UPGRADES[i]["prerequisite"].size() > 0: #Check for PreRequisites
+		elif UpgradeDb.UPGRADES[i]["prerequisite"].size() > 0:  #Check for PreRequisites
 			var to_add = true
 			for n in UpgradeDb.UPGRADES[i]["prerequisite"]:
 				if not n in collected_upgrades:
@@ -414,15 +442,17 @@ func get_random_item():
 	else:
 		return null
 
+
 func change_time(argtime = 0):
 	time = argtime
-	var get_m = int(time/60.0)
+	var get_m = int(time / 60.0)
 	var get_s = time % 60
 	if get_m < 10:
-		get_m = str(0,get_m)
+		get_m = str(0, get_m)
 	if get_s < 10:
-		get_s = str(0,get_s)
-	lblTimer.text = str(get_m,":",get_s)
+		get_s = str(0, get_s)
+	lblTimer.text = str(get_m, ":", get_s)
+
 
 func adjust_gui_collection(upgrade):
 	var get_upgraded_displayname = UpgradeDb.UPGRADES[upgrade]["displayname"]
@@ -440,26 +470,31 @@ func adjust_gui_collection(upgrade):
 				"upgrade":
 					collectedUpgrades.add_child(new_item)
 
+
 func death():
 	deathPanel.visible = true
 	emit_signal("playerdeath")
 	get_tree().paused = true
 	var tween = deathPanel.create_tween()
-	tween.tween_property(deathPanel,"position",Vector2(220,50),3.0).set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_OUT)
+	(
+		tween
+		. tween_property(deathPanel, "position", Vector2(220, 50), 3.0)
+		. set_trans(Tween.TRANS_QUINT)
+		. set_ease(Tween.EASE_OUT)
+	)
 	tween.play()
 	if time >= 300:
-		lblResult.text = "You Win"		
+		lblResult.text = "You Win"
 		sndVictory.play()
 	else:
 		lblResult.text = "You Lose"
 		sndLose.play()
-		
-	# TODO Only submit scores on win, prompt for name
-	if game_session.has('id'):
-		# Random names for now
-		var names = ["Johnny", "Jake", "Beej"]		
-		var leaderboard = await Server.submit_game_session(score, names.pick_random())
 
+	# TODO Only submit scores on win, prompt for name
+	if game_session.has("id"):
+		# Random names for now
+		var names = ["Johnny", "Jake", "Beej"]
+		var leaderboard = await Server.submit_game_session(score, names.pick_random())
 
 
 func _on_btn_menu_click_end():
@@ -468,5 +503,5 @@ func _on_btn_menu_click_end():
 
 
 func _on_session_update_timer_timeout():
-	if game_session.has('id'):
+	if game_session.has("id"):
 		game_session = await Server.update_game_session(score)
