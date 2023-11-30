@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dl8xjc15okuks"
-path="res://.godot/imported/SpitterRat1_walk_SPRITESHEET.png-20a85a86bd4e316d7356c2a11be0a28f.ctex"
+uid="uid://dr5l8c2rwrurr"
+path="res://.godot/imported/Rat Wars Curb Plain .png-b3c4decacad62679ef36a784cfa562ba.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/enemy/spitterRat1/SpitterRat1_walk_SPRITESHEET.png"
-dest_files=["res://.godot/imported/SpitterRat1_walk_SPRITESHEET.png-20a85a86bd4e316d7356c2a11be0a28f.ctex"]
+source_file="res://Textures/Terrain/Rat Wars Curb Plain .png"
+dest_files=["res://.godot/imported/Rat Wars Curb Plain .png-b3c4decacad62679ef36a784cfa562ba.ctex"]
 
 [params]
 
