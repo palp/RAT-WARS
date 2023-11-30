@@ -10,6 +10,8 @@ var spell_cooldown = 0
 var spell_size = 0
 var additional_attacks = 0
 
+@onready var attacker = owner
+
 class AttackType:
 	func _init(scene_:PackedScene, attack_speed_:float, replenish_speed_:float):
 		scene = scene_
@@ -39,9 +41,9 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if not owner:
+	if not attacker:
 		return
-	if owner.hp <= 0:
+	if attacker.hp <= 0:
 		return
 	for attack_type in attacks.keys():
 		var attack = attacks[attack_type]
@@ -50,18 +52,18 @@ func _process(delta):
 		if attack.base_ammo > 0:
 			attack.elapsed_since_replenish += delta
 			if attack.elapsed_since_replenish >= attack.replenish_speed and attack.ammo < attack.max_ammo:
-				attack.ammo += attack.base_ammo + owner.additional_attacks
+				attack.ammo += attack.base_ammo + attacker.additional_attacks
 				attack.elapsed_since_replenish -= attack.replenish_speed
 		attack.elapsed_since_attack += delta
-		var resolved_attack_speed = attack.attack_speed * (1 - owner.spell_cooldown)
+		var resolved_attack_speed = attack.attack_speed * (1 - attacker.spell_cooldown)
 		if attack.elapsed_since_attack >= resolved_attack_speed and attack.ammo > 0:
 			var instance = attack.scene.instantiate()
-			instance.position = owner.global_position
+			instance.position = attacker.global_position
 			instance.level = attack.level
 			if attack_type == "tornado":
-				instance.last_movement = owner.last_movement
+				instance.last_movement = attacker.last_movement
 			else:
-				instance.target = owner.get_random_target()
+				instance.target = attacker.get_random_target()
 			
 			attack.instances.append(instance)
 			add_child(instance)
