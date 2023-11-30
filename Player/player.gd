@@ -472,6 +472,12 @@ func adjust_gui_collection(upgrade):
 
 
 func death():
+	if autopilot:
+		# TODO Remove this
+		await submit_score()
+		emit_signal("playerdeath")
+		get_tree().reload_current_scene()
+		return
 	deathPanel.visible = true
 	emit_signal("playerdeath")
 	get_tree().paused = true
@@ -491,11 +497,13 @@ func death():
 		sndLose.play()
 
 	# TODO Only submit scores on win, prompt for name
+	await submit_score()
+
+func submit_score():
 	if game_session.has("id"):
 		# Random names for now
 		var names = ["Johnny", "Jake", "Beej"]
-		var leaderboard = await Server.submit_game_session(score, names.pick_random())
-
+		var leaderboard = await Server.submit_game_session(score, names.pick_random())	
 
 func _on_btn_menu_click_end():
 	get_tree().paused = false
