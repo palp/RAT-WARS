@@ -16,19 +16,11 @@ var collected_experience = 0
 var score = 0
 
 #Attacks
-var iceSpear = preload("res://Player/Attack/ice_spear.tscn")
-var tornado = preload("res://Player/Attack/tornado.tscn")
-var vinyl = preload("res://Player/Attack/vinyl.tscn")
 var javelin = preload("res://Player/Attack/javelin.tscn")
 
 #AttackNodes
-@onready var iceSpearTimer = get_node("%IceSpearTimer")
-@onready var iceSpearAttackTimer = get_node("%IceSpearAttackTimer")
-@onready var tornadoTimer = get_node("%TornadoTimer")
-@onready var tornadoAttackTimer = get_node("%TornadoAttackTimer")
-@onready var vinylTimer = get_node("%VinylTimer")
-@onready var vinylAttackTimer = get_node("%VinylAttackTimer")
 @onready var javelinBase = get_node("%JavelinBase")
+@onready var attackManager = get_node("%AttackManager") as attack_manager
 
 #UPGRADES
 var collected_upgrades = []
@@ -38,24 +30,6 @@ var speed = 0
 var spell_cooldown = 0
 var spell_size = 0
 var additional_attacks = 0
-
-#IceSpear
-var icespear_ammo = 0
-var icespear_baseammo = 0
-var icespear_attackspeed = 1.5
-var icespear_level = 0
-
-#Tornado
-var tornado_ammo = 0
-var tornado_baseammo = 0
-var tornado_attackspeed = 3
-var tornado_level = 0
-
-#Vinyl
-var vinyl_ammo = 0
-var vinyl_baseammo = 0
-var vinyl_attackspeed = 3
-var vinyl_level = 0
 
 #Javelin
 var javelin_ammo = 0
@@ -162,18 +136,6 @@ func _physics_process(delta):
 
 
 func attack():
-	if icespear_level > 0:
-		iceSpearTimer.wait_time = icespear_attackspeed * (1 - spell_cooldown)
-		if iceSpearTimer.is_stopped():
-			iceSpearTimer.start()
-	if tornado_level > 0:
-		tornadoTimer.wait_time = tornado_attackspeed * (1 - spell_cooldown)
-		if tornadoTimer.is_stopped():
-			tornadoTimer.start()
-	if vinyl_level > 0:
-		vinylTimer.wait_time = vinyl_attackspeed * (1 - spell_cooldown)
-		if vinylTimer.is_stopped():
-			vinylTimer.start()
 	if javelin_level > 0:
 		spawn_javelin()
 
@@ -184,64 +146,6 @@ func _on_hurt_box_hurt(damage, _angle, _knockback):
 	healthBar.value = hp
 	if hp <= 0:
 		death()
-
-
-func _on_ice_spear_timer_timeout():
-	icespear_ammo += icespear_baseammo + additional_attacks
-	iceSpearAttackTimer.start()
-
-
-func _on_ice_spear_attack_timer_timeout():
-	if icespear_ammo > 0:
-		var icespear_attack = iceSpear.instantiate()
-		icespear_attack.position = position
-		icespear_attack.target = get_random_target()
-		icespear_attack.level = icespear_level
-		add_child(icespear_attack)
-		icespear_ammo -= 1
-		if icespear_ammo > 0:
-			iceSpearAttackTimer.start()
-		else:
-			iceSpearAttackTimer.stop()
-
-
-func _on_vinyl_timer_timeout():
-	vinyl_ammo += vinyl_baseammo + additional_attacks
-	vinylAttackTimer.start()
-
-
-func _on_vinyl_attack_timer_timeout():
-	if vinyl_ammo > 0:
-		var vinyl_attack = vinyl.instantiate()
-		vinyl_attack.position = position
-		vinyl_attack.target = get_random_target()
-		vinyl_attack.level = vinyl_level
-		add_child(vinyl_attack)
-		vinyl_ammo -= 1
-		if vinyl_ammo > 0:
-			vinylAttackTimer.start()
-		else:
-			vinylAttackTimer.stop()
-
-
-func _on_tornado_timer_timeout():
-	tornado_ammo += tornado_baseammo + additional_attacks
-	tornadoAttackTimer.start()
-
-
-func _on_tornado_attack_timer_timeout():
-	if tornado_ammo > 0:
-		var tornado_attack = tornado.instantiate()
-		tornado_attack.position = position
-		tornado_attack.last_movement = last_movement
-		tornado_attack.level = tornado_level
-		add_child(tornado_attack)
-		tornado_ammo -= 1
-		if tornado_ammo > 0:
-			tornadoAttackTimer.start()
-		else:
-			tornadoAttackTimer.stop()
-
 
 func spawn_javelin():
 	var get_javelin_total = javelinBase.get_child_count()
@@ -348,40 +252,40 @@ func levelup():
 func upgrade_character(upgrade):
 	match upgrade:
 		"icespear1":
-			icespear_level = 1
-			icespear_baseammo += 1
+			attackManager.attacks['icespear'].level = 1
+			attackManager.attacks['icespear'].base_ammo += 1
 		"icespear2":
-			icespear_level = 2
-			icespear_baseammo += 1
+			attackManager.attacks['icespear'].level = 2
+			attackManager.attacks['icespear'].base_ammo += 1
 		"icespear3":
-			icespear_level = 3
+			attackManager.attacks['icespear'].level = 3
 		"icespear4":
-			icespear_level = 4
-			icespear_baseammo += 2
+			attackManager.attacks['icespear'].level = 4
+			attackManager.attacks['icespear'].baseammo += 2
 		"tornado1":
-			tornado_level = 1
-			tornado_baseammo += 1
+			attackManager.attacks['tornado'].level = 1
+			attackManager.attacks['tornado'].base_ammo += 1
 		"tornado2":
-			tornado_level = 2
-			tornado_baseammo += 1
+			attackManager.attacks['tornado'].level = 2
+			attackManager.attacks['tornado'].base_ammo += 1
 		"tornado3":
-			tornado_level = 3
-			tornado_attackspeed -= 0.5
+			attackManager.attacks['tornado'].level = 3
+			attackManager.attacks['tornado'].attack_speed -= 0.5
 		"tornado4":
-			tornado_level = 4
-			tornado_baseammo += 1
+			attackManager.attacks['tornado'].level = 4
+			attackManager.attacks['tornado'].base_ammo += 1
 		"vinyl1":
-			vinyl_level = 1
-			vinyl_baseammo += 1
+			attackManager.attacks['vinyl'].level = 1
+			attackManager.attacks['vinyl'].base_ammo += 1
 		"vinyl2":
-			vinyl_level = 2
-			vinyl_baseammo += 1
+			attackManager.attacks['vinyl'].level = 2
+			attackManager.attacks['vinyl'].base_ammo += 1
 		"vinyl3":
-			vinyl_level = 3
-			vinyl_attackspeed -= 0.5
+			attackManager.attacks['vinyl'].level = 3
+			attackManager.attacks['vinyl'].attack_speed -= 0.5
 		"vinyl4":
-			vinyl_level = 4
-			vinyl_baseammo += 1
+			attackManager.attacks['vinyl'].level = 4
+			attackManager.attacks['vinyl'].base_ammo += 1
 		"javelin1":
 			javelin_level = 1
 			javelin_ammo = 1
@@ -396,10 +300,10 @@ func upgrade_character(upgrade):
 		"speed1", "speed2", "speed3", "speed4":
 			movement_speed += 20.0
 		"tome1", "tome2", "tome3", "tome4":
-			spell_size += 0.10
-		"scroll1", "scroll2", "scroll3", "scroll4":
+			spell_size += 0.10			
+		"scroll1", "scroll2", "scroll3", "scroll4":			
 			spell_cooldown += 0.05
-		"ring1", "ring2":
+		"ring1", "ring2":			
 			additional_attacks += 1
 		"food":
 			hp += 20

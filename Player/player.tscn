@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://6rkaprmq4ect"]
+[gd_scene load_steps=24 format=3 uid="uid://6rkaprmq4ect"]
 
 [ext_resource type="Script" path="res://Player/player.gd" id="1_37q80"]
 [ext_resource type="Texture2D" uid="uid://bd1dsmqbq3l7" path="res://assets/player/character/john/john_placeholder.png" id="2_jra2j"]
@@ -12,6 +12,7 @@
 [ext_resource type="FontFile" uid="uid://cb4e8g30xxp5u" path="res://Font/tenderness.otf" id="6_okx7u"]
 [ext_resource type="AudioStream" uid="uid://ul8hunj8tl2t" path="res://Audio/SoundEffect/levelup.ogg" id="7_wl7d2"]
 [ext_resource type="Script" path="res://Player/StateMachine/Pathing.gd" id="7_xn56v"]
+[ext_resource type="Script" path="res://Player/Attack/attack_manager.gd" id="9_e47dm"]
 [ext_resource type="AudioStream" uid="uid://bnv76nm5171dn" path="res://Audio/SoundEffect/Victory.wav" id="10_rwm3p"]
 [ext_resource type="AudioStream" uid="uid://ca6physj6mqei" path="res://Audio/SoundEffect/Lose.ogg" id="11_28kfi"]
 [ext_resource type="PackedScene" uid="uid://b7c7gsdx2rkjm" path="res://Utility/basic_button.tscn" id="12_i8esf"]
@@ -115,6 +116,10 @@ wait_time = 0.2
 
 [node name="JavelinBase" type="Node2D" parent="Attack"]
 unique_name_in_owner = true
+
+[node name="AttackManager" type="Node" parent="Attack"]
+unique_name_in_owner = true
+script = ExtResource("9_e47dm")
 
 [node name="EnemyDetectionArea" type="Area2D" parent="."]
 visible = false
