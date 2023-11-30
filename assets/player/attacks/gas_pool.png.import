@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dl8xjc15okuks"
-path="res://.godot/imported/SpitterRat1_walk_SPRITESHEET.png-20a85a86bd4e316d7356c2a11be0a28f.ctex"
+uid="uid://d1knv8bgnbrqh"
+path="res://.godot/imported/gas_pool.png-7463b3f7a1b89a4097a1a71aa0fb3aae.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/enemy/spitterRat1/SpitterRat1_walk_SPRITESHEET.png"
-dest_files=["res://.godot/imported/SpitterRat1_walk_SPRITESHEET.png-20a85a86bd4e316d7356c2a11be0a28f.ctex"]
+source_file="res://assets/player/attacks/gas_pool.png"
+dest_files=["res://.godot/imported/gas_pool.png-7463b3f7a1b89a4097a1a71aa0fb3aae.ctex"]
 
 [params]
 

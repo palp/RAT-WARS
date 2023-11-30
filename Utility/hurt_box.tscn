@@ -7,6 +7,7 @@ script/source = "extends Area2D
 
 @onready var collision = $CollisionShape2D
 @onready var disableTimer = $DisableTimer
+@onready var damageOverTime = $DamageOverTime
 
 signal hurt(damage, angle, knockback)
 
@@ -54,6 +55,7 @@ func _on_disable_timer_timeout():
 collision_layer = 0
 collision_mask = 0
 script = SubResource("GDScript_cr452")
+HurtBoxType = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 

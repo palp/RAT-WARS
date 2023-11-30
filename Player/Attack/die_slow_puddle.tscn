@@ -1,0 +1,39 @@
+[gd_scene load_steps=6 format=3 uid="uid://dq5nsjiel0tsh"]
+
+[ext_resource type="Script" path="res://Player/Attack/die_slow_puddle.gd" id="1_817ex"]
+[ext_resource type="Texture2D" uid="uid://d1knv8bgnbrqh" path="res://assets/player/attacks/gas_pool.png" id="1_h40pq"]
+[ext_resource type="PackedScene" uid="uid://uhr6mtuisqm1" path="res://Utility/hit_box.tscn" id="3_lffrs"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ujgh5"]
+radius = 28.1603
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_v16ql"]
+radius = 28.1603
+
+[node name="DieSlowPuddle" type="Area2D"]
+top_level = true
+script = ExtResource("1_817ex")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+top_level = true
+position = Vector2(-4, 5)
+texture = ExtResource("1_h40pq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_ujgh5")
+
+[node name="DurationTimer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+autostart = true
+
+[node name="HitBox" parent="." instance=ExtResource("3_lffrs")]
+collision_layer = 4
+collision_mask = 4
+
+[node name="CollisionShape2D" parent="HitBox" index="0"]
+shape = SubResource("CircleShape2D_v16ql")
+
+[connection signal="timeout" from="DurationTimer" to="." method="_on_duration_timer_timeout"]
+
+[editable path="HitBox"]
