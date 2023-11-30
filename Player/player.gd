@@ -111,7 +111,7 @@ func get_pathing_target():
 
 
 func _ready():
-	upgrade_character("vinyl1")	
+	upgrade_character("vinyl1")
 	set_expbar(experience, calculate_experiencecap())
 	_on_hurt_box_hurt(0, 0, 0)
 	for content in Unlocks.unlocked_content:
@@ -140,6 +140,7 @@ func _on_hurt_box_hurt(damage, _angle, _knockback):
 	healthBar.value = hp
 	if hp <= 0:
 		death()
+
 
 func spawn_javelin():
 	var get_javelin_total = javelinBase.get_child_count()
@@ -246,64 +247,64 @@ func levelup():
 func upgrade_character(upgrade):
 	match upgrade:
 		"icespear1":
-			attackManager.attacks['icespear'].level = 1
-			attackManager.attacks['icespear'].base_ammo += 1
+			attackManager.attacks["icespear"].level = 1
+			attackManager.attacks["icespear"].base_ammo += 1
 		"icespear2":
-			attackManager.attacks['icespear'].level = 2
-			attackManager.attacks['icespear'].base_ammo += 1
+			attackManager.attacks["icespear"].level = 2
+			attackManager.attacks["icespear"].base_ammo += 1
 		"icespear3":
-			attackManager.attacks['icespear'].level = 3
+			attackManager.attacks["icespear"].level = 3
 		"icespear4":
-			attackManager.attacks['icespear'].level = 4
-			attackManager.attacks['icespear'].baseammo += 2
+			attackManager.attacks["icespear"].level = 4
+			attackManager.attacks["icespear"].baseammo += 2
 		"tornado1":
-			attackManager.attacks['tornado'].level = 1
-			attackManager.attacks['tornado'].base_ammo += 1
+			attackManager.attacks["tornado"].level = 1
+			attackManager.attacks["tornado"].base_ammo += 1
 		"tornado2":
-			attackManager.attacks['tornado'].level = 2
-			attackManager.attacks['tornado'].base_ammo += 1
+			attackManager.attacks["tornado"].level = 2
+			attackManager.attacks["tornado"].base_ammo += 1
 		"tornado3":
-			attackManager.attacks['tornado'].level = 3
-			attackManager.attacks['tornado'].attack_speed -= 0.5
+			attackManager.attacks["tornado"].level = 3
+			attackManager.attacks["tornado"].attack_speed -= 0.5
 		"tornado4":
-			attackManager.attacks['tornado'].level = 4
-			attackManager.attacks['tornado'].base_ammo += 1
+			attackManager.attacks["tornado"].level = 4
+			attackManager.attacks["tornado"].base_ammo += 1
 		"vinyl1":
-			attackManager.attacks['vinyl'].level = 1
-			attackManager.attacks['vinyl'].base_ammo += 1
+			attackManager.attacks["vinyl"].level = 1
+			attackManager.attacks["vinyl"].base_ammo += 1
 		"vinyl2":
-			attackManager.attacks['vinyl'].level = 2
-			attackManager.attacks['vinyl'].base_ammo += 1
+			attackManager.attacks["vinyl"].level = 2
+			attackManager.attacks["vinyl"].base_ammo += 1
 		"vinyl3":
-			attackManager.attacks['vinyl'].level = 3
-			attackManager.attacks['vinyl'].attack_speed -= 0.5
+			attackManager.attacks["vinyl"].level = 3
+			attackManager.attacks["vinyl"].attack_speed -= 0.5
 		"vinyl4":
-			attackManager.attacks['vinyl'].level = 4
-			attackManager.attacks['vinyl'].base_ammo += 1
+			attackManager.attacks["vinyl"].level = 4
+			attackManager.attacks["vinyl"].base_ammo += 1
 		"javelin1":
-			attackManager.attacks['javelin'].level = 1
-			attackManager.attacks['javelin'].ammo = 1
+			attackManager.attacks["javelin"].level = 1
+			attackManager.attacks["javelin"].ammo = 1
 		"javelin2":
-			attackManager.attacks['javelin'].level = 2
+			attackManager.attacks["javelin"].level = 2
 		"javelin3":
-			attackManager.attacks['javelin'].level = 3
+			attackManager.attacks["javelin"].level = 3
 		"javelin4":
-			attackManager.attacks['javelin'].level = 4
+			attackManager.attacks["javelin"].level = 4
 		"armor1", "armor2", "armor3", "armor4":
 			armor += 1
 		"speed1", "speed2", "speed3", "speed4":
 			movement_speed += 20.0
 		"tome1", "tome2", "tome3", "tome4":
-			spell_size += 0.10			
-		"scroll1", "scroll2", "scroll3", "scroll4":			
+			spell_size += 0.10
+		"scroll1", "scroll2", "scroll3", "scroll4":
 			spell_cooldown += 0.05
-		"ring1", "ring2":			
+		"ring1", "ring2":
 			additional_attacks += 1
 		"food":
 			hp += 20
 			hp = clamp(hp, 0, maxhp)
 	adjust_gui_collection(upgrade)
-	if attackManager.attacks['javelin'].level > 0:
+	if attackManager.attacks["javelin"].level > 0:
 		attackManager.spawn_javelin()
 	var option_children = upgradeOptions.get_children()
 	for i in option_children:
@@ -398,11 +399,13 @@ func death():
 	# TODO Only submit scores on win, prompt for name
 	await submit_score()
 
+
 func submit_score():
 	if game_session.has("id"):
 		# Random names for now
 		var names = ["Johnny", "Jake", "Beej"]
-		var leaderboard = await Server.submit_game_session(score, names.pick_random())	
+		var leaderboard = await Server.submit_game_session(score, names.pick_random())
+
 
 func _on_btn_menu_click_end():
 	get_tree().paused = false
