@@ -5,7 +5,7 @@ signal get_leaderboard_request_complete
 signal update_session_request_complete
 signal submit_session_request_complete
 
-const API_URL = "http://localhost:8787/api"
+const API_URL = "https://ratwars-server.palp.workers.dev/api"
 
 var leaderboard:Array
 var session:Dictionary
