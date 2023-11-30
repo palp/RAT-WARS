@@ -50,6 +50,7 @@ func submit_game_session(name):
 		return {}
 	submit_session_http_request.request(API_URL + '/session/%s/submit' % session.id, PackedStringArray([]), HTTPClient.METHOD_POST, JSON.stringify({"name": name}))
 	await submit_session_request_complete
+	session = {}
 	return leaderboard
 
 func get_leaderboard():		
