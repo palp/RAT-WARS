@@ -25,10 +25,11 @@ func _physics_process(delta):
 	position += angle.normalized() * speed * delta
 
 
-func _on_flight_duration_timer_timeout():
-	sprite.hide()
+func _on_flight_duration_timer_timeout():	
 	var puddle_attack = puddle.instantiate()
-	puddle_attack.position = position
+	puddle_attack.position = global_position
+	print_debug("puddle_attack.position = " + str(puddle_attack.position))
 	puddle_attack.level = level
 	add_child(puddle_attack)
+	sprite.hide()
 	

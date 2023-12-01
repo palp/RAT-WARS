@@ -88,14 +88,6 @@ script = ExtResource("7_xn56v")
 unique_name_in_owner = true
 script = ExtResource("9_e47dm")
 
-[node name="DieSlowTimer" type="Timer" parent="Attack"]
-unique_name_in_owner = true
-wait_time = 4.0
-
-[node name="DieSlowAttackTimer" type="Timer" parent="Attack/DieSlowTimer"]
-unique_name_in_owner = true
-wait_time = 0.5
-
 [node name="EnemyDetectionArea" type="Area2D" parent="."]
 visible = false
 collision_layer = 4
@@ -275,12 +267,6 @@ unique_name_in_owner = true
 wait_time = 45.0
 
 [connection signal="hurt" from="HurtBox" to="." method="_on_hurt_box_hurt"]
-[connection signal="timeout" from="Attack/IceSpearTimer" to="." method="_on_ice_spear_timer_timeout"]
-[connection signal="timeout" from="Attack/IceSpearTimer/IceSpearAttackTimer" to="." method="_on_ice_spear_attack_timer_timeout"]
-[connection signal="timeout" from="Attack/TornadoTimer" to="." method="_on_tornado_timer_timeout"]
-[connection signal="timeout" from="Attack/TornadoTimer/TornadoAttackTimer" to="." method="_on_tornado_attack_timer_timeout"]
-[connection signal="timeout" from="Attack/VinylTimer" to="." method="_on_vinyl_timer_timeout"]
-[connection signal="timeout" from="Attack/VinylTimer/VinylAttackTimer" to="." method="_on_vinyl_attack_timer_timeout"]
 [connection signal="body_entered" from="EnemyDetectionArea" to="." method="_on_enemy_detection_area_body_entered"]
 [connection signal="body_exited" from="EnemyDetectionArea" to="." method="_on_enemy_detection_area_body_exited"]
 [connection signal="area_entered" from="GrabArea" to="." method="_on_grab_area_area_entered"]
