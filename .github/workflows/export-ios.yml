@@ -65,3 +65,9 @@ jobs:
         run: |
           mkdir -v -p build/ios
           godot -v --headless --audio-driver Dummy --export-release "ios" "build/ios/ratwars-ios.ipa"
+      - name: Publish Artifact
+        if: ${{ success() }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: ratwars-ios
+          path: build/ios
