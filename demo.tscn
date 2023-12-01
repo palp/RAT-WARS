@@ -5,12 +5,12 @@
 [ext_resource type="PackedScene" uid="uid://eno7xtkdwasd" path="res://ui/main_menu.tscn" id="3_1vbbm"]
 [ext_resource type="Theme" uid="uid://bwayc6rbhtvxj" path="res://assets/ui/theme/HEALTH_theme.tres" id="3_8j42b"]
 [ext_resource type="PackedScene" uid="uid://ba2claihwes2y" path="res://Utility/enemy_spawner.tscn" id="3_p01g4"]
-[ext_resource type="PackedScene" uid="uid://gvm5jcbbgwdv" path="res://Enemy/enemy_small_rat.tscn" id="4_ee8bm"]
+[ext_resource type="PackedScene" uid="uid://bvp4js6prjv2k" path="res://Enemy/enemy_small_rat.tscn" id="4_detmb"]
+[ext_resource type="PackedScene" uid="uid://gvm5jcbbgwdv" path="res://Enemy/enemy_mutated_rat.tscn" id="4_ee8bm"]
 [ext_resource type="Script" path="res://Utility/spawn_info.gd" id="5_jj7s8"]
-[ext_resource type="PackedScene" uid="uid://bbvhxvk65o8el" path="res://Enemy/enemy_spitter_rat.tscn" id="6_rumbx"]
-[ext_resource type="PackedScene" uid="uid://bok7kd2psi5gl" path="res://Enemy/enemy_mutated_rat.tscn" id="7_unri0"]
-[ext_resource type="PackedScene" uid="uid://hcjnrdsb563h" path="res://Enemy/enemy_balloon_rat.tscn" id="8_ltymd"]
-[ext_resource type="PackedScene" uid="uid://btf7clk4jja87" path="res://Enemy/enemy_boss_verminator.tscn" id="9_xs42h"]
+[ext_resource type="PackedScene" uid="uid://dhucglqau1jbg" path="res://Enemy/enemy_spitter_rat.tscn" id="7_pxitb"]
+[ext_resource type="PackedScene" uid="uid://what6ybd045w" path="res://Enemy/enemy_balloon_rat.tscn" id="8_rm5oc"]
+[ext_resource type="PackedScene" uid="uid://clkwok10blwsl" path="res://Enemy/enemy_boss_verminator.tscn" id="9_iksbi"]
 [ext_resource type="AudioStream" uid="uid://bbufl4r1ou1rw" path="res://Audio/Music/battleThemeA.mp3" id="10_rk3we"]
 [ext_resource type="Script" path="res://Audio/Music/snd_Music.gd" id="11_ovtx6"]
 
@@ -30,7 +30,7 @@ size = Vector2(4000, 5)
 script = ExtResource("5_jj7s8")
 time_start = null
 time_end = 30
-enemy = ExtResource("4_ee8bm")
+enemy = ExtResource("4_detmb")
 enemy_num = 1
 enemy_spawn_delay = null
 
@@ -38,7 +38,7 @@ enemy_spawn_delay = null
 script = ExtResource("5_jj7s8")
 time_start = 30
 time_end = 210
-enemy = ExtResource("4_ee8bm")
+enemy = ExtResource("4_detmb")
 enemy_num = 2
 enemy_spawn_delay = null
 
@@ -46,7 +46,7 @@ enemy_spawn_delay = null
 script = ExtResource("5_jj7s8")
 time_start = 60
 time_end = 180
-enemy = ExtResource("6_rumbx")
+enemy = ExtResource("4_ee8bm")
 enemy_num = 1
 enemy_spawn_delay = 1
 
@@ -54,7 +54,7 @@ enemy_spawn_delay = 1
 script = ExtResource("5_jj7s8")
 time_start = 180
 time_end = 210
-enemy = ExtResource("7_unri0")
+enemy = ExtResource("7_pxitb")
 enemy_num = 1
 enemy_spawn_delay = 2
 
@@ -62,7 +62,7 @@ enemy_spawn_delay = 2
 script = ExtResource("5_jj7s8")
 time_start = 210
 time_end = 240
-enemy = ExtResource("6_rumbx")
+enemy = ExtResource("4_ee8bm")
 enemy_num = 2
 enemy_spawn_delay = null
 
@@ -70,7 +70,7 @@ enemy_spawn_delay = null
 script = ExtResource("5_jj7s8")
 time_start = 240
 time_end = 270
-enemy = ExtResource("7_unri0")
+enemy = ExtResource("7_pxitb")
 enemy_num = 1
 enemy_spawn_delay = null
 
@@ -78,7 +78,7 @@ enemy_spawn_delay = null
 script = ExtResource("5_jj7s8")
 time_start = 240
 time_end = 240
-enemy = ExtResource("8_ltymd")
+enemy = ExtResource("8_rm5oc")
 enemy_num = 1
 enemy_spawn_delay = null
 
@@ -86,7 +86,7 @@ enemy_spawn_delay = null
 script = ExtResource("5_jj7s8")
 time_start = 270
 time_end = 300
-enemy = ExtResource("6_rumbx")
+enemy = ExtResource("4_ee8bm")
 enemy_num = 4
 enemy_spawn_delay = null
 
@@ -94,7 +94,7 @@ enemy_spawn_delay = null
 script = ExtResource("5_jj7s8")
 time_start = 300
 time_end = 300
-enemy = ExtResource("9_xs42h")
+enemy = ExtResource("9_iksbi")
 enemy_num = 1
 enemy_spawn_delay = null
 
