@@ -2,6 +2,7 @@ extends Node2D
 
 
 @export var spawns: Array[Spawn_info] = []
+@export var spawn_area: Rect2 = Rect2(-2000,-2000,4000,4000)
 
 @onready var player = get_tree().get_first_node_in_group("player")
 
@@ -20,8 +21,12 @@ func spawn_enemies():
 				var new_enemy = i.enemy
 				var counter = 0
 				while  counter < i.enemy_num:
+					var position = get_random_position()
+					# TODO prevent generating random positions within the spawn area instead of looping
+					if not spawn_area.has_point(position):
+						continue
 					var enemy_spawn = new_enemy.instantiate()
-					enemy_spawn.global_position = get_random_position()
+					enemy_spawn.global_position = position
 					add_sibling.call_deferred(enemy_spawn)
 					counter += 1
 	
@@ -36,7 +41,7 @@ func _on_timer_timeout():
 	emit_signal("changetime",time)
 
 func get_random_position():
-	var vpr = get_viewport_rect().size * randf_range(1.1,1.4)
+	var vpr = get_viewport_rect().size * randf_range(1.1,1.4)	
 	var top_left = Vector2(player.global_position.x - vpr.x/2, player.global_position.y - vpr.y/2)
 	var top_right = Vector2(player.global_position.x + vpr.x/2, player.global_position.y - vpr.y/2)
 	var bottom_left = Vector2(player.global_position.x - vpr.x/2, player.global_position.y + vpr.y/2)
@@ -44,6 +49,7 @@ func get_random_position():
 	var pos_side = ["up","down","right","left"].pick_random()
 	var spawn_pos1 = Vector2.ZERO
 	var spawn_pos2 = Vector2.ZERO
+	
 	
 	match pos_side:
 		"up":

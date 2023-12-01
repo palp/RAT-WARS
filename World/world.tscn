@@ -1,7 +1,7 @@
 [gd_scene load_steps=21 format=3 uid="uid://du6qbgqucaqov"]
 
 [ext_resource type="Texture2D" uid="uid://b6umklllf2jsl" path="res://Textures/dirt_full_new.png" id="1_3v41d"]
-[ext_resource type="PackedScene" uid="uid://dncgepmkc4jf4" path="res://Player/player.tscn" id="2_40uwv"]
+[ext_resource type="PackedScene" uid="uid://6rkaprmq4ect" path="res://Player/player.tscn" id="2_40uwv"]
 [ext_resource type="PackedScene" uid="uid://ba2claihwes2y" path="res://Utility/enemy_spawner.tscn" id="3_p01g4"]
 [ext_resource type="PackedScene" uid="uid://gvm5jcbbgwdv" path="res://Enemy/enemy_kobold_weak.tscn" id="4_ee8bm"]
 [ext_resource type="Script" path="res://Utility/spawn_info.gd" id="5_jj7s8"]
