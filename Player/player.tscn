@@ -13,9 +13,9 @@
 [ext_resource type="AudioStream" uid="uid://ul8hunj8tl2t" path="res://Audio/SoundEffect/levelup.ogg" id="7_wl7d2"]
 [ext_resource type="Script" path="res://Player/StateMachine/Pathing.gd" id="7_xn56v"]
 [ext_resource type="Script" path="res://Player/Attack/attack_manager.gd" id="9_e47dm"]
-[ext_resource type="AudioStream" uid="uid://bnv76nm5171dn" path="res://Audio/SoundEffect/Victory.wav" id="10_rwm3p"]
 [ext_resource type="AudioStream" uid="uid://ca6physj6mqei" path="res://Audio/SoundEffect/Lose.ogg" id="11_28kfi"]
 [ext_resource type="PackedScene" uid="uid://b7c7gsdx2rkjm" path="res://Utility/basic_button.tscn" id="12_i8esf"]
+[ext_resource type="AudioStream" uid="uid://diaghcy4b4jm" path="res://Audio/SoundEffect/demigods_win.ogg" id="14_78iji"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_nffdp"]
 height = 36.0
@@ -212,7 +212,7 @@ vertical_alignment = 1
 
 [node name="snd_victory" type="AudioStreamPlayer" parent="GUILayer/GUI/DeathPanel"]
 unique_name_in_owner = true
-stream = ExtResource("10_rwm3p")
+stream = ExtResource("14_78iji")
 volume_db = -10.0
 bus = &"SFX"
 
