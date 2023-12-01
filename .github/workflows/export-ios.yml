@@ -57,14 +57,21 @@ jobs:
         continue-on-error: true # we still ignore the timeout, the script is not quit and we run into a timeout
         shell: bash
         run: |
-          godot -e --path . -s res://addons/gdUnit4/bin/ProjectScanner.gd --headless --audio-driver Dummy --exit
+          godot -e --path . -s res://addons/gdUnit4/bin/ProjectScanner.gd --headless --audio-driver Dummy
       - name: Build
         if: ${{ !cancelled() }}
         timeout-minutes: 5
         continue-on-error: true
         run: |
           mkdir -v -p build/ios
-          godot -v --headless --audio-driver Dummy --export-release "ios" "build/ios/ratwars-ios.ipa" --exit
+          godot -v --headless --audio-driver Dummy --export-release "ios" "build/ios/ratwars-ios.ipa"
+      - name: Check build
+        if: ${{ !cancelled() }}
+        run: |
+          if [ ! -f "build/ios/ratwars-ios.ipa" ]; then
+            echo "Build failed"
+            exit 1
+          fi
       - name: Publish Artifact
         if: ${{ success() }}
         uses: actions/upload-artifact@v2
