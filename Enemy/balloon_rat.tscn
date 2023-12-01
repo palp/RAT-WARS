@@ -106,10 +106,9 @@ script = ExtResource("1_d8g1e")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 z_index = 1
-position = Vector2(106.667, -266.667)
-scale = Vector2(3, 3)
+scale = Vector2(8, 8)
 texture = ExtResource("2_hq5fu")
-offset = Vector2(-40, 80)
+offset = Vector2(0, -3.33333)
 vframes = 12
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
