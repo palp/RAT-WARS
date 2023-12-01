@@ -1,12 +1,15 @@
-[gd_scene load_steps=10 format=3 uid="uid://what6ybd045w"]
+[gd_scene load_steps=13 format=3 uid="uid://what6ybd045w"]
 
 [ext_resource type="Script" path="res://Enemy/enemy.gd" id="1_d8g1e"]
+[ext_resource type="PackedScene" uid="uid://elvgq35o6fbi" path="res://Enemy/balloon_explosion.tscn" id="2_6durt"]
 [ext_resource type="Texture2D" uid="uid://chjoqtsegrpiq" path="res://assets/enemy/BallonRat/ballon_rat_walk_7.png" id="2_6qfiv"]
 [ext_resource type="Texture2D" uid="uid://y3cyx8ixt3ow" path="res://assets/enemy/BallonRat/ballon_rat_death_12.png" id="2_hq5fu"]
 [ext_resource type="PackedScene" uid="uid://xy3cvpwdy828" path="res://Utility/hurt_box.tscn" id="3_ivxq8"]
+[ext_resource type="PackedScene" uid="uid://uhr6mtuisqm1" path="res://Utility/hit_box.tscn" id="4_vdnsx"]
+[ext_resource type="AudioStream" uid="uid://bi7t7cjthnhhc" path="res://Audio/SoundEffect/enemy_hit.ogg" id="5_aknlk"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_6vuew"]
-radius = 220.025
+radius = 249.15
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_n3lwc"]
 radius = 226.887
@@ -101,15 +104,18 @@ _data = {
 
 [node name="balloon_rat" type="CharacterBody2D"]
 scale = Vector2(0.3, 0.3)
+collision_layer = 5
+collision_mask = 5
 motion_mode = 1
 script = ExtResource("1_d8g1e")
+hp = 2
+death_anim = ExtResource("2_6durt")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 z_index = 1
-position = Vector2(106.667, -266.667)
-scale = Vector2(3, 3)
+scale = Vector2(8, 8)
 texture = ExtResource("2_hq5fu")
-offset = Vector2(-40, 80)
+offset = Vector2(0, -3.33333)
 vframes = 12
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -119,8 +125,15 @@ shape = SubResource("CircleShape2D_6vuew")
 [node name="HurtBox" parent="." instance=ExtResource("3_ivxq8")]
 collision_layer = 5
 collision_mask = 5
+HurtBoxType = 1
 
 [node name="CollisionShape2D" parent="HurtBox" index="0"]
+shape = SubResource("CircleShape2D_n3lwc")
+
+[node name="HitBox" parent="." instance=ExtResource("4_vdnsx")]
+collision_layer = 2
+
+[node name="CollisionShape2D" parent="HitBox" index="0"]
 shape = SubResource("CircleShape2D_n3lwc")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -128,4 +141,12 @@ libraries = {
 "": SubResource("AnimationLibrary_2bjk2")
 }
 
+[node name="snd_hit" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_aknlk")
+volume_db = -20.0
+bus = &"SFX"
+
+[connection signal="hurt" from="HurtBox" to="." method="_on_hurt_box_hurt"]
+
 [editable path="HurtBox"]
+[editable path="HitBox"]

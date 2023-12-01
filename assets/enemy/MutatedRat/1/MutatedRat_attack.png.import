@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c838kg48ms2oc"
-path="res://.godot/imported/balloon_rat.png-0ab8b5fdc3fcf677831800d3e6738657.ctex"
+uid="uid://bxn4fii3y58wp"
+path="res://.godot/imported/MutatedRat_attack.png-7aad32e4fe5e7b375a83fe7ea3667cfa.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/enemy/balloon_rat.png"
-dest_files=["res://.godot/imported/balloon_rat.png-0ab8b5fdc3fcf677831800d3e6738657.ctex"]
+source_file="res://assets/enemy/MutatedRat/1/MutatedRat_attack.png"
+dest_files=["res://.godot/imported/MutatedRat_attack.png-7aad32e4fe5e7b375a83fe7ea3667cfa.ctex"]
 
 [params]
 
