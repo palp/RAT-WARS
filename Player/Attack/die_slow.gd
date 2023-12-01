@@ -17,6 +17,8 @@ var puddle = preload("res://Player/Attack/die_slow_puddle.tscn")
 @onready var sprite = $Sprite2D
 @onready var collision = $CollisionShape2D
 
+signal remove_from_array(object)
+
 func _physics_process(delta):
 	if angle.angle() >= 0:
 		rotation += .08
@@ -28,8 +30,13 @@ func _physics_process(delta):
 func _on_flight_duration_timer_timeout():	
 	var puddle_attack = puddle.instantiate()
 	puddle_attack.position = global_position
-	print_debug("puddle_attack.position = " + str(puddle_attack.position))
 	puddle_attack.level = level
+	puddle_attack.remove_from_array.connect(_on_remove_from_array)
 	add_child(puddle_attack)
 	sprite.hide()
 	
+
+func _on_remove_from_array(obj):
+	if get_child_count() <= 1:
+		emit_signal("remove_from_array", self)
+		queue_free()
