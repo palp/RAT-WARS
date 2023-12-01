@@ -4,13 +4,13 @@
 [ext_resource type="PackedScene" uid="uid://6rkaprmq4ect" path="res://Player/player.tscn" id="2_40uwv"]
 [ext_resource type="Theme" uid="uid://bwayc6rbhtvxj" path="res://assets/ui/theme/HEALTH_theme.tres" id="3_8j42b"]
 [ext_resource type="PackedScene" uid="uid://ba2claihwes2y" path="res://Utility/enemy_spawner.tscn" id="3_p01g4"]
-[ext_resource type="PackedScene" uid="uid://gvm5jcbbgwdv" path="res://Enemy/enemy_kobold_weak.tscn" id="4_ee8bm"]
+[ext_resource type="PackedScene" uid="uid://gvm5jcbbgwdv" path="res://Enemy/enemy_small_rat.tscn" id="4_y20nk"]
 [ext_resource type="PackedScene" uid="uid://do8nu166getvr" path="res://ui/pause_menu.tscn" id="5_e8x4x"]
 [ext_resource type="Script" path="res://Utility/spawn_info.gd" id="5_jj7s8"]
-[ext_resource type="PackedScene" uid="uid://bbvhxvk65o8el" path="res://Enemy/enemy_kobold_strong.tscn" id="6_rumbx"]
-[ext_resource type="PackedScene" uid="uid://bok7kd2psi5gl" path="res://Enemy/enemy_cyclops.tscn" id="7_unri0"]
-[ext_resource type="PackedScene" uid="uid://hcjnrdsb563h" path="res://Enemy/enemy_juggernaut.tscn" id="8_ltymd"]
-[ext_resource type="PackedScene" uid="uid://btf7clk4jja87" path="res://Enemy/enemy_super.tscn" id="9_xs42h"]
+[ext_resource type="PackedScene" uid="uid://bbvhxvk65o8el" path="res://Enemy/enemy_spitter_rat.tscn" id="6_rumbx"]
+[ext_resource type="PackedScene" uid="uid://bok7kd2psi5gl" path="res://Enemy/enemy_mutated_rat.tscn" id="7_unri0"]
+[ext_resource type="PackedScene" uid="uid://hcjnrdsb563h" path="res://Enemy/enemy_balloon_rat.tscn" id="8_ltymd"]
+[ext_resource type="PackedScene" uid="uid://btf7clk4jja87" path="res://Enemy/enemy_boss_verminator.tscn" id="9_xs42h"]
 [ext_resource type="AudioStream" uid="uid://bbufl4r1ou1rw" path="res://Audio/Music/battleThemeA.mp3" id="10_rk3we"]
 [ext_resource type="Script" path="res://Audio/Music/snd_Music.gd" id="11_ovtx6"]
 [ext_resource type="Script" path="res://ui/pause_button.gd" id="13_wx351"]
@@ -19,7 +19,7 @@
 script = ExtResource("5_jj7s8")
 time_start = null
 time_end = 30
-enemy = ExtResource("4_ee8bm")
+enemy = ExtResource("4_y20nk")
 enemy_num = 1
 enemy_spawn_delay = null
 
@@ -27,7 +27,7 @@ enemy_spawn_delay = null
 script = ExtResource("5_jj7s8")
 time_start = 30
 time_end = 210
-enemy = ExtResource("4_ee8bm")
+enemy = ExtResource("4_y20nk")
 enemy_num = 2
 enemy_spawn_delay = null
 

@@ -1,4 +1,5 @@
 extends CharacterBody2D
+class_name EnemyBase
 
 
 @export var movement_speed = 20.0
@@ -15,13 +16,13 @@ var knockback = Vector2.ZERO
 @onready var snd_hit = $snd_hit
 @onready var hitBox = $HitBox
 
-var death_anim = preload("res://Enemy/explosion.tscn")
+@export var death_anim = preload("res://Enemy/explosion.tscn")
 var exp_gem = preload("res://Objects/experience_gem.tscn")
 
 signal remove_from_array(object)
 
 
-func _ready():
+func _ready():	
 	anim.play("walk")
 	hitBox.damage = enemy_damage
 
@@ -33,9 +34,9 @@ func _physics_process(_delta):
 	move_and_slide()
 	
 	if direction.x > 0.1:
-		sprite.flip_h = true
-	elif direction.x < -0.1:
 		sprite.flip_h = false
+	elif direction.x < -0.1:
+		sprite.flip_h = true
 
 func death():
 	emit_signal("remove_from_array",self)

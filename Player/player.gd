@@ -1,6 +1,8 @@
 class_name Player
 extends CharacterBody2D
 
+var logger = LogStream.new("player", LogStream.LogLevel.DEBUG)
+
 @export var autopilot = true
 var disable_pathing_input = false
 
@@ -182,7 +184,7 @@ func get_random_target():
 
 
 func _on_enemy_detection_area_body_entered(body):
-	if not enemy_close.has(body):
+	if not enemy_close.has(body):		
 		enemy_close.append(body)
 
 
