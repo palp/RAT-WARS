@@ -3,6 +3,9 @@ on:
   push:
     branches:
       - main
+      - release-build
+    tags:
+      - v*
 
 jobs:
   export-matrix:
@@ -75,11 +78,18 @@ jobs:
             exit 1
           fi
       - name: Publish Artifact
+        if: ${{ success() }}
         uses: actions/upload-artifact@v2
         with:
           name: ratwars-${{matrix.build.tag}}
           path: ${{matrix.build.path}}
-      - name: Push to Itch.io (${{matrix.build.tag}}))
-        run: butler push ${{matrix.build.path}} palp/rat-wars:${{matrix.build.tag}}
+      - name: Push to healthnoise.itch.io (${{matrix.build.tag}})
+        if: ${{ github.ref_type == 'tag' && github.ref_name == 'v*' && success() }}
+        run: butler push ${{matrix.build.path}} healthnoise/ratwars:${{matrix.build.tag}} --userversion ${{github.ref_name}}
+        env:
+          BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
+      - name: Push to palp.itch.io (${{matrix.build.tag}})
+        if: ${{ github.ref_name == 'main' && success() }}
+        run: butler push ${{matrix.build.path}} palp/rat-wars:${{matrix.build.tag}} --userversion ${{github.sha}}
         env:
           BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}

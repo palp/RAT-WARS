@@ -6,8 +6,6 @@ signal update_session_request_complete
 signal submit_session_request_complete
 signal unlock_request_complete
 
-const API_URL = "https://ratwars-server.palp.workers.dev/api"
-
 var logger = LogStream.new("Server", LogStream.LogLevel.WARN)
 
 var leaderboard: Array
@@ -19,7 +17,6 @@ var unlocks: Array
 @onready var update_session_http_request = HTTPRequest.new()
 @onready var submit_session_http_request = HTTPRequest.new()
 @onready var unlock_http_request = HTTPRequest.new()
-
 
 func _ready():
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -40,7 +37,7 @@ func create_game_session():
 		logger.warn("create_session: Not replacing existing session!")
 		return {}
 	create_session_http_request.request(
-		API_URL + "/session", PackedStringArray([]), HTTPClient.METHOD_POST
+		GameConfig.api_base_url + "/session", PackedStringArray([]), HTTPClient.METHOD_POST
 	)
 	await create_session_request_complete
 	return session
@@ -51,7 +48,7 @@ func update_game_session(score):
 		logger.warn("update_game_session: Not replacing existing session!")
 		return {}
 	update_session_http_request.request(
-		API_URL + "/session/%s" % session.id,
+		GameConfig.api_base_url + "/session/%s" % session.id,
 		PackedStringArray([]),
 		HTTPClient.METHOD_POST,
 		JSON.stringify({"score": score})
@@ -69,7 +66,7 @@ func submit_game_session(score, name):
 		logger.warn("submit_game_session: Not replacing existing session!")
 		return {}
 	submit_session_http_request.request(
-		API_URL + "/session/%s/submit" % session.id,
+		GameConfig.api_base_url + "/session/%s/submit" % session.id,
 		PackedStringArray([]),
 		HTTPClient.METHOD_POST,
 		JSON.stringify({"score": score, "name": name})
@@ -80,13 +77,13 @@ func submit_game_session(score, name):
 
 
 func get_leaderboard():
-	get_leaderboard_http_request.request(API_URL + "/leaderboard")
+	get_leaderboard_http_request.request(GameConfig.api_base_url + "/leaderboard")
 	await get_leaderboard_request_complete
 
 	return leaderboard
 
 func unlock_content(code):
-	unlock_http_request.request(API_URL + "/unlock", PackedStringArray([]), HTTPClient.METHOD_POST, JSON.stringify({"code": code}))
+	unlock_http_request.request(GameConfig.api_base_url + "/unlock", PackedStringArray([]), HTTPClient.METHOD_POST, JSON.stringify({"code": code}))
 	await unlock_request_complete
 
 	return unlocks
