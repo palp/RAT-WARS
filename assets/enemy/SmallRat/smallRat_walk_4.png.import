@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bxn4fii3y58wp"
-path="res://.godot/imported/MutatedRat_attack.png-da4487a023c6f2265179aecf1eb73862.ctex"
+uid="uid://0x4q7pgy0i56"
+path="res://.godot/imported/smallRat_walk_4.png-5f169f9b82a2d57519ebac9bcd104805.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/enemy/MutatedRat/MutatedRat_attack.png"
-dest_files=["res://.godot/imported/MutatedRat_attack.png-da4487a023c6f2265179aecf1eb73862.ctex"]
+source_file="res://assets/enemy/SmallRat/smallRat_walk_4.png"
+dest_files=["res://.godot/imported/smallRat_walk_4.png-5f169f9b82a2d57519ebac9bcd104805.ctex"]
 
 [params]
 

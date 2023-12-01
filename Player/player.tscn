@@ -1,7 +1,7 @@
 [gd_scene load_steps=24 format=3 uid="uid://6rkaprmq4ect"]
 
 [ext_resource type="Script" path="res://Player/player.gd" id="1_37q80"]
-[ext_resource type="Texture2D" uid="uid://bd1dsmqbq3l7" path="res://assets/player/character/john/john_placeholder.png" id="2_jra2j"]
+[ext_resource type="Texture2D" uid="uid://brcoprsvx8ti7" path="res://assets/player/character/john/john_smol.png" id="2_1lecr"]
 [ext_resource type="PackedScene" uid="uid://xy3cvpwdy828" path="res://Utility/hurt_box.tscn" id="3_gs51i"]
 [ext_resource type="Script" path="res://Player/StateMachine/Idle.gd" id="3_lcdk6"]
 [ext_resource type="Script" path="res://Player/StateMachine/StateMachine.gd" id="3_r7o28"]
@@ -48,7 +48,8 @@ movement_speed = 200.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, -2.08165e-12)
-texture = ExtResource("2_jra2j")
+scale = Vector2(3, 3)
+texture = ExtResource("2_1lecr")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
