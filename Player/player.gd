@@ -1,8 +1,6 @@
 class_name Player
 extends CharacterBody2D
 
-@onready var logger = LogStream.new("player", LogStream.LogLevel.DEBUG)
-
 @export var autopilot = true
 var disable_pathing_input = false
 
