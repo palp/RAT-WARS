@@ -4,6 +4,7 @@ signal create_session_request_complete
 signal get_leaderboard_request_complete
 signal update_session_request_complete
 signal submit_session_request_complete
+signal unlock_request_complete
 
 const API_URL = "https://ratwars-server.palp.workers.dev/api"
 
@@ -11,11 +12,13 @@ var logger = LogStream.new("Server", LogStream.LogLevel.WARN)
 
 var leaderboard: Array
 var session: Dictionary
+var unlocks: Array
 
 @onready var get_leaderboard_http_request = HTTPRequest.new()
 @onready var create_session_http_request = HTTPRequest.new()
 @onready var update_session_http_request = HTTPRequest.new()
 @onready var submit_session_http_request = HTTPRequest.new()
+@onready var unlock_http_request = HTTPRequest.new()
 
 
 func _ready():
@@ -28,6 +31,8 @@ func _ready():
 	add_child(update_session_http_request)
 	submit_session_http_request.request_completed.connect(_on_submit_session_response)
 	add_child(submit_session_http_request)
+	unlock_http_request.request_completed.connect(_on_unlock_response)
+	add_child(unlock_http_request)
 
 
 func create_game_session():
@@ -79,6 +84,12 @@ func get_leaderboard():
 	await get_leaderboard_request_complete
 
 	return leaderboard
+
+func unlock_content(code):
+	unlock_http_request.request(API_URL + "/unlock", PackedStringArray([]), HTTPClient.METHOD_POST, JSON.stringify({"code": code}))
+	await unlock_request_complete
+
+	return unlocks
 
 
 func _on_create_session_response(result, response_code, headers, body):
@@ -157,3 +168,20 @@ func _on_submit_session_response(result, response_code, headers, body):
 	else:
 		logger.warn("submit_session_error: ", {"response_code": response_code, "body": body_string})
 	emit_signal("submit_session_request_complete")
+
+func _on_unlock_response(result, response_code, headers, body):
+	var body_string = body.get_string_from_utf8()
+	logger.debug(
+		"unlock_response: ",
+		{"result": result, "response_code": response_code, "headers": headers, "body": body_string}
+	)
+	if response_code == 200:		
+		unlocks = JSON.parse_string(body_string)['content']
+	elif response_code >= 400 and response_code < 500:
+		logger.warn(
+			"unlock_error: ",
+			{"response_code": response_code, "body": JSON.parse_string(body_string)}
+		)
+	else:
+		logger.warn("unlock_error: ", {"response_code": response_code, "body": body_string})
+	emit_signal("unlock_request_complete")
