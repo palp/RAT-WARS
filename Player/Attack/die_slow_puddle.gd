@@ -6,6 +6,7 @@ var damage = 5
 var attack_size = 1.0
 var slow = 0.1
 var dot_duration = 0.1
+var hitbox_type = 1
 
 
 var target = Vector2.ZERO
