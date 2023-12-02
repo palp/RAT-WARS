@@ -15,31 +15,31 @@ signal remove_from_array(object)
 
 func _ready():
 	angle = global_position.direction_to(target)
-	rotation = angle.angle() + deg_to_rad(135)
+	rotation = angle.angle() + deg_to_rad(90)
 	match level:
 		1:
 			hp = 1
-			speed = 100
+			speed = 120
 			damage = 5
-			knockback_amount = 100
+			knockback_amount = 150
 			attack_size = 1.0 * (1 + player.spell_size)
 		2:
 			hp = 1
-			speed = 100
+			speed = 130
 			damage = 5
-			knockback_amount = 100
+			knockback_amount = 160
 			attack_size = 1.0 * (1 + player.spell_size)
 		3:
 			hp = 2
-			speed = 100
+			speed = 140
 			damage = 8
-			knockback_amount = 100
+			knockback_amount = 170
 			attack_size = 1.0 * (1 + player.spell_size)
 		4:
 			hp = 2
-			speed = 100
+			speed = 150
 			damage = 8
-			knockback_amount = 100
+			knockback_amount = 180
 			attack_size = 1.0 * (1 + player.spell_size)
 
 	
