@@ -3,6 +3,8 @@ extends CharacterBody2D
 
 @export var autopilot = true
 var disable_pathing_input = false
+var disable_pausing = false
+var disable_upgrades = false
 
 @export var movement_speed = 40.0
 @export var maxhp = 80
@@ -43,10 +45,6 @@ var speed = 0
 var spell_cooldown = 0
 var spell_size = 0
 var additional_attacks = 0
-
-#Javelin
-var javelin_ammo = 0
-var javelin_level = 0
 
 #Enemy Related
 var enemy_close = []
@@ -130,6 +128,9 @@ func get_pathing_target():
 
 
 func _ready():
+	disable_pausing = false
+	disable_pathing_input = false
+	disable_upgrades = false
 	upgrade_character("dieslow1")
 	set_expbar(experience, calculate_experiencecap())
 	_on_hurt_box_hurt(0, 0, 0)
@@ -222,13 +223,20 @@ func set_expbar(set_value = 1, set_max_value = 100):
 	expBar.value = set_value
 	expBar.max_value = set_max_value
 
+func _input(event):
+	if disable_upgrades and event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and not event.is_pressed():
+		disable_upgrades = false
 
-func levelup():
+func levelup():	
 	sndLevelUp.play()
 	lblLevel.text = str("Level: ", experience_level)
 	if autopilot:
 		upgrade_character(get_random_item())
 		return
+	disable_pathing_input = true
+	disable_pausing = true
+	if Input.is_action_pressed("click"):
+		disable_upgrades = true
 	var tween = levelPanel.create_tween()
 	(
 		tween
@@ -248,7 +256,7 @@ func levelup():
 	get_tree().paused = true
 
 
-func upgrade_character(upgrade):
+func upgrade_character(upgrade):	
 	match upgrade:
 		"icespear1":
 			attackManager.attacks["icespear"].level = 1
@@ -327,6 +335,8 @@ func upgrade_character(upgrade):
 		i.queue_free()
 	upgrade_options.clear()
 	collected_upgrades.append(upgrade)
+	disable_pathing_input = false
+	disable_pausing = false
 	levelPanel.visible = false
 	levelPanel.position = Vector2(800, 50)
 	get_tree().paused = false
