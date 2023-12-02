@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://6rkaprmq4ect"]
+[gd_scene load_steps=28 format=3 uid="uid://6rkaprmq4ect"]
 
 [ext_resource type="Script" path="res://Player/player.gd" id="1_37q80"]
 [ext_resource type="Texture2D" uid="uid://bd1dsmqbq3l7" path="res://assets/player/character/john/john_placeholder.png" id="2_1lecr"]
@@ -14,7 +14,9 @@
 [ext_resource type="Texture2D" uid="uid://b5l20dpjaj216" path="res://Textures/GUI/exp_background1.png" id="11_6u3jb"]
 [ext_resource type="PackedScene" uid="uid://b7c7gsdx2rkjm" path="res://Utility/basic_button.tscn" id="12_i8esf"]
 [ext_resource type="VideoStream" path="res://Video/RAT_WARS_Win.ogv" id="12_k73xi"]
+[ext_resource type="VideoStream" path="res://Video/GAME_OVER_1.ogv" id="12_qj38w"]
 [ext_resource type="Texture2D" uid="uid://t7d7oq4ukono" path="res://Textures/GUI/exp_progress1.png" id="12_tesno"]
+[ext_resource type="VideoStream" path="res://Video/GAME_OVER_Loop.ogv" id="13_0dr2r"]
 [ext_resource type="FontFile" uid="uid://bejghu08d1uvm" path="res://Font/ARIBLK.TTF" id="13_qr3b0"]
 [ext_resource type="PackedScene" uid="uid://i4j5o8gkuyr0" path="res://ui/leaderboard.tscn" id="19_7sjgu"]
 [ext_resource type="VideoStream" path="res://Video/RAT_WARS_Fail.ogv" id="19_xptxg"]
@@ -161,6 +163,7 @@ grow_vertical = 2
 stream = ExtResource("19_xptxg")
 
 [node name="Label" type="Label" parent="GUILayer/GUI/LoseVideoPanel"]
+visible = false
 z_index = 4
 layout_mode = 0
 offset_left = 480.0
@@ -176,10 +179,10 @@ text = "YOU LOSE"
 top_level = true
 z_index = 4
 layout_mode = 0
-offset_left = 586.0
-offset_top = 372.0
-offset_right = 918.0
-offset_bottom = 456.0
+offset_left = 268.0
+offset_top = 180.0
+offset_right = 600.0
+offset_bottom = 264.0
 theme = ExtResource("4_f6gen")
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
@@ -200,10 +203,10 @@ text = "TRY AGAIN"
 top_level = true
 z_index = 4
 layout_mode = 0
-offset_left = 585.0
-offset_top = 506.0
-offset_right = 917.0
-offset_bottom = 590.0
+offset_left = 932.0
+offset_top = 178.0
+offset_right = 1264.0
+offset_bottom = 262.0
 theme = ExtResource("4_f6gen")
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
@@ -219,6 +222,30 @@ theme_override_colors/icon_hover_pressed_color = Color(1, 1, 1, 1)
 theme_override_colors/icon_focus_color = Color(1, 1, 1, 1)
 theme_override_colors/icon_disabled_color = Color(1, 1, 1, 1)
 text = "GIVE UP"
+
+[node name="video_lose_bg" type="VideoStreamPlayer" parent="GUILayer/GUI/LoseVideoPanel"]
+unique_name_in_owner = true
+visible = false
+z_index = 3
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stream = ExtResource("12_qj38w")
+
+[node name="video_lose_bg_loop" type="VideoStreamPlayer" parent="GUILayer/GUI/LoseVideoPanel"]
+unique_name_in_owner = true
+visible = false
+z_index = 3
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stream = ExtResource("13_0dr2r")
 
 [node name="WinVideoPanel" type="Panel" parent="GUILayer/GUI"]
 unique_name_in_owner = true
@@ -463,7 +490,7 @@ offset_bottom = 837.0
 text = "PLAY AGAIN
 "
 
-[node name="exit_game_button" type="Button" parent="GUILayer/GUI/LeaderboardControl"]
+[node name="main_menu_button" type="Button" parent="GUILayer/GUI/LeaderboardControl"]
 unique_name_in_owner = true
 process_mode = 3
 top_level = true
@@ -473,7 +500,7 @@ offset_left = 835.0
 offset_top = 780.0
 offset_right = 1053.0
 offset_bottom = 839.0
-text = "EXIT GAME"
+text = "MAIN MENU"
 
 [node name="SessionUpdateTimer" type="Timer" parent="."]
 unique_name_in_owner = true
@@ -487,10 +514,12 @@ wait_time = 45.0
 [connection signal="finished" from="GUILayer/GUI/LoseVideoPanel/video_lose" to="." method="_on_video_lose_finished"]
 [connection signal="pressed" from="GUILayer/GUI/LoseVideoPanel/try_again_button" to="." method="_on_play_again_button_pressed"]
 [connection signal="pressed" from="GUILayer/GUI/LoseVideoPanel/give_up_button" to="." method="_on_give_up_button_pressed"]
+[connection signal="finished" from="GUILayer/GUI/LoseVideoPanel/video_lose_bg" to="." method="_on_video_lose_bg_finished"]
+[connection signal="finished" from="GUILayer/GUI/LoseVideoPanel/video_lose_bg_loop" to="." method="_on_video_lose_bg_loop_finished"]
 [connection signal="finished" from="GUILayer/GUI/WinVideoPanel/video_win" to="." method="_on_video_win_finished"]
 [connection signal="click_end" from="GUILayer/GUI/WinVideoPanel/WinScoreForm/btn_submit_score" to="." method="_on_btn_submit_score_click_end"]
 [connection signal="pressed" from="GUILayer/GUI/LeaderboardControl/play_again_button" to="." method="_on_play_again_button_pressed"]
-[connection signal="pressed" from="GUILayer/GUI/LeaderboardControl/exit_game_button" to="." method="_on_give_up_button_pressed"]
+[connection signal="pressed" from="GUILayer/GUI/LeaderboardControl/main_menu_button" to="." method="_on_give_up_button_pressed"]
 [connection signal="timeout" from="SessionUpdateTimer" to="." method="_on_session_update_timer_timeout"]
 
 [editable path="HurtBox"]
