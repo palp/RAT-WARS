@@ -14,11 +14,12 @@ var angle = Vector2.ZERO
 @onready var player = get_tree().get_first_node_in_group("player")
 @onready var sprite = $Sprite2D
 @onready var collision = $CollisionShape2D
+@onready var hitboxcollision = $HitBox/CollisionShape2D
 
 signal remove_from_array(object)
 
 func _ready():
-	print_debug("Puddle ready, position " + str(position))
+	sprite.rotation = deg_to_rad(randf_range(0,360))
 	match level:
 		1:
 			hp = 999

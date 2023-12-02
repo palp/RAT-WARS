@@ -2,6 +2,7 @@ extends Node
 
 
 const ICON_PATH = "res://Textures/Items/Upgrades/"
+const RAT_ICON_PATH = "res://assets/player/upgrades/"
 const WEAPON_PATH = "res://Textures/Items/Weapons/"
 const RAT_WEAPON_PATH = "res://assets/player/attacks/"
 const UPGRADES = {
@@ -16,7 +17,7 @@ const UPGRADES = {
 	},
 	"icespear2": {
 
-		"icon": WEAPON_PATH + "stonefist.png",
+		"icon": RAT_WEAPON_PATH + "stonefist.png",
 		"displayname": "STONEFIST",
 		"details": "An addition STONEFIST is thrown",
 
@@ -25,7 +26,7 @@ const UPGRADES = {
 		"type": "weapon"
 	},
 	"icespear3": {
-		"icon": WEAPON_PATH + "stonefist.png",
+		"icon": RAT_WEAPON_PATH + "stonefist.png",
 		"displayname": "STONEFIST",
 		"details": "STONEFISTS now blast through another enemy and do + 3 damage",
 		"level": "Level: 3",
@@ -33,8 +34,7 @@ const UPGRADES = {
 		"type": "weapon"
 	},
 	"icespear4": {
-
-		"icon": WEAPON_PATH + "stonefist.png",
+		"icon": RAT_WEAPON_PATH + "stonefist.png",
 		"displayname": "STONEFIST",
 		"details": "An additional 2 STONEFISTS are thrown",
 		"level": "Level: 4",
@@ -202,32 +202,32 @@ const UPGRADES = {
 		"type": "upgrade"
 	},
 	"speed1": {
-		"icon": ICON_PATH + "boots_4_green.png",
-		"displayname": "Speed",
+		"icon": RAT_ICON_PATH + "darkenough.png",
+		"displayname": "DARK ENOUGH",
 		"details": "Movement Speed Increased by 50% of base speed",
 		"level": "Level: 1",
 		"prerequisite": [],
 		"type": "upgrade"
 	},
 	"speed2": {
-		"icon": ICON_PATH + "boots_4_green.png",
-		"displayname": "Speed",
+		"icon": RAT_ICON_PATH + "darkenough.png",
+		"displayname": "DARK ENOUGH",
 		"details": "Movement Speed Increased by an additional 50% of base speed",
 		"level": "Level: 2",
 		"prerequisite": ["speed1"],
 		"type": "upgrade"
 	},
 	"speed3": {
-		"icon": ICON_PATH + "boots_4_green.png",
-		"displayname": "Speed",
+		"icon": RAT_ICON_PATH + "darkenough.png",
+		"displayname": "DARK ENOUGH",
 		"details": "Movement Speed Increased by an additional 50% of base speed",
 		"level": "Level: 3",
 		"prerequisite": ["speed2"],
 		"type": "upgrade"
 	},
 	"speed4": {
-		"icon": ICON_PATH + "boots_4_green.png",
-		"displayname": "Speed",
+		"icon": RAT_ICON_PATH + "darkenough.png",
+		"displayname": "DARK ENOUGH",
 		"details": "Movement Speed Increased an additional 50% of base speed",
 		"level": "Level: 4",
 		"prerequisite": ["speed3"],
