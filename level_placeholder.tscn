@@ -88,7 +88,7 @@ enemy = ExtResource("9_iksbi")
 enemy_num = 1
 enemy_spawn_delay = null
 
-[node name="World" type="Node2D"]
+[node name="World2" type="Node2D"]
 y_sort_enabled = true
 
 [node name="Background" type="Sprite2D" parent="."]
