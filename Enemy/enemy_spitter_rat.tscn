@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://dhucglqau1jbg"]
+[gd_scene load_steps=9 format=3 uid="uid://cicd0plbiord6"]
 
 [ext_resource type="Script" path="res://Enemy/enemy.gd" id="1_d8g1e"]
 [ext_resource type="Texture2D" uid="uid://ol37si0fasq8" path="res://assets/enemy/SpitterRat/SpitterRat1_walk_16.png" id="1_p38jk"]
@@ -52,8 +52,10 @@ script = ExtResource("1_d8g1e")
 movement_speed = 50.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(3, 3)
 texture = ExtResource("1_p38jk")
 vframes = 16
+frame = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-28, -12.5)
