@@ -1,15 +1,17 @@
-[gd_scene load_steps=23 format=3 uid="uid://b4kwl8s8nbbnh"]
+[gd_scene load_steps=25 format=3 uid="uid://b4kwl8s8nbbnh"]
 
+[ext_resource type="Script" path="res://TerrainGen.gd" id="1_qwf6y"]
+[ext_resource type="PackedScene" uid="uid://b854gcq3q7qme" path="res://assets/world/the_sprawl_terrain_packs.tscn" id="2_2dud3"]
 [ext_resource type="PackedScene" uid="uid://6rkaprmq4ect" path="res://Player/player.tscn" id="2_40uwv"]
 [ext_resource type="Theme" uid="uid://bwayc6rbhtvxj" path="res://assets/ui/theme/HEALTH_theme.tres" id="3_8j42b"]
 [ext_resource type="PackedScene" uid="uid://ba2claihwes2y" path="res://Utility/enemy_spawner.tscn" id="3_p01g4"]
-[ext_resource type="PackedScene" uid="uid://bvp4js6prjv2k" path="res://Enemy/enemy_small_rat.tscn" id="4_detmb"]
-[ext_resource type="PackedScene" uid="uid://gvm5jcbbgwdv" path="res://Enemy/enemy_mutated_rat.tscn" id="4_ee8bm"]
+[ext_resource type="PackedScene" path="res://Enemy/enemy_small_rat.tscn" id="4_detmb"]
+[ext_resource type="PackedScene" uid="uid://gvm5jcbbgwdv" path="res://Enemy/enemy_kobold_weak.tscn" id="4_ee8bm"]
 [ext_resource type="PackedScene" uid="uid://do8nu166getvr" path="res://ui/pause_menu.tscn" id="5_e8x4x"]
 [ext_resource type="Script" path="res://Utility/spawn_info.gd" id="5_jj7s8"]
-[ext_resource type="PackedScene" uid="uid://dhucglqau1jbg" path="res://Enemy/enemy_spitter_rat.tscn" id="7_pxitb"]
-[ext_resource type="PackedScene" uid="uid://what6ybd045w" path="res://Enemy/enemy_balloon_rat.tscn" id="8_rm5oc"]
-[ext_resource type="PackedScene" uid="uid://clkwok10blwsl" path="res://Enemy/enemy_boss_verminator.tscn" id="9_iksbi"]
+[ext_resource type="PackedScene" path="res://Enemy/enemy_spitter_rat.tscn" id="7_pxitb"]
+[ext_resource type="PackedScene" path="res://Enemy/enemy_balloon_rat.tscn" id="8_rm5oc"]
+[ext_resource type="PackedScene" path="res://Enemy/enemy_boss_verminator.tscn" id="9_iksbi"]
 [ext_resource type="AudioStream" uid="uid://bxntkvkn4o6u7" path="res://Audio/Music/06 HEALTH - UNLOVED - Instrumental Master.mp3" id="10_mpto5"]
 [ext_resource type="Script" path="res://Audio/Music/snd_Music.gd" id="11_ovtx6"]
 [ext_resource type="Script" path="res://ui/pause_button.gd" id="13_wx351"]
@@ -95,6 +97,11 @@ texture_filter = 2
 texture_repeat = 2
 region_enabled = true
 region_rect = Rect2(-4000, -4000, 4000, 4000)
+
+[node name="TerrainGenOrigin" type="Node2D" parent="."]
+script = ExtResource("1_qwf6y")
+packedscene_terrain_horizontal = ExtResource("2_2dud3")
+scroll_horizontal = true
 
 [node name="Player" parent="." instance=ExtResource("2_40uwv")]
 autopilot = false
