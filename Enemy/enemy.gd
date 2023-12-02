@@ -7,6 +7,7 @@ class_name EnemyBase
 @export var knockback_recovery = 3.5
 @export var experience = 1
 @export var enemy_damage = 1
+@export var trigger_victory = false
 var knockback = Vector2.ZERO
 var slow_percent = 0.0
 var tick_damage = 0
@@ -62,6 +63,8 @@ func death():
 	new_gem.global_position = global_position
 	new_gem.experience = experience
 	loot_base.call_deferred("add_child",new_gem)
+	if trigger_victory:
+		player.victory()
 	queue_free()
 
 func _on_hurt_box_hurt(damage, angle, knockback_amount):
