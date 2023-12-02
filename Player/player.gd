@@ -72,11 +72,16 @@ var enemy_close = []
 @onready var sndVictory = get_node("%snd_victory")
 @onready var sndLose = get_node("%snd_lose")
 
-@onready var victoryPanel = get_node("%VictoryPanel")
-@onready var victoryPanelSound = get_node("%VictoryPanelSound")
+@onready var winVideoPanel = get_node("%WinVideoPanel")
+@onready var videoWin = get_node("%video_win")
+@onready var winScoreForm = get_node("%WinScoreForm")
+@onready var winScoreLabel = get_node("%WinScoreLabel")
 @onready var scoreSubmitName = get_node("%score_submit_name")
 @onready var leaderboard = get_node("%leaderboard") as Leaderboard
 @onready var playAgainButton = get_node("%play_again_button")
+@onready var loseVideoPanel = get_node("%LoseVideoPanel")
+@onready var videoLose = get_node("%video_lose")
+@onready var leaderboardControl = get_node("%LeaderboardControl")
 
 #Game session
 @onready var sessionUpdateTimer = get_node("%SessionUpdateTimer") as Timer
@@ -395,32 +400,19 @@ func death():
 	emit_signal("playerdeath")
 	get_tree().paused = true
 
-	if time >= 30:
+	if time >= 60:
 		var name = choose_name()
 		scoreSubmitName.text = name
-		victoryPanel.visible = true
-		var tween = victoryPanel.create_tween()
-		(
-			tween
-			. tween_property(victoryPanel, "position", Vector2(220, 50), 3.0)
-			. set_trans(Tween.TRANS_QUINT)
-			. set_ease(Tween.EASE_OUT)
-		)
-		tween.play()
-		victoryPanelSound.play()
+		winScoreLabel.text = str(score)
+		winScoreForm.visible = false
+		winVideoPanel.visible = true
+		videoWin.visible = true
+		videoWin.play()
 	else:
-		deathPanel.visible = true
-		lblResult.text = "You Lose"
-		var tween = deathPanel.create_tween()
-		(
-			tween
-			. tween_property(deathPanel, "position", Vector2(220, 50), 3.0)
-			. set_trans(Tween.TRANS_QUINT)
-			. set_ease(Tween.EASE_OUT)
-		)
-		tween.play()
-		sndLose.play()
-
+		loseVideoPanel.visible = true
+		videoLose.visible = true
+		videoLose.play()
+		
 func choose_name():
 	var name = "HEALTH fan"
 	if current_skin == "john" or current_skin == "john_plugsuit":
@@ -442,17 +434,27 @@ func _on_session_update_timer_timeout():
 
 
 func _on_btn_submit_score_click_end():
-	victoryPanel.visible = false
+	winScoreForm.visible = false
 	if game_session.has("id"):
 		var name = scoreSubmitName.text
 		if name.length() < 2:
 			name = choose_name()
 		var leaderboard_scores = await Server.submit_game_session(score, name)
 		leaderboard.display(leaderboard_scores)
-	leaderboard.visible = true
-	playAgainButton.visible = true
+	leaderboardControl.visible = true
 
 
 func _on_play_again_button_pressed():
 	get_tree().paused = false
 	get_tree().reload_current_scene()
+
+
+func _on_video_lose_finished():
+	videoLose.visible = false
+
+func _on_give_up_button_pressed():
+	get_tree().quit()
+
+func _on_video_win_finished():
+	winScoreForm.visible = true
+	videoWin.visible = false

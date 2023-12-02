@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://6rkaprmq4ect"]
+[gd_scene load_steps=29 format=3 uid="uid://6rkaprmq4ect"]
 
 [ext_resource type="Script" path="res://Player/player.gd" id="1_37q80"]
 [ext_resource type="Texture2D" uid="uid://bd1dsmqbq3l7" path="res://assets/player/character/john/john_placeholder.png" id="2_1lecr"]
@@ -13,12 +13,14 @@
 [ext_resource type="Script" path="res://Player/Attack/attack_manager.gd" id="9_e47dm"]
 [ext_resource type="Texture2D" uid="uid://b5l20dpjaj216" path="res://Textures/GUI/exp_background1.png" id="11_6u3jb"]
 [ext_resource type="PackedScene" uid="uid://b7c7gsdx2rkjm" path="res://Utility/basic_button.tscn" id="12_i8esf"]
+[ext_resource type="VideoStream" path="res://Video/RAT_WARS_Win.ogv" id="12_k73xi"]
 [ext_resource type="Texture2D" uid="uid://t7d7oq4ukono" path="res://Textures/GUI/exp_progress1.png" id="12_tesno"]
 [ext_resource type="FontFile" uid="uid://bejghu08d1uvm" path="res://Font/ARIBLK.TTF" id="13_qr3b0"]
 [ext_resource type="AudioStream" uid="uid://diaghcy4b4jm" path="res://Audio/SoundEffect/demigods_win.ogg" id="14_78iji"]
 [ext_resource type="AudioStream" uid="uid://dcl830nr5lion" path="res://Audio/SoundEffect/dsmv_loss.ogg" id="15_b8x5g"]
 [ext_resource type="FontFile" uid="uid://b0d1fu8iufshl" path="res://Font/ARIAL.TTF" id="15_cin0e"]
 [ext_resource type="PackedScene" uid="uid://i4j5o8gkuyr0" path="res://ui/leaderboard.tscn" id="19_7sjgu"]
+[ext_resource type="VideoStream" path="res://Video/RAT_WARS_Fail.ogv" id="19_xptxg"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_nffdp"]
 height = 36.0
@@ -126,6 +128,214 @@ anchors_preset = 0
 offset_right = 1536.0
 offset_bottom = 864.0
 
+[node name="LoseVideoPanel" type="Panel" parent="GUILayer/GUI"]
+unique_name_in_owner = true
+process_mode = 3
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="GUILayer/GUI/LoseVideoPanel"]
+z_index = 2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="video_lose" type="VideoStreamPlayer" parent="GUILayer/GUI/LoseVideoPanel"]
+unique_name_in_owner = true
+process_mode = 3
+visible = false
+top_level = true
+z_index = 5
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stream = ExtResource("19_xptxg")
+
+[node name="Label" type="Label" parent="GUILayer/GUI/LoseVideoPanel"]
+z_index = 4
+layout_mode = 0
+offset_left = 480.0
+offset_top = 120.0
+offset_right = 1052.0
+offset_bottom = 243.0
+theme = ExtResource("4_f6gen")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 120
+text = "YOU LOSE"
+
+[node name="try_again_button" type="Button" parent="GUILayer/GUI/LoseVideoPanel"]
+top_level = true
+z_index = 4
+layout_mode = 0
+offset_left = 586.0
+offset_top = 372.0
+offset_right = 918.0
+offset_bottom = 456.0
+theme = ExtResource("4_f6gen")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_disabled_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_colors/icon_normal_color = Color(1, 1, 1, 1)
+theme_override_colors/icon_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/icon_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/icon_hover_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/icon_focus_color = Color(1, 1, 1, 1)
+theme_override_colors/icon_disabled_color = Color(1, 1, 1, 1)
+text = "TRY AGAIN"
+
+[node name="give_up_button" type="Button" parent="GUILayer/GUI/LoseVideoPanel"]
+top_level = true
+z_index = 4
+layout_mode = 0
+offset_left = 585.0
+offset_top = 506.0
+offset_right = 917.0
+offset_bottom = 590.0
+theme = ExtResource("4_f6gen")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_disabled_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_colors/icon_normal_color = Color(1, 1, 1, 1)
+theme_override_colors/icon_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/icon_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/icon_hover_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/icon_focus_color = Color(1, 1, 1, 1)
+theme_override_colors/icon_disabled_color = Color(1, 1, 1, 1)
+text = "GIVE UP"
+
+[node name="WinVideoPanel" type="Panel" parent="GUILayer/GUI"]
+unique_name_in_owner = true
+process_mode = 3
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="GUILayer/GUI/WinVideoPanel"]
+z_index = 2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="video_win" type="VideoStreamPlayer" parent="GUILayer/GUI/WinVideoPanel"]
+unique_name_in_owner = true
+process_mode = 3
+visible = false
+top_level = true
+z_index = 5
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stream = ExtResource("12_k73xi")
+
+[node name="WinScoreForm" type="Control" parent="GUILayer/GUI/WinVideoPanel"]
+unique_name_in_owner = true
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="WinScoreLabel2" type="Label" parent="GUILayer/GUI/WinVideoPanel/WinScoreForm"]
+z_index = 4
+offset_left = 516.0
+offset_top = 95.0
+offset_right = 1034.0
+offset_bottom = 218.0
+theme = ExtResource("4_f6gen")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 120
+text = "YOU WIN"
+
+[node name="WinScorePromptLabel" type="Label" parent="GUILayer/GUI/WinVideoPanel/WinScoreForm"]
+z_index = 3
+layout_mode = 0
+offset_left = 560.0
+offset_top = 283.0
+offset_right = 973.0
+offset_bottom = 321.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "Enter your RAT WARRIOR name and join the ranks!"
+
+[node name="WinScoreLabel" type="Label" parent="GUILayer/GUI/WinVideoPanel/WinScoreForm"]
+unique_name_in_owner = true
+z_index = 4
+offset_left = 869.0
+offset_top = 217.0
+offset_right = 1015.0
+offset_bottom = 276.0
+theme = ExtResource("4_f6gen")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 50
+text = "12345"
+
+[node name="score_submit_name" type="LineEdit" parent="GUILayer/GUI/WinVideoPanel/WinScoreForm"]
+unique_name_in_owner = true
+z_index = 4
+layout_mode = 0
+offset_left = 516.0
+offset_top = 333.0
+offset_right = 1008.0
+offset_bottom = 408.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_selected_color = Color(0.866667, 0.866667, 0.866667, 1)
+theme_override_font_sizes/font_size = 48
+text = "JOHNNY"
+alignment = 1
+max_length = 25
+select_all_on_focus = true
+
+[node name="btn_submit_score" parent="GUILayer/GUI/WinVideoPanel/WinScoreForm" instance=ExtResource("12_i8esf")]
+top_level = true
+z_index = 4
+layout_mode = 0
+offset_left = 617.0
+offset_top = 440.0
+offset_right = 925.0
+offset_bottom = 493.0
+theme = ExtResource("4_f6gen")
+text = "OK"
+
+[node name="WinScorePrefixLabel" type="Label" parent="GUILayer/GUI/WinVideoPanel/WinScoreForm"]
+z_index = 4
+layout_mode = 0
+offset_left = 528.0
+offset_top = 217.0
+offset_right = 861.0
+offset_bottom = 276.0
+theme = ExtResource("4_f6gen")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 50
+text = "YOUR SCORE:"
+
 [node name="ExperienceBar" type="TextureProgressBar" parent="GUILayer/GUI"]
 unique_name_in_owner = true
 layout_mode = 0
@@ -196,7 +406,6 @@ bus = &"SFX"
 [node name="DeathPanel" type="Panel" parent="GUILayer/GUI"]
 unique_name_in_owner = true
 process_mode = 2
-visible = false
 layout_mode = 0
 offset_left = 230.0
 offset_top = -266.0
@@ -263,35 +472,6 @@ stream = ExtResource("14_78iji")
 volume_db = -10.0
 bus = &"SFX"
 
-[node name="btn_submit_score" parent="GUILayer/GUI/VictoryPanel" instance=ExtResource("12_i8esf")]
-layout_mode = 0
-offset_left = 131.0
-offset_top = 195.0
-offset_right = 265.0
-offset_bottom = 248.0
-theme = ExtResource("4_f6gen")
-text = "OK"
-
-[node name="lbl_prompt" type="Label" parent="GUILayer/GUI/VictoryPanel"]
-layout_mode = 0
-offset_left = 16.0
-offset_top = 45.0
-offset_right = 351.0
-offset_bottom = 92.0
-text = "Enter your name, RAT WARRIOR"
-
-[node name="score_submit_name" type="LineEdit" parent="GUILayer/GUI/VictoryPanel"]
-unique_name_in_owner = true
-layout_mode = 0
-offset_left = 24.0
-offset_top = 95.0
-offset_right = 370.0
-offset_bottom = 138.0
-text = "JOHNNY"
-alignment = 1
-max_length = 25
-select_all_on_focus = true
-
 [node name="lblTimer" type="Label" parent="GUILayer/GUI"]
 unique_name_in_owner = true
 layout_mode = 0
@@ -324,27 +504,45 @@ offset_bottom = 159.0
 scale = Vector2(3, 3)
 columns = 10
 
-[node name="leaderboard" parent="GUILayer/GUI" instance=ExtResource("19_7sjgu")]
+[node name="LeaderboardControl" type="Control" parent="GUILayer/GUI"]
 unique_name_in_owner = true
 visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="leaderboard" parent="GUILayer/GUI/LeaderboardControl" instance=ExtResource("19_7sjgu")]
+unique_name_in_owner = true
+top_level = true
+z_index = 5
 layout_mode = 1
 offset_left = 560.0
-offset_top = 88.0
+offset_top = 24.0
 offset_right = -482.0
-offset_bottom = -33.0
+offset_bottom = -97.0
 
-[node name="play_again_button" type="Button" parent="GUILayer/GUI"]
-unique_name_in_owner = true
+[node name="play_again_button" type="Button" parent="GUILayer/GUI/LeaderboardControl"]
 process_mode = 3
-visible = false
 top_level = true
-layout_mode = 0
-offset_left = 704.0
-offset_top = 828.0
-offset_right = 929.0
-offset_bottom = 859.0
+z_index = 6
+offset_left = 562.0
+offset_top = 778.0
+offset_right = 776.0
+offset_bottom = 837.0
 text = "PLAY AGAIN
 "
+
+[node name="exit_game_button" type="Button" parent="GUILayer/GUI/LeaderboardControl"]
+unique_name_in_owner = true
+process_mode = 3
+top_level = true
+z_index = 6
+layout_mode = 0
+offset_left = 835.0
+offset_top = 780.0
+offset_right = 1053.0
+offset_bottom = 839.0
+text = "EXIT GAME"
 
 [node name="SessionUpdateTimer" type="Timer" parent="."]
 unique_name_in_owner = true
@@ -355,9 +553,14 @@ wait_time = 45.0
 [connection signal="body_exited" from="EnemyDetectionArea" to="." method="_on_enemy_detection_area_body_exited"]
 [connection signal="area_entered" from="GrabArea" to="." method="_on_grab_area_area_entered"]
 [connection signal="area_entered" from="CollectArea" to="." method="_on_collect_area_area_entered"]
+[connection signal="finished" from="GUILayer/GUI/LoseVideoPanel/video_lose" to="." method="_on_video_lose_finished"]
+[connection signal="pressed" from="GUILayer/GUI/LoseVideoPanel/try_again_button" to="." method="_on_play_again_button_pressed"]
+[connection signal="pressed" from="GUILayer/GUI/LoseVideoPanel/give_up_button" to="." method="_on_give_up_button_pressed"]
+[connection signal="finished" from="GUILayer/GUI/WinVideoPanel/video_win" to="." method="_on_video_win_finished"]
+[connection signal="click_end" from="GUILayer/GUI/WinVideoPanel/WinScoreForm/btn_submit_score" to="." method="_on_btn_submit_score_click_end"]
 [connection signal="click_end" from="GUILayer/GUI/DeathPanel/btn_menu" to="." method="_on_btn_menu_click_end"]
-[connection signal="click_end" from="GUILayer/GUI/VictoryPanel/btn_submit_score" to="." method="_on_btn_submit_score_click_end"]
-[connection signal="pressed" from="GUILayer/GUI/play_again_button" to="." method="_on_play_again_button_pressed"]
+[connection signal="pressed" from="GUILayer/GUI/LeaderboardControl/play_again_button" to="." method="_on_play_again_button_pressed"]
+[connection signal="pressed" from="GUILayer/GUI/LeaderboardControl/exit_game_button" to="." method="_on_give_up_button_pressed"]
 [connection signal="timeout" from="SessionUpdateTimer" to="." method="_on_session_update_timer_timeout"]
 
 [editable path="HurtBox"]
