@@ -104,6 +104,7 @@ packedscene_terrain_horizontal = ExtResource("2_2dud3")
 scroll_horizontal = true
 
 [node name="Player" parent="." instance=ExtResource("2_40uwv")]
+top_level = true
 autopilot = false
 
 [node name="EnemySpawner" parent="." instance=ExtResource("3_p01g4")]
