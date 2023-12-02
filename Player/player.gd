@@ -128,10 +128,7 @@ func get_pathing_target():
 
 
 func _ready():
-	upgrade_character("dieslow1")
-	upgrade_character("dieslow2")
-	upgrade_character("dieslow3")
-	upgrade_character("dieslow4")
+	upgrade_character("vinyl1")
 	set_expbar(experience, calculate_experiencecap())
 	_on_hurt_box_hurt(0, 0, 0)
 	for content in Unlocks.unlocked_content:
