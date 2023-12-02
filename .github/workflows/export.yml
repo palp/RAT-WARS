@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - main
+      - godot-4.2
     tags:
       - v*
 
