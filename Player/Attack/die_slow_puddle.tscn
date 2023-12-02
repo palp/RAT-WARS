@@ -19,14 +19,12 @@ particles_anim_loop = false
 gradient = SubResource("Gradient_cx2j7")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_i1ugi"]
+particle_flag_disable_z = true
 emission_shape = 1
 emission_sphere_radius = 63.69
-particle_flag_disable_z = true
-gravity = Vector3(0, -150, 0)
-orbit_velocity_min = 0.0
-orbit_velocity_max = 0.0
 angle_min = -489.5
 angle_max = 51.0
+gravity = Vector3(0, -150, 0)
 scale_max = 2.0
 color = Color(1, 0.560784, 0.0470588, 1)
 color_ramp = SubResource("GradientTexture1D_utsdk")
