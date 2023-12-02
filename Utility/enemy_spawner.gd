@@ -29,6 +29,7 @@ func spawn_enemies():
 							continue
 					var enemy_spawn = new_enemy.instantiate()
 					enemy_spawn.global_position = position
+					enemy_spawn.top_level = true
 					add_sibling.call_deferred(enemy_spawn)
 					counter += 1
 	
