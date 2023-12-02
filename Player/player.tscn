@@ -11,17 +11,13 @@
 [ext_resource type="AudioStream" uid="uid://ul8hunj8tl2t" path="res://Audio/SoundEffect/levelup.ogg" id="7_wl7d2"]
 [ext_resource type="Script" path="res://Player/StateMachine/Pathing.gd" id="7_xn56v"]
 [ext_resource type="Script" path="res://Player/Attack/attack_manager.gd" id="9_e47dm"]
-[ext_resource type="AudioStream" uid="uid://bnv76nm5171dn" path="res://Audio/SoundEffect/Victory.wav" id="10_rwm3p"]
 [ext_resource type="Texture2D" uid="uid://b5l20dpjaj216" path="res://Textures/GUI/exp_background1.png" id="11_6u3jb"]
-[ext_resource type="AudioStream" uid="uid://ca6physj6mqei" path="res://Audio/SoundEffect/Lose.ogg" id="11_28kfi"]
 [ext_resource type="PackedScene" uid="uid://b7c7gsdx2rkjm" path="res://Utility/basic_button.tscn" id="12_i8esf"]
 [ext_resource type="Texture2D" uid="uid://t7d7oq4ukono" path="res://Textures/GUI/exp_progress1.png" id="12_tesno"]
 [ext_resource type="FontFile" uid="uid://bejghu08d1uvm" path="res://Font/ARIBLK.TTF" id="13_qr3b0"]
-[ext_resource type="FontFile" uid="uid://b0d1fu8iufshl" path="res://Font/ARIAL.TTF" id="15_cin0e"]
-[ext_resource type="PackedScene" uid="uid://b7c7gsdx2rkjm" path="res://Utility/basic_button.tscn" id="12_i8esf"]
 [ext_resource type="AudioStream" uid="uid://diaghcy4b4jm" path="res://Audio/SoundEffect/demigods_win.ogg" id="14_78iji"]
 [ext_resource type="AudioStream" uid="uid://dcl830nr5lion" path="res://Audio/SoundEffect/dsmv_loss.ogg" id="15_b8x5g"]
-
+[ext_resource type="FontFile" uid="uid://b0d1fu8iufshl" path="res://Font/ARIAL.TTF" id="15_cin0e"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_nffdp"]
 height = 36.0
