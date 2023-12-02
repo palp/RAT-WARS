@@ -15,6 +15,23 @@ var experience_level = 1
 var collected_experience = 0
 var score = 0
 
+#Characters
+var skins = {
+	"john": preload("res://assets/player/character/john/john_placeholder.png"),	
+	"john_plugsuit": preload("res://assets/player/character/john/john_plugsuit.png"),
+	"jake": preload("res://assets/player/character/jake/jake.png"),
+	"beej": preload("res://assets/player/character/beej/beej.png"),
+}
+
+var available_skins = [
+	"john",
+	"jake",
+	"beej",
+]
+
+var current_skin = "john"
+
+
 #Attacks
 var javelin = preload("res://Player/Attack/javelin.tscn")
 
@@ -111,13 +128,14 @@ func get_pathing_target():
 
 
 func _ready():
-	upgrade_character("vinyl1")
+	upgrade_character("icespear1")
 	set_expbar(experience, calculate_experiencecap())
 	_on_hurt_box_hurt(0, 0, 0)
 	for content in Unlocks.unlocked_content:
 		_on_content_unlocked(content)
 	Unlocks.content_unlocked.connect(_on_content_unlocked)
-
+	current_skin = available_skins.pick_random()
+	get_node(NodePath("Sprite2D")).texture = skins[current_skin]
 	# TODO Disable when autopilot is enabled, also make autopilot state cancel session
 	game_session = await Server.create_game_session()
 	sessionUpdateTimer.start(45)
@@ -125,9 +143,8 @@ func _ready():
 
 func _on_content_unlocked(content):
 	if content == "plugsuit":
-		get_node(NodePath("Sprite2D")).texture = load(
-			"res://assets/player/character/john/john_plugsuit.png"
-		)
+		current_skin = "john_plugsuit"
+		get_node(NodePath("Sprite2D")).texture = skins[current_skin]
 
 
 func _physics_process(delta):
@@ -165,7 +182,7 @@ func get_random_target():
 
 
 func _on_enemy_detection_area_body_entered(body):
-	if not enemy_close.has(body):
+	if not enemy_close.has(body):		
 		enemy_close.append(body)
 
 
@@ -228,7 +245,7 @@ func levelup():
 	var tween = levelPanel.create_tween()
 	(
 		tween
-		. tween_property(levelPanel, "position", Vector2(220, 50), 0.2)
+		. tween_property(levelPanel, "position", Vector2(568, 200), 0.8)
 		. set_trans(Tween.TRANS_QUINT)
 		. set_ease(Tween.EASE_IN)
 	)
@@ -290,6 +307,18 @@ func upgrade_character(upgrade):
 			attackManager.attacks["javelin"].level = 3
 		"javelin4":
 			attackManager.attacks["javelin"].level = 4
+		"dieslow1":
+			attackManager.attacks["die_slow"].level = 1
+			attackManager.attacks["die_slow"].base_ammo += 1
+		"dieslow2":
+			attackManager.attacks["die_slow"].level = 2
+			attackManager.attacks["die_slow"].base_ammo += 1
+		"dieslow3":
+			attackManager.attacks["die_slow"].level = 3
+			attackManager.attacks["die_slow"].base_ammo += 1
+		"dieslow4":
+			attackManager.attacks["die_slow"].level = 4
+			attackManager.attacks["die_slow"].base_ammo += 1
 		"armor1", "armor2", "armor3", "armor4":
 			armor += 1
 		"speed1", "speed2", "speed3", "speed4":
@@ -402,9 +431,15 @@ func death():
 
 func submit_score():
 	if game_session.has("id"):
-		# Random names for now
-		var names = ["Johnny", "Jake", "Beej"]
-		var leaderboard = await Server.submit_game_session(score, names.pick_random())
+		var name = "HEALTH fan"
+		if current_skin == "john" or current_skin == "john_plugsuit":
+			name = "Johnny"
+		elif current_skin == "beej":
+			name = "Beej"
+		elif current_skin == "jake":
+			name = "Jake"
+		# TODO Prompt for a name, send default on timeout/cancel
+		var leaderboard = await Server.submit_game_session(score, name)
 
 
 func _on_btn_menu_click_end():

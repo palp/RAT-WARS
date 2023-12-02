@@ -20,6 +20,7 @@ config/icon="res://icon.svg"
 UpgradeDb="*res://Utility/upgrade_db.tscn"
 Unlocks="*res://Utility/unlocks.gd"
 Server="*res://Utility/server.gd"
+GameConfig="*res://Utility/game_config.gd"
 
 [display]
 

@@ -96,6 +96,7 @@ stream = ExtResource("5_tph6t")
 volume_db = -20.0
 bus = &"SFX"
 
+[connection signal="dot" from="HurtBox" to="." method="_on_hurt_box_dot"]
 [connection signal="hurt" from="HurtBox" to="." method="_on_hurt_box_hurt"]
 
 [editable path="HurtBox"]

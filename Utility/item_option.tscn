@@ -2,15 +2,15 @@
 
 [ext_resource type="Texture2D" uid="uid://bu2son8g2konp" path="res://Textures/Items/Weapons/sword.png" id="1_583l0"]
 [ext_resource type="Script" path="res://Utility/item_option.gd" id="1_unejd"]
-[ext_resource type="FontFile" uid="uid://cb4e8g30xxp5u" path="res://Font/tenderness.otf" id="2_wif5r"]
+[ext_resource type="FontFile" uid="uid://b0d1fu8iufshl" path="res://Font/ARIAL.TTF" id="3_7frhy"]
 
 [node name="ItemOption" type="ColorRect"]
-custom_minimum_size = Vector2(180, 50)
+custom_minimum_size = Vector2(480, 150)
 anchors_preset = -1
-anchor_right = 0.281
-anchor_bottom = 0.139
-offset_right = 0.159988
-offset_bottom = -0.0400047
+anchor_right = 0.312
+anchor_bottom = 0.174
+offset_right = 0.768005
+offset_bottom = -0.336014
 color = Color(0.54902, 0.54902, 0.54902, 1)
 script = ExtResource("1_unejd")
 
@@ -18,47 +18,47 @@ script = ExtResource("1_unejd")
 layout_mode = 0
 offset_left = 2.0
 offset_top = 2.0
-offset_right = 26.0
-offset_bottom = 26.0
+offset_right = 84.0
+offset_bottom = 78.0
 color = Color(0, 0, 0, 1)
 
 [node name="ItemIcon" type="TextureRect" parent="ColorRect"]
 layout_mode = 0
-offset_right = 32.0
-offset_bottom = 32.0
+offset_right = 109.0
+offset_bottom = 101.0
 scale = Vector2(0.75, 0.75)
 texture = ExtResource("1_583l0")
 
 [node name="lbl_name" type="Label" parent="."]
 layout_mode = 0
-offset_left = 39.0
-offset_top = 2.0
-offset_right = 79.0
-offset_bottom = 25.0
-theme_override_fonts/font = ExtResource("2_wif5r")
-text = "Name"
+offset_left = 91.0
+offset_top = 8.0
+offset_right = 138.0
+offset_bottom = 31.0
+theme_override_fonts/font = ExtResource("3_7frhy")
+text = "NAME"
 horizontal_alignment = 1
 
 [node name="lbl_description" type="Label" parent="."]
 layout_mode = 0
-offset_left = 4.0
-offset_top = 27.0
-offset_right = 166.0
-offset_bottom = 48.0
-theme_override_fonts/font = ExtResource("2_wif5r")
-theme_override_font_sizes/font_size = 8
+offset_left = 89.0
+offset_top = 34.0
+offset_right = 357.0
+offset_bottom = 58.0
+theme_override_fonts/font = ExtResource("3_7frhy")
+theme_override_font_sizes/font_size = 18
 text = "Description of Item"
 autowrap_mode = 3
 
 [node name="lbl_level" type="Label" parent="."]
 layout_mode = 0
-offset_left = 130.0
-offset_top = 3.0
-offset_right = 170.0
-offset_bottom = 26.0
-theme_override_fonts/font = ExtResource("2_wif5r")
-theme_override_font_sizes/font_size = 12
-text = "level: 1"
+offset_left = 402.0
+offset_top = 7.0
+offset_right = 465.0
+offset_bottom = 30.0
+theme_override_fonts/font = ExtResource("3_7frhy")
+theme_override_font_sizes/font_size = 16
+text = "LEVEL 1"
 
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

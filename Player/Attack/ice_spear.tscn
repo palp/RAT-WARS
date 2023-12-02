@@ -1,11 +1,11 @@
 [gd_scene load_steps=5 format=3 uid="uid://6png8wr01ov5"]
 
 [ext_resource type="Script" path="res://Player/Attack/ice_spear.gd" id="1_4el3j"]
-[ext_resource type="Texture2D" uid="uid://jjt1rh5e2jcp" path="res://Textures/Items/Weapons/ice_spear.png" id="1_nhh0e"]
+[ext_resource type="Texture2D" uid="uid://rte45t0vllmt" path="res://Textures/Items/Weapons/stonefist.png" id="2_lem0w"]
 [ext_resource type="AudioStream" uid="uid://cl3g2vts3nyt0" path="res://Audio/SoundEffect/ice.wav" id="3_esswn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p4tiy"]
-size = Vector2(6.36396, 33.234)
+size = Vector2(14.1421, 14.1421)
 
 [node name="IceSpear" type="Area2D" groups=["attack"]]
 top_level = true
@@ -15,11 +15,14 @@ collision_mask = 0
 script = ExtResource("1_4el3j")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_nhh0e")
+position = Vector2(0, 1.90735e-06)
+rotation = -0.71733
+texture = ExtResource("2_lem0w")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0.500001, -0.999999)
+position = Vector2(-6.74349e-07, -6.74349e-07)
 rotation = -0.785398
+scale = Vector2(2, 2)
 shape = SubResource("RectangleShape2D_p4tiy")
 
 [node name="Timer" type="Timer" parent="."]
