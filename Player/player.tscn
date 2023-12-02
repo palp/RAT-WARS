@@ -56,6 +56,8 @@ scale = Vector2(3, 3)
 texture = ExtResource("2_1lecr")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+process_callback = 0
+position_smoothing_enabled = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(1, 76)
@@ -383,18 +385,6 @@ text = "Level: 1"
 horizontal_alignment = 1
 vertical_alignment = 2
 
-[node name="HealthBar" type="TextureProgressBar" parent="GUILayer/GUI"]
-unique_name_in_owner = true
-self_modulate = Color(1, 1, 1, 0.392157)
-layout_mode = 0
-offset_left = 710.0
-offset_top = 530.0
-offset_right = 838.0
-offset_bottom = 546.0
-theme = ExtResource("4_f6gen")
-value = 50.0
-texture_progress = SubResource("GradientTexture2D_ca7jc")
-
 [node name="LevelUp" type="Panel" parent="GUILayer/GUI"]
 unique_name_in_owner = true
 process_mode = 2
@@ -505,6 +495,17 @@ text = "MAIN MENU"
 [node name="SessionUpdateTimer" type="Timer" parent="."]
 unique_name_in_owner = true
 wait_time = 45.0
+
+[node name="HealthBar" type="TextureProgressBar" parent="."]
+unique_name_in_owner = true
+self_modulate = Color(1, 1, 1, 0.392157)
+offset_left = -64.0
+offset_top = 90.0
+offset_right = 64.0
+offset_bottom = 106.0
+theme = ExtResource("4_f6gen")
+value = 50.0
+texture_progress = SubResource("GradientTexture2D_ca7jc")
 
 [connection signal="hurt" from="HurtBox" to="." method="_on_hurt_box_hurt"]
 [connection signal="body_entered" from="EnemyDetectionArea" to="." method="_on_enemy_detection_area_body_entered"]
