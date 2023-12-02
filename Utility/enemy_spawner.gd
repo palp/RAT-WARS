@@ -2,7 +2,7 @@ extends Node2D
 
 
 @export var spawns: Array[Spawn_info] = []
-@export var spawn_area: Rect2 = Rect2(-2000,-2000,4000,4000)
+@export var spawn_area: Rect2 = Rect2(0,0,0,0)
 
 @onready var player = get_tree().get_first_node_in_group("player")
 
@@ -23,8 +23,10 @@ func spawn_enemies():
 				while  counter < i.enemy_num:
 					var position = get_random_position()
 					# TODO prevent generating random positions within the spawn area instead of looping
-					if not spawn_area.has_point(position):
-						continue
+					# An empty area means no constraints
+					if not spawn_area.get_area() == 0.0:
+						if not spawn_area.has_point(position):
+							continue
 					var enemy_spawn = new_enemy.instantiate()
 					enemy_spawn.global_position = position
 					add_sibling.call_deferred(enemy_spawn)

@@ -80,6 +80,12 @@ jobs:
           sed 's|export/android/android_sdk_path = ".*"|export/android/android_sdk_path = "'/usr/lib/android-sdk'"|g' -i /root/.config/godot/editor_settings-4.tres
           mkdir -v -p ~/.config/godot
           cp -v /root/.config/godot/editor_settings-4.tres ~/.config/godot/
+
+      - name: Install production config
+        if: ${{ !cancelled() && github.ref_type == 'tag' && startsWith(github.ref, 'refs/tags/v') }}
+        run: |
+          echo -n "${{ secrets.PROD_CONFIG_BASE64 }}" | base64 --decode -o ratwars.cfg.prod
+          echo -n "${{ secrets.CONFIG_KEY_BASE64 }}" | base64 --decode -o config.key
       - name: Build
         if: ${{ !cancelled() }}
         timeout-minutes: 10
