@@ -1,6 +1,5 @@
-[gd_scene load_steps=24 format=3 uid="uid://b4kwl8s8nbbnh"]
+[gd_scene load_steps=23 format=3 uid="uid://b4kwl8s8nbbnh"]
 
-[ext_resource type="Texture2D" uid="uid://b6umklllf2jsl" path="res://Textures/dirt_full_new.png" id="1_3v41d"]
 [ext_resource type="PackedScene" uid="uid://6rkaprmq4ect" path="res://Player/player.tscn" id="2_40uwv"]
 [ext_resource type="Theme" uid="uid://bwayc6rbhtvxj" path="res://assets/ui/theme/HEALTH_theme.tres" id="3_8j42b"]
 [ext_resource type="PackedScene" uid="uid://ba2claihwes2y" path="res://Utility/enemy_spawner.tscn" id="3_p01g4"]
@@ -94,7 +93,6 @@ y_sort_enabled = true
 z_index = -1
 texture_filter = 2
 texture_repeat = 2
-texture = ExtResource("1_3v41d")
 region_enabled = true
 region_rect = Rect2(-4000, -4000, 4000, 4000)
 
@@ -129,10 +127,17 @@ theme_override_font_sizes/normal_font_size = 255
 text = "RAT WARS"
 
 [node name="pause_button" type="Button" parent="CanvasLayer"]
-offset_left = 79.0
-offset_top = 101.0
-offset_right = 79.0
-offset_bottom = 101.0
+<<<<<<< Updated upstream
+offset_left = 1413.0
+offset_top = 72.0
+offset_right = 1513.0
+offset_bottom = 128.0
+=======
+offset_left = 1423.0
+offset_top = 93.0
+offset_right = 1523.0
+offset_bottom = 149.0
+>>>>>>> Stashed changes
 theme = ExtResource("3_8j42b")
 text = "Pause"
 script = ExtResource("13_wx351")
