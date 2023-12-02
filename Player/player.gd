@@ -67,11 +67,6 @@ var enemy_close = []
 @onready var collectedUpgrades = get_node("%CollectedUpgrades")
 @onready var itemContainer = preload("res://Player/GUI/item_container.tscn")
 
-@onready var deathPanel = get_node("%DeathPanel")
-@onready var lblResult = get_node("%lbl_Result")
-@onready var sndVictory = get_node("%snd_victory")
-@onready var sndLose = get_node("%snd_lose")
-
 @onready var winVideoPanel = get_node("%WinVideoPanel")
 @onready var videoWin = get_node("%video_win")
 @onready var winScoreForm = get_node("%WinScoreForm")
@@ -421,12 +416,7 @@ func choose_name():
 		name = "Beej"
 	elif current_skin == "jake":
 		name = "Jake"
-	return name	
-
-func _on_btn_menu_click_end():
-	get_tree().paused = false
-	var _level = get_tree().change_scene_to_file("res://TitleScreen/menu.tscn")
-
+	return name
 
 func _on_session_update_timer_timeout():
 	if game_session.has("id"):

@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://6rkaprmq4ect"]
+[gd_scene load_steps=26 format=3 uid="uid://6rkaprmq4ect"]
 
 [ext_resource type="Script" path="res://Player/player.gd" id="1_37q80"]
 [ext_resource type="Texture2D" uid="uid://bd1dsmqbq3l7" path="res://assets/player/character/john/john_placeholder.png" id="2_1lecr"]
@@ -16,9 +16,6 @@
 [ext_resource type="VideoStream" path="res://Video/RAT_WARS_Win.ogv" id="12_k73xi"]
 [ext_resource type="Texture2D" uid="uid://t7d7oq4ukono" path="res://Textures/GUI/exp_progress1.png" id="12_tesno"]
 [ext_resource type="FontFile" uid="uid://bejghu08d1uvm" path="res://Font/ARIBLK.TTF" id="13_qr3b0"]
-[ext_resource type="AudioStream" uid="uid://diaghcy4b4jm" path="res://Audio/SoundEffect/demigods_win.ogg" id="14_78iji"]
-[ext_resource type="AudioStream" uid="uid://dcl830nr5lion" path="res://Audio/SoundEffect/dsmv_loss.ogg" id="15_b8x5g"]
-[ext_resource type="FontFile" uid="uid://b0d1fu8iufshl" path="res://Font/ARIAL.TTF" id="15_cin0e"]
 [ext_resource type="PackedScene" uid="uid://i4j5o8gkuyr0" path="res://ui/leaderboard.tscn" id="19_7sjgu"]
 [ext_resource type="VideoStream" path="res://Video/RAT_WARS_Fail.ogv" id="19_xptxg"]
 
@@ -266,6 +263,7 @@ offset_bottom = 40.0
 
 [node name="WinScoreLabel2" type="Label" parent="GUILayer/GUI/WinVideoPanel/WinScoreForm"]
 z_index = 4
+layout_mode = 0
 offset_left = 516.0
 offset_top = 95.0
 offset_right = 1034.0
@@ -288,6 +286,7 @@ text = "Enter your RAT WARRIOR name and join the ranks!"
 [node name="WinScoreLabel" type="Label" parent="GUILayer/GUI/WinVideoPanel/WinScoreForm"]
 unique_name_in_owner = true
 z_index = 4
+layout_mode = 0
 offset_left = 869.0
 offset_top = 217.0
 offset_right = 1015.0
@@ -403,75 +402,6 @@ stream = ExtResource("7_wl7d2")
 volume_db = -10.0
 bus = &"SFX"
 
-[node name="DeathPanel" type="Panel" parent="GUILayer/GUI"]
-unique_name_in_owner = true
-process_mode = 2
-layout_mode = 0
-offset_left = 230.0
-offset_top = -266.0
-offset_right = 430.0
-offset_bottom = -16.0
-theme = ExtResource("4_f6gen")
-
-[node name="lbl_Result" type="Label" parent="GUILayer/GUI/DeathPanel"]
-unique_name_in_owner = true
-layout_mode = 0
-offset_right = 200.0
-offset_bottom = 50.0
-theme = ExtResource("4_f6gen")
-theme_override_fonts/font = ExtResource("15_cin0e")
-text = "Result"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="snd_victory" type="AudioStreamPlayer" parent="GUILayer/GUI/DeathPanel"]
-unique_name_in_owner = true
-stream = ExtResource("14_78iji")
-volume_db = -10.0
-bus = &"SFX"
-
-[node name="snd_lose" type="AudioStreamPlayer" parent="GUILayer/GUI/DeathPanel"]
-unique_name_in_owner = true
-stream = ExtResource("15_b8x5g")
-volume_db = -10.0
-bus = &"SFX"
-
-[node name="btn_menu" parent="GUILayer/GUI/DeathPanel" instance=ExtResource("12_i8esf")]
-layout_mode = 0
-offset_left = 60.0
-offset_top = 200.0
-offset_right = 140.0
-offset_bottom = 230.0
-text = "Menu"
-
-[node name="VictoryPanel" type="Panel" parent="GUILayer/GUI"]
-unique_name_in_owner = true
-process_mode = 2
-visible = false
-top_level = true
-layout_mode = 0
-offset_left = 111.0
-offset_top = -266.0
-offset_right = 503.0
-offset_bottom = -16.0
-theme = ExtResource("4_f6gen")
-
-[node name="lbl_Result" type="Label" parent="GUILayer/GUI/VictoryPanel"]
-layout_mode = 0
-offset_right = 389.0
-offset_bottom = 50.0
-theme = ExtResource("4_f6gen")
-theme_override_fonts/font = ExtResource("15_cin0e")
-text = "You win!"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="VictoryPanelSound" type="AudioStreamPlayer" parent="GUILayer/GUI/VictoryPanel"]
-unique_name_in_owner = true
-stream = ExtResource("14_78iji")
-volume_db = -10.0
-bus = &"SFX"
-
 [node name="lblTimer" type="Label" parent="GUILayer/GUI"]
 unique_name_in_owner = true
 layout_mode = 0
@@ -525,6 +455,7 @@ offset_bottom = -97.0
 process_mode = 3
 top_level = true
 z_index = 6
+layout_mode = 0
 offset_left = 562.0
 offset_top = 778.0
 offset_right = 776.0
@@ -558,7 +489,6 @@ wait_time = 45.0
 [connection signal="pressed" from="GUILayer/GUI/LoseVideoPanel/give_up_button" to="." method="_on_give_up_button_pressed"]
 [connection signal="finished" from="GUILayer/GUI/WinVideoPanel/video_win" to="." method="_on_video_win_finished"]
 [connection signal="click_end" from="GUILayer/GUI/WinVideoPanel/WinScoreForm/btn_submit_score" to="." method="_on_btn_submit_score_click_end"]
-[connection signal="click_end" from="GUILayer/GUI/DeathPanel/btn_menu" to="." method="_on_btn_menu_click_end"]
 [connection signal="pressed" from="GUILayer/GUI/LeaderboardControl/play_again_button" to="." method="_on_play_again_button_pressed"]
 [connection signal="pressed" from="GUILayer/GUI/LeaderboardControl/exit_game_button" to="." method="_on_give_up_button_pressed"]
 [connection signal="timeout" from="SessionUpdateTimer" to="." method="_on_session_update_timer_timeout"]
