@@ -248,10 +248,17 @@ vertical_alignment = 1
 [node name="CollectedWeapons" type="GridContainer" parent="GUILayer/GUI"]
 unique_name_in_owner = true
 layout_mode = 0
+<<<<<<< Updated upstream
 offset_left = 2.0
 offset_top = 77.0
 offset_right = 202.0
 offset_bottom = 93.0
+=======
+offset_left = 1.0
+offset_top = 70.0
+offset_right = 201.0
+offset_bottom = 86.0
+>>>>>>> Stashed changes
 scale = Vector2(3, 3)
 columns = 10
 
@@ -259,9 +266,15 @@ columns = 10
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 1.0
+<<<<<<< Updated upstream
 offset_top = 143.0
 offset_right = 201.0
 offset_bottom = 159.0
+=======
+offset_top = 135.0
+offset_right = 201.0
+offset_bottom = 151.0
+>>>>>>> Stashed changes
 scale = Vector2(3, 3)
 columns = 10
 

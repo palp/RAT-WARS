@@ -127,10 +127,17 @@ theme_override_font_sizes/normal_font_size = 255
 text = "RAT WARS"
 
 [node name="pause_button" type="Button" parent="CanvasLayer"]
+<<<<<<< Updated upstream
 offset_left = 1413.0
 offset_top = 72.0
 offset_right = 1513.0
 offset_bottom = 128.0
+=======
+offset_left = 1423.0
+offset_top = 93.0
+offset_right = 1523.0
+offset_bottom = 149.0
+>>>>>>> Stashed changes
 theme = ExtResource("3_8j42b")
 text = "Pause"
 script = ExtResource("13_wx351")
