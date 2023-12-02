@@ -32,11 +32,7 @@ var available_skins = [
 var current_skin = "john"
 
 
-#Attacks
-var javelin = preload("res://Player/Attack/javelin.tscn")
-
-#AttackNodes
-@onready var javelinBase = get_node("%JavelinBase")
+#AttackManager
 @onready var attackManager = get_node("%AttackManager") as attack_manager
 
 #UPGRADES
@@ -142,9 +138,10 @@ func _ready():
 	Unlocks.content_unlocked.connect(_on_content_unlocked)
 	current_skin = available_skins.pick_random()
 	get_node(NodePath("Sprite2D")).texture = skins[current_skin]
-	# TODO Disable when autopilot is enabled, also make autopilot state cancel session
-	game_session = await Server.create_game_session()
-	sessionUpdateTimer.start(45)
+
+	if not autopilot:
+		game_session = await Server.create_game_session()
+		sessionUpdateTimer.start(45)
 
 
 func _on_content_unlocked(content):
@@ -163,22 +160,6 @@ func _on_hurt_box_hurt(damage, _angle, _knockback):
 	healthBar.value = hp
 	if hp <= 0:
 		death()
-
-
-func spawn_javelin():
-	var get_javelin_total = javelinBase.get_child_count()
-	var calc_spawns = (javelin_ammo + additional_attacks) - get_javelin_total
-	while calc_spawns > 0:
-		var javelin_spawn = javelin.instantiate()
-		javelin_spawn.global_position = global_position
-		javelinBase.add_child(javelin_spawn)
-		calc_spawns -= 1
-	#Upgrade Javelin
-	var get_javelins = javelinBase.get_children()
-	for i in get_javelins:
-		if i.has_method("update_javelin"):
-			i.update_javelin()
-
 
 func get_random_target():
 	if enemy_close.size() > 0:
@@ -473,4 +454,5 @@ func _on_btn_submit_score_click_end():
 
 
 func _on_play_again_button_pressed():
+	get_tree().paused = false
 	get_tree().reload_current_scene()

@@ -6,7 +6,7 @@ signal update_session_request_complete
 signal submit_session_request_complete
 signal unlock_request_complete
 
-var logger = LogStream.new("Server", LogStream.LogLevel.DEBUG)
+var logger = LogStream.new("Server", LogStream.LogLevel.WARN)
 
 var leaderboard: Array
 var session: Dictionary

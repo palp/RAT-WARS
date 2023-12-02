@@ -162,6 +162,7 @@ texture_progress = SubResource("GradientTexture2D_ca7jc")
 [node name="LevelUp" type="Panel" parent="GUILayer/GUI"]
 unique_name_in_owner = true
 process_mode = 2
+top_level = true
 layout_mode = 0
 offset_left = 1200.0
 offset_top = 300.0
@@ -238,6 +239,7 @@ text = "Menu"
 unique_name_in_owner = true
 process_mode = 2
 visible = false
+top_level = true
 layout_mode = 0
 offset_left = 111.0
 offset_top = -266.0
@@ -333,7 +335,10 @@ offset_bottom = -33.0
 
 [node name="play_again_button" type="Button" parent="GUILayer/GUI"]
 unique_name_in_owner = true
+process_mode = 3
 visible = false
+top_level = true
+layout_mode = 0
 offset_left = 704.0
 offset_top = 828.0
 offset_right = 929.0
