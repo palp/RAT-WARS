@@ -1,9 +1,11 @@
-[gd_scene load_steps=24 format=3 uid="uid://b4kwl8s8nbbnh"]
+[gd_scene load_steps=26 format=3 uid="uid://b4kwl8s8nbbnh"]
 
 [ext_resource type="Texture2D" uid="uid://b6umklllf2jsl" path="res://Textures/dirt_full_new.png" id="1_3v41d"]
+[ext_resource type="Script" path="res://TerrainGen.gd" id="2_5ujhp"]
 [ext_resource type="PackedScene" uid="uid://6rkaprmq4ect" path="res://Player/player.tscn" id="2_40uwv"]
 [ext_resource type="Theme" uid="uid://bwayc6rbhtvxj" path="res://assets/ui/theme/HEALTH_theme.tres" id="3_8j42b"]
 [ext_resource type="PackedScene" uid="uid://ba2claihwes2y" path="res://Utility/enemy_spawner.tscn" id="3_p01g4"]
+[ext_resource type="PackedScene" uid="uid://b854gcq3q7qme" path="res://assets/world/the_sprawl_terrain_packs.tscn" id="3_ssw13"]
 [ext_resource type="PackedScene" uid="uid://gvm5jcbbgwdv" path="res://Enemy/enemy_kobold_weak.tscn" id="4_ee8bm"]
 [ext_resource type="PackedScene" uid="uid://do8nu166getvr" path="res://ui/pause_menu.tscn" id="5_e8x4x"]
 [ext_resource type="Script" path="res://Utility/spawn_info.gd" id="5_jj7s8"]
@@ -97,6 +99,11 @@ texture_repeat = 2
 texture = ExtResource("1_3v41d")
 region_enabled = true
 region_rect = Rect2(-4000, -4000, 4000, 4000)
+
+[node name="TerrainGenOrigin" type="Node2D" parent="."]
+script = ExtResource("2_5ujhp")
+packedscene_terrain_horizontal = ExtResource("3_ssw13")
+scroll_horizontal = true
 
 [node name="Player" parent="." instance=ExtResource("2_40uwv")]
 autopilot = false
