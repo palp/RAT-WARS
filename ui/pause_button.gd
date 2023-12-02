@@ -4,15 +4,16 @@ extends Button
 @onready var player = get_tree().get_first_node_in_group("player")
 
 func _pressed():
-	get_tree().paused = !get_tree().paused
-	pause_menu.visible = get_tree().paused
+	if player != null and not player.disable_pausing:
+		get_tree().paused = !get_tree().paused
+		pause_menu.visible = get_tree().paused
 
 func _on_mouse_entered():	
-	if player != null:
+	if player != null and not player.disable_pausing:
 		player.disable_pathing_input = true
 	
 func _on_mouse_exited():
-	if player != null and not Rect2(Vector2(), size).has_point(get_local_mouse_position()):
+	if player != null and not Rect2(Vector2(), size).has_point(get_local_mouse_position()) and not player.disable_pausing:
 		player.disable_pathing_input = false
 
 
