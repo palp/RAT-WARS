@@ -50,7 +50,6 @@ var additional_attacks = 0
 var enemy_close = []
 
 @onready var sprite = $Sprite2D
-@onready var walkTimer = get_node("%walkTimer")
 
 #GUI
 @onready var expBar = get_node("%ExperienceBar")
@@ -71,7 +70,6 @@ var enemy_close = []
 @onready var winScoreLabel = get_node("%WinScoreLabel")
 @onready var scoreSubmitName = get_node("%score_submit_name")
 @onready var leaderboard = get_node("%leaderboard") as Leaderboard
-@onready var playAgainButton = get_node("%play_again_button")
 @onready var loseVideoPanel = get_node("%LoseVideoPanel")
 @onready var videoLose = get_node("%video_lose")
 @onready var leaderboardControl = get_node("%LeaderboardControl")

@@ -4,7 +4,6 @@ extends Area2D
 
 @onready var collision = $CollisionShape2D
 @onready var disableTimer = $DisableTimer
-@onready var damageOverTime = $DamageOverTime
 
 signal hurt(damage, angle, knockback)
 signal dot(damage, duration, slow)
