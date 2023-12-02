@@ -39,12 +39,12 @@ jobs:
           # apply provisioning profile
           mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
           cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
-      - name: "Download and Install Godot 4.1.3"
+      - name: "Download and Install Godot 4.2"
         continue-on-error: false
         shell: bash
         run: |
-          GODOT_VERSION=4.1.3
-          brew install --cask https://raw.githubusercontent.com/Homebrew/homebrew-cask/4ed2983b312044fd39cd3d321dbadc30bef78e1e/Casks/g/godot.rb
+          GODOT_VERSION=4.2
+          brew install --cask https://raw.githubusercontent.com/Homebrew/homebrew-cask/b0945f65719f9f1743684d182def989252dd9d95/Casks/g/godot.rb
 
           mkdir -v -p "/Users/runner/Library/Application Support/Godot/export_templates"
           GODOT_TEMPLATES_PACKAGE=Godot_v$GODOT_VERSION-stable_export_templates.tpz          
