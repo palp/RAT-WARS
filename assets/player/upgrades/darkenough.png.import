@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dk5i1p4csl1pa"
-path="res://.godot/imported/stonefist.png-256bd508e0f5030574f17d96da4ddc37.ctex"
+uid="uid://bnd6xeme0bpfa"
+path="res://.godot/imported/darkenough.png-5df5a1b420c8ad1acf168a9d7cf9faa0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Player/Attack/stonefist.png"
-dest_files=["res://.godot/imported/stonefist.png-256bd508e0f5030574f17d96da4ddc37.ctex"]
+source_file="res://assets/player/upgrades/darkenough.png"
+dest_files=["res://.godot/imported/darkenough.png-5df5a1b420c8ad1acf168a9d7cf9faa0.ctex"]
 
 [params]
 

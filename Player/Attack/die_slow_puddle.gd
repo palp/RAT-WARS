@@ -6,6 +6,7 @@ var damage = 5
 var attack_size = 1.0
 var slow = 0.1
 var dot_duration = 0.1
+var hitbox_type = 1
 
 
 var target = Vector2.ZERO
@@ -14,11 +15,12 @@ var angle = Vector2.ZERO
 @onready var player = get_tree().get_first_node_in_group("player")
 @onready var sprite = $Sprite2D
 @onready var collision = $CollisionShape2D
+@onready var hitboxcollision = $HitBox/CollisionShape2D
 
 signal remove_from_array(object)
 
 func _ready():
-	print_debug("Puddle ready, position " + str(position))
+	sprite.rotation = deg_to_rad(randf_range(0,360))
 	match level:
 		1:
 			hp = 999

@@ -128,7 +128,7 @@ func get_pathing_target():
 
 
 func _ready():
-	upgrade_character("icespear1")
+	upgrade_character("dieslow1")
 	set_expbar(experience, calculate_experiencecap())
 	_on_hurt_box_hurt(0, 0, 0)
 	for content in Unlocks.unlocked_content:
