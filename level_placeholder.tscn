@@ -106,6 +106,7 @@ scroll_horizontal = true
 
 [node name="Player" parent="." instance=ExtResource("2_40uwv")]
 top_level = true
+z_index = 1
 autopilot = false
 
 [node name="EnemySpawner" parent="." instance=ExtResource("3_p01g4")]
@@ -154,5 +155,6 @@ offset_bottom = 86.0
 
 [connection signal="playerdeath" from="Player" to="snd_Music" method="_on_player_playerdeath"]
 [connection signal="playerdeath" from="Player" to="CanvasLayer/pause_button" method="_on_player_playerdeath"]
+[connection signal="finished" from="snd_Music" to="snd_Music" method="_on_finished"]
 [connection signal="mouse_entered" from="CanvasLayer/pause_button" to="CanvasLayer/pause_button" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="CanvasLayer/pause_button" to="CanvasLayer/pause_button" method="_on_mouse_exited"]
