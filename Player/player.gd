@@ -32,11 +32,7 @@ var available_skins = [
 var current_skin = "john"
 
 
-#Attacks
-var javelin = preload("res://Player/Attack/javelin.tscn")
-
-#AttackNodes
-@onready var javelinBase = get_node("%JavelinBase")
+#AttackManager
 @onready var attackManager = get_node("%AttackManager") as attack_manager
 
 #UPGRADES
@@ -75,6 +71,12 @@ var enemy_close = []
 @onready var lblResult = get_node("%lbl_Result")
 @onready var sndVictory = get_node("%snd_victory")
 @onready var sndLose = get_node("%snd_lose")
+
+@onready var victoryPanel = get_node("%VictoryPanel")
+@onready var victoryPanelSound = get_node("%VictoryPanelSound")
+@onready var scoreSubmitName = get_node("%score_submit_name")
+@onready var leaderboard = get_node("%leaderboard") as Leaderboard
+@onready var playAgainButton = get_node("%play_again_button")
 
 #Game session
 @onready var sessionUpdateTimer = get_node("%SessionUpdateTimer") as Timer
@@ -136,9 +138,10 @@ func _ready():
 	Unlocks.content_unlocked.connect(_on_content_unlocked)
 	current_skin = available_skins.pick_random()
 	get_node(NodePath("Sprite2D")).texture = skins[current_skin]
-	# TODO Disable when autopilot is enabled, also make autopilot state cancel session
-	game_session = await Server.create_game_session()
-	sessionUpdateTimer.start(45)
+
+	if not autopilot:
+		game_session = await Server.create_game_session()
+		sessionUpdateTimer.start(45)
 
 
 func _on_content_unlocked(content):
@@ -157,22 +160,6 @@ func _on_hurt_box_hurt(damage, _angle, _knockback):
 	healthBar.value = hp
 	if hp <= 0:
 		death()
-
-
-func spawn_javelin():
-	var get_javelin_total = javelinBase.get_child_count()
-	var calc_spawns = (javelin_ammo + additional_attacks) - get_javelin_total
-	while calc_spawns > 0:
-		var javelin_spawn = javelin.instantiate()
-		javelin_spawn.global_position = global_position
-		javelinBase.add_child(javelin_spawn)
-		calc_spawns -= 1
-	#Upgrade Javelin
-	var get_javelins = javelinBase.get_children()
-	for i in get_javelins:
-		if i.has_method("update_javelin"):
-			i.update_javelin()
-
 
 func get_random_target():
 	if enemy_close.size() > 0:
@@ -401,46 +388,48 @@ func adjust_gui_collection(upgrade):
 
 
 func death():
-	if autopilot:
-		# TODO Remove this
-		await submit_score()
+	if autopilot:		
 		emit_signal("playerdeath")
 		get_tree().reload_current_scene()
-		return
-	deathPanel.visible = true
+		return	
 	emit_signal("playerdeath")
 	get_tree().paused = true
-	var tween = deathPanel.create_tween()
-	(
-		tween
-		. tween_property(deathPanel, "position", Vector2(220, 50), 3.0)
-		. set_trans(Tween.TRANS_QUINT)
-		. set_ease(Tween.EASE_OUT)
-	)
-	tween.play()
-	if time >= 300:
-		lblResult.text = "You Win"
-		sndVictory.play()
+
+	if time >= 30:
+		var name = choose_name()
+		scoreSubmitName.text = name
+		victoryPanel.visible = true
+		var tween = victoryPanel.create_tween()
+		(
+			tween
+			. tween_property(victoryPanel, "position", Vector2(220, 50), 3.0)
+			. set_trans(Tween.TRANS_QUINT)
+			. set_ease(Tween.EASE_OUT)
+		)
+		tween.play()
+		victoryPanelSound.play()
 	else:
+		deathPanel.visible = true
 		lblResult.text = "You Lose"
+		var tween = deathPanel.create_tween()
+		(
+			tween
+			. tween_property(deathPanel, "position", Vector2(220, 50), 3.0)
+			. set_trans(Tween.TRANS_QUINT)
+			. set_ease(Tween.EASE_OUT)
+		)
+		tween.play()
 		sndLose.play()
 
-	# TODO Only submit scores on win, prompt for name
-	await submit_score()
-
-
-func submit_score():
-	if game_session.has("id"):
-		var name = "HEALTH fan"
-		if current_skin == "john" or current_skin == "john_plugsuit":
-			name = "Johnny"
-		elif current_skin == "beej":
-			name = "Beej"
-		elif current_skin == "jake":
-			name = "Jake"
-		# TODO Prompt for a name, send default on timeout/cancel
-		var leaderboard = await Server.submit_game_session(score, name)
-
+func choose_name():
+	var name = "HEALTH fan"
+	if current_skin == "john" or current_skin == "john_plugsuit":
+		name = "Johnny"
+	elif current_skin == "beej":
+		name = "Beej"
+	elif current_skin == "jake":
+		name = "Jake"
+	return name	
 
 func _on_btn_menu_click_end():
 	get_tree().paused = false
@@ -450,3 +439,20 @@ func _on_btn_menu_click_end():
 func _on_session_update_timer_timeout():
 	if game_session.has("id"):
 		game_session = await Server.update_game_session(score)
+
+
+func _on_btn_submit_score_click_end():
+	victoryPanel.visible = false
+	if game_session.has("id"):
+		var name = scoreSubmitName.text
+		if name.length() < 2:
+			name = choose_name()
+		var leaderboard_scores = await Server.submit_game_session(score, name)
+		leaderboard.display(leaderboard_scores)
+	leaderboard.visible = true
+	playAgainButton.visible = true
+
+
+func _on_play_again_button_pressed():
+	get_tree().paused = false
+	get_tree().reload_current_scene()

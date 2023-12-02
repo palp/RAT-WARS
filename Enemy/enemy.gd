@@ -37,11 +37,11 @@ func _physics_process(_delta):
 	if dotTimer.time_left > 0:
 		velocity = direction*movement_speed*slow_percent
 		hp -= tick_damage
-		print_debug("Slow:")
-		print_debug(slow_percent)
-		print_debug("HP:")
-		print_debug(hp)
-		print_debug(tick_damage)
+#		print_debug("Slow:")
+#		print_debug(slow_percent)
+#		print_debug("HP:")
+#		print_debug(hp)
+#		print_debug(tick_damage)
 	else: 
 		velocity = direction*movement_speed
 	velocity += knockback

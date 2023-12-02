@@ -14,3 +14,7 @@ func _on_mouse_entered():
 func _on_mouse_exited():
 	if player != null and not Rect2(Vector2(), size).has_point(get_local_mouse_position()):
 		player.disable_pathing_input = false
+
+
+func _on_player_playerdeath():
+	visible = false

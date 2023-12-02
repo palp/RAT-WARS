@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://6rkaprmq4ect"]
+[gd_scene load_steps=27 format=3 uid="uid://6rkaprmq4ect"]
 
 [ext_resource type="Script" path="res://Player/player.gd" id="1_37q80"]
 [ext_resource type="Texture2D" uid="uid://bd1dsmqbq3l7" path="res://assets/player/character/john/john_placeholder.png" id="2_1lecr"]
@@ -18,6 +18,7 @@
 [ext_resource type="AudioStream" uid="uid://diaghcy4b4jm" path="res://Audio/SoundEffect/demigods_win.ogg" id="14_78iji"]
 [ext_resource type="AudioStream" uid="uid://dcl830nr5lion" path="res://Audio/SoundEffect/dsmv_loss.ogg" id="15_b8x5g"]
 [ext_resource type="FontFile" uid="uid://b0d1fu8iufshl" path="res://Font/ARIAL.TTF" id="15_cin0e"]
+[ext_resource type="PackedScene" uid="uid://i4j5o8gkuyr0" path="res://ui/leaderboard.tscn" id="19_7sjgu"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_nffdp"]
 height = 36.0
@@ -161,6 +162,7 @@ texture_progress = SubResource("GradientTexture2D_ca7jc")
 [node name="LevelUp" type="Panel" parent="GUILayer/GUI"]
 unique_name_in_owner = true
 process_mode = 2
+top_level = true
 layout_mode = 0
 offset_left = 1200.0
 offset_top = 300.0
@@ -233,6 +235,63 @@ offset_right = 140.0
 offset_bottom = 230.0
 text = "Menu"
 
+[node name="VictoryPanel" type="Panel" parent="GUILayer/GUI"]
+unique_name_in_owner = true
+process_mode = 2
+visible = false
+top_level = true
+layout_mode = 0
+offset_left = 111.0
+offset_top = -266.0
+offset_right = 503.0
+offset_bottom = -16.0
+theme = ExtResource("4_f6gen")
+
+[node name="lbl_Result" type="Label" parent="GUILayer/GUI/VictoryPanel"]
+layout_mode = 0
+offset_right = 389.0
+offset_bottom = 50.0
+theme = ExtResource("4_f6gen")
+theme_override_fonts/font = ExtResource("15_cin0e")
+text = "You win!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VictoryPanelSound" type="AudioStreamPlayer" parent="GUILayer/GUI/VictoryPanel"]
+unique_name_in_owner = true
+stream = ExtResource("14_78iji")
+volume_db = -10.0
+bus = &"SFX"
+
+[node name="btn_submit_score" parent="GUILayer/GUI/VictoryPanel" instance=ExtResource("12_i8esf")]
+layout_mode = 0
+offset_left = 131.0
+offset_top = 195.0
+offset_right = 265.0
+offset_bottom = 248.0
+theme = ExtResource("4_f6gen")
+text = "OK"
+
+[node name="lbl_prompt" type="Label" parent="GUILayer/GUI/VictoryPanel"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 45.0
+offset_right = 351.0
+offset_bottom = 92.0
+text = "Enter your name, RAT WARRIOR"
+
+[node name="score_submit_name" type="LineEdit" parent="GUILayer/GUI/VictoryPanel"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 24.0
+offset_top = 95.0
+offset_right = 370.0
+offset_bottom = 138.0
+text = "JOHNNY"
+alignment = 1
+max_length = 25
+select_all_on_focus = true
+
 [node name="lblTimer" type="Label" parent="GUILayer/GUI"]
 unique_name_in_owner = true
 layout_mode = 0
@@ -265,6 +324,28 @@ offset_bottom = 159.0
 scale = Vector2(3, 3)
 columns = 10
 
+[node name="leaderboard" parent="GUILayer/GUI" instance=ExtResource("19_7sjgu")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+offset_left = 560.0
+offset_top = 88.0
+offset_right = -482.0
+offset_bottom = -33.0
+
+[node name="play_again_button" type="Button" parent="GUILayer/GUI"]
+unique_name_in_owner = true
+process_mode = 3
+visible = false
+top_level = true
+layout_mode = 0
+offset_left = 704.0
+offset_top = 828.0
+offset_right = 929.0
+offset_bottom = 859.0
+text = "PLAY AGAIN
+"
+
 [node name="SessionUpdateTimer" type="Timer" parent="."]
 unique_name_in_owner = true
 wait_time = 45.0
@@ -275,6 +356,8 @@ wait_time = 45.0
 [connection signal="area_entered" from="GrabArea" to="." method="_on_grab_area_area_entered"]
 [connection signal="area_entered" from="CollectArea" to="." method="_on_collect_area_area_entered"]
 [connection signal="click_end" from="GUILayer/GUI/DeathPanel/btn_menu" to="." method="_on_btn_menu_click_end"]
+[connection signal="click_end" from="GUILayer/GUI/VictoryPanel/btn_submit_score" to="." method="_on_btn_submit_score_click_end"]
+[connection signal="pressed" from="GUILayer/GUI/play_again_button" to="." method="_on_play_again_button_pressed"]
 [connection signal="timeout" from="SessionUpdateTimer" to="." method="_on_session_update_timer_timeout"]
 
 [editable path="HurtBox"]

@@ -34,8 +34,8 @@ func _ready():
 
 func create_game_session():
 	if session.has("id"):
-		logger.warn("create_session: Not replacing existing session!")
-		return {}
+		logger.warn("create_session: replacing existing session!")
+		end_game_session()
 	create_session_http_request.request(
 		GameConfig.api_base_url + "/session", PackedStringArray([]), HTTPClient.METHOD_POST
 	)
@@ -45,7 +45,7 @@ func create_game_session():
 
 func update_game_session(score):
 	if not session.has("id"):
-		logger.warn("update_game_session: Not replacing existing session!")
+		logger.warn("update_game_session: No existing session!")
 		return {}
 	update_session_http_request.request(
 		GameConfig.api_base_url + "/session/%s" % session.id,
@@ -63,7 +63,7 @@ func end_game_session():
 
 func submit_game_session(score, name):
 	if not session.has("id"):
-		logger.warn("submit_game_session: Not replacing existing session!")
+		logger.warn("submit_game_session: No existing session!")
 		return {}
 	submit_session_http_request.request(
 		GameConfig.api_base_url + "/session/%s/submit" % session.id,
