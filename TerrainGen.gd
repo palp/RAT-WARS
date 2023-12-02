@@ -71,10 +71,20 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if (scroll_horizontal):
+		var prefab_to_move
+		var closest_prefab
 		if (player.position.x > 0.0 && player.position.x >= current_zero.x + (current_size.x / 2 - half_camera_viewport_size)):
-			prefab_array_horizontal[get_furthest_prefab()].position.x += current_size.x
+			prefab_to_move = get_furthest_prefab()
+			closest_prefab = get_closest_prefab()
+			prefab_array_horizontal[prefab_to_move].position.x += prefab_array_horizontal[prefab_to_move].position.distance_to(prefab_array_horizontal[closest_prefab].position) + get_prefab_length(prefab_to_move)
+			current_zero = prefab_array_horizontal[get_furthest_prefab()].position
+			current_zero.x -= current_size.x / prefab_array_horizontal.size()
 		elif (player.position.x < 0.0 && player.position.x <= current_zero.x - (current_size.x / 2 - half_camera_viewport_size)):
-			prefab_array_horizontal[get_furthest_prefab()].position.x -= current_size.x
+			prefab_to_move = get_furthest_prefab()
+			closest_prefab = get_closest_prefab()
+			prefab_array_horizontal[prefab_to_move].position.x -= prefab_array_horizontal[prefab_to_move].position.distance_to(prefab_array_horizontal[closest_prefab].position) + get_prefab_length(prefab_to_move)
+			current_zero = prefab_array_horizontal[get_furthest_prefab()].position
+			current_zero.x += current_size.x / prefab_array_horizontal.size()
 	
 # Iterate through all in-use scene arrays and start arranging them
 func build_level():
@@ -101,20 +111,21 @@ func build_level():
 		current_zero = prefab_array_horizontal[center_node].position
 
 func get_furthest_prefab():
-	var furthest_prefab = 0
-	var furthest_distance = 0
+	var distance_array = []
 	
-	if (player.position.x > 0):
-		for n in prefab_array_horizontal.size():
-			if (furthest_distance < player.position.x + prefab_array_horizontal[n].position.x && player.position.x + prefab_array_horizontal[n].position.x >= 0):
-				furthest_distance = player.position.x + prefab_array_horizontal[n].position.x
-				furthest_prefab = n
-	else :
-		for n in prefab_array_horizontal.size():
-			if (furthest_distance < player.position.x - prefab_array_horizontal[n].position.x && player.position.x + prefab_array_horizontal[n].position.x <= 0):
-				furthest_distance = player.position.x - prefab_array_horizontal[n].position.x
-				furthest_prefab = n
+	for n in prefab_array_horizontal.size():
+		distance_array.append(player.position.distance_to(prefab_array_horizontal[n].position))
+		
+	return distance_array.find(distance_array.max())
 	
-	current_zero = prefab_array_horizontal[furthest_prefab].position
+func get_closest_prefab():
+	var distance_array = []
 	
-	return furthest_prefab
+	for n in prefab_array_horizontal.size():
+		distance_array.append(player.position.distance_to(prefab_array_horizontal[n].position))
+		
+	return distance_array.find(distance_array.min())
+	
+func get_prefab_length(prefab_index : int):
+	var prefab_length = prefab_array_horizontal[prefab_index].get_used_rect().size.x * prefab_array_horizontal[prefab_index].get_scale().x * 64
+	return prefab_length
