@@ -14,7 +14,6 @@ var angle = Vector2.ZERO
 @onready var player = get_tree().get_first_node_in_group("player")
 @onready var sprite = $Sprite2D
 @onready var collision = $CollisionShape2D
-@onready var hitboxcollision = $HitBox/CollisionShape2D
 
 signal remove_from_array(object)
 
@@ -47,7 +46,6 @@ func _ready():
 			
 	sprite.scale = sprite.scale * attack_size
 	collision.scale = collision.scale * attack_size
-	hitboxcollision.scale = hitboxcollision.scale * attack_size
 
 func _on_duration_timer_timeout():
 	emit_signal("remove_from_array", self)
