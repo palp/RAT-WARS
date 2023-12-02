@@ -9,3 +9,7 @@ dist/*
 # VS
 .vs/
 /Player/player_old.gd
+
+ratwars-prod.cfg
+ratwars.cfg.prod
+config.key
