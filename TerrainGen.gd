@@ -11,7 +11,7 @@ var level_vertical
 var level_clutter
 
 # keep track of the current size of our level, so we know how far to move tiles later
-	var current_size : Vector2
+var current_size : Vector2
 
 # What types of things are active in this instance of TerrainGen?
 @export var scroll_horizontal : bool
