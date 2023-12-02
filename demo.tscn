@@ -1,6 +1,5 @@
-[gd_scene load_steps=27 format=3 uid="uid://bbkmjcn6ordk6"]
+[gd_scene load_steps=26 format=3 uid="uid://bbkmjcn6ordk6"]
 
-[ext_resource type="Texture2D" uid="uid://b6umklllf2jsl" path="res://Textures/dirt_full_new.png" id="1_3v41d"]
 [ext_resource type="PackedScene" uid="uid://6rkaprmq4ect" path="res://Player/player.tscn" id="2_40uwv"]
 [ext_resource type="PackedScene" uid="uid://eno7xtkdwasd" path="res://ui/main_menu.tscn" id="3_1vbbm"]
 [ext_resource type="Theme" uid="uid://bwayc6rbhtvxj" path="res://assets/ui/theme/HEALTH_theme.tres" id="3_8j42b"]
@@ -119,10 +118,18 @@ shape = SubResource("RectangleShape2D_732dt")
 position = Vector2(0, 2000)
 shape = SubResource("RectangleShape2D_nykgs")
 
+[node name="Background1" type="ColorRect" parent="."]
+texture_repeat = 2
+offset_left = -300.0
+offset_top = -300.0
+offset_right = 1900.0
+offset_bottom = 1200.0
+color = Color(0.368627, 0.368627, 0.368627, 1)
+
 [node name="Background" type="Sprite2D" parent="."]
+visible = false
 texture_filter = 2
 texture_repeat = 2
-texture = ExtResource("1_3v41d")
 region_enabled = true
 region_rect = Rect2(-4000, -4000, 4000, 4000)
 

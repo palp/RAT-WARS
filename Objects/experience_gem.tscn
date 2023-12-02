@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://d20r3gqas2kms"]
 
-[ext_resource type="Texture2D" uid="uid://c2kvist0kqcew" path="res://Textures/Items/Gems/Gem_green.png" id="1_glkr3"]
 [ext_resource type="Script" path="res://Objects/experience_gem.gd" id="1_k4pfj"]
+[ext_resource type="Texture2D" uid="uid://b6x205ajei3p5" path="res://Textures/Items/Gems/Gem_red.png" id="2_cmt2x"]
 [ext_resource type="AudioStream" uid="uid://bnm8cttqwefdx" path="res://Audio/SoundEffect/collectgem.mp3" id="3_g1t57"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wytta"]
@@ -14,7 +14,7 @@ collision_mask = 0
 script = ExtResource("1_k4pfj")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_glkr3")
+texture = ExtResource("2_cmt2x")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -1)

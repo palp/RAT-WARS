@@ -6,33 +6,33 @@ const WEAPON_PATH = "res://Textures/Items/Weapons/"
 const RAT_WEAPON_PATH = "res://assets/player/attacks/"
 const UPGRADES = {
 	"icespear1": {
-		"icon": WEAPON_PATH + "ice_spear.png",
-		"displayname": "Ice Spear",
-		"details": "A spear of ice is thrown at a random enemy",
+		"icon": WEAPON_PATH + "stonefist.png",
+		"displayname": "STONEFIST",
+		"details": "A fist of stone is thrown at a random enemy",
 		"level": "Level: 1",
 		"prerequisite": [],
 		"type": "weapon"
 	},
 	"icespear2": {
-		"icon": WEAPON_PATH + "ice_spear.png",
-		"displayname": "Ice Spear",
-		"details": "An addition Ice Spear is thrown",
+		"icon": WEAPON_PATH + "stonefist.png",
+		"displayname": "STONEFIST",
+		"details": "An addition STONEFIST is thrown",
 		"level": "Level: 2",
 		"prerequisite": ["icespear1"],
 		"type": "weapon"
 	},
 	"icespear3": {
-		"icon": WEAPON_PATH + "ice_spear.png",
-		"displayname": "Ice Spear",
-		"details": "Ice Spears now pass through another enemy and do + 3 damage",
+		"icon": WEAPON_PATH + "stonefist.png",
+		"displayname": "STONEFIST",
+		"details": "STONEFISTS now pass through another enemy and do + 3 damage",
 		"level": "Level: 3",
 		"prerequisite": ["icespear2"],
 		"type": "weapon"
 	},
 	"icespear4": {
-		"icon": WEAPON_PATH + "ice_spear.png",
-		"displayname": "Ice Spear",
-		"details": "An additional 2 Ice Spears are thrown",
+		"icon": WEAPON_PATH + "stonefist.png",
+		"displayname": "STONEFIST",
+		"details": "An additional 2 STONEFISTS are thrown",
 		"level": "Level: 4",
 		"prerequisite": ["icespear3"],
 		"type": "weapon"
@@ -103,7 +103,7 @@ const UPGRADES = {
 	},
 	"dieslow1": {
 		"icon": RAT_WEAPON_PATH + "die_slow.png",
-		"displayname": "Die Slow",
+		"displayname": "DIE SLOW",
 		"details": "A burning pool of gas tossed from a can.",
 		"level": "Level: 1",
 		"prerequisite": [],
@@ -111,7 +111,7 @@ const UPGRADES = {
 	},
 	"dieslow2": {
 		"icon": RAT_WEAPON_PATH + "die_slow.png",
-		"displayname": "Die Slow",
+		"displayname": "DIE SLOW",
 		"details": "An additional burning pool of gas is created.",
 		"level": "Level: 2",
 		"prerequisite": ["dieslow1"],
@@ -119,7 +119,7 @@ const UPGRADES = {
 	},
 	"dieslow3": {
 		"icon": RAT_WEAPON_PATH + "die_slow.png",
-		"displayname": "Die Slow",
+		"displayname": "DIE SLOW",
 		"details": "An additional burning pool of gas is created.",
 		"level": "Level: 3",
 		"prerequisite": ["dieslow2"],
@@ -127,7 +127,7 @@ const UPGRADES = {
 	},
 	"dieslow4": {
 		"icon": RAT_WEAPON_PATH + "die_slow.png",
-		"displayname": "Die Slow",
+		"displayname": "DIE SLOW",
 		"details": "Two additional burning pools of gas are created.",
 		"level": "Level: 4",
 		"prerequisite": ["dieslow3"],
@@ -135,7 +135,7 @@ const UPGRADES = {
 	},
 	"vinyl1": {
 		"icon": RAT_WEAPON_PATH + "vinyl.png",
-		"displayname": "RAT WARS",
+		"displayname": "RAT WARS LP",
 		"details": "A deadly razor sharp vinyl that bounces.",
 		"level": "Level: 1",
 		"prerequisite": [],
@@ -143,24 +143,24 @@ const UPGRADES = {
 	},
 	"vinyl2": {
 		"icon": RAT_WEAPON_PATH + "vinyl.png",
-		"displayname": "RAT WARS",
-		"details": "An additional Vinyl is created",
+		"displayname": "RAT WARS LP",
+		"details": "An additional LIMITED EDITION RED Vinyl is created",
 		"level": "Level: 2",
 		"prerequisite": ["vinyl1"],
 		"type": "weapon"
 	},
 	"vinyl3": {
 		"icon": RAT_WEAPON_PATH + "vinyl.png",
-		"displayname": "Tornado",
-		"details": "The Tornado cooldown is reduced by 0.5 seconds",
+		"displayname": "RAT WARS LP",
+		"details": "The LIMITED EDITION RED LP cooldown is reduced by 0.5 seconds",
 		"level": "Level: 3",
 		"prerequisite": ["vinyl2"],
 		"type": "weapon"
 	},
 	"vinyl4": {
 		"icon": RAT_WEAPON_PATH + "vinyl.png",
-		"displayname": "Tornado",
-		"details": "An additional vinyl is created and the knockback is increased by 25%",
+		"displayname": "RAT WARS LP",
+		"details": "An additional LIMITED EDITION RED LP is created and the knockback is increased by 25%",
 		"level": "Level: 4",
 		"prerequisite": ["vinyl3"],
 		"type": "weapon"
