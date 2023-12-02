@@ -58,6 +58,11 @@ jobs:
         shell: bash
         run: |
           godot -e --path . -s res://addons/gdUnit4/bin/ProjectScanner.gd --headless --audio-driver Dummy
+      - name: Install production config
+        if: ${{ !cancelled() }}
+        run: |
+          echo ${{ secrets.PROD_CONFIG_BASE64 }} | base64 --decode > res://ratwars.cfg.prod
+          echo ${{ secrets.CONFIG_KEY }} > res://config.key
       - name: Build
         if: ${{ !cancelled() }}
         timeout-minutes: 5
