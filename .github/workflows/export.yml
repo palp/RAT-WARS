@@ -84,8 +84,8 @@ jobs:
       - name: Install production config
         if: ${{ !cancelled() && github.ref_type == 'tag' && startsWith(github.ref, 'refs/tags/v') }}
         run: |
-          echo ${{ secrets.PROD_CONFIG_BASE64 }} | base64 --decode > res://ratwars.cfg.prod
-          echo ${{ secrets.CONFIG_KEY }} > res://config.key
+          echo ${{ secrets.PROD_CONFIG_BASE64 }} | base64 --decode > ratwars.cfg.prod
+          echo ${{ secrets.CONFIG_KEY }} > config.key
 
       - name: Build
         if: ${{ !cancelled() }}
