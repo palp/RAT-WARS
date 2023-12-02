@@ -138,11 +138,12 @@ script = ExtResource("13_wx351")
 [node name="pause_menu" parent="CanvasLayer" instance=ExtResource("5_e8x4x")]
 unique_name_in_owner = true
 visible = false
-offset_left = 190.0
-offset_top = 89.0
-offset_right = 72.0
+offset_left = 34.0
+offset_top = 86.0
+offset_right = -129.0
 offset_bottom = 90.0
 
 [connection signal="playerdeath" from="Player" to="snd_Music" method="_on_player_playerdeath"]
+[connection signal="playerdeath" from="Player" to="CanvasLayer/pause_button" method="_on_player_playerdeath"]
 [connection signal="mouse_entered" from="CanvasLayer/pause_button" to="CanvasLayer/pause_button" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="CanvasLayer/pause_button" to="CanvasLayer/pause_button" method="_on_mouse_exited"]

@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://i4j5o8gkuyr0"]
+[gd_scene load_steps=3 format=3 uid="uid://i4j5o8gkuyr0"]
 
 [ext_resource type="Script" path="res://ui/leaderboard.gd" id="1_ulqhq"]
+[ext_resource type="Theme" uid="uid://bwayc6rbhtvxj" path="res://assets/ui/theme/HEALTH_theme.tres" id="2_uqbur"]
 
 [node name="leaderboard" type="Control"]
 layout_mode = 3
@@ -8,21 +9,41 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_right = -1042.0
-offset_bottom = -136.0
+offset_bottom = -121.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_ulqhq")
 
-[node name="ItemList" type="ItemList" parent="."]
-unique_name_in_owner = true
-layout_mode = 0
-offset_left = -1.0
-offset_top = -1.0
-offset_right = 498.0
-offset_bottom = 729.0
-
 [node name="RefreshTimer" type="Timer" parent="."]
 wait_time = 300.0
 autostart = true
+
+[node name="ScoresPanel" type="Panel" parent="."]
+layout_mode = 0
+offset_left = 1.0
+offset_right = 498.0
+offset_bottom = 743.0
+
+[node name="Label" type="Label" parent="ScoresPanel"]
+layout_mode = 2
+offset_right = 496.0
+offset_bottom = 27.0
+theme = ExtResource("2_uqbur")
+text = "RAT WARRIORS"
+horizontal_alignment = 1
+uppercase = true
+
+[node name="ColorRect" type="ColorRect" parent="ScoresPanel"]
+layout_mode = 0
+offset_top = 35.0
+offset_right = 493.0
+offset_bottom = 40.0
+
+[node name="ScoresContainer" type="VBoxContainer" parent="ScoresPanel"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_top = 44.0
+offset_right = 496.0
+offset_bottom = 741.0
 
 [connection signal="timeout" from="RefreshTimer" to="." method="_on_refresh_timer_timeout"]

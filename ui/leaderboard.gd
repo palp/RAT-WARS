@@ -1,7 +1,8 @@
 extends Control
+class_name Leaderboard
 
-@onready var items = get_node("%ItemList") as ItemList
-
+@onready var scores_container = get_node("%ScoresContainer") as VBoxContainer
+@onready var score_line = preload("res://ui/score_line.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -14,10 +15,12 @@ func refresh():
 
 
 func display(leaderboard):
-	items.clear()
+	for child in scores_container.get_children():
+		scores_container.remove_child(child)
 	for item in leaderboard:
-		items.add_item(item.name + "     %d" % item.score)
-
+		var line = score_line.instantiate()
+		line.score = item
+		scores_container.add_child(line)
 
 func _on_refresh_timer_timeout():
 	refresh()
