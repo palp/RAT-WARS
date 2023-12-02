@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cpflqm58odyhu"
-path="res://.godot/imported/MutatedRat_walk_8.png-c1c95f7c5723fc4473986b8da1ff36b6.ctex"
+uid="uid://mt17x67goror"
+path="res://.godot/imported/SpitterRat_walk_16.png-0022c2a41d2de4f7860b960bd934c1b7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/enemy/MutatedRat/1/MutatedRat_walk_8.png"
-dest_files=["res://.godot/imported/MutatedRat_walk_8.png-c1c95f7c5723fc4473986b8da1ff36b6.ctex"]
+source_file="res://assets/enemy/SpitterRat/SpitterRat_walk_16.png"
+dest_files=["res://.godot/imported/SpitterRat_walk_16.png-0022c2a41d2de4f7860b960bd934c1b7.ctex"]
 
 [params]
 

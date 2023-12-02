@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cmb4njmoyqj51"
-path="res://.godot/imported/verminator_attack_8.png-cf0eb10827b3c5420ff5fe5a760d66ab.ctex"
+uid="uid://rbtn4dm2ono4"
+path="res://.godot/imported/batRat_death_4.png-c6c0a30cdc1ac5571c82e1be15267023.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/enemy/Boss/Verminator/verminator_attack_8.png"
-dest_files=["res://.godot/imported/verminator_attack_8.png-cf0eb10827b3c5420ff5fe5a760d66ab.ctex"]
+source_file="res://assets/enemy/BatRat/batRat_death_4.png"
+dest_files=["res://.godot/imported/batRat_death_4.png-c6c0a30cdc1ac5571c82e1be15267023.ctex"]
 
 [params]
 

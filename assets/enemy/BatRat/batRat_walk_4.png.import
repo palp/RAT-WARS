@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ci0adfw8jtvir"
-path="res://.godot/imported/verminator_walk_9.png-85a99b1c98c7bb1b1b87214e7183abae.ctex"
+uid="uid://bedtiylmv25s"
+path="res://.godot/imported/batRat_walk_4.png-f15f84cd8e5c5e1af646ce6e70c8ba82.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/enemy/Boss/Verminator/verminator_walk_9.png"
-dest_files=["res://.godot/imported/verminator_walk_9.png-85a99b1c98c7bb1b1b87214e7183abae.ctex"]
+source_file="res://assets/enemy/BatRat/batRat_walk_4.png"
+dest_files=["res://.godot/imported/batRat_walk_4.png-f15f84cd8e5c5e1af646ce6e70c8ba82.ctex"]
 
 [params]
 
