@@ -1,10 +1,17 @@
-[gd_scene load_steps=7 format=3 uid="uid://dq5nsjiel0tsh"]
+[gd_scene load_steps=9 format=3 uid="uid://dq5nsjiel0tsh"]
 
 [ext_resource type="Script" path="res://Player/Attack/die_slow_puddle.gd" id="1_817ex"]
 [ext_resource type="Texture2D" uid="uid://d1knv8bgnbrqh" path="res://assets/player/attacks/gas_pool.png" id="1_h40pq"]
+[ext_resource type="Texture2D" uid="uid://bojewifqgscjw" path="res://Player/Attack/Explosion_Sheet.png" id="3_5sre2"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ujgh5"]
 radius = 55.0
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_d24or"]
+particles_animation = true
+particles_anim_h_frames = 5
+particles_anim_v_frames = 1
+particles_anim_loop = false
 
 [sub_resource type="Gradient" id="Gradient_cx2j7"]
 
@@ -32,6 +39,7 @@ collision_mask = 0
 script = ExtResource("1_817ex")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
 position = Vector2(-4, 5)
 scale = Vector2(2, 2)
 texture = ExtResource("1_h40pq")
@@ -45,7 +53,9 @@ one_shot = true
 autostart = true
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+material = SubResource("CanvasItemMaterial_d24or")
 amount = 25
 process_material = SubResource("ParticleProcessMaterial_i1ugi")
+texture = ExtResource("3_5sre2")
 
 [connection signal="timeout" from="DurationTimer" to="." method="_on_duration_timer_timeout"]
