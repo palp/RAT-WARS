@@ -33,7 +33,9 @@ func _ready():
 	_on_reset_pos_timer_timeout()
 
 func update_javelin():
-	level = player.javelin_level
+	if not player.attackManager.attacks.has('javelin'):
+		return
+	level = player.attackManager.attacks['javelin'].level
 	match level:
 		1:
 			hp = 9999

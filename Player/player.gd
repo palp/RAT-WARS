@@ -405,19 +405,19 @@ func death():
 	emit_signal("playerdeath")
 	get_tree().paused = true
 
-	if time >= 300:
-		var name = choose_name()
-		scoreSubmitName.text = name
-		winScoreLabel.text = str(score)
-		winScoreForm.visible = false
-		winVideoPanel.visible = true
-		videoWin.visible = true
-		videoWin.play()
-	else:
-		loseVideoPanel.visible = true
-		videoLose.visible = true
-		videoLose.play()
+	loseVideoPanel.visible = true
+	videoLose.visible = true
+	videoLose.play()
 		
+func victory():
+	var name = choose_name()
+	scoreSubmitName.text = name
+	winScoreLabel.text = str(score)
+	winScoreForm.visible = false
+	winVideoPanel.visible = true
+	videoWin.visible = true
+	videoWin.play()
+	
 func choose_name():
 	var name = "HEALTH fan"
 	if current_skin == "john" or current_skin == "john_plugsuit":
