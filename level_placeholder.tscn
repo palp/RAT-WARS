@@ -5,13 +5,13 @@
 [ext_resource type="PackedScene" uid="uid://6rkaprmq4ect" path="res://Player/player.tscn" id="2_40uwv"]
 [ext_resource type="Theme" uid="uid://bwayc6rbhtvxj" path="res://assets/ui/theme/HEALTH_theme.tres" id="3_8j42b"]
 [ext_resource type="PackedScene" uid="uid://ba2claihwes2y" path="res://Utility/enemy_spawner.tscn" id="3_p01g4"]
-[ext_resource type="PackedScene" path="res://Enemy/enemy_small_rat.tscn" id="4_detmb"]
-[ext_resource type="PackedScene" uid="uid://gvm5jcbbgwdv" path="res://Enemy/enemy_kobold_weak.tscn" id="4_ee8bm"]
+[ext_resource type="PackedScene" uid="uid://bvp4js6prjv2k" path="res://Enemy/enemy_small_rat.tscn" id="4_detmb"]
+[ext_resource type="PackedScene" uid="uid://gvm5jcbbgwdv" path="res://Enemy/enemy_mutated_rat.tscn" id="4_ee8bm"]
 [ext_resource type="PackedScene" uid="uid://do8nu166getvr" path="res://ui/pause_menu.tscn" id="5_e8x4x"]
 [ext_resource type="Script" path="res://Utility/spawn_info.gd" id="5_jj7s8"]
-[ext_resource type="PackedScene" path="res://Enemy/enemy_spitter_rat.tscn" id="7_pxitb"]
-[ext_resource type="PackedScene" path="res://Enemy/enemy_balloon_rat.tscn" id="8_rm5oc"]
-[ext_resource type="PackedScene" path="res://Enemy/enemy_boss_verminator.tscn" id="9_iksbi"]
+[ext_resource type="PackedScene" uid="uid://dhucglqau1jbg" path="res://Enemy/enemy_spitter_rat.tscn" id="7_pxitb"]
+[ext_resource type="PackedScene" uid="uid://what6ybd045w" path="res://Enemy/enemy_balloon_rat.tscn" id="8_rm5oc"]
+[ext_resource type="PackedScene" uid="uid://clkwok10blwsl" path="res://Enemy/enemy_boss_verminator.tscn" id="9_iksbi"]
 [ext_resource type="AudioStream" uid="uid://bxntkvkn4o6u7" path="res://Audio/Music/06 HEALTH - UNLOVED - Instrumental Master.mp3" id="10_mpto5"]
 [ext_resource type="Script" path="res://Audio/Music/snd_Music.gd" id="11_ovtx6"]
 [ext_resource type="Script" path="res://ui/pause_button.gd" id="13_wx351"]
@@ -88,7 +88,7 @@ enemy = ExtResource("9_iksbi")
 enemy_num = 1
 enemy_spawn_delay = null
 
-[node name="World" type="Node2D"]
+[node name="World2" type="Node2D"]
 y_sort_enabled = true
 
 [node name="Background" type="Sprite2D" parent="."]
@@ -105,6 +105,7 @@ player = NodePath("../Player")
 scroll_horizontal = true
 
 [node name="Player" parent="." instance=ExtResource("2_40uwv")]
+top_level = true
 autopilot = false
 
 [node name="EnemySpawner" parent="." instance=ExtResource("3_p01g4")]
@@ -146,11 +147,12 @@ script = ExtResource("13_wx351")
 [node name="pause_menu" parent="CanvasLayer" instance=ExtResource("5_e8x4x")]
 unique_name_in_owner = true
 visible = false
-offset_left = 190.0
-offset_top = 89.0
-offset_right = 72.0
-offset_bottom = 90.0
+offset_left = 34.0
+offset_top = 82.0
+offset_right = -129.0
+offset_bottom = 86.0
 
 [connection signal="playerdeath" from="Player" to="snd_Music" method="_on_player_playerdeath"]
+[connection signal="playerdeath" from="Player" to="CanvasLayer/pause_button" method="_on_player_playerdeath"]
 [connection signal="mouse_entered" from="CanvasLayer/pause_button" to="CanvasLayer/pause_button" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="CanvasLayer/pause_button" to="CanvasLayer/pause_button" method="_on_mouse_exited"]

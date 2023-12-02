@@ -36,6 +36,10 @@ project/assembly_name="RAT WARS"
 
 enabled=PackedStringArray("res://addons/gdUnit4/plugin.cfg")
 
+[gdunit4]
+
+settings/common/update_notification_enabled=false
+
 [input]
 
 up={
