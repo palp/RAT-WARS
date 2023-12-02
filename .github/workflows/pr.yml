@@ -3,9 +3,6 @@ run-name: ${{ github.head_ref || github.ref_name }}-pull-request
 
 on:
   pull_request:
-    paths-ignore:
-      - "**.yml"
-      - "**.md"
   workflow_dispatch:
 
 concurrency:
