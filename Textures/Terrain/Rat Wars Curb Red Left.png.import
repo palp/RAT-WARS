@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dk5i1p4csl1pa"
-path="res://.godot/imported/stonefist.png-256bd508e0f5030574f17d96da4ddc37.ctex"
+uid="uid://c81nx0kd7qnsr"
+path="res://.godot/imported/Rat Wars Curb Red Left.png-192f812053e3cb3d8713e80147c04655.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Player/Attack/stonefist.png"
-dest_files=["res://.godot/imported/stonefist.png-256bd508e0f5030574f17d96da4ddc37.ctex"]
+source_file="res://Textures/Terrain/Rat Wars Curb Red Left.png"
+dest_files=["res://.godot/imported/Rat Wars Curb Red Left.png-192f812053e3cb3d8713e80147c04655.ctex"]
 
 [params]
 

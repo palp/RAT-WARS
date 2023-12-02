@@ -37,6 +37,11 @@ func _physics_process(_delta):
 	if dotTimer.time_left > 0:
 		velocity = direction*movement_speed*slow_percent
 		hp -= tick_damage
+		print_debug("Slow:")
+		print_debug(slow_percent)
+		print_debug("HP:")
+		print_debug(hp)
+		print_debug(tick_damage)
 	else: 
 		velocity = direction*movement_speed
 	velocity += knockback
@@ -69,7 +74,11 @@ func _on_hurt_box_hurt(damage, angle, knockback_amount):
 
 
 func _on_hurt_box_dot(damage, duration, slow):
-	dotTimer.duration = duration
+	dotTimer.wait_time = duration
 	tick_damage = damage
 	slow_percent = (1.0 - slow)
 	dotTimer.start()
+	if hp <= 0:
+		death()
+	else:
+		snd_hit.play
