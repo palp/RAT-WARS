@@ -144,6 +144,7 @@ script = ExtResource("11_ovtx6")
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer"]
+visible = false
 offset_left = 47.0
 offset_top = 10.0
 offset_right = 1471.0

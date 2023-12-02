@@ -245,7 +245,7 @@ func levelup():
 	var tween = levelPanel.create_tween()
 	(
 		tween
-		. tween_property(levelPanel, "position", Vector2(220, 50), 0.2)
+		. tween_property(levelPanel, "position", Vector2(568, 200), 0.8)
 		. set_trans(Tween.TRANS_QUINT)
 		. set_ease(Tween.EASE_IN)
 	)

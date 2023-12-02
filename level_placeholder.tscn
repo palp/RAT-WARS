@@ -3,15 +3,15 @@
 [ext_resource type="Texture2D" uid="uid://b6umklllf2jsl" path="res://Textures/dirt_full_new.png" id="1_3v41d"]
 [ext_resource type="PackedScene" uid="uid://6rkaprmq4ect" path="res://Player/player.tscn" id="2_40uwv"]
 [ext_resource type="Theme" uid="uid://bwayc6rbhtvxj" path="res://assets/ui/theme/HEALTH_theme.tres" id="3_8j42b"]
-[ext_resource type="PackedScene" uid="uid://do8nu166getvr" path="res://ui/pause_menu.tscn" id="5_e8x4x"]
 [ext_resource type="PackedScene" uid="uid://ba2claihwes2y" path="res://Utility/enemy_spawner.tscn" id="3_p01g4"]
 [ext_resource type="PackedScene" uid="uid://bvp4js6prjv2k" path="res://Enemy/enemy_small_rat.tscn" id="4_detmb"]
 [ext_resource type="PackedScene" uid="uid://gvm5jcbbgwdv" path="res://Enemy/enemy_mutated_rat.tscn" id="4_ee8bm"]
+[ext_resource type="PackedScene" uid="uid://do8nu166getvr" path="res://ui/pause_menu.tscn" id="5_e8x4x"]
 [ext_resource type="Script" path="res://Utility/spawn_info.gd" id="5_jj7s8"]
 [ext_resource type="PackedScene" uid="uid://dhucglqau1jbg" path="res://Enemy/enemy_spitter_rat.tscn" id="7_pxitb"]
 [ext_resource type="PackedScene" uid="uid://what6ybd045w" path="res://Enemy/enemy_balloon_rat.tscn" id="8_rm5oc"]
 [ext_resource type="PackedScene" uid="uid://clkwok10blwsl" path="res://Enemy/enemy_boss_verminator.tscn" id="9_iksbi"]
-[ext_resource type="AudioStream" uid="uid://bbufl4r1ou1rw" path="res://Audio/Music/battleThemeA.mp3" id="10_rk3we"]
+[ext_resource type="AudioStream" uid="uid://bxntkvkn4o6u7" path="res://Audio/Music/06 HEALTH - UNLOVED - Instrumental Master.mp3" id="10_mpto5"]
 [ext_resource type="Script" path="res://Audio/Music/snd_Music.gd" id="11_ovtx6"]
 [ext_resource type="Script" path="res://ui/pause_button.gd" id="13_wx351"]
 
@@ -108,7 +108,7 @@ spawns = Array[ExtResource("5_jj7s8")]([SubResource("Resource_03m25"), SubResour
 
 [node name="snd_Music" type="AudioStreamPlayer" parent="."]
 process_mode = 3
-stream = ExtResource("10_rk3we")
+stream = ExtResource("10_mpto5")
 volume_db = -15.0
 autoplay = true
 bus = &"Music"
@@ -118,6 +118,7 @@ script = ExtResource("11_ovtx6")
 process_mode = 3
 
 [node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer"]
+visible = false
 offset_left = 47.0
 offset_top = 10.0
 offset_right = 1471.0
