@@ -96,9 +96,10 @@ texture_repeat = 2
 region_enabled = true
 region_rect = Rect2(-4000, -4000, 4000, 4000)
 
-[node name="TerrainGenOrigin" type="Node2D" parent="."]
+[node name="TerrainGenOrigin" type="Node2D" parent="." node_paths=PackedStringArray("player")]
 script = ExtResource("1_rwhiv")
 packedscene_terrain_horizontal = ExtResource("2_rorgg")
+player = NodePath("../Player")
 scroll_horizontal = true
 
 [node name="Player" parent="." instance=ExtResource("2_40uwv")]

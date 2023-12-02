@@ -5,6 +5,11 @@ extends Node2D
 @export var packedscene_terrain_vertical := PackedScene
 @export var packedscene_terrain_clutter := PackedScene
 
+# a reference to the player so we can keep track of where they are
+@export var player := Node2D
+var half_camera_viewport_size : int
+var furthest_prefab
+
 # these are gonna instantiate our packedscenes
 var level_horizontal
 var level_vertical
@@ -12,6 +17,9 @@ var level_clutter
 
 # keep track of the current size of our level, so we know how far to move tiles later
 var current_size : Vector2
+
+# keep track of where "zero" is relative to where the prefabs are. Should always be the position of the middle prefab.
+var current_zero : Vector2
 
 # What types of things are active in this instance of TerrainGen?
 @export var scroll_horizontal : bool
@@ -25,6 +33,9 @@ var clutter_array
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	# grab the size of the camera viewport and chop it in half for later reference
+	half_camera_viewport_size = get_viewport().size.x / 2
+	
 	# temporary variable because we need something to hold our scene when we load it
 	var temp_scene
 	if (scroll_horizontal):
@@ -59,7 +70,11 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	pass
+	if (scroll_horizontal):
+		if (player.position.x > 0.0 && player.position.x >= current_zero.x + (current_size.x / 2 - half_camera_viewport_size)):
+			prefab_array_horizontal[get_furthest_prefab()].position.x += current_size.x
+		elif (player.position.x < 0.0 && player.position.x <= current_zero.x - (current_size.x / 2 - half_camera_viewport_size)):
+			prefab_array_horizontal[get_furthest_prefab()].position.x -= current_size.x
 	
 # Iterate through all in-use scene arrays and start arranging them
 func build_level():
@@ -77,10 +92,29 @@ func build_level():
 			if (n > center_node):
 				temp_position = prefab_array_horizontal[center_node].get_used_rect().size.x / 2 + prefab_array_horizontal[n].get_used_rect().size.x / 2
 				prefab_array_horizontal[n].position.x += temp_position * prefab_array_horizontal[n].get_scale().x * 64
-				current_size.x += prefab_array_horizontal[n].get_used_rect().size.x
+				current_size.x += prefab_array_horizontal[n].get_used_rect().size.x * prefab_array_horizontal[n].get_scale().x * 64
 			# and if the index of this prefab is less than the center, move it to the left
 			elif (n < center_node):
 				temp_position = prefab_array_horizontal[center_node].get_used_rect().size.x / 2 + prefab_array_horizontal[n].get_used_rect().size.x / 2
 				prefab_array_horizontal[n].position.x -= temp_position * prefab_array_horizontal[n].get_scale().x * 64
-				current_size.x += prefab_array_horizontal[n].get_used_rect().size.x
-			
+				current_size.x += prefab_array_horizontal[n].get_used_rect().size.x * prefab_array_horizontal[n].get_scale().x * 64
+		current_zero = prefab_array_horizontal[center_node].position
+
+func get_furthest_prefab():
+	var furthest_prefab = 0
+	var furthest_distance = 0
+	
+	if (player.position.x > 0):
+		for n in prefab_array_horizontal.size():
+			if (furthest_distance < player.position.x + prefab_array_horizontal[n].position.x && player.position.x + prefab_array_horizontal[n].position.x >= 0):
+				furthest_distance = player.position.x + prefab_array_horizontal[n].position.x
+				furthest_prefab = n
+	else :
+		for n in prefab_array_horizontal.size():
+			if (furthest_distance < player.position.x - prefab_array_horizontal[n].position.x && player.position.x + prefab_array_horizontal[n].position.x <= 0):
+				furthest_distance = player.position.x - prefab_array_horizontal[n].position.x
+				furthest_prefab = n
+	
+	current_zero = prefab_array_horizontal[furthest_prefab].position
+	
+	return furthest_prefab
