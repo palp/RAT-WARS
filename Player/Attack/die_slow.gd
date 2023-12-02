@@ -9,7 +9,7 @@ var knockback_amount = 0
 
 var target = Vector2.ZERO
 
-var angle = Vector2.ZERO
+@onready var angle = global_position.direction_to(target)
 
 var puddle = preload("res://Player/Attack/die_slow_puddle.tscn")
 
@@ -19,7 +19,7 @@ var puddle = preload("res://Player/Attack/die_slow_puddle.tscn")
 
 signal remove_from_array(object)
 
-func _physics_process(delta):
+func _physics_process(delta):	
 	if angle.angle() >= 0:
 		rotation += .08
 	if angle.angle() < 0:

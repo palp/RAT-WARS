@@ -81,7 +81,7 @@ func _process(delta):
 			attack.instances.append(instance)
 			add_child(instance)
 			attack.ammo -= 1
-			attack.elapsed_since_attack -= resolved_attack_speed
+			attack.elapsed_since_attack = 0
 
 
 func spawn_javelin():

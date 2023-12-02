@@ -128,7 +128,10 @@ func get_pathing_target():
 
 
 func _ready():
-	upgrade_character("vinyl1")		
+	upgrade_character("dieslow1")
+	upgrade_character("dieslow2")
+	upgrade_character("dieslow3")
+	upgrade_character("dieslow4")
 	set_expbar(experience, calculate_experiencecap())
 	_on_hurt_box_hurt(0, 0, 0)
 	for content in Unlocks.unlocked_content:
@@ -311,11 +314,14 @@ func upgrade_character(upgrade):
 			attackManager.attacks["die_slow"].level = 1
 			attackManager.attacks["die_slow"].base_ammo += 1
 		"dieslow2":
-			attackManager.attacks["die_slow"].level = 2			
+			attackManager.attacks["die_slow"].level = 2
+			attackManager.attacks["die_slow"].base_ammo += 1
 		"dieslow3":
-			attackManager.attacks["die_slow"].level = 3			
+			attackManager.attacks["die_slow"].level = 3
+			attackManager.attacks["die_slow"].base_ammo += 1
 		"dieslow4":
-			attackManager.attacks["die_slow"].level = 4			
+			attackManager.attacks["die_slow"].level = 4
+			attackManager.attacks["die_slow"].base_ammo += 1
 		"armor1", "armor2", "armor3", "armor4":
 			armor += 1
 		"speed1", "speed2", "speed3", "speed4":
