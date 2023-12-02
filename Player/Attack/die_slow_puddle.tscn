@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://d1knv8bgnbrqh" path="res://assets/player/attacks/gas_pool.png" id="1_h40pq"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ujgh5"]
-radius = 28.1603
+radius = 55.0
 
 [node name="DieSlowPuddle" type="Area2D" groups=["attack"]]
 top_level = true
@@ -14,6 +14,7 @@ script = ExtResource("1_817ex")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(-4, 5)
+scale = Vector2(2, 2)
 texture = ExtResource("1_h40pq")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

@@ -6,17 +6,20 @@ const WEAPON_PATH = "res://Textures/Items/Weapons/"
 const RAT_WEAPON_PATH = "res://assets/player/attacks/"
 const UPGRADES = {
 	"icespear1": {
-		"icon": WEAPON_PATH + "stonefist.png",
+
+		"icon": RAT_WEAPON_PATH + "stonefist.png",
 		"displayname": "STONEFIST",
-		"details": "A fist of stone is thrown at a random enemy",
+		"details": "A crushing fist of stone is thrown at a random enemy",
 		"level": "Level: 1",
 		"prerequisite": [],
 		"type": "weapon"
 	},
 	"icespear2": {
+
 		"icon": WEAPON_PATH + "stonefist.png",
 		"displayname": "STONEFIST",
 		"details": "An addition STONEFIST is thrown",
+
 		"level": "Level: 2",
 		"prerequisite": ["icespear1"],
 		"type": "weapon"
@@ -24,12 +27,13 @@ const UPGRADES = {
 	"icespear3": {
 		"icon": WEAPON_PATH + "stonefist.png",
 		"displayname": "STONEFIST",
-		"details": "STONEFISTS now pass through another enemy and do + 3 damage",
+		"details": "STONEFISTS now blast through another enemy and do + 3 damage",
 		"level": "Level: 3",
 		"prerequisite": ["icespear2"],
 		"type": "weapon"
 	},
 	"icespear4": {
+
 		"icon": WEAPON_PATH + "stonefist.png",
 		"displayname": "STONEFIST",
 		"details": "An additional 2 STONEFISTS are thrown",

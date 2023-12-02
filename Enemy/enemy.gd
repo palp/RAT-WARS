@@ -8,6 +8,8 @@ class_name EnemyBase
 @export var experience = 1
 @export var enemy_damage = 1
 var knockback = Vector2.ZERO
+var slow_percent = 0.0
+var tick_damage = 0
 
 @onready var player = get_tree().get_first_node_in_group("player")
 @onready var loot_base = get_tree().get_first_node_in_group("loot")
@@ -15,6 +17,8 @@ var knockback = Vector2.ZERO
 @onready var anim = $AnimationPlayer
 @onready var snd_hit = $snd_hit
 @onready var hitBox = $HitBox
+@onready var dotTimer = $HurtBox/DOTTimer
+
 
 @export var death_anim = preload("res://Enemy/explosion.tscn")
 var exp_gem = preload("res://Objects/experience_gem.tscn")
@@ -29,7 +33,12 @@ func _ready():
 func _physics_process(_delta):
 	knockback = knockback.move_toward(Vector2.ZERO, knockback_recovery)
 	var direction = global_position.direction_to(player.global_position)
-	velocity = direction*movement_speed
+	
+	if dotTimer.time_left > 0:
+		velocity = direction*movement_speed*slow_percent
+		hp -= tick_damage
+	else: 
+		velocity = direction*movement_speed
 	velocity += knockback
 	move_and_slide()
 	
@@ -57,3 +66,10 @@ func _on_hurt_box_hurt(damage, angle, knockback_amount):
 		death()
 	else:
 		snd_hit.play()
+
+
+func _on_hurt_box_dot(damage, duration, slow):
+	dotTimer.duration = duration
+	tick_damage = damage
+	slow_percent = (1.0 - slow)
+	dotTimer.start()
