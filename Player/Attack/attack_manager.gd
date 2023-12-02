@@ -5,6 +5,7 @@ var vinyl = preload("res://Player/Attack/vinyl.tscn")
 var icespear = preload("res://Player/Attack/ice_spear.tscn")
 var tornado = preload("res://Player/Attack/tornado.tscn")
 var javelin = preload("res://Player/Attack/javelin.tscn")
+var die_slow = preload("res://Player/Attack/die_slow.tscn")
 
 var spell_cooldown = 0
 var spell_size = 0
@@ -37,6 +38,7 @@ var attacks = {
 	"icespear": AttackType.new(icespear, 0.075, 1.5),
 	"tornado": AttackType.new(tornado, 0.2, 3),
 	"javelin": AttackType.new(javelin, 0.5, 0.5),
+	"die_slow": AttackType.new(die_slow, 0.5, 4.0),
 }
 
 
@@ -79,7 +81,7 @@ func _process(delta):
 			attack.instances.append(instance)
 			add_child(instance)
 			attack.ammo -= 1
-			attack.elapsed_since_attack -= resolved_attack_speed
+			attack.elapsed_since_attack = 0
 
 
 func spawn_javelin():

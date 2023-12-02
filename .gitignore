@@ -8,3 +8,4 @@ dist/*
 
 # VS
 .vs/
+/Player/player_old.gd

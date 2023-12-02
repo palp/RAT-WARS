@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://ct0k2s3fup1ks"]
+
+[ext_resource type="Texture2D" uid="uid://cby4f5gx5mktf" path="res://assets/player/attacks/die_slow.png" id="1_0wd83"]
+[ext_resource type="Script" path="res://Player/Attack/die_slow.gd" id="1_bgle6"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xoyj5"]
+size = Vector2(29, 29)
+
+[node name="DieSlow" type="Area2D"]
+top_level = true
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1_bgle6")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.5, 1.5)
+shape = SubResource("RectangleShape2D_xoyj5")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_0wd83")
+
+[node name="FlightDurationTimer" type="Timer" parent="."]
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="FlightDurationTimer" to="." method="_on_flight_duration_timer_timeout"]

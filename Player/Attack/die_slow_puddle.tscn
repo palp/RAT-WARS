@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://dq5nsjiel0tsh"]
+
+[ext_resource type="Script" path="res://Player/Attack/die_slow_puddle.gd" id="1_817ex"]
+[ext_resource type="Texture2D" uid="uid://d1knv8bgnbrqh" path="res://assets/player/attacks/gas_pool.png" id="1_h40pq"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ujgh5"]
+radius = 28.1603
+
+[node name="DieSlowPuddle" type="Area2D" groups=["attack"]]
+top_level = true
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_817ex")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-4, 5)
+texture = ExtResource("1_h40pq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_ujgh5")
+
+[node name="DurationTimer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="DurationTimer" to="." method="_on_duration_timer_timeout"]

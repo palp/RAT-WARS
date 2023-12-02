@@ -101,18 +101,50 @@ const UPGRADES = {
 		"prerequisite": ["tornado3"],
 		"type": "weapon"
 	},
+	"dieslow1": {
+		"icon": RAT_WEAPON_PATH + "die_slow.png",
+		"displayname": "Die Slow",
+		"details": "A burning pool of gas tossed from a can.",
+		"level": "Level: 1",
+		"prerequisite": [],
+		"type": "weapon"
+	},
+	"dieslow2": {
+		"icon": RAT_WEAPON_PATH + "die_slow.png",
+		"displayname": "Die Slow",
+		"details": "An additional burning pool of gas is created.",
+		"level": "Level: 2",
+		"prerequisite": ["dieslow1"],
+		"type": "weapon"
+	},
+	"dieslow3": {
+		"icon": RAT_WEAPON_PATH + "die_slow.png",
+		"displayname": "Die Slow",
+		"details": "An additional burning pool of gas is created.",
+		"level": "Level: 3",
+		"prerequisite": ["dieslow2"],
+		"type": "weapon"
+	},
+	"dieslow4": {
+		"icon": RAT_WEAPON_PATH + "die_slow.png",
+		"displayname": "Die Slow",
+		"details": "Two additional burning pools of gas are created.",
+		"level": "Level: 4",
+		"prerequisite": ["dieslow3"],
+		"type": "weapon"
+	},
 	"vinyl1": {
 		"icon": RAT_WEAPON_PATH + "vinyl.png",
-		"displayname": "Tornado",
-		"details": "A vinyl is created and random heads somewhere in the players direction",
+		"displayname": "RAT WARS",
+		"details": "A deadly razor sharp vinyl that bounces.",
 		"level": "Level: 1",
 		"prerequisite": [],
 		"type": "weapon"
 	},
 	"vinyl2": {
 		"icon": RAT_WEAPON_PATH + "vinyl.png",
-		"displayname": "Tornado",
-		"details": "An additional Tornado is created",
+		"displayname": "RAT WARS",
+		"details": "An additional Vinyl is created",
 		"level": "Level: 2",
 		"prerequisite": ["vinyl1"],
 		"type": "weapon"
