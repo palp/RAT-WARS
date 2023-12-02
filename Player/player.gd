@@ -395,7 +395,7 @@ func death():
 	emit_signal("playerdeath")
 	get_tree().paused = true
 
-	if time >= 60:
+	if time >= 300:
 		var name = choose_name()
 		scoreSubmitName.text = name
 		winScoreLabel.text = str(score)
@@ -441,10 +441,23 @@ func _on_play_again_button_pressed():
 
 func _on_video_lose_finished():
 	videoLose.visible = false
+	get_node("%video_lose_bg").play()
+	get_node("%video_lose_bg_loop").visible = false
+	get_node("%video_lose_bg").visible = true
 
 func _on_give_up_button_pressed():
-	get_tree().quit()
+	get_tree().change_scene_to_file("res://demo.tscn")
 
 func _on_video_win_finished():
 	winScoreForm.visible = true
 	videoWin.visible = false
+
+func _on_video_lose_bg_finished():	
+	var bg_loop = get_node("%video_lose_bg_loop")	
+	bg_loop.play()
+	bg_loop.visible = true
+	get_node("%video_lose_bg").visible = false
+
+
+func _on_video_lose_bg_loop_finished():
+	get_node("%video_lose_bg_loop").play()
