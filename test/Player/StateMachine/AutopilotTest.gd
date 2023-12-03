@@ -16,7 +16,7 @@ func before_test():
 
 func test_get_autopilot_velocity_no_enemies() -> void:
 	var velocity = autopilot.get_autopilot_velocity(Vector2(0, 0), Array())
-	assert_vector2(velocity).is_not_equal(Vector2(0, 0))
+	assert_vector(velocity).is_not_equal(Vector2(0, 0))
 
 
 func test_get_autopilot_velocity_one_enemy() -> void:
