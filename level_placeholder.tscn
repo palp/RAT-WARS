@@ -12,7 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://cicd0plbiord6" path="res://Enemy/enemy_spitter_rat.tscn" id="7_pxitb"]
 [ext_resource type="PackedScene" uid="uid://dhwhbsqu47ocn" path="res://Enemy/enemy_balloon_rat.tscn" id="8_rm5oc"]
 [ext_resource type="PackedScene" uid="uid://x87jrsdtky6u" path="res://Enemy/enemy_boss_verminator.tscn" id="9_iksbi"]
-[ext_resource type="AudioStream" uid="uid://bxntkvkn4o6u7" path="res://Audio/Music/06 HEALTH - UNLOVED - Instrumental Master.mp3" id="10_mpto5"]
+[ext_resource type="AudioStream" uid="uid://7xlmshasr1ic" path="res://Audio/Music/UNLOVED LOOP.mp3" id="11_jv7o4"]
 [ext_resource type="Script" path="res://Audio/Music/snd_Music.gd" id="11_ovtx6"]
 [ext_resource type="Script" path="res://ui/pause_button.gd" id="13_wx351"]
 
@@ -116,7 +116,7 @@ spawns = Array[ExtResource("5_jj7s8")]([SubResource("Resource_03m25"), SubResour
 
 [node name="snd_Music" type="AudioStreamPlayer" parent="."]
 process_mode = 3
-stream = ExtResource("10_mpto5")
+stream = ExtResource("11_jv7o4")
 volume_db = -15.0
 autoplay = true
 bus = &"Music"
