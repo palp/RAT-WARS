@@ -27,7 +27,7 @@ jobs:
           prerelease: false
   export-macos:
     needs: create-release
-    name: Export MacOS
+    name: Export macos
     runs-on: macos-latest
     steps:
       - name: Checkout
@@ -86,9 +86,9 @@ jobs:
           echo  "notarization/api_uuid=\"${{ secrets.APPSTORE_ISSUER_ID }}\"" >>export-credentials.cfg
           echo -n "$APPSTORE_API_PRIVATE_KEY" >$RUNNER_TEMP/appstore.p8
           echo  "notarization/api_key=\"$RUNNER_TEMP/appstore.p8\"" >> export-credentials.cfg
-          echo  "notarization/api_key_id=\"${{ secrets.APPSTORE_API_KEY_ID }}\"" >>export-credentials.cfg"
+          echo  "notarization/api_key_id=\"${{ secrets.APPSTORE_API_KEY_ID }}\"" >>export-credentials.cfg
       - name: Install production config
-        if: ${{ !cancelled() }}
+        if: ${{ success() }}
         run: |
           echo -n "${{ secrets.PROD_CONFIG_BASE64 }}" | base64 --decode -o ratwars.cfg.prod
           echo -n "${{ secrets.CONFIG_KEY_BASE64 }}" | base64 --decode -o config.key
