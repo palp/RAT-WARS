@@ -390,10 +390,10 @@ unique_name_in_owner = true
 process_mode = 2
 top_level = true
 layout_mode = 0
-offset_left = 1200.0
-offset_top = 300.0
-offset_right = 1700.0
-offset_bottom = 900.0
+offset_left = 500.0
+offset_top = 1000.0
+offset_right = 1000.0
+offset_bottom = 1600.0
 theme = ExtResource("4_f6gen")
 
 [node name="lbl_LevelUP" type="Label" parent="GUILayer/GUI/LevelUp"]
