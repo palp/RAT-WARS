@@ -108,6 +108,7 @@ jobs:
             mv ${{matrix.build.output}} rat-wars-macos.zip
           else
             zip -r rat-wars-${{matrix.build.tag}}.zip ${{matrix.build.path}}
+          fi
       - name: Publish Artifact
         if: ${{ success() }}
         uses: actions/upload-artifact@v2
