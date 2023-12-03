@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - main
+      - fix-release
     tags:
       - v*
 
@@ -100,6 +101,12 @@ jobs:
             echo "Build failed"
             exit 1
           fi
+      - name: Zip
+        if: ${{ success() && contains(fromJson('["macos","android"]'),matrix.build.preset) }}
+        run: |
+          cd ${{matrix.build.path}}
+          zip -r ${{matrix.build.path}}/ratwars-${{matrix.build.tag}}.zip ${{matrix.build.output}}
+          rm -f ${{matrix.build.output}}
       - name: Publish Artifact
         if: ${{ success() }}
         uses: actions/upload-artifact@v2
@@ -113,8 +120,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ needs.create-release.outputs.upload_url }}
-          asset_path: ${{matrix.build.output}}
-          asset_name: ratwars-${{matrix.build.tag}}
+          asset_path: ${{matrix.build.path}}
+          asset_name: ratwars-${{matrix.build.tag}}.zip
           asset_content_type: application/octet-stream
       - name: Push to healthnoise.itch.io (${{matrix.build.tag}})
         if: ${{ github.ref_type == 'tag' && startsWith(github.ref, 'refs/tags/v') && success() }}
