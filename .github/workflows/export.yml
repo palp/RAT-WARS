@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - main
+      - macos
     tags:
       - v*
 
@@ -24,6 +25,113 @@ jobs:
           release_name: ${{ github.ref }}
           draft: false
           prerelease: false
+  export-macos:
+    needs: create-release
+    name: Export MacOS
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          lfs: true
+      - name: Install the Apple certificate
+        env:
+          BUILD_CERTIFICATE_BASE64: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
+          P12_PASSWORD: ${{ secrets.P12_PASSWORD }}
+          BUILD_PROVISION_PROFILE_BASE64: ${{ secrets.BUILD_PROVISION_PROFILE_BASE64 }}
+          KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
+        run: |
+          # create variables
+          CERTIFICATE_PATH=$RUNNER_TEMP/build_certificate.p12
+          KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
+
+          # import certificate and provisioning profile from secrets
+          echo -n "$BUILD_CERTIFICATE_BASE64" | base64 --decode -o $CERTIFICATE_PATH
+
+          # create temporary keychain
+          security create-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+          security set-keychain-settings -lut 21600 $KEYCHAIN_PATH
+          security unlock-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+
+          # import certificate to keychain
+          security import $CERTIFICATE_PATH -P "$P12_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
+          security list-keychain -d user -s $KEYCHAIN_PATH
+      - name: "Download and Install Godot 4.2"
+        continue-on-error: false
+        shell: bash
+        run: |
+          GODOT_VERSION=4.2
+          brew install --cask https://raw.githubusercontent.com/Homebrew/homebrew-cask/b0945f65719f9f1743684d182def989252dd9d95/Casks/g/godot.rb
+
+          mkdir -v -p "/Users/runner/Library/Application Support/Godot/export_templates"
+          GODOT_TEMPLATES_PACKAGE=Godot_v$GODOT_VERSION-stable_export_templates.tpz          
+          wget -q https://github.com/godotengine/godot/releases/download/$GODOT_VERSION-stable/$GODOT_TEMPLATES_PACKAGE -P ${{ runner.temp }}
+          unzip ${{ runner.temp }}/$GODOT_TEMPLATES_PACKAGE -d "/Users/runner/Library/Application Support/Godot/export_templates"
+          mv "/Users/runner/Library/Application Support/Godot/export_templates/templates" "/Users/runner/Library/Application Support/Godot/export_templates/$GODOT_VERSION.stable"
+      - name: "Update Project"
+        if: ${{ !cancelled() }}
+        timeout-minutes: 1
+        continue-on-error: true # we still ignore the timeout, the script is not quit and we run into a timeout
+        shell: bash
+        run: |
+          godot -e --path . -s res://addons/gdUnit4/bin/ProjectScanner.gd --headless --audio-driver Dummy
+      - name: Configure Notarization
+        if: ${{ !cancelled() }}
+        run: |
+          mkdir -p .godot
+          cd .godot
+          echo  "[preset.3.options]"  > export-credentials.cfg
+          echo  "notarization/api_uuid=\"${{ secrets.APPSTORE_ISSUER_ID }}\"" >> export-credentials.cfg
+          echo -n "${{ secrets.APPSTORE_API_PRIVATE_KEY }}" >/root/appstore.p8
+          echo  "notarization/api_key=\"/root/appstore.p8\"" >> export-credentials.cfg
+          echo  "notarization/api_key_id=\"${{ secrets.APPSTORE_API_KEY_ID }}\"" >> export-credentials.cfg"
+      - name: Install production config
+        if: ${{ !cancelled() }}
+        run: |
+          echo -n "${{ secrets.PROD_CONFIG_BASE64 }}" | base64 --decode -o ratwars.cfg.prod
+          echo -n "${{ secrets.CONFIG_KEY_BASE64 }}" | base64 --decode -o config.key
+      - name: Build
+        if: ${{ !cancelled() }}
+        timeout-minutes: 10
+        run: |
+          mkdir -v -p build/macos
+          godot -v --headless --audio-driver Dummy --export-release "macos" "build/macos/ratwars-macos.ipa"
+      - name: Check build
+        if: ${{ !cancelled() }}
+        run: |
+          if [ ! -f "build/macos/ratwars-macos.zip" ]; then
+            echo "Build failed"
+            exit 1
+          fi
+      - name: Publish Artifact
+        if: ${{ success() }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: ratwars-macos
+          path: build/macos/ratwars-macos.zip
+      - name: Upload Release Asset
+        if: ${{ github.ref_type == 'tag' && startsWith(github.ref, 'refs/tags/v') && success() }}
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ needs.create-release.outputs.upload_url }}
+          asset_path: build/macos/rat-wars-macos.zip
+          asset_name: rat-wars-macos.zip
+          asset_content_type: application/octet-stream
+      - name: Set up butler
+        uses: jdno/setup-butler@v1          
+      - name: Push to healthnoise.itch.io
+        if: ${{ github.ref_type == 'tag' && startsWith(github.ref, 'refs/tags/v') && success() }}
+        run: butler push build/macos/rat-wars-macos.zip healthnoise/ratwars:macos --userversion ${{github.ref_name}}
+        env:
+          BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
+      - name: Push to palp.itch.io
+        if: ${{ !(github.ref_type == 'tag' && startsWith(github.ref, 'refs/tags/v')) && success() }}
+        run: butler push build/macos/rat-wars-macos.zip palp/rat-wars:macos --userversion ${{github.sha}}
+        env:
+          BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
+
   export-matrix:
     needs: create-release
     strategy:
@@ -42,10 +150,6 @@ jobs:
             path: build/win
             output: build/win/RatWars.exe
             tag: win
-          - preset: macos
-            path: build/macos
-            output: build/macos/rat-wars-macos.zip
-            tag: macos
           - preset: android
             path: build/android
             output: build/android/RatWars.apk
