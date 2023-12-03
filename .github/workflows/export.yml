@@ -235,11 +235,11 @@ jobs:
           asset_content_type: application/octet-stream
       - name: Push to healthnoise.itch.io (${{matrix.build.tag}})
         if: ${{ github.ref_type == 'tag' && startsWith(github.ref, 'refs/tags/v') && success() }}
-        run: butler push build/ratwars-${{matrix.build.tag}}.zip healthnoise/ratwars:${{matrix.build.tag}} --userversion ${{github.ref_name}}
+        run: butler push ${{matrix.build.path}} healthnoise/ratwars:${{matrix.build.tag}} --userversion ${{github.ref_name}}
         env:
           BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
       - name: Push to palp.itch.io (${{matrix.build.tag}})
         if: ${{ !(github.ref_type == 'tag' && startsWith(github.ref, 'refs/tags/v')) && success() }}
-        run: butler push build/ratwars-${{matrix.build.tag}}.zip palp/rat-wars:${{matrix.build.tag}} --userversion ${{github.sha}}
+        run: butler push ${{matrix.build.path}} palp/rat-wars:${{matrix.build.tag}} --userversion ${{github.sha}}
         env:
           BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
