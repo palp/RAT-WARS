@@ -20,13 +20,5 @@ func _ready():
 	lblLevel.text = UpgradeDb.UPGRADES[item]["level"]
 	itemIcon.texture = load(UpgradeDb.UPGRADES[item]["icon"])
 	
-func _input(event):
-	if event.is_action("click"):
-		if mouse_over:
-			emit_signal("selected_upgrade",item)
-
-func _on_mouse_entered():
-	mouse_over = true
-
-func _on_mouse_exited():
-	mouse_over = false
+func _on_button_pressed():
+	emit_signal("selected_upgrade", item)
