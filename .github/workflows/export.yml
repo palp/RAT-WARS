@@ -3,7 +3,6 @@ on:
   push:
     branches:
       - main
-      - fix-macos-cert
     tags:
       - v*
 
@@ -199,7 +198,7 @@ jobs:
           WINE_PATH=$(which wine64)
           cp .github/rcedit-x64.exe $RUNNER_TEMP/
           sed 's|export/windows/rcedit = ".*"|export/windows/rcedit = "'$RUNNER_TEMP/rcedit-x64.exe'"|g' -i /root/.config/godot/editor_settings-4.tres
-          sed 's|export/windows/wine = ".*"|export/windows/wine = "'$WINE_PATH'"|g' -i /root/.config/godot/editor_settings-4.tres
+          sed 's|export/windows/wine = ".*"|export/windows/wine = "$WINE_PATH"|g' -i /root/.config/godot/editor_settings-4.tres
           mkdir -v -p ~/.config/godot
           cp -v /root/.config/godot/editor_settings-4.tres ~/.config/godot
       - name: Install production config
