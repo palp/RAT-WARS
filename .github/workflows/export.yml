@@ -77,12 +77,14 @@ jobs:
           godot -e --path . -s res://addons/gdUnit4/bin/ProjectScanner.gd --headless --audio-driver Dummy
       - name: Configure Notarization
         if: ${{ !cancelled() }}
+        env: 
+          APPSTORE_KEY: ${{secrets.APPSTORE_API_PRIVATE_KEY}}
         run: |
           mkdir -p .godot
           cd .godot
           echo  "[preset.3.options]"  > export-credentials.cfg
           echo  "notarization/api_uuid=\"${{ secrets.APPSTORE_ISSUER_ID }}\"" >> export-credentials.cfg
-          echo -n "${{ secrets.APPSTORE_API_PRIVATE_KEY }}" >/root/appstore.p8
+          echo -n "$APPSTORE_API_PRIVATE_KEY" >/root/appstore.p8
           echo  "notarization/api_key=\"/root/appstore.p8\"" >> export-credentials.cfg
           echo  "notarization/api_key_id=\"${{ secrets.APPSTORE_API_KEY_ID }}\"" >> export-credentials.cfg"
       - name: Install production config
