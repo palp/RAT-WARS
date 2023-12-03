@@ -89,7 +89,6 @@ jobs:
       - name: Build
         if: ${{ !cancelled() }}
         timeout-minutes: 10
-        continue-on-error: true
         run: |
           mkdir -v -p ${{matrix.build.path}}
           godot -v --headless --audio-driver Dummy --export-release "${{matrix.build.preset}}" "${{matrix.build.output}}"
@@ -100,13 +99,14 @@ jobs:
             echo "Build failed"
             exit 1
           fi
-      # - name: Zip
-      #   if: ${{ success() && contains(fromJson('["android"]'),matrix.build.preset) }}
-      #   run: |
-      #     cd ${{matrix.build.path}}
-      #     zip -r ../ratwars-${{matrix.build.tag}}.zip .
-      #     rm -f *
-      #     mv ../ratwars-${{matrix.build.tag}}.zip .
+      - name: Zip
+        if: ${{ success() }}
+        run: |
+          if [ "${{matrix.build.preset}}" == "macos" ]; then
+            mv ${{matrix.build.output}} rat-wars-macos.zip
+          else
+            zip -r rat-wars-${{matrix.build.tag}}.zip ${{matrix.build.path}}
+          fi
       - name: Publish Artifact
         if: ${{ success() }}
         uses: actions/upload-artifact@v2
@@ -120,16 +120,16 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ needs.create-release.outputs.upload_url }}
-          asset_path: ${{matrix.build.path}}
-          asset_name: ratwars-${{matrix.build.tag}}.zip
+          asset_path: rat-wars-${{matrix.build.tag}}.zip
+          asset_name: rat-wars-${{matrix.build.tag}}.zip
           asset_content_type: application/octet-stream
       - name: Push to healthnoise.itch.io (${{matrix.build.tag}})
         if: ${{ github.ref_type == 'tag' && startsWith(github.ref, 'refs/tags/v') && success() }}
-        run: butler push ${{matrix.build.path}} healthnoise/ratwars:${{matrix.build.tag}} --userversion ${{github.ref_name}}
+        run: butler push rat-wars-${{matrix.build.tag}}.zip healthnoise/ratwars:${{matrix.build.tag}} --userversion ${{github.ref_name}}
         env:
           BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
       - name: Push to palp.itch.io (${{matrix.build.tag}})
         if: ${{ !(github.ref_type == 'tag' && startsWith(github.ref, 'refs/tags/v')) && success() }}
-        run: butler push ${{matrix.build.path}} palp/rat-wars:${{matrix.build.tag}} --userversion ${{github.sha}}
+        run: butler push rat-wars-${{matrix.build.tag}}.zip palp/rat-wars:${{matrix.build.tag}} --userversion ${{github.sha}}
         env:
           BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
