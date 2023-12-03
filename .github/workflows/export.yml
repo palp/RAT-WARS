@@ -82,7 +82,7 @@ jobs:
         run: |
           brew install gnu-sed
           PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
-          echo "$APPSTORE_API_PRIVATE_KEY" >$RUNNER_TEMP/appstore.p8
+          echo -n "$APPSTORE_KEY" >$RUNNER_TEMP/appstore.p8
           sed 's@notarization/api_uuid=".*"@notarization/api_uuid="'${{ secrets.APPSTORE_ISSUER_ID }}'"@g' -i export_presets.cfg
           sed 's@notarization/api_key=".*"@notarization/api_key="'$RUNNER_TEMP/appstore.p8'"@g' -i export_presets.cfg
           sed 's@notarization/api_key_id=".*"@notarization/api_key_id="'${{ secrets.APPSTORE_API_KEY_ID }}'"@g' -i export_presets.cfg
