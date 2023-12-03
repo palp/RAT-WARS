@@ -80,14 +80,10 @@ jobs:
         env: 
           APPSTORE_KEY: ${{secrets.APPSTORE_API_PRIVATE_KEY}}
         run: |
-          mkdir -p .godot
-          cd .godot
-          echo "[preset.3]" > export-credentials.cfg
-          echo  "[preset.3.options]"  >> export-credentials.cfg
-          echo  "notarization/api_uuid=\"${{ secrets.APPSTORE_ISSUER_ID }}\"" >>export-credentials.cfg
-          echo -n "$APPSTORE_API_PRIVATE_KEY" >$RUNNER_TEMP/appstore.p8
-          echo  "notarization/api_key=\"$RUNNER_TEMP/appstore.p8\"" >> export-credentials.cfg
-          echo  "notarization/api_key_id=\"${{ secrets.APPSTORE_API_KEY_ID }}\"" >>export-credentials.cfg
+          echo "$APPSTORE_API_PRIVATE_KEY" >$RUNNER_TEMP/appstore.p8
+          sed 's@notarization/api_uuid=".*"@notarization/api_uuid="'${{ secrets.APPSTORE_ISSUER_ID }}'"@g' -i export_presets.cfg
+          sed 's@notarization/api_key=".*"@notarization/api_key="'$RUNNER_TEMP/appstore.p8'"@g' -i export_presets.cfg
+          sed 's@notarization/api_key_id=".*"@notarization/api_key_id="'${{ secrets.APPSTORE_API_KEY_ID }}'"@g' -i export_presets.cfg
       - name: Install production config
         if: ${{ success() }}
         run: |
