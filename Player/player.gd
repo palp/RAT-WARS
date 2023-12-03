@@ -72,6 +72,7 @@ var enemy_close = []
 @onready var leaderboard = get_node("%leaderboard") as Leaderboard
 @onready var loseVideoPanel = get_node("%LoseVideoPanel")
 @onready var videoLose = get_node("%video_lose")
+@onready var videoCredits = get_node("%video_credits")
 @onready var leaderboardControl = get_node("%LeaderboardControl")
 
 #Game session
@@ -223,12 +224,12 @@ func set_expbar(set_value = 1, set_max_value = 100):
 
 func _input(event):
 # Uncomment these cheats for testing
-#	if event.is_action_pressed("ui_copy"):
-#		victory()
-#	if event.is_action_pressed("ui_cut"):
-#		death()
-#   if event._is_action_pressed("ui_paste"):
-#		upgrade_character(get_random_item())
+	if event.is_action_pressed("ui_copy"):
+		victory()
+	if event.is_action_pressed("ui_cut"):
+		death()
+	if event.is_action_pressed("ui_paste"):
+		upgrade_character(get_random_item())
 	if disable_upgrades and event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and not event.is_pressed():
 		disable_upgrades = false
 
@@ -451,6 +452,8 @@ func _on_session_update_timer_timeout():
 
 func _on_btn_submit_score_click_end():
 	winScoreForm.visible = false
+	videoCredits.visible = true
+	videoCredits.play()
 	if game_session.has("id"):
 		var name = scoreSubmitName.text
 		if name.length() < 2:

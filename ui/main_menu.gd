@@ -5,7 +5,10 @@ extends Control
 @onready var unlock_input = get_node("%unlock_input")
 @onready var unlock_button = get_node("%unlock_button")
 @onready var leaderboard = get_node("%leaderboard")
+@onready var video_player = get_node("%VideoStreamPlayer")
 
+signal video_started
+signal video_stopped
 
 func _on_play_pressed():
 	get_tree().change_scene_to_file("res://level_placeholder.tscn")
@@ -44,3 +47,21 @@ func _on_scores_button_pressed():
 	else:
 		close_submenus()
 		leaderboard.visible = true
+
+
+func _on_video_stream_player_finished():
+	emit_signal("video_stopped")
+	get_tree().paused = false
+	video_player.visible = false
+
+func _on_credits_button_pressed():
+	emit_signal("video_started")
+	video_player.visible = true
+	get_tree().paused = true
+	video_player.play()
+
+
+func _on_video_stream_player_gui_input(event):
+	if Input.is_action_just_pressed("click") and video_player.stream_position > 5:
+		get_tree().paused = false
+		video_player.stop()

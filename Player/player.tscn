@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://6rkaprmq4ect"]
+[gd_scene load_steps=29 format=3 uid="uid://6rkaprmq4ect"]
 
 [ext_resource type="Script" path="res://Player/player.gd" id="1_37q80"]
 [ext_resource type="Texture2D" uid="uid://bd1dsmqbq3l7" path="res://assets/player/character/john/john_placeholder.png" id="2_1lecr"]
@@ -20,6 +20,7 @@
 [ext_resource type="FontFile" uid="uid://bejghu08d1uvm" path="res://Font/ARIBLK.TTF" id="13_qr3b0"]
 [ext_resource type="PackedScene" uid="uid://i4j5o8gkuyr0" path="res://ui/leaderboard.tscn" id="19_7sjgu"]
 [ext_resource type="VideoStream" path="res://Video/RAT_WARS_Fail.ogv" id="19_xptxg"]
+[ext_resource type="VideoStream" path="res://Video/Credits_Final.ogv" id="20_vi8j1"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_nffdp"]
 height = 36.0
@@ -270,6 +271,22 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
+[node name="video_credits" type="VideoStreamPlayer" parent="GUILayer/GUI/WinVideoPanel"]
+unique_name_in_owner = true
+process_mode = 3
+visible = false
+z_index = 4
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 384.0
+offset_bottom = 224.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.8, 0.8)
+stream = ExtResource("20_vi8j1")
+
 [node name="video_win" type="VideoStreamPlayer" parent="GUILayer/GUI/WinVideoPanel"]
 unique_name_in_owner = true
 process_mode = 3
@@ -280,6 +297,10 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = -192.0
+offset_top = -112.0
+offset_right = 192.0
+offset_bottom = 112.0
 grow_horizontal = 2
 grow_vertical = 2
 stream = ExtResource("12_k73xi")
@@ -463,20 +484,20 @@ unique_name_in_owner = true
 top_level = true
 z_index = 5
 layout_mode = 1
-offset_left = 560.0
-offset_top = 24.0
-offset_right = -482.0
-offset_bottom = -97.0
+offset_left = 965.0
+offset_top = 26.0
+offset_right = -77.0
+offset_bottom = -95.0
 
 [node name="play_again_button" type="Button" parent="GUILayer/GUI/LeaderboardControl"]
 process_mode = 3
 top_level = true
 z_index = 6
 layout_mode = 0
-offset_left = 562.0
-offset_top = 778.0
-offset_right = 776.0
-offset_bottom = 837.0
+offset_left = 966.0
+offset_top = 780.0
+offset_right = 1180.0
+offset_bottom = 839.0
 text = "PLAY AGAIN
 "
 
@@ -486,10 +507,10 @@ process_mode = 3
 top_level = true
 z_index = 6
 layout_mode = 0
-offset_left = 835.0
-offset_top = 780.0
-offset_right = 1053.0
-offset_bottom = 839.0
+offset_left = 1239.0
+offset_top = 782.0
+offset_right = 1457.0
+offset_bottom = 841.0
 text = "MAIN MENU"
 
 [node name="SessionUpdateTimer" type="Timer" parent="."]
@@ -517,6 +538,7 @@ texture_progress = SubResource("GradientTexture2D_ca7jc")
 [connection signal="pressed" from="GUILayer/GUI/LoseVideoPanel/give_up_button" to="." method="_on_give_up_button_pressed"]
 [connection signal="finished" from="GUILayer/GUI/LoseVideoPanel/video_lose_bg" to="." method="_on_video_lose_bg_finished"]
 [connection signal="finished" from="GUILayer/GUI/LoseVideoPanel/video_lose_bg_loop" to="." method="_on_video_lose_bg_loop_finished"]
+[connection signal="finished" from="GUILayer/GUI/WinVideoPanel/video_credits" to="." method="_on_video_lose_bg_finished"]
 [connection signal="finished" from="GUILayer/GUI/WinVideoPanel/video_win" to="." method="_on_video_win_finished"]
 [connection signal="click_end" from="GUILayer/GUI/WinVideoPanel/WinScoreForm/btn_submit_score" to="." method="_on_btn_submit_score_click_end"]
 [connection signal="pressed" from="GUILayer/GUI/LeaderboardControl/play_again_button" to="." method="_on_play_again_button_pressed"]

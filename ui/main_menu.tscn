@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://eno7xtkdwasd"]
+[gd_scene load_steps=6 format=3 uid="uid://eno7xtkdwasd"]
 
 [ext_resource type="Theme" uid="uid://bwayc6rbhtvxj" path="res://assets/ui/theme/HEALTH_theme.tres" id="1_6g7a4"]
 [ext_resource type="Script" path="res://ui/main_menu.gd" id="1_d8lo5"]
 [ext_resource type="PackedScene" uid="uid://t6pr3p1c7edy" path="res://ui/options_menu.tscn" id="2_ij7nk"]
+[ext_resource type="VideoStream" path="res://Video/Credits_Final.ogv" id="3_dkdyw"]
 [ext_resource type="PackedScene" uid="uid://i4j5o8gkuyr0" path="res://ui/leaderboard.tscn" id="3_m6ake"]
 
 [node name="menu" type="Control"]
@@ -15,12 +16,23 @@ grow_vertical = 2
 theme = ExtResource("1_6g7a4")
 script = ExtResource("1_d8lo5")
 
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="."]
+unique_name_in_owner = true
+process_mode = 3
+z_index = 6
+z_as_relative = false
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 1088.0
+scale = Vector2(0.8, 0.8)
+stream = ExtResource("3_dkdyw")
+
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 0
-offset_left = 15.0
-offset_top = 12.0
-offset_right = 151.0
-offset_bottom = 128.0
+offset_left = 94.0
+offset_top = 113.0
+offset_right = 230.0
+offset_bottom = 408.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
@@ -80,18 +92,29 @@ offset_top = -191.0
 offset_right = 797.0
 offset_bottom = 497.0
 
+[node name="credits_button" type="Button" parent="MarginContainer/VBoxContainer/bonus_button"]
+layout_mode = 0
+offset_left = 2.0
+offset_top = 122.0
+offset_right = 136.0
+offset_bottom = 178.0
+text = "CREDITS"
+
 [node name="options_menu" parent="." instance=ExtResource("2_ij7nk")]
 unique_name_in_owner = true
 visible = false
 layout_mode = 1
-offset_left = 169.0
-offset_top = 76.0
-offset_right = 169.0
-offset_bottom = 76.0
+offset_left = 245.0
+offset_top = 132.0
+offset_right = -944.0
+offset_bottom = -449.0
 
+[connection signal="finished" from="VideoStreamPlayer" to="." method="_on_video_stream_player_finished"]
+[connection signal="gui_input" from="VideoStreamPlayer" to="." method="_on_video_stream_player_gui_input"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/play_button" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/options_button" to="." method="_on_options_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/bonus_button" to="." method="_on_bonus_button_pressed"]
 [connection signal="text_changed" from="MarginContainer/VBoxContainer/bonus_button/unlock_input" to="." method="_on_unlock_input_text_changed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/bonus_button/unlock_button" to="." method="_on_unlock_button_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/bonus_button/scores_button" to="." method="_on_scores_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/bonus_button/credits_button" to="." method="_on_credits_button_pressed"]
