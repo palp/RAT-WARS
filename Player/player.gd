@@ -238,7 +238,7 @@ func levelup():
 	var tween = levelPanel.create_tween()
 	(
 		tween
-		. tween_property(levelPanel, "position", Vector2(568, 200), 0.8)
+		. tween_property(levelPanel, "position", Vector2(568, 200), 1.2)
 		. set_trans(Tween.TRANS_QUINT)
 		. set_ease(Tween.EASE_IN)
 	)
@@ -336,7 +336,7 @@ func upgrade_character(upgrade):
 	disable_pathing_input = false
 	disable_pausing = false
 	levelPanel.visible = false
-	levelPanel.position = Vector2(800, 50)
+	levelPanel.position = Vector2(568, 1200)
 	get_tree().paused = false
 	calculate_experience(0)
 
