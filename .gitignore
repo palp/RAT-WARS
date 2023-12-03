@@ -2,12 +2,14 @@
 .godot/
 dist/*
 
+
 # Mac files
 *.DS_Store
 /.vs/RAT-WARS/FileContentIndex
 
 # VS
 .vs/
+.vscode/
 /Player/player_old.gd
 
 ratwars-prod.cfg
