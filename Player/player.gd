@@ -119,7 +119,7 @@ func _ready():
 	disable_pausing = false
 	disable_pathing_input = false
 	disable_upgrades = false
-	upgrade_character("dieslow1")
+	upgrade_character("stonefist1")
 	set_expbar(experience, calculate_experiencecap())
 	_on_hurt_box_hurt(0, 0, 0)
 	for content in Unlocks.unlocked_content:
@@ -263,17 +263,17 @@ func levelup():
 
 func upgrade_character(upgrade):	
 	match upgrade:
-		"icespear1":
-			attackManager.attacks["icespear"].level = 1
-			attackManager.attacks["icespear"].base_ammo += 1
-		"icespear2":
-			attackManager.attacks["icespear"].level = 2
-			attackManager.attacks["icespear"].base_ammo += 1
-		"icespear3":
-			attackManager.attacks["icespear"].level = 3
-		"icespear4":
-			attackManager.attacks["icespear"].level = 4
-			attackManager.attacks["icespear"].base_ammo += 2
+		"stonefist1":
+			attackManager.attacks["stonefist"].level = 1
+			attackManager.attacks["stonefist"].base_ammo += 1
+		"stonefist2":
+			attackManager.attacks["stonefist"].level = 2
+			attackManager.attacks["stonefist"].base_ammo += 1
+		"stonefist3":
+			attackManager.attacks["stonefist"].level = 3
+		"stonefist4":
+			attackManager.attacks["stonefist"].level = 4
+			attackManager.attacks["stonefist"].base_ammo += 2
 		"tornado1":
 			attackManager.attacks["tornado"].level = 1
 			attackManager.attacks["tornado"].base_ammo += 1

@@ -6,7 +6,7 @@ const RAT_ICON_PATH = "res://assets/player/upgrades/"
 const WEAPON_PATH = "res://Textures/Items/Weapons/"
 const RAT_WEAPON_PATH = "res://assets/player/attacks/"
 const UPGRADES = {
-	"icespear1": {
+	"stonefist1": {
 
 		"icon": RAT_WEAPON_PATH + "stonefist.png",
 		"displayname": "STONEFIST",
@@ -15,30 +15,30 @@ const UPGRADES = {
 		"prerequisite": [],
 		"type": "weapon"
 	},
-	"icespear2": {
+	"stonefist2": {
 
 		"icon": RAT_WEAPON_PATH + "stonefist.png",
 		"displayname": "STONEFIST",
-		"details": "An addition STONEFIST is thrown",
+		"details": "An additional STONEFIST is thrown",
 
 		"level": "Level: 2",
-		"prerequisite": ["icespear1"],
+		"prerequisite": ["stonefist1"],
 		"type": "weapon"
 	},
-	"icespear3": {
+	"stonefist3": {
 		"icon": RAT_WEAPON_PATH + "stonefist.png",
 		"displayname": "STONEFIST",
 		"details": "STONEFISTS now blast through another enemy and do + 3 damage",
 		"level": "Level: 3",
-		"prerequisite": ["icespear2"],
+		"prerequisite": ["stonefist2"],
 		"type": "weapon"
 	},
-	"icespear4": {
+	"stonefist4": {
 		"icon": RAT_WEAPON_PATH + "stonefist.png",
 		"displayname": "STONEFIST",
 		"details": "An additional 2 STONEFISTS are thrown",
 		"level": "Level: 4",
-		"prerequisite": ["icespear3"],
+		"prerequisite": ["stonefist3"],
 		"type": "weapon"
 	},
 	"javelin1": {

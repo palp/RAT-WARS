@@ -2,7 +2,7 @@ class_name attack_manager
 extends Node
 
 var vinyl = preload("res://Player/Attack/vinyl.tscn")
-var icespear = preload("res://Player/Attack/ice_spear.tscn")
+var stonefist = preload("res://Player/Attack/ice_spear.tscn")
 var tornado = preload("res://Player/Attack/tornado.tscn")
 var javelin = preload("res://Player/Attack/javelin.tscn")
 var die_slow = preload("res://Player/Attack/die_slow.tscn")
@@ -35,7 +35,7 @@ class AttackType:
 
 var attacks = {
 	"vinyl": AttackType.new(vinyl, 0.2, 3),
-	"icespear": AttackType.new(icespear, 0.075, 1.5),
+	"stonefist": AttackType.new(stonefist, 0.075, 1.5),
 	"tornado": AttackType.new(tornado, 0.2, 3),
 	"javelin": AttackType.new(javelin, 0.5, 0.5),
 	"die_slow": AttackType.new(die_slow, 0.5, 4.0),
