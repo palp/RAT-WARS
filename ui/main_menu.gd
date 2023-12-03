@@ -14,7 +14,7 @@ signal video_started
 signal video_stopped
 
 func _on_play_pressed():
-	get_tree().change_scene_to_file("res://level_placeholder.tscn")
+	get_tree().change_scene_to_file("res://Player/player_select.tscn")
 
 func close_submenus():
 	options_menu.visible = false
