@@ -215,7 +215,8 @@ jobs:
       - name: Zip
         if: ${{ success() }}
         run: |
-          zip -r ratwars-${{matrix.build.tag}}.zip ${{matrix.build.path}}
+          cd ${{matrix.build.path}}
+          zip -r ../ratwars-${{matrix.build.tag}}.zip .
       - name: Publish Artifact
         if: ${{ success() }}
         uses: actions/upload-artifact@v2
@@ -229,16 +230,16 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ needs.create-release.outputs.upload_url }}
-          asset_path: ratwars-${{matrix.build.tag}}.zip
+          asset_path: build/ratwars-${{matrix.build.tag}}.zip
           asset_name: ratwars-${{matrix.build.tag}}.zip
           asset_content_type: application/octet-stream
       - name: Push to healthnoise.itch.io (${{matrix.build.tag}})
         if: ${{ github.ref_type == 'tag' && startsWith(github.ref, 'refs/tags/v') && success() }}
-        run: butler push ratwars-${{matrix.build.tag}}.zip healthnoise/ratwars:${{matrix.build.tag}} --userversion ${{github.ref_name}}
+        run: butler push build/ratwars-${{matrix.build.tag}}.zip healthnoise/ratwars:${{matrix.build.tag}} --userversion ${{github.ref_name}}
         env:
           BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
       - name: Push to palp.itch.io (${{matrix.build.tag}})
         if: ${{ !(github.ref_type == 'tag' && startsWith(github.ref, 'refs/tags/v')) && success() }}
-        run: butler push ratwars-${{matrix.build.tag}}.zip palp/rat-wars:${{matrix.build.tag}} --userversion ${{github.sha}}
+        run: butler push build/ratwars-${{matrix.build.tag}}.zip palp/rat-wars:${{matrix.build.tag}} --userversion ${{github.sha}}
         env:
           BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
