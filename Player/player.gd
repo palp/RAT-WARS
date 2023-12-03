@@ -111,6 +111,7 @@ func get_movement_vector():
 
 
 func get_pathing_target():
+	print_debug(get_global_mouse_position())
 	return get_global_mouse_position()
 
 
@@ -206,7 +207,7 @@ func calculate_experiencecap():
 	if experience_level < 20:
 		exp_cap = experience_level * 5
 	elif experience_level < 40:
-		exp_cap + 95 * (experience_level - 19) * 8
+		exp_cap = 95 * (experience_level - 19) * 8
 	else:
 		exp_cap = 255 + (experience_level - 39) * 12
 
@@ -226,6 +227,8 @@ func _input(event):
 			death()
 		if event.is_action_pressed("ui_paste"):
 			upgrade_character(get_random_item())
+		if event.is_action_pressed("ui_undo"):
+			calculate_experience(calculate_experiencecap())
 	if disable_upgrades and event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and not event.is_pressed():
 		disable_upgrades = false
 
