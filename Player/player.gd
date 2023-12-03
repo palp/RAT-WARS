@@ -17,23 +17,6 @@ var experience_level = 1
 var collected_experience = 0
 var score = 0
 
-#Characters
-var skins = {
-	"john": preload("res://assets/player/character/john/john_placeholder.png"),	
-	"john_plugsuit": preload("res://assets/player/character/john/john_plugsuit.png"),
-	"jake": preload("res://assets/player/character/jake/jake.png"),
-	"beej": preload("res://assets/player/character/beej/beej.png"),
-}
-
-var available_skins = [
-	"john",
-	"jake",
-	"beej",
-]
-
-var current_skin = "john"
-
-
 #AttackManager
 @onready var attackManager = get_node("%AttackManager") as attack_manager
 
@@ -134,19 +117,26 @@ func _ready():
 	_on_hurt_box_hurt(0, 0, 0)
 	for content in Unlocks.unlocked_content:
 		_on_content_unlocked(content)
-	Unlocks.content_unlocked.connect(_on_content_unlocked)
-	current_skin = available_skins.pick_random()
-	get_node(NodePath("Sprite2D")).texture = skins[current_skin]
+	Unlocks.content_unlocked.connect(_on_content_unlocked)		
+	update_player_character()
 
 	if not autopilot:
 		game_session = await Server.create_game_session()
-		sessionUpdateTimer.start(45)
+		sessionUpdateTimer.start(45)	
+		
+	
 
+func update_player_character():
+	if autopilot:
+		Unlocks.select_character(Unlocks.player_characters.keys().pick_random())
+	get_node(NodePath("Sprite2D")).texture = Unlocks.get_player_character().get_current_skin().texture
 
 func _on_content_unlocked(content):
 	if content == "plugsuit":
-		current_skin = "john_plugsuit"
-		get_node(NodePath("Sprite2D")).texture = skins[current_skin]
+		Unlocks.select_character("john")
+		Unlocks.player_characters["john"].skins["plugsuit"].unlocked = true
+		Unlocks.player_characters["john"].set_current_skin("plugsuit")
+		update_player_character()
 
 
 func _physics_process(delta):
@@ -436,11 +426,11 @@ func victory():
 	
 func choose_name():
 	var name = "HEALTH fan"
-	if current_skin == "john" or current_skin == "john_plugsuit":
+	if Unlocks.selected_character == "john":
 		name = "Johnny"
-	elif current_skin == "beej":
+	elif Unlocks.selected_character == "beej":
 		name = "Beej"
-	elif current_skin == "jake":
+	elif Unlocks.selected_character == "jake":
 		name = "Jake"
 	return name
 
