@@ -131,9 +131,7 @@ theme_override_font_sizes/normal_font_size = 255
 text = "RAT WARS"
 
 [node name="main_menu" parent="CanvasLayer" instance=ExtResource("3_1vbbm")]
-offset_left = 79.0
-offset_top = 101.0
-offset_right = 79.0
-offset_bottom = 101.0
 
 [connection signal="finished" from="snd_Music" to="snd_Music" method="_on_finished"]
+[connection signal="video_started" from="CanvasLayer/main_menu" to="snd_Music" method="pause_audio"]
+[connection signal="video_stopped" from="CanvasLayer/main_menu" to="snd_Music" method="unpause_audio"]

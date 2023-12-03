@@ -12,10 +12,15 @@ var hp = maxhp
 var last_movement = Vector2.UP
 var time = 0
 
+
 var experience = 0
 var experience_level = 1
 var collected_experience = 0
 var score = 0
+
+# Credits loop
+var credits_loop = false
+@onready var credits_loop_video = preload("res://Video/big_rat_loop.ogv")
 
 #AttackManager
 @onready var attackManager = get_node("%AttackManager") as attack_manager
@@ -55,6 +60,7 @@ var enemy_close = []
 @onready var leaderboard = get_node("%leaderboard") as Leaderboard
 @onready var loseVideoPanel = get_node("%LoseVideoPanel")
 @onready var videoLose = get_node("%video_lose")
+@onready var videoCredits = get_node("%video_credits")
 @onready var leaderboardControl = get_node("%LeaderboardControl")
 
 #Game session
@@ -213,12 +219,12 @@ func set_expbar(set_value = 1, set_max_value = 100):
 
 func _input(event):
 # Uncomment these cheats for testing
-#	if event.is_action_pressed("ui_copy"):
-#		victory()
-#	if event.is_action_pressed("ui_cut"):
-#		death()
-#   if event._is_action_pressed("ui_paste"):
-#		upgrade_character(get_random_item())
+	if event.is_action_pressed("ui_copy"):
+		victory()
+	if event.is_action_pressed("ui_cut"):
+		death()
+	if event.is_action_pressed("ui_paste"):
+		upgrade_character(get_random_item())
 	if disable_upgrades and event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and not event.is_pressed():
 		disable_upgrades = false
 
@@ -441,6 +447,8 @@ func _on_session_update_timer_timeout():
 
 func _on_btn_submit_score_click_end():
 	winScoreForm.visible = false
+	videoCredits.visible = true
+	videoCredits.play()
 	if game_session.has("id"):
 		var name = scoreSubmitName.text
 		if name.length() < 2:
@@ -477,3 +485,12 @@ func _on_video_lose_bg_finished():
 
 func _on_video_lose_bg_loop_finished():
 	get_node("%video_lose_bg_loop").play()
+
+
+func _on_video_credits_finished():
+	if not credits_loop:
+		credits_loop = true
+		var credits_node = get_node("%video_credits")
+		credits_node.stream = credits_loop_video
+		credits_node.loop = true
+		credits_node.play()
