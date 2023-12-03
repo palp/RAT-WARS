@@ -192,7 +192,16 @@ jobs:
           sed 's|export/android/android_sdk_path = ".*"|export/android/android_sdk_path = "'/usr/lib/android-sdk'"|g' -i /root/.config/godot/editor_settings-4.tres
           mkdir -v -p ~/.config/godot
           cp -v /root/.config/godot/editor_settings-4.tres ~/.config/godot/
-
+      - name: Setup (Windows)
+        if: ${{matrix.build.preset == 'win' }}
+        run: |
+          sudo apt install wine64
+          WINE_PATH=(which wine64)
+          cp .github/rcedit-x64.exe $RUNNER_TEMP/
+          sed 's|export/windows/rcedit = ".*"|export/windows/rcedit = "'$RUNNER_TEMP/rcedit-x64.exe'"|g' -i /root/.config/godot/editor_settings-4.tres
+          sed 's|export/windows/wine = ".*"|export/windows/wine = "'$WINE_PATH'"|g' -i /root/.config/godot/editor_settings-4.tres
+          mkdir -v -p ~/.config/godot
+          cp -v /root/.config/godot/editor_settings-4.tres ~/.config/godot
       - name: Install production config
         if: ${{ !cancelled() && github.ref_type == 'tag' && startsWith(github.ref, 'refs/tags/v') }}
         run: |
