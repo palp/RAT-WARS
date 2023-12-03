@@ -85,10 +85,10 @@ signal playerdeath
 # These could be abstracted to an input manager
 func check_movement_input():
 	return (
-		Input.is_action_just_pressed("ui_up")
-		or Input.is_action_just_pressed("ui_down")
-		or Input.is_action_just_pressed("ui_right")
-		or Input.is_action_just_pressed("ui_left")
+		Input.is_action_just_pressed("up")
+		or Input.is_action_just_pressed("down")
+		or Input.is_action_just_pressed("right")
+		or Input.is_action_just_pressed("left")
 	)
 
 
@@ -118,7 +118,7 @@ func check_pathing_input():
 
 
 func get_movement_vector():
-	return Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
+	return Input.get_vector("left", "right", "up", "down")
 
 
 func get_pathing_target():
