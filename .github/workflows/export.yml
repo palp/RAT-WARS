@@ -82,7 +82,8 @@ jobs:
         run: |
           mkdir -p .godot
           cd .godot
-          echo  "[preset.3.options]"  > export-credentials.cfg
+          echo "[preset.3]" > export-credentials.cfg
+          echo  "[preset.3.options]"  >> export-credentials.cfg
           echo  "notarization/api_uuid=\"${{ secrets.APPSTORE_ISSUER_ID }}\"" >>export-credentials.cfg
           echo -n "$APPSTORE_API_PRIVATE_KEY" >$RUNNER_TEMP/appstore.p8
           echo  "notarization/api_key=\"$RUNNER_TEMP/appstore.p8\"" >> export-credentials.cfg
