@@ -269,7 +269,7 @@ func upgrade_character(upgrade):
 			attackManager.attacks["icespear"].level = 3
 		"icespear4":
 			attackManager.attacks["icespear"].level = 4
-			attackManager.attacks["icespear"].baseammo += 2
+			attackManager.attacks["icespear"].base_ammo += 2
 		"tornado1":
 			attackManager.attacks["tornado"].level = 1
 			attackManager.attacks["tornado"].base_ammo += 1
