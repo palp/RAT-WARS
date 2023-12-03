@@ -17,22 +17,6 @@ var experience_level = 1
 var collected_experience = 0
 var score = 0
 
-#Characters
-var player_characters = {
-	"john": PlayerCharacter.new(
-		"John", preload("res://assets/player/character/john/john_placeholder.png"),
-		{
-			"plugsuit": PlayerSkin.new(
-				"Plugsuit", preload("res://assets/player/character/john/john_plugsuit.png"))
-		}),
-	"jake": PlayerCharacter.new(
-		"Jake", preload("res://assets/player/character/jake/jake.png")),
-	"beej": PlayerCharacter.new(
-		"Beej", preload("res://assets/player/character/beej/beej.png"))
-}
-
-var selected_character:String
-
 #AttackManager
 @onready var attackManager = get_node("%AttackManager") as attack_manager
 
@@ -135,7 +119,7 @@ func _ready():
 		_on_content_unlocked(content)
 	Unlocks.content_unlocked.connect(_on_content_unlocked)
 	
-	selected_character = player_characters.keys().pick_random()
+	Unlocks.select_character(Unlocks.player_characters.keys().pick_random())
 	update_player_character()
 
 	if not autopilot:
@@ -143,13 +127,13 @@ func _ready():
 		sessionUpdateTimer.start(45)
 
 func update_player_character():
-	get_node(NodePath("Sprite2D")).texture = player_characters[selected_character].get_current_skin().texture
+	get_node(NodePath("Sprite2D")).texture = Unlocks.get_player_character().get_current_skin().texture
 
 func _on_content_unlocked(content):
 	if content == "plugsuit":
-		selected_character = "john"
-		player_characters["john"].skins["plugsuit"].unlocked = true
-		player_characters["john"].set_current_skin("plugsuit")		
+		Unlocks.select_character("john")
+		Unlocks.player_characters["john"].skins["plugsuit"].unlocked = true
+		Unlocks.player_characters["john"].set_current_skin("plugsuit")
 		update_player_character()
 
 
@@ -440,11 +424,11 @@ func victory():
 	
 func choose_name():
 	var name = "HEALTH fan"
-	if selected_character == "john":
+	if Unlocks.selected_character == "john":
 		name = "Johnny"
-	elif selected_character == "beej":
+	elif Unlocks.selected_character == "beej":
 		name = "Beej"
-	elif selected_character == "jake":
+	elif Unlocks.selected_character == "jake":
 		name = "Jake"
 	return name
 

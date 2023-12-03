@@ -16,4 +16,4 @@ func get_current_skin():
 	
 func set_current_skin(skin:String):
 	if skins.has(skin):
-		current_skin = skins[skin]
+		current_skin = skin
