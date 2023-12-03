@@ -111,6 +111,7 @@ func get_movement_vector():
 
 
 func get_pathing_target():
+	print_debug(get_global_mouse_position())
 	return get_global_mouse_position()
 
 
