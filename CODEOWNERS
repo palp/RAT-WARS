@@ -1,2 +1,2 @@
 .github/workflows @palp
-export_presets.cfg @palp
+release_presets.cfg @palp

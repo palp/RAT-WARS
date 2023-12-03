@@ -58,6 +58,10 @@ jobs:
         shell: bash
         run: |
           godot -e --path . -s res://addons/gdUnit4/bin/ProjectScanner.gd --headless --audio-driver Dummy
+      - name: Install release presets
+        run: |
+          rm export_presets.cfg
+          mv release_presets.cfg export_presets.cfg          
       - name: Install production config
         if: ${{ !cancelled() }}
         run: |

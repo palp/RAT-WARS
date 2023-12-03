@@ -75,6 +75,10 @@ jobs:
         shell: bash
         run: |
           godot -e --path . -s res://addons/gdUnit4/bin/ProjectScanner.gd --headless --audio-driver Dummy
+      - name: Install release presets
+        run: |
+          rm export_presets.cfg
+          mv release_presets.cfg export_presets.cfg          
       - name: Configure Notarization
         if: ${{ !cancelled() }}
         env: 
@@ -174,7 +178,11 @@ jobs:
         continue-on-error: true # we still ignore the timeout, the script is not quit and we run into a timeout
         shell: bash
         run: |
-          godot -e --path . -s res://addons/gdUnit4/bin/ProjectScanner.gd --headless --audio-driver Dummy
+          godot -e --path . -s res://addons/gdUnit4/bin/ProjectScanner.gd --headless --audio-driver Dummy   
+      - name: Install release presets
+        run: |
+          rm export_presets.cfg
+          mv release_presets.cfg export_presets.cfg       
       - name: Setup (Android)
         if: ${{matrix.build.preset == 'android'}}
         run: |
