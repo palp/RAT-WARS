@@ -215,6 +215,9 @@ jobs:
         if: ${{ success() }}
         run: |
           cd ${{matrix.build.path}}
+          if [ "${{matrix.build.preset}}" == "android" ]; then
+            rm -f RatWars.apk.idsig
+          fi
           zip -r ../ratwars-${{matrix.build.tag}}.zip .
       - name: Publish Artifact
         if: ${{ success() }}
