@@ -386,6 +386,8 @@ func change_time(argtime = 0):
 
 
 func adjust_gui_collection(upgrade):
+	if upgrade == null:
+		return
 	var get_upgraded_displayname = UpgradeDb.UPGRADES[upgrade]["displayname"]
 	var get_type = UpgradeDb.UPGRADES[upgrade]["type"]
 	if get_type != "item":
@@ -458,9 +460,13 @@ func _on_btn_submit_score_click_end():
 		if name.length() < 2:
 			name = choose_name()
 		var leaderboard_scores = await Server.submit_game_session(score, name)
-		leaderboard.display(leaderboard_scores)
+		if leaderboard_scores:
+			leaderboard.display(leaderboard_scores)
+	show_leaderboard()
+		
+func show_leaderboard():
+	print_debug("now showing leaderboard")
 	leaderboardControl.visible = true
-
 
 func _on_play_again_button_pressed():
 	get_tree().paused = false
