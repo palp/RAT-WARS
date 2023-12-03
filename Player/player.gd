@@ -117,16 +117,18 @@ func _ready():
 	_on_hurt_box_hurt(0, 0, 0)
 	for content in Unlocks.unlocked_content:
 		_on_content_unlocked(content)
-	Unlocks.content_unlocked.connect(_on_content_unlocked)
-	
-	Unlocks.select_character(Unlocks.player_characters.keys().pick_random())
+	Unlocks.content_unlocked.connect(_on_content_unlocked)		
 	update_player_character()
 
 	if not autopilot:
 		game_session = await Server.create_game_session()
-		sessionUpdateTimer.start(45)
+		sessionUpdateTimer.start(45)	
+		
+	
 
 func update_player_character():
+	if autopilot:
+		Unlocks.select_character(Unlocks.player_characters.keys().pick_random())
 	get_node(NodePath("Sprite2D")).texture = Unlocks.get_player_character().get_current_skin().texture
 
 func _on_content_unlocked(content):

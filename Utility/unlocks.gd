@@ -16,7 +16,7 @@ var player_characters = {
 		"Beej", preload("res://assets/player/character/beej/beej.png"))
 }
 
-var selected_character:String
+var selected_character:String = "john"
 
 var unlocked_content = []
 
