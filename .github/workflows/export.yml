@@ -104,8 +104,8 @@ jobs:
       - name: Zip
         if: ${{ success() && contains(fromJson('["macos","android"]'),matrix.build.preset) }}
         run: |
-          cd ${{matrix.build.path}}
-          zip -r ${{matrix.build.path}}/ratwars-${{matrix.build.tag}}.zip ${{matrix.build.output}}
+          cd ${{matrix.build.path}}          
+          zip -r ratwars-${{matrix.build.tag}}.zip .
           rm -f ${{matrix.build.output}}
       - name: Publish Artifact
         if: ${{ success() }}
