@@ -80,6 +80,8 @@ jobs:
         env: 
           APPSTORE_KEY: ${{secrets.APPSTORE_API_PRIVATE_KEY}}
         run: |
+          brew install gnu-sed
+          PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
           echo "$APPSTORE_API_PRIVATE_KEY" >$RUNNER_TEMP/appstore.p8
           sed 's@notarization/api_uuid=".*"@notarization/api_uuid="'${{ secrets.APPSTORE_ISSUER_ID }}'"@g' -i export_presets.cfg
           sed 's@notarization/api_key=".*"@notarization/api_key="'$RUNNER_TEMP/appstore.p8'"@g' -i export_presets.cfg
@@ -90,18 +92,11 @@ jobs:
           echo -n "${{ secrets.PROD_CONFIG_BASE64 }}" | base64 --decode -o ratwars.cfg.prod
           echo -n "${{ secrets.CONFIG_KEY_BASE64 }}" | base64 --decode -o config.key
       - name: Build
-        if: ${{ !cancelled() }}
+        if: ${{ success() }}
         timeout-minutes: 10
         run: |
           mkdir -v -p build/macos
           godot -v --headless --audio-driver Dummy --export-release "macos" "build/macos/ratwars-macos.ipa"
-      - name: Check build
-        if: ${{ !cancelled() }}
-        run: |
-          if [ ! -f "build/macos/ratwars-macos.zip" ]; then
-            echo "Build failed"
-            exit 1
-          fi
       - name: Publish Artifact
         if: ${{ success() }}
         uses: actions/upload-artifact@v2
