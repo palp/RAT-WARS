@@ -43,3 +43,8 @@ text = "SFX Volume"
 [node name="sfx_slider" parent="MarginContainer/VBoxContainer" instance=ExtResource("2_t1n0s")]
 layout_mode = 2
 bus_name = "SFX"
+
+[node name="ColorRect" type="ColorRect" parent="MarginContainer"]
+z_index = -1
+layout_mode = 2
+color = Color(0, 0, 0, 0.705882)

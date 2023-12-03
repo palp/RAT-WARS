@@ -10,22 +10,37 @@ extends Control
 func _on_play_pressed():
 	get_tree().change_scene_to_file("res://level_placeholder.tscn")
 
+func close_submenus():
+	options_menu.visible = false
+	unlock_input.visible = false
+	unlock_button.visible = false
+	leaderboard.visible = false
 
 func _on_options_pressed():
-	options_menu.visible = !options_menu.visible
-
+	if options_menu.visible:
+		close_submenus()
+	else:
+		close_submenus()
+		options_menu.visible = true
 
 func _on_bonus_button_pressed():
-	unlock_input.visible = !unlock_input.visible
-	unlock_button.visible = unlock_input.visible
+	if unlock_input.visible:
+		close_submenus()
+	else:
+		close_submenus()
+		unlock_input.visible = true
+		unlock_button.visible = true
 
 
 func _on_unlock_button_pressed():
 	Unlocks.unlock(unlock_input.text.to_upper())
 	unlock_input.text = ""
-	unlock_input.visible = false
-	unlock_button.visible = false
+	close_submenus()
 
 
 func _on_scores_button_pressed():
-	leaderboard.visible = !leaderboard.visible
+	if leaderboard.visible:
+		close_submenus()
+	else:
+		close_submenus()
+		leaderboard.visible = true
