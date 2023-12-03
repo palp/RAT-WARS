@@ -12,6 +12,7 @@ var hp = maxhp
 var last_movement = Vector2.UP
 var time = 0
 
+
 var experience = 0
 var experience_level = 1
 var collected_experience = 0
@@ -33,6 +34,10 @@ var available_skins = [
 
 var current_skin = "john"
 
+
+# Credits loop
+var credits_loop = false
+@onready var credits_loop_video = preload("res://Video/big_rat_loop.ogv")
 
 #AttackManager
 @onready var attackManager = get_node("%AttackManager") as attack_manager
@@ -490,3 +495,12 @@ func _on_video_lose_bg_finished():
 
 func _on_video_lose_bg_loop_finished():
 	get_node("%video_lose_bg_loop").play()
+
+
+func _on_video_credits_finished():
+	if not credits_loop:
+		credits_loop = true
+		var credits_node = get_node("%video_credits")
+		credits_node.stream = credits_loop_video
+		credits_node.loop = true
+		credits_node.play()

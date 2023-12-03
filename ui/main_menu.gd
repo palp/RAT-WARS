@@ -6,6 +6,9 @@ extends Control
 @onready var unlock_button = get_node("%unlock_button")
 @onready var leaderboard = get_node("%leaderboard")
 @onready var video_player = get_node("%VideoStreamPlayer")
+@onready var rat_loop = preload("res://Video/big_rat_loop.ogv")
+
+var in_loop = false
 
 signal video_started
 signal video_stopped
@@ -50,9 +53,14 @@ func _on_scores_button_pressed():
 
 
 func _on_video_stream_player_finished():
-	emit_signal("video_stopped")
-	get_tree().paused = false
-	video_player.visible = false
+	if in_loop:
+		emit_signal("video_stopped")
+		get_tree().paused = false
+		video_player.visible = false
+	else:
+		in_loop = true
+		video_player.stream = rat_loop
+		video_player.play()
 
 func _on_credits_button_pressed():
 	emit_signal("video_started")
@@ -64,4 +72,6 @@ func _on_credits_button_pressed():
 func _on_video_stream_player_gui_input(event):
 	if Input.is_action_just_pressed("click") and video_player.stream_position > 5:
 		get_tree().paused = false
+		# Make sure we end playback regardless of if we're in the loop
+		in_loop = true
 		video_player.stop()

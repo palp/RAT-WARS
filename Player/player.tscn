@@ -538,7 +538,7 @@ texture_progress = SubResource("GradientTexture2D_ca7jc")
 [connection signal="pressed" from="GUILayer/GUI/LoseVideoPanel/give_up_button" to="." method="_on_give_up_button_pressed"]
 [connection signal="finished" from="GUILayer/GUI/LoseVideoPanel/video_lose_bg" to="." method="_on_video_lose_bg_finished"]
 [connection signal="finished" from="GUILayer/GUI/LoseVideoPanel/video_lose_bg_loop" to="." method="_on_video_lose_bg_loop_finished"]
-[connection signal="finished" from="GUILayer/GUI/WinVideoPanel/video_credits" to="." method="_on_video_lose_bg_finished"]
+[connection signal="finished" from="GUILayer/GUI/WinVideoPanel/video_credits" to="." method="_on_video_credits_finished"]
 [connection signal="finished" from="GUILayer/GUI/WinVideoPanel/video_win" to="." method="_on_video_win_finished"]
 [connection signal="click_end" from="GUILayer/GUI/WinVideoPanel/WinScoreForm/btn_submit_score" to="." method="_on_btn_submit_score_click_end"]
 [connection signal="pressed" from="GUILayer/GUI/LeaderboardControl/play_again_button" to="." method="_on_play_again_button_pressed"]
