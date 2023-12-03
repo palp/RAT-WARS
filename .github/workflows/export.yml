@@ -90,7 +90,6 @@ jobs:
       - name: Build
         if: ${{ !cancelled() }}
         timeout-minutes: 10
-        continue-on-error: true
         run: |
           mkdir -v -p ${{matrix.build.path}}
           godot -v --headless --audio-driver Dummy --export-release "${{matrix.build.preset}}" "${{matrix.build.output}}"
