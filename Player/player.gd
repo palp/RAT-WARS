@@ -218,13 +218,14 @@ func set_expbar(set_value = 1, set_max_value = 100):
 	expBar.max_value = set_max_value
 
 func _input(event):
-# Uncomment these cheats for testing
-	if event.is_action_pressed("ui_copy"):
-		victory()
-	if event.is_action_pressed("ui_cut"):
-		death()
-	if event.is_action_pressed("ui_paste"):
-		upgrade_character(get_random_item())
+	# cheats for testing in debug mode
+	if OS.is_debug_build():
+		if event.is_action_pressed("ui_copy"):
+			victory()
+		if event.is_action_pressed("ui_cut"):
+			death()
+		if event.is_action_pressed("ui_paste"):
+			upgrade_character(get_random_item())
 	if disable_upgrades and event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and not event.is_pressed():
 		disable_upgrades = false
 
