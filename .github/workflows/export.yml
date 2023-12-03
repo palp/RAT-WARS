@@ -3,7 +3,6 @@ on:
   push:
     branches:
       - main
-      - fix-release
     tags:
       - v*
 
@@ -101,13 +100,13 @@ jobs:
             echo "Build failed"
             exit 1
           fi
-      - name: Zip
-        if: ${{ success() && contains(fromJson('["macos","android"]'),matrix.build.preset) }}
-        run: |
-          cd ${{matrix.build.path}}          
-          zip -r ../ratwars-${{matrix.build.tag}}.zip .
-          rm -f *
-          mv ../ratwars-${{matrix.build.tag}}.zip .
+      # - name: Zip
+      #   if: ${{ success() && contains(fromJson('["android"]'),matrix.build.preset) }}
+      #   run: |
+      #     cd ${{matrix.build.path}}
+      #     zip -r ../ratwars-${{matrix.build.tag}}.zip .
+      #     rm -f *
+      #     mv ../ratwars-${{matrix.build.tag}}.zip .
       - name: Publish Artifact
         if: ${{ success() }}
         uses: actions/upload-artifact@v2
