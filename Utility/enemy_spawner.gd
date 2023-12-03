@@ -70,11 +70,11 @@ func get_random_position():
 		top = spawn_area.position.y
 		bottom = spawn_area.end.y
 		if track_horizontal:
-			left = player.global_position.x - vpr.x/2
-			right = player.global_position.x + vpr.x/2
+			left = player.global_position.x - spawn_area.size.x/2
+			right = player.global_position.x + spawn_area.size.x/2
 		if track_vertical:
-			top = player.global_position.y - vpr.y/2
-			bottom = player.global_position.x + vpr.y/2
+			top = player.global_position.y - spawn_area.size.y/2
+			bottom = player.global_position.y + spawn_area.size.y/2
 		top_left = Vector2(left, top)
 		top_right = Vector2(right, top)
 		bottom_left = Vector2(left, bottom)
