@@ -80,7 +80,7 @@ var game_session = {}
 
 #Signal
 signal playerdeath
-
+signal playervictory
 
 # These could be abstracted to an input manager
 func check_movement_input():
@@ -222,6 +222,13 @@ func set_expbar(set_value = 1, set_max_value = 100):
 	expBar.max_value = set_max_value
 
 func _input(event):
+# Uncomment these cheats for testing
+#	if event.is_action_pressed("ui_copy"):
+#		victory()
+#	if event.is_action_pressed("ui_cut"):
+#		death()
+#   if event._is_action_pressed("ui_paste"):
+#		upgrade_character(get_random_item())
 	if disable_upgrades and event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and not event.is_pressed():
 		disable_upgrades = false
 
@@ -410,10 +417,11 @@ func death():
 	videoLose.visible = true
 	videoLose.play()
 		
-func victory():
+func victory():	
 	if autopilot:
 		get_tree().reload_current_scene()
 		return
+	emit_signal("playervictory")
 	var name = choose_name()
 	get_tree().paused = true
 	disable_pausing = true

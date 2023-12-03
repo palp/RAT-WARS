@@ -19,3 +19,7 @@ func _on_mouse_exited():
 
 func _on_player_playerdeath():
 	visible = false
+
+
+func _on_player_playervictory():
+	visible = false
