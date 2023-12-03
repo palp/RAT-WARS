@@ -96,7 +96,14 @@ jobs:
         timeout-minutes: 10
         run: |
           mkdir -v -p build/macos
-          godot -v --headless --audio-driver Dummy --export-release "macos" "build/macos/ratwars-macos.ipa"
+          godot -v --headless --audio-driver Dummy --export-release "macos" "build/macos/ratwars-macos.zip"
+      - name: Check build
+        if: ${{ !cancelled() }}
+        run: |
+          if [ ! -f "build/macos/ratwars-macos.zip" ]; then
+            echo "Build failed"
+            exit 1
+          fi
       - name: Publish Artifact
         if: ${{ success() }}
         uses: actions/upload-artifact@v2
