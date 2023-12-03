@@ -35,16 +35,15 @@ jobs:
           lfs: true
       - name: Install the Apple certificate
         env:
-          BUILD_CERTIFICATE_BASE64: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
-          P12_PASSWORD: ${{ secrets.P12_PASSWORD }}
-          BUILD_PROVISION_PROFILE_BASE64: ${{ secrets.BUILD_PROVISION_PROFILE_BASE64 }}
+          BUILD_CERTIFICATE_BASE64: ${{ secrets.APPLE_DEV_ID_CERT_BASE64 }}
+          P12_PASSWORD: ${{ secrets.APPLE_DEV_ID_P12_PASSWORD }}
           KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
         run: |
           # create variables
           CERTIFICATE_PATH=$RUNNER_TEMP/build_certificate.p12
           KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
 
-          # import certificate and provisioning profile from secrets
+          # import certificate from secrets
           echo -n "$BUILD_CERTIFICATE_BASE64" | base64 --decode -o $CERTIFICATE_PATH
 
           # create temporary keychain
@@ -192,7 +191,16 @@ jobs:
           sed 's|export/android/android_sdk_path = ".*"|export/android/android_sdk_path = "'/usr/lib/android-sdk'"|g' -i /root/.config/godot/editor_settings-4.tres
           mkdir -v -p ~/.config/godot
           cp -v /root/.config/godot/editor_settings-4.tres ~/.config/godot/
-
+      - name: Setup (Windows)
+        if: ${{matrix.build.preset == 'win' }}
+        run: |
+          apt update && apt -yy install wine64
+          WINE_PATH=$(which wine64)
+          cp .github/rcedit-x64.exe $RUNNER_TEMP/
+          sed 's|export/windows/rcedit = ".*"|export/windows/rcedit = "'$RUNNER_TEMP/rcedit-x64.exe'"|g' -i /root/.config/godot/editor_settings-4.tres
+          sed 's|export/windows/wine = ".*"|export/windows/wine = "$WINE_PATH"|g' -i /root/.config/godot/editor_settings-4.tres
+          mkdir -v -p ~/.config/godot
+          cp -v /root/.config/godot/editor_settings-4.tres ~/.config/godot
       - name: Install production config
         if: ${{ !cancelled() && github.ref_type == 'tag' && startsWith(github.ref, 'refs/tags/v') }}
         run: |
