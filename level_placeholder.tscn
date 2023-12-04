@@ -107,6 +107,7 @@ scroll_horizontal = true
 [node name="Player" parent="." instance=ExtResource("2_40uwv")]
 top_level = true
 z_index = 1
+position = Vector2(-117, -7)
 autopilot = false
 
 [node name="EnemySpawner" parent="." instance=ExtResource("3_p01g4")]

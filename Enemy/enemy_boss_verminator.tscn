@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://x87jrsdtky6u"]
+[gd_scene load_steps=20 format=3 uid="uid://x87jrsdtky6u"]
 
 [ext_resource type="Script" path="res://Enemy/enemy.gd" id="1_q3uwj"]
 [ext_resource type="Texture2D" uid="uid://b8qxkhg3epije" path="res://assets/enemy/Boss/Verminator/verminator_attack_21.png" id="2_e6j7j"]
@@ -7,6 +7,8 @@
 [ext_resource type="Texture2D" uid="uid://ddrup734adh75" path="res://assets/enemy/Boss/Verminator/verminator_walk_23.png" id="3_alh3u"]
 [ext_resource type="PackedScene" uid="uid://uhr6mtuisqm1" path="res://Utility/hit_box.tscn" id="4_kb0q2"]
 [ext_resource type="AudioStream" uid="uid://bi7t7cjthnhhc" path="res://Audio/SoundEffect/enemy_hit.ogg" id="5_aknlk"]
+[ext_resource type="Theme" uid="uid://bwayc6rbhtvxj" path="res://assets/ui/theme/HEALTH_theme.tres" id="8_h1gf3"]
+[ext_resource type="FontFile" uid="uid://dp2cnmaceqp74" path="res://Font/ARIALBD.TTF" id="8_o8yon"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_24u87"]
 radius = 102.59
@@ -153,6 +155,14 @@ size = Vector2(211, 341)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ucec4"]
 size = Vector2(210, 337)
 
+[sub_resource type="Gradient" id="Gradient_1vt5j"]
+colors = PackedColorArray(0.375023, 3.55284e-06, 1.81104e-06, 1, 0.494245, 7.23819e-07, 9.67411e-09, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_mdvl5"]
+gradient = SubResource("Gradient_1vt5j")
+width = 128
+height = 16
+
 [node name="enemy_boss_verminator" type="CharacterBody2D"]
 collision_layer = 5
 collision_mask = 5
@@ -198,6 +208,28 @@ shape = SubResource("RectangleShape2D_ucec4")
 stream = ExtResource("5_aknlk")
 volume_db = -20.0
 bus = &"SFX"
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Label" type="Label" parent="CanvasLayer"]
+offset_left = 421.0
+offset_top = 780.0
+offset_right = 525.0
+offset_bottom = 804.0
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_fonts/font = ExtResource("8_o8yon")
+text = "THE VERMINATOR, WHO MAKES THE RULES"
+
+[node name="HealthBarBoss1" type="TextureProgressBar" parent="CanvasLayer"]
+unique_name_in_owner = true
+offset_left = 421.0
+offset_top = 816.0
+offset_right = 549.0
+offset_bottom = 832.0
+scale = Vector2(6, 2)
+theme = ExtResource("8_h1gf3")
+value = 100.0
+texture_progress = SubResource("GradientTexture2D_mdvl5")
 
 [connection signal="dot" from="HurtBox" to="." method="_on_hurt_box_dot"]
 [connection signal="hurt" from="HurtBox" to="." method="_on_hurt_box_hurt"]
