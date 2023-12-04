@@ -211,20 +211,17 @@ jobs:
           echo -n "${{ secrets.PROD_CONFIG_BASE64 }}" | base64 --decode >ratwars.cfg.prod
           echo -n "${{ secrets.CONFIG_KEY_BASE64 }}" | base64 --decode >config.key
       - name: Build
-        if: ${{ matrix.build.preset != 'android' && !cancelled() }}
+        if: ${{ !cancelled() }}
         timeout-minutes: 10
         run: |
           mkdir -v -p ${{matrix.build.path}}
           godot -v --headless --audio-driver Dummy --export-release "${{matrix.build.preset}}" "${{matrix.build.output}}"
-      - name: Build (Android)        
-        timeout-minutes: 15
-        if: ${{ matrix.build.preset == 'android' && !cancelled() }}
+      - name: Build (Android Play Store)        
+        timeout-minutes: 10
+        if: ${{ matrix.build.preset == 'android' }}
         shell: bash         
         run: |                       
-          java --version       
-          mkdir -v -p ${{matrix.build.path}}
-          mkdir -v -p build/android-aab
-          godot -v --headless --audio-driver Dummy --export-release "${{matrix.build.preset}}" "${{matrix.build.output}}"          
+          mkdir -v -p build/android-aab          
           sed 's@gradle_build/export_format=.*@gradle_build/export_format=1@g' -i export_presets.cfg          
           godot -v --headless --audio-driver Dummy --export-release "${{matrix.build.preset}}" "build/android-aab/RatWars.aab"
           if [ ! -f "build/android-aab/RatWars.aab" ]; then
@@ -291,7 +288,7 @@ jobs:
         if: ${{ success() && matrix.build.preset == 'android' }}
         uses: r0adkll/upload-google-play@v1
         with:
-          serviceAccountJson: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_JSON }}
+          serviceAccountJsonPlainText: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_JSON }}
           packageName: com.youwillloveeachother.ratwars
           releaseFiles: build/android-aab/RatWars.aab
           track: ${{ steps.release-track.outputs.track }}
