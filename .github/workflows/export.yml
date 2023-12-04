@@ -223,9 +223,10 @@ jobs:
         run: |                       
           java --version       
           mkdir -v -p ${{matrix.build.path}}
-          godot -v --headless --audio-driver Dummy --export-release "${{matrix.build.preset}}" "${{matrix.build.path}}/RatWars.apk"
+          mkdir -v -p build/android-aab
+          godot -v --headless --audio-driver Dummy --export-release "${{matrix.build.preset}}" "${{matrix.build.output}}"          
           sed 's@gradle_build/export_format=.*@gradle_build/export_format=1@g' -i export_presets.cfg
-          godot -v --headless --audio-driver Dummy --export-release "${{matrix.build.preset}}" "${{matrix.build.path}}/RatWars.aab"
+          godot -v --headless --audio-driver Dummy --export-release "${{matrix.build.preset}}" build/android-aab/RatWars.aab"
       - name: Check build
         if: ${{ !cancelled() }}
         run: |
@@ -235,7 +236,7 @@ jobs:
           fi
       - name: Zip
         if: ${{ success() }}
-        run: |
+        run: |        
           cd ${{matrix.build.path}}
           zip -r ../ratwars-${{matrix.build.tag}}.zip .
       - name: Publish Artifact
@@ -259,6 +260,35 @@ jobs:
         run: butler push ${{matrix.build.path}} healthnoise/ratwars:${{matrix.build.tag}} --userversion ${{github.ref_name}}
         env:
           BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
+      - name: Determine release track
+        id: release-track        
+        if: ${{ success() && matrix.build.preset == 'android' }}
+        run: |
+          if [[ "${{github.ref_type}}" == "tag" ]]; then
+            echo "ref=$GITHUB_REF" >> $GITHUB_OUTPUT
+            if [[ "${{github.ref_name}}" == *"alpha"* ]]; then
+              echo "track=alpha" >> $GITHUB_OUTPUT              
+            elif [[ "${{github.ref_name}}" == *"beta"* ]]; then
+              echo "track=beta" >> $GITHUB_OUTPUT              
+            else
+              echo "track=production" >> $GITHUB_OUTPUT                          
+            fi          
+          elif [[ "${{github.ref_name}}" == "main" ]]; then
+            echo "track=internal" >> $GITHUB_OUTPUT
+            echo "ref=$GITHUB_SHA" >> $GITHUB_OUTPUT
+          else
+            echo "track=internal" >> $GITHUB_OUTPUT
+            echo "ref=$GITHUB_REF" >> $GITHUB_OUTPUT
+          fi
+      - name: Push to Google Play
+        if: ${{ success() && matrix.build.preset == 'android' }}
+        uses: r0adkll/upload-google-play@v1
+        with:
+          serviceAccountJson: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_JSON }}
+          packageName: com.youwillloveeachother.ratwars
+          releaseFiles: build/android/RatWars.aab
+          track: ${{ steps.release-track.outputs.track }}
+          releaseName: ${{ steps.release-track.outputs.ref }} 
       - name: Push to palp.itch.io (${{matrix.build.tag}})
         if: ${{ success() }}
         run: butler push ${{matrix.build.path}} palp/rat-wars:${{matrix.build.tag}} --userversion ${{github.sha}}
