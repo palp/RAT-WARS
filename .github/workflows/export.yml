@@ -314,6 +314,5 @@ jobs:
           serviceAccountJsonPlainText: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_JSON }}
           packageName: com.youwillloveeachother.ratwars
           releaseFiles: build/android-aab/RatWars.aab
-          track: 
+          track: internal #${{ steps.release-track.outputs.track }}
           releaseName: ${{ github.ref_name }}
-        
