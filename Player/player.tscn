@@ -95,10 +95,6 @@ script = ExtResource("7_xn56v")
 unique_name_in_owner = true
 script = ExtResource("9_e47dm")
 
-[node name="PlugPulseTimer" type="Timer" parent="AttackManager"]
-unique_name_in_owner = true
-autostart = true
-
 [node name="EnemyDetectionArea" type="Area2D" parent="."]
 visible = false
 collision_layer = 4

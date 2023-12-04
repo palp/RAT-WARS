@@ -6,7 +6,9 @@
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3gd5q"]
 height = 34.0
 
-[node name="Buttplug" type="Area2D" groups=["attacks"]]
+[node name="Buttplug" type="Area2D" groups=["attack"]]
+collision_layer = 4
+collision_mask = 4
 script = ExtResource("1_t6xbv")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

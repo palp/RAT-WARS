@@ -119,7 +119,7 @@ func _ready():
 	disable_pausing = false
 	disable_pathing_input = false
 	disable_upgrades = false
-	upgrade_character("stonefist1")
+	upgrade_character("plug1")
 	set_expbar(experience, calculate_experiencecap())
 	_on_hurt_box_hurt(0, 0, 0)
 	for content in Unlocks.unlocked_content:
@@ -263,6 +263,18 @@ func levelup():
 
 func upgrade_character(upgrade):	
 	match upgrade:
+		"plug1":
+			attackManager.attacks["plug"].level = 1
+			attackManager.attacks["plug"].base_ammo += 3
+		"plug2":
+			attackManager.attacks["plug"].level = 2
+			attackManager.attacks["plug"].base_ammo += 1
+		"plug3":
+			attackManager.attacks["plug"].level = 3
+			attackManager.attacks["plug"].base_ammo += 1
+		"plug4":
+			attackManager.attacks["plug"].level = 4
+			attackManager.attacks["plug"].base_ammo += 1
 		"stonefist1":
 			attackManager.attacks["stonefist"].level = 1
 			attackManager.attacks["stonefist"].base_ammo += 1
