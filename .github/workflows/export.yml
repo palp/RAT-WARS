@@ -187,6 +187,8 @@ jobs:
       - name: Setup (Android)
         if: ${{matrix.build.preset == 'android'}}
         run: |
+          apt update && apt install openjdk-19-jdk-headless -yy
+          chmod +x android/build/gradlew
           echo ${{ secrets.ANDROID_RELEASE_KEYSTORE_BASE64 }} | base64 --decode > /root/release.keystore
           sed 's@keystore/release=".*"@keystore/release="'/root/release.keystore'"@g' -i export_presets.cfg
           sed 's@keystore/release_user=".*"@keystore/release_user="'${{ secrets.ANDROID_RELEASE_KEYSTORE_USER }}'"@g' -i export_presets.cfg
@@ -218,9 +220,8 @@ jobs:
       - name: Build (Android)        
         timeout-minutes: 15
         if: ${{ matrix.build.preset == 'android' && !cancelled() }}
-        run: |
-          apt update && apt install openjdk-19-jdk-headless -yy
-          chmod +x android/build/gradlew
+        shell: bash
+        run: |          
           mkdir -v -p ${{matrix.build.path}}
           godot -v --headless --audio-driver Dummy --export-release "${{matrix.build.preset}}" "${{matrix.build.path}}/RatWars.apk"
           sed 's@gradle_build/export_format=.*@gradle_build/export_format=1@g' -i export_presets.cfg
