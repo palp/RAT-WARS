@@ -476,8 +476,7 @@ func _on_btn_submit_score_click_end():
 			leaderboard.display(leaderboard_scores)
 	show_leaderboard()
 		
-func show_leaderboard():
-	print_debug("now showing leaderboard")
+func show_leaderboard():	
 	leaderboardControl.visible = true
 
 func _on_play_again_button_pressed():
