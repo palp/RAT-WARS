@@ -1,4 +1,4 @@
-.gradle
-assets
-build/outputs
-build/tmp
+.gradle/
+assets/
+build/
+src/debug
