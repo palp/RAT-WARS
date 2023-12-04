@@ -29,25 +29,25 @@ func _ready():
 		1:
 			hp = 9999
 			speed = 150.0
-			damage = 10
+			damage = 2
 			knockback_amount = 100
 			attack_size = 1.0
 		2:
 			hp = 9999
-			speed = 100.0
-			damage = 15
+			speed = 150.0
+			damage = 4
 			knockback_amount = 100
 			attack_size = 1.0
 		3:
 			hp = 9999
-			speed = 100.0
-			damage = 20
+			speed = 150.0
+			damage = 8
 			knockback_amount = 100
 			attack_size = 1.0
 		4:
 			hp = 9999
-			speed = 100.0
-			damage = 25
+			speed = 150.0
+			damage = 10
 			knockback_amount = 125
 			attack_size = 1.0
 

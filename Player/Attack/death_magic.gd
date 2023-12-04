@@ -7,6 +7,7 @@ var damage = 5
 var knockback_amount = 100
 var attack_size = 1.0
 var angle_counter = 0
+var max_angles = 5
 
 var target = Vector2.ZERO
 var angle = Vector2.ZERO
@@ -23,25 +24,29 @@ func _ready():
 			hp = 5
 			speed = 200
 			damage = 3
-			knockback_amount = 130
+			knockback_amount = 120
+			max_angles = 5
 			attack_size = 1.0 * (1 + player.spell_size)
 		2:
 			hp = 10
 			speed = 250
 			damage = 3
-			knockback_amount = 140
+			knockback_amount = 130
+			max_angles = 6
 			attack_size = 1.0 * (1 + player.spell_size)
 		3:
 			hp = 15
 			speed = 300
-			damage = 5
-			knockback_amount = 150
+			damage = 3
+			knockback_amount = 140
+			max_angles = 7
 			attack_size = 1.0 * (1 + player.spell_size)
 		4:
 			hp = 20
 			speed = 350
-			damage = 5
+			damage = 3
 			knockback_amount = 160
+			max_angles = 8
 			attack_size = 1.0 * (1 + player.spell_size)
 
 	
@@ -66,9 +71,11 @@ func _on_timer_timeout():
 
 
 func _on_change_direction_timer_timeout():
-	angle = angle.orthogonal()
-	hp -= 1
-	angle_counter += 1
+	angle = angle.rotated(15)
+	if hp > 1:
+		hp -= 1
+	if angle_counter < max_angles:
+		angle_counter += 1
 	speed += (15 * angle_counter)
 	knockback_amount += 15
 	damage += 1

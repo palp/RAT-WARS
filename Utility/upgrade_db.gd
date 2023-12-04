@@ -108,7 +108,7 @@ const UPGRADES = {
 	"deathmagic1": {
 		"icon": RAT_WEAPON_PATH + "death_magic.png",
 		"displayname": "DEATH MAGIC",
-		"details": "Harnessing death magic, a shattered projectile is thrown in an arc",
+		"details": "Harnessing death magic, a shattered projectile is thrown in a spiral, becoming more lethal over time",
 		"level": "Level: 1",
 		"prerequisite": [],
 		"type": "weapon"
@@ -116,7 +116,7 @@ const UPGRADES = {
 	"deathmagic2": {
 		"icon": RAT_WEAPON_PATH + "death_magic.png",
 		"displayname": "DEATH MAGIC",
-		"details": "Harnessing death magic, a shattered projectile is thrown in an arc",
+		"details": "DEATH MAGIC can pass through more enemies, gains increased attack speed, and can charge for longer",
 		"level": "Level: 2",
 		"prerequisite": ["deathmagic1"],
 		"type": "weapon"
@@ -124,7 +124,7 @@ const UPGRADES = {
 	"deathmagic3": {
 		"icon": RAT_WEAPON_PATH + "death_magic.png",
 		"displayname": "DEATH MAGIC",
-		"details": "Harnessing death magic, a shattered projectile is thrown in an arc",
+		"details": "DEATH MAGIC can pass through more enemies, gains increased attack speed, and can charge for longer",
 		"level": "Level: 3",
 		"prerequisite": ["deathmagic2"],
 		"type": "weapon"
@@ -132,7 +132,7 @@ const UPGRADES = {
 	"deathmagic": {
 		"icon": RAT_WEAPON_PATH + "death_magic.png",
 		"displayname": "DEATH MAGIC",
-		"details": "Harnessing death magic, a shattered projectile is thrown in an arc",
+		"details": "An additional DEATH MAGIC is created",
 		"level": "Level: 4",
 		"prerequisite": ["deathmagic3"],
 		"type": "weapon"
@@ -140,7 +140,7 @@ const UPGRADES = {
 	"dieslow1": {
 		"icon": RAT_WEAPON_PATH + "die_slow.png",
 		"displayname": "DIE SLOW",
-		"details": "A burning pool of gas tossed from a can.",
+		"details": "A burning pool of gas is tossed from a can at a random enemy",
 		"level": "Level: 1",
 		"prerequisite": [],
 		"type": "weapon"
@@ -172,7 +172,7 @@ const UPGRADES = {
 	"vinyl1": {
 		"icon": RAT_WEAPON_PATH + "vinyl.png",
 		"displayname": "RAT WARS LP",
-		"details": "A deadly razor sharp vinyl that bounces.",
+		"details": "A deadly razor sharp vinyl that bounces back",
 		"level": "Level: 1",
 		"prerequisite": [],
 		"type": "weapon"
