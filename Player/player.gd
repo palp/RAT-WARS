@@ -263,6 +263,18 @@ func levelup():
 
 func upgrade_character(upgrade):	
 	match upgrade:
+		"plug1":
+			attackManager.attacks["plug"].level = 1
+			attackManager.attacks["plug"].base_ammo += 3
+		"plug2":
+			attackManager.attacks["plug"].level = 2
+			attackManager.attacks["plug"].base_ammo += 1
+		"plug3":
+			attackManager.attacks["plug"].level = 3
+			attackManager.attacks["plug"].base_ammo += 1
+		"plug4":
+			attackManager.attacks["plug"].level = 4
+			attackManager.attacks["plug"].base_ammo += 1
 		"stonefist1":
 			attackManager.attacks["stonefist"].level = 1
 			attackManager.attacks["stonefist"].base_ammo += 1

@@ -6,6 +6,38 @@ const RAT_ICON_PATH = "res://assets/player/upgrades/"
 const WEAPON_PATH = "res://Textures/Items/Weapons/"
 const RAT_WEAPON_PATH = "res://assets/player/attacks/"
 const UPGRADES = {
+	"plug1": {
+		"icon": RAT_WEAPON_PATH + "buttplug.png",
+		"displayname": "NC-17",
+		"details": "A powerful, pulsating ring of b-plugs orbits the player.",
+		"level": "Level: 1",
+		"prerequisite": [],
+		"type": "weapon"
+	},
+	"plug2": {
+		"icon": RAT_WEAPON_PATH + "buttplug.png",
+		"displayname": "NC-17",
+		"details": "An additional b-plug is created, knockback, damage and max radius are increased.",
+		"level": "Level: 2",
+		"prerequisite": ["plug1"],
+		"type": "weapon"
+	},
+	"plug3": {
+		"icon": RAT_WEAPON_PATH + "buttplug.png",
+		"displayname": "NC-17",
+		"details": "An additional b-plug is created, knockback, damage and max radius are increased.",
+		"level": "Level: 3",
+		"prerequisite": ["plug2"],
+		"type": "weapon"
+	},
+	"plug4": {
+		"icon": RAT_WEAPON_PATH + "buttplug.png",
+		"displayname": "NC-17",
+		"details": "An additional b-plug is created, knockback, damage and max radius are increased..",
+		"level": "Level: 4",
+		"prerequisite": ["plug3"],
+		"type": "weapon"
+	},
 	"stonefist1": {
 
 		"icon": RAT_WEAPON_PATH + "stonefist.png",
@@ -170,32 +202,32 @@ const UPGRADES = {
 		"type": "weapon"
 	},
 	"armor1": {
-		"icon": ICON_PATH + "helmet_1.png",
-		"displayname": "Armor",
+		"icon": RAT_ICON_PATH + "feel_nothing.png",
+		"displayname": "FEEL NOTHING",
 		"details": "Reduces Damage By 1 point",
 		"level": "Level: 1",
 		"prerequisite": [],
 		"type": "upgrade"
 	},
 	"armor2": {
-		"icon": ICON_PATH + "helmet_1.png",
-		"displayname": "Armor",
+		"icon": RAT_ICON_PATH + "feel_nothing.png",
+		"displayname": "FEEL NOTHING",
 		"details": "Reduces Damage By an additional 1 point",
 		"level": "Level: 2",
 		"prerequisite": ["armor1"],
 		"type": "upgrade"
 	},
 	"armor3": {
-		"icon": ICON_PATH + "helmet_1.png",
-		"displayname": "Armor",
+		"icon": RAT_ICON_PATH + "feel_nothing.png",
+		"displayname": "FEEL NOTHING",
 		"details": "Reduces Damage By an additional 1 point",
 		"level": "Level: 3",
 		"prerequisite": ["armor2"],
 		"type": "upgrade"
 	},
 	"armor4": {
-		"icon": ICON_PATH + "helmet_1.png",
-		"displayname": "Armor",
+		"icon": RAT_ICON_PATH + "feel_nothing.png",
+		"displayname": "FEEL NOTHING",
 		"details": "Reduces Damage By an additional 1 point",
 		"level": "Level: 4",
 		"prerequisite": ["armor3"],
@@ -234,32 +266,32 @@ const UPGRADES = {
 		"type": "upgrade"
 	},
 	"tome1": {
-		"icon": ICON_PATH + "thick_new.png",
-		"displayname": "Tome",
+		"icon": RAT_ICON_PATH + "rat_wars_cassette.png",
+		"displayname": "RAT WARS CASSETTE",
 		"details": "Increases the size of spells an additional 10% of their base size",
 		"level": "Level: 1",
 		"prerequisite": [],
 		"type": "upgrade"
 	},
 	"tome2": {
-		"icon": ICON_PATH + "thick_new.png",
-		"displayname": "Tome",
+		"icon": RAT_ICON_PATH + "rat_wars_cassette.png",
+		"displayname": "RAT WARS CASSETTE",
 		"details": "Increases the size of spells an additional 10% of their base size",
 		"level": "Level: 2",
 		"prerequisite": ["tome1"],
 		"type": "upgrade"
 	},
 	"tome3": {
-		"icon": ICON_PATH + "thick_new.png",
-		"displayname": "Tome",
+		"icon": RAT_ICON_PATH + "rat_wars_cassette.png",
+		"displayname": "RAT WARS CASSETTE",
 		"details": "Increases the size of spells an additional 10% of their base size",
 		"level": "Level: 3",
 		"prerequisite": ["tome2"],
 		"type": "upgrade"
 	},
 	"tome4": {
-		"icon": ICON_PATH + "thick_new.png",
-		"displayname": "Tome",
+		"icon": RAT_ICON_PATH + "rat_wars_cassette.png",
+		"displayname": "RAT WARS CASSETTE",
 		"details": "Increases the size of spells an additional 10% of their base size",
 		"level": "Level: 4",
 		"prerequisite": ["tome3"],
