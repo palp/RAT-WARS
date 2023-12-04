@@ -51,7 +51,7 @@ func update_plug():
 
 
 func _physics_process(delta):
-	angle_of_rotation += 2
+	angle_of_rotation += (max_radius - 100) / 15
 	if inc_rad and radius < max_radius:
 		radius += 1
 	if inc_rad and radius >= max_radius:

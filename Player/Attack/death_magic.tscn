@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=3 uid="uid://d4motqtci2g1c"]
+
+[ext_resource type="Texture2D" uid="uid://51rtvjufpn3l" path="res://assets/player/attacks/death_magic.png" id="1_ch1b5"]
+[ext_resource type="Script" path="res://Player/Attack/death_magic.gd" id="1_wynvo"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y0dyx"]
+size = Vector2(27, 32)
+
+[node name="DeathMagic" type="Area2D" groups=["attack"]]
+top_level = true
+collision_layer = 4
+collision_mask = 4
+gravity_point_center = Vector2(0, -1)
+gravity_direction = Vector2(0, -1)
+angular_damp = 43.424
+script = ExtResource("1_wynvo")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.5, 0)
+shape = SubResource("RectangleShape2D_y0dyx")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_ch1b5")
+
+[node name="ChangeDirectionTimer" type="Timer" parent="."]
+wait_time = 0.8
+autostart = true
+
+[connection signal="timeout" from="ChangeDirectionTimer" to="." method="_on_change_direction_timer_timeout"]
