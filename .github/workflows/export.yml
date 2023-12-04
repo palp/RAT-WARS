@@ -187,7 +187,7 @@ jobs:
       - name: Setup (Android)
         if: ${{matrix.build.preset == 'android'}}
         run: |          
-          apt update && apt install openjdk-19-jdk-headless -yy && apt remove -yy openjdk-11-jre-headless                  
+          apt update && apt install openjdk-17-jdk-headless -yy && apt remove -yy openjdk-11-jre-headless                  
           echo ${{ secrets.ANDROID_RELEASE_KEYSTORE_BASE64 }} | base64 --decode > /root/release.keystore
           sed 's@keystore/release=".*"@keystore/release="'/root/release.keystore'"@g' -i export_presets.cfg
           sed 's@keystore/release_user=".*"@keystore/release_user="'${{ secrets.ANDROID_RELEASE_KEYSTORE_USER }}'"@g' -i export_presets.cfg
