@@ -119,7 +119,7 @@ func _ready():
 	disable_pausing = false
 	disable_pathing_input = false
 	disable_upgrades = false
-	upgrade_character("stonefist1")
+	upgrade_character(rand_starting_item())
 	set_expbar(experience, calculate_experiencecap())
 	_on_hurt_box_hurt(0, 0, 0)
 	for content in Unlocks.unlocked_content:
@@ -286,18 +286,18 @@ func upgrade_character(upgrade):
 		"stonefist4":
 			attackManager.attacks["stonefist"].level = 4
 			attackManager.attacks["stonefist"].base_ammo += 2
-		"tornado1":
-			attackManager.attacks["tornado"].level = 1
-			attackManager.attacks["tornado"].base_ammo += 1
-		"tornado2":
-			attackManager.attacks["tornado"].level = 2
-			attackManager.attacks["tornado"].base_ammo += 1
-		"tornado3":
-			attackManager.attacks["tornado"].level = 3
-			attackManager.attacks["tornado"].attack_speed -= 0.5
-		"tornado4":
-			attackManager.attacks["tornado"].level = 4
-			attackManager.attacks["tornado"].base_ammo += 1
+		"deathmagic1":
+			attackManager.attacks["death_magic"].level = 1
+			attackManager.attacks["death_magic"].base_ammo += 1
+		"deathmagic2":
+			attackManager.attacks["death_magic"].level = 2
+			attackManager.attacks["death_magic"].attack_speed -= 0.5
+		"deathmagic3":
+			attackManager.attacks["death_magic"].level = 3
+			attackManager.attacks["death_magic"].attack_speed -= 0.5
+		"deathmagic4":
+			attackManager.attacks["death_magic"].level = 4
+			attackManager.attacks["death_magic"].base_ammo += 1
 		"vinyl1":
 			attackManager.attacks["vinyl"].level = 1
 			attackManager.attacks["vinyl"].base_ammo += 1
@@ -515,3 +515,7 @@ func _on_video_credits_finished():
 		credits_node.stream = credits_loop_video
 		credits_node.loop = true
 		credits_node.play()
+		
+func rand_starting_item():
+	var weapon_list = ["plug1", "deathmagic1", "vinyl1", "dieslow1", "stonefist1"]
+	return weapon_list[randi() % weapon_list.size()]

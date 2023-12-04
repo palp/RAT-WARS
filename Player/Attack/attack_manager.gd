@@ -3,7 +3,7 @@ extends Node
 
 var vinyl = preload("res://Player/Attack/vinyl.tscn")
 var stonefist = preload("res://Player/Attack/ice_spear.tscn")
-var tornado = preload("res://Player/Attack/tornado.tscn")
+var death_magic = preload("res://Player/Attack/death_magic.tscn")
 var javelin = preload("res://Player/Attack/javelin.tscn")
 var die_slow = preload("res://Player/Attack/die_slow.tscn")
 var plug = preload("res://Player/Attack/buttplug.tscn")
@@ -37,7 +37,7 @@ class AttackType:
 var attacks = {
 	"vinyl": AttackType.new(vinyl, 0.2, 3),
 	"stonefist": AttackType.new(stonefist, 0.075, 1.5),
-	"tornado": AttackType.new(tornado, 0.2, 3),
+	"death_magic": AttackType.new(death_magic, 0.2, 3),
 	"javelin": AttackType.new(javelin, 0.5, 0.5),
 	"die_slow": AttackType.new(die_slow, 0.5, 4.0),
 	"plug": AttackType.new(plug, 0.5, 4.0)
@@ -79,10 +79,7 @@ func _process(delta):
 			var instance = attack.scene.instantiate()
 			instance.position = attacker.global_position
 			instance.level = attack.level
-			if attack_type == "tornado":
-				instance.last_movement = attacker.last_movement
-			else:
-				instance.target = attacker.get_random_target()
+			instance.target = attacker.get_random_target()
 
 			attack.instances.append(instance)
 			add_child(instance)

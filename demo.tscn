@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://TerrainGen.gd" id="1_rwhiv"]
 [ext_resource type="PackedScene" uid="uid://6rkaprmq4ect" path="res://Player/player.tscn" id="2_40uwv"]
-[ext_resource type="PackedScene" uid="uid://b854gcq3q7qme" path="res://assets/world/the_sprawl_terrain_packs.tscn" id="2_rorgg"]
+[ext_resource type="PackedScene" path="res://assets/world/the_sprawl_terrain_packs.tscn" id="2_rorgg"]
 [ext_resource type="PackedScene" uid="uid://eno7xtkdwasd" path="res://ui/main_menu.tscn" id="3_1vbbm"]
 [ext_resource type="Theme" uid="uid://bwayc6rbhtvxj" path="res://assets/ui/theme/HEALTH_theme.tres" id="3_8j42b"]
 [ext_resource type="PackedScene" uid="uid://ba2claihwes2y" path="res://Utility/enemy_spawner.tscn" id="3_p01g4"]

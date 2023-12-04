@@ -6,10 +6,13 @@ var speed = 100
 var damage = 5
 var knockback_amount = 100
 var attack_size = 1.0
+var angle_counter = 0
+var max_angles = 5
 
 var target = Vector2.ZERO
 var angle = Vector2.ZERO
 
+@onready var changeDirectionTimer = $ChangeDirectionTimer
 @onready var player = get_tree().get_first_node_in_group("player")
 signal remove_from_array(object)
 
@@ -18,28 +21,32 @@ func _ready():
 	rotation = angle.angle() + deg_to_rad(135)
 	match level:
 		1:
-			hp = 1
-			speed = 120
-			damage = 5
-			knockback_amount = 170
+			hp = 5
+			speed = 200
+			damage = 3
+			knockback_amount = 120
+			max_angles = 5
 			attack_size = 1.0 * (1 + player.spell_size)
 		2:
-			hp = 1
-			speed = 130
-			damage = 5
-			knockback_amount = 180
+			hp = 10
+			speed = 250
+			damage = 3
+			knockback_amount = 130
+			max_angles = 6
 			attack_size = 1.0 * (1 + player.spell_size)
 		3:
-			hp = 2
-			speed = 140
-			damage = 8
-			knockback_amount = 190
+			hp = 15
+			speed = 300
+			damage = 3
+			knockback_amount = 140
+			max_angles = 7
 			attack_size = 1.0 * (1 + player.spell_size)
 		4:
-			hp = 2
-			speed = 150
-			damage = 8
-			knockback_amount = 200
+			hp = 20
+			speed = 350
+			damage = 3
+			knockback_amount = 160
+			max_angles = 8
 			attack_size = 1.0 * (1 + player.spell_size)
 
 	
@@ -48,6 +55,7 @@ func _ready():
 	tween.play()
 
 func _physics_process(delta):
+	rotation += (.15 * (angle_counter + 1))
 	position += angle*speed*delta
 
 func enemy_hit(charge = 1):
@@ -60,3 +68,14 @@ func enemy_hit(charge = 1):
 func _on_timer_timeout():
 	emit_signal("remove_from_array",self)
 	queue_free()
+
+
+func _on_change_direction_timer_timeout():
+	angle = angle.rotated(15)
+	if hp > 1:
+		hp -= 1
+	if angle_counter < max_angles:
+		angle_counter += 1
+	speed += (15 * angle_counter)
+	knockback_amount += 15
+	damage += 1

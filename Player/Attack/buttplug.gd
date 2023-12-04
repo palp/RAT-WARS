@@ -58,7 +58,7 @@ func _physics_process(delta):
 		inc_rad = 0
 		dec_rad = 1
 	if dec_rad and radius > 100:
-		radius -= 2
+		radius -= 1
 	if dec_rad and radius <= 100:
 		inc_rad = 1
 		dec_rad = 0
