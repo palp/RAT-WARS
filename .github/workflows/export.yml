@@ -5,6 +5,9 @@ on:
       - main
     tags:
       - v*
+  pull_request:
+    branches:
+      - main
 
 jobs:
   create-release:
@@ -144,7 +147,7 @@ jobs:
           - preset: web
             path: build/web
             output: build/web/index.html
-            tag: web
+            tag: web            
           - preset: linux
             path: build/linux
             output: build/linux/RatWars.x86_64
@@ -207,11 +210,19 @@ jobs:
           echo -n "${{ secrets.PROD_CONFIG_BASE64 }}" | base64 --decode >ratwars.cfg.prod
           echo -n "${{ secrets.CONFIG_KEY_BASE64 }}" | base64 --decode >config.key
       - name: Build
-        if: ${{ !cancelled() }}
+        if: ${{ matrix.build.preset != 'android' && !cancelled() }}
         timeout-minutes: 10
         run: |
           mkdir -v -p ${{matrix.build.path}}
           godot -v --headless --audio-driver Dummy --export-release "${{matrix.build.preset}}" "${{matrix.build.output}}"
+      - name: Build (Android)        
+        timeout-minutes: 15
+        if: ${{ matrix.build.preset == 'android' && !cancelled() }}
+        run: |
+          mkdir -v -p ${{matrix.build.path}}
+          godot -v --headless --audio-driver Dummy --export-release "${{matrix.build.preset}}" "${{matrix.build.path}}/RatWars.apk"
+          sed 's@gradle_build/export_format=.*@gradle_build/export_format=1@g' -i export_presets.cfg
+          godot -v --headless --audio-driver Dummy --export-release "${{matrix.build.preset}}" "${{matrix.build.path}}/RatWars.aab"
       - name: Check build
         if: ${{ !cancelled() }}
         run: |
@@ -223,9 +234,6 @@ jobs:
         if: ${{ success() }}
         run: |
           cd ${{matrix.build.path}}
-          if [ "${{matrix.build.preset}}" = "android" ]; then
-            rm -f RatWars.apk.idsig
-          fi
           zip -r ../ratwars-${{matrix.build.tag}}.zip .
       - name: Publish Artifact
         if: ${{ success() }}
@@ -249,7 +257,7 @@ jobs:
         env:
           BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
       - name: Push to palp.itch.io (${{matrix.build.tag}})
-        if: ${{ !(github.ref_type == 'tag' && startsWith(github.ref, 'refs/tags/v')) && success() }}
+        if: ${{ success() }}
         run: butler push ${{matrix.build.path}} palp/rat-wars:${{matrix.build.tag}} --userversion ${{github.sha}}
         env:
           BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
