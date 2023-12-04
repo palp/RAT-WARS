@@ -226,7 +226,7 @@ jobs:
           mkdir -v -p build/android-aab
           godot -v --headless --audio-driver Dummy --export-release "${{matrix.build.preset}}" "${{matrix.build.output}}"          
           sed 's@gradle_build/export_format=.*@gradle_build/export_format=1@g' -i export_presets.cfg
-          godot -v --headless --audio-driver Dummy --export-release "${{matrix.build.preset}}" build/android-aab/RatWars.aab"
+          godot -v --headless --audio-driver Dummy --export-release "${{matrix.build.preset}}" "build/android-aab/RatWars.aab"
       - name: Check build
         if: ${{ !cancelled() }}
         run: |
