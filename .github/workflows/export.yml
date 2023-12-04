@@ -5,6 +5,7 @@ on:
       - main
     tags:
       - v*
+  workflow_dispatch:
 
 jobs:
   create-release:
@@ -144,7 +145,7 @@ jobs:
           - preset: web
             path: build/web
             output: build/web/index.html
-            tag: web
+            tag: web            
           - preset: linux
             path: build/linux
             output: build/linux/RatWars.x86_64
@@ -166,10 +167,12 @@ jobs:
         uses: actions/checkout@v3
         with:
           lfs: true
+
       - name: Setup
         run: |
           mkdir -v -p ~/.local/share/godot/export_templates
           mv /root/.local/share/godot/export_templates/4.2.stable ~/.local/share/godot/export_templates/4.2.stable
+          
       - name: "Update Project"
         if: ${{ !cancelled() }}
         timeout-minutes: 1
@@ -177,13 +180,16 @@ jobs:
         shell: bash
         run: |
           godot -e --path . -s res://addons/gdUnit4/bin/ProjectScanner.gd --headless --audio-driver Dummy   
+
       - name: Install release presets
         run: |
           rm export_presets.cfg
           mv release_presets.cfg export_presets.cfg       
+
       - name: Setup (Android)
         if: ${{matrix.build.preset == 'android'}}
-        run: |
+        run: |          
+          apt update && apt install openjdk-17-jdk-headless -yy && apt remove -yy openjdk-11-jre-headless                  
           echo ${{ secrets.ANDROID_RELEASE_KEYSTORE_BASE64 }} | base64 --decode > /root/release.keystore
           sed 's@keystore/release=".*"@keystore/release="'/root/release.keystore'"@g' -i export_presets.cfg
           sed 's@keystore/release_user=".*"@keystore/release_user="'${{ secrets.ANDROID_RELEASE_KEYSTORE_USER }}'"@g' -i export_presets.cfg
@@ -191,6 +197,7 @@ jobs:
           sed 's|export/android/android_sdk_path = ".*"|export/android/android_sdk_path = "'/usr/lib/android-sdk'"|g' -i /root/.config/godot/editor_settings-4.tres
           mkdir -v -p ~/.config/godot
           cp -v /root/.config/godot/editor_settings-4.tres ~/.config/godot/
+
       - name: Setup (Windows)
         if: ${{matrix.build.preset == 'win' }}
         run: |
@@ -201,17 +208,33 @@ jobs:
           sed 's|export/windows/wine = ".*"|export/windows/wine = "$WINE_PATH"|g' -i /root/.config/godot/editor_settings-4.tres
           mkdir -v -p ~/.config/godot
           cp -v /root/.config/godot/editor_settings-4.tres ~/.config/godot
+
       - name: Install production config
         if: ${{ !cancelled() && github.ref_type == 'tag' && startsWith(github.ref, 'refs/tags/v') }}
         run: |
           echo -n "${{ secrets.PROD_CONFIG_BASE64 }}" | base64 --decode >ratwars.cfg.prod
           echo -n "${{ secrets.CONFIG_KEY_BASE64 }}" | base64 --decode >config.key
+
       - name: Build
         if: ${{ !cancelled() }}
         timeout-minutes: 10
         run: |
           mkdir -v -p ${{matrix.build.path}}
           godot -v --headless --audio-driver Dummy --export-release "${{matrix.build.preset}}" "${{matrix.build.output}}"
+
+      - name: Build (Android Play Store)        
+        timeout-minutes: 10
+        if: ${{ matrix.build.preset == 'android' }}
+        shell: bash         
+        run: |                       
+          mkdir -v -p build/android-aab          
+          sed 's@gradle_build/export_format=.*@gradle_build/export_format=1@g' -i export_presets.cfg          
+          godot -v --headless --audio-driver Dummy --export-release "${{matrix.build.preset}}" "build/android-aab/RatWars.aab"
+          if [ ! -f "build/android-aab/RatWars.aab" ]; then
+            echo "Build failed"
+            exit 1
+          fi
+
       - name: Check build
         if: ${{ !cancelled() }}
         run: |
@@ -219,20 +242,27 @@ jobs:
             echo "Build failed"
             exit 1
           fi
+
       - name: Zip
         if: ${{ success() }}
-        run: |
+        run: |        
           cd ${{matrix.build.path}}
-          if [ "${{matrix.build.preset}}" = "android" ]; then
-            rm -f RatWars.apk.idsig
-          fi
           zip -r ../ratwars-${{matrix.build.tag}}.zip .
+
       - name: Publish Artifact
         if: ${{ success() }}
         uses: actions/upload-artifact@v2
         with:
           name: ratwars-${{matrix.build.tag}}
           path: ${{matrix.build.path}}
+
+      - name: Publish Artifact (Android Play Store)
+        if: ${{ success() && matrix.build.preset == 'android' }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: ratwars-${{matrix.build.tag}}-aab
+          path: build/android-aab/RatWars.aab
+
       - name: Upload Release Asset
         if: ${{ github.ref_type == 'tag' && startsWith(github.ref, 'refs/tags/v') && success() }}
         uses: actions/upload-release-asset@v1
@@ -243,13 +273,46 @@ jobs:
           asset_path: build/ratwars-${{matrix.build.tag}}.zip
           asset_name: ratwars-${{matrix.build.tag}}.zip
           asset_content_type: application/octet-stream
+
       - name: Push to healthnoise.itch.io (${{matrix.build.tag}})
         if: ${{ github.ref_type == 'tag' && startsWith(github.ref, 'refs/tags/v') && success() }}
         run: butler push ${{matrix.build.path}} healthnoise/ratwars:${{matrix.build.tag}} --userversion ${{github.ref_name}}
         env:
           BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
+
       - name: Push to palp.itch.io (${{matrix.build.tag}})
-        if: ${{ !(github.ref_type == 'tag' && startsWith(github.ref, 'refs/tags/v')) && success() }}
+        if: ${{ success() && github.ref_name == 'main' }}
         run: butler push ${{matrix.build.path}} palp/rat-wars:${{matrix.build.tag}} --userversion ${{github.sha}}
         env:
           BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
+
+      - name: Determine release track
+        id: release-track        
+        if: ${{ success() && matrix.build.preset == 'android' }}
+        run: |
+          if [[ "${{github.ref_type}}" == "tag" ]]; then
+            echo "ref=$GITHUB_REF" >> $GITHUB_OUTPUT
+            if [[ "${{github.ref_name}}" == *"alpha"* ]]; then
+              echo "track=alpha" >> $GITHUB_OUTPUT              
+            elif [[ "${{github.ref_name}}" == *"beta"* ]]; then
+              echo "track=beta" >> $GITHUB_OUTPUT              
+            else
+              echo "track=production" >> $GITHUB_OUTPUT                          
+            fi          
+          elif [[ "${{github.ref_name}}" == "main" ]]; then
+            echo "track=internal" >> $GITHUB_OUTPUT
+            echo "ref=$GITHUB_SHA" >> $GITHUB_OUTPUT
+          else
+            echo "track=internal" >> $GITHUB_OUTPUT
+            echo "ref=${{github.ref_name}}" >> $GITHUB_OUTPUT
+          fi
+  
+      - name: Push to Google Play
+        if: ${{ success() && matrix.build.preset == 'android' && github.ref_type == 'tag' && startsWith(github.ref, 'refs/tags/v') }}
+        uses: r0adkll/upload-google-play@v1
+        with:
+          serviceAccountJsonPlainText: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_JSON }}
+          packageName: com.youwillloveeachother.ratwars
+          releaseFiles: build/android-aab/RatWars.aab
+          track: internal #${{ steps.release-track.outputs.track }}
+          releaseName: ${{ github.ref_name }}
