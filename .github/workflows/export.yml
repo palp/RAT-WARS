@@ -5,9 +5,7 @@ on:
       - main
     tags:
       - v*
-  pull_request:
-    branches:
-      - main
+  workflow_dispatch:
 
 jobs:
   create-release:
@@ -169,7 +167,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           lfs: true
-          
+
       - name: Setup
         run: |
           mkdir -v -p ~/.local/share/godot/export_templates
@@ -282,6 +280,12 @@ jobs:
         env:
           BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
 
+      - name: Push to palp.itch.io (${{matrix.build.tag}})
+        if: ${{ success() && github.ref_name == 'main' }}
+        run: butler push ${{matrix.build.path}} palp/rat-wars:${{matrix.build.tag}} --userversion ${{github.sha}}
+        env:
+          BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
+
       - name: Determine release track
         id: release-track        
         if: ${{ success() && matrix.build.preset == 'android' }}
@@ -298,27 +302,18 @@ jobs:
           elif [[ "${{github.ref_name}}" == "main" ]]; then
             echo "track=internal" >> $GITHUB_OUTPUT
             echo "ref=$GITHUB_SHA" >> $GITHUB_OUTPUT
-          elif [[ "${{github.event_name}}" == "pull_request" ]]; then
-            echo "track=internal" >> $GITHUB_OUTPUT
-            echo "ref=${{github.head_ref}}" >> $GITHUB_OUTPUT
           else
             echo "track=internal" >> $GITHUB_OUTPUT
-            echo "ref=$GITHUB_REF" >> $GITHUB_OUTPUT
+            echo "ref=${{github.ref_name}}" >> $GITHUB_OUTPUT
           fi
-
-      - name: Push to palp.itch.io (${{matrix.build.tag}})
-        if: ${{ success() }}
-        run: butler push ${{matrix.build.path}} palp/rat-wars:${{matrix.build.tag}} --userversion ${{github.sha}}
-        env:
-          BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
-
+  
       - name: Push to Google Play
-        if: ${{ success() && matrix.build.preset == 'android' }}
+        if: ${{ success() && matrix.build.preset == 'android' && github.ref_type == 'tag' && startsWith(github.ref, 'refs/tags/v') }}
         uses: r0adkll/upload-google-play@v1
         with:
           serviceAccountJsonPlainText: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_JSON }}
           packageName: com.youwillloveeachother.ratwars
           releaseFiles: build/android-aab/RatWars.aab
-          track: ${{ steps.release-track.outputs.track }}
-          releaseName: ${{ steps.release-track.outputs.ref }} 
+          track: 
+          releaseName: ${{ github.ref_name }}
         
