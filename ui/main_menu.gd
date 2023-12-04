@@ -10,16 +10,24 @@ extends Control
 
 var in_loop = false
 
+var bonus_disabled = false
+
 signal video_started
 signal video_stopped
+
+func _ready():
+	if OS.get_name() == 'iOS':
+		bonus_disabled = true
+		bonus_button.queue_free()
 
 func _on_play_pressed():
 	get_tree().change_scene_to_file("res://Player/player_select.tscn")
 
 func close_submenus():
 	options_menu.visible = false
-	unlock_input.visible = false
-	unlock_button.visible = false
+	if not bonus_disabled:
+		unlock_input.visible = false
+		unlock_button.visible = false
 	leaderboard.visible = false
 
 func _on_options_pressed():
