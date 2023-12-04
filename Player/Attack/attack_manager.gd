@@ -6,6 +6,7 @@ var stonefist = preload("res://Player/Attack/ice_spear.tscn")
 var tornado = preload("res://Player/Attack/tornado.tscn")
 var javelin = preload("res://Player/Attack/javelin.tscn")
 var die_slow = preload("res://Player/Attack/die_slow.tscn")
+var plug = preload("res://Player/Attack/buttplug.tscn")
 
 var spell_cooldown = 0
 var spell_size = 0
@@ -13,7 +14,7 @@ var additional_attacks = 0
 
 @onready var attacker = owner
 @onready var javelin_base = Node2D.new()
-
+@onready var plug_base = Node2D.new()
 
 class AttackType:
 	func _init(scene_: PackedScene, attack_speed_: float, replenish_speed_: float):
@@ -39,12 +40,14 @@ var attacks = {
 	"tornado": AttackType.new(tornado, 0.2, 3),
 	"javelin": AttackType.new(javelin, 0.5, 0.5),
 	"die_slow": AttackType.new(die_slow, 0.5, 4.0),
+	"plug": AttackType.new(plug, 0.5, 4.0)
 }
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	add_child(javelin_base)
+	add_child(plug_base)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -55,6 +58,9 @@ func _process(delta):
 		return
 	for attack_type in attacks.keys():
 		if attack_type == "javelin":
+			continue
+		if attack_type == "plug":
+			spawn_plug()
 			continue
 		var attack = attacks[attack_type]
 		if attack.level <= 0:
@@ -97,3 +103,27 @@ func spawn_javelin():
 	for i in get_javelins:
 		if i.has_method("update_javelin"):
 			i.update_javelin()
+
+func spawn_plug():
+	var get_plug_total = plug_base.get_child_count()
+	var additional_spawns = (attacks["plug"].base_ammo + attacker.additional_attacks) - get_plug_total
+	var increment_amount = floor(360 / (get_plug_total + additional_spawns))
+	var current_deg = 0
+	while additional_spawns > 0:
+		current_deg = reset_angle(increment_amount)
+		var plug_spawn = plug.instantiate()
+		plug_spawn.angle_of_rotation = current_deg
+		current_deg += increment_amount
+		plug_base.add_child(plug_spawn)
+		plug_spawn.update_plug()
+		additional_spawns -= 1
+	for i in plug_base.get_children():
+		if i.has_method("update_plug"):
+			i.update_plug()
+
+func reset_angle(increment_amount):
+	var current_deg = 0
+	for i in plug_base.get_children():
+		i.angle_of_rotation = current_deg
+		current_deg += increment_amount
+	return current_deg
