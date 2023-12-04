@@ -225,8 +225,12 @@ jobs:
           mkdir -v -p ${{matrix.build.path}}
           mkdir -v -p build/android-aab
           godot -v --headless --audio-driver Dummy --export-release "${{matrix.build.preset}}" "${{matrix.build.output}}"          
-          sed 's@gradle_build/export_format=.*@gradle_build/export_format=1@g' -i export_presets.cfg
+          sed 's@gradle_build/export_format=.*@gradle_build/export_format=1@g' -i export_presets.cfg          
           godot -v --headless --audio-driver Dummy --export-release "${{matrix.build.preset}}" "build/android-aab/RatWars.aab"
+          if [ ! -f "build/android-aab/RatWars.aab" ]; then
+            echo "Build failed"
+            exit 1
+          fi
       - name: Check build
         if: ${{ !cancelled() }}
         run: |
@@ -276,6 +280,9 @@ jobs:
           elif [[ "${{github.ref_name}}" == "main" ]]; then
             echo "track=internal" >> $GITHUB_OUTPUT
             echo "ref=$GITHUB_SHA" >> $GITHUB_OUTPUT
+          elif [[ "${{github.event_name}}" == "pull_request" ]]; then
+            echo "track=internal" >> $GITHUB_OUTPUT
+            echo "ref=${{github.head_ref}}" >> $GITHUB_OUTPUT
           else
             echo "track=internal" >> $GITHUB_OUTPUT
             echo "ref=$GITHUB_REF" >> $GITHUB_OUTPUT
