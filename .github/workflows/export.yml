@@ -219,6 +219,7 @@ jobs:
         timeout-minutes: 15
         if: ${{ matrix.build.preset == 'android' && !cancelled() }}
         run: |
+          chmod +x android/build/gradlew
           mkdir -v -p ${{matrix.build.path}}
           godot -v --headless --audio-driver Dummy --export-release "${{matrix.build.preset}}" "${{matrix.build.path}}/RatWars.apk"
           sed 's@gradle_build/export_format=.*@gradle_build/export_format=1@g' -i export_presets.cfg
