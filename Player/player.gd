@@ -110,8 +110,7 @@ func get_movement_vector():
 	return Input.get_vector("left", "right", "up", "down")
 
 
-func get_pathing_target():
-	print_debug(get_global_mouse_position())
+func get_pathing_target():	
 	return get_global_mouse_position()
 
 

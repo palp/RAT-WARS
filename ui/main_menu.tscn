@@ -52,7 +52,7 @@ text = "OPTIONS
 [node name="bonus_button" type="Button" parent="MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "BONUS"
+text = "CHEATS"
 
 [node name="unlock_input" type="LineEdit" parent="MarginContainer/VBoxContainer/bonus_button"]
 unique_name_in_owner = true
@@ -62,7 +62,7 @@ offset_left = 152.0
 offset_top = 3.0
 offset_right = 462.0
 offset_bottom = 53.0
-placeholder_text = "Enter unlock code"
+placeholder_text = "Enter cheat code"
 
 [node name="unlock_button" type="Button" parent="MarginContainer/VBoxContainer/bonus_button"]
 unique_name_in_owner = true
