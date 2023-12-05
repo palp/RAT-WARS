@@ -1,6 +1,6 @@
 extends Area2D
 
-var level = 1
+var level = 0
 var hp = 1
 var damage = 5
 var knockback_amount = 100
@@ -9,7 +9,7 @@ var radius = 100
 var angle_of_rotation = 0
 var dec_rad = 0
 var inc_rad = 1
-var max_radius
+var max_radius = 115
 var angle = Vector2.ZERO
 
 @onready var player = get_tree().get_first_node_in_group("player")
