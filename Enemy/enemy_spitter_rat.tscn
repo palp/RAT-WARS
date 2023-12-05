@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://cicd0plbiord6"]
+[gd_scene load_steps=10 format=3 uid="uid://cicd0plbiord6"]
 
 [ext_resource type="Script" path="res://Enemy/enemy.gd" id="1_d8g1e"]
 [ext_resource type="Texture2D" uid="uid://mt17x67goror" path="res://assets/enemy/SpitterRat/SpitterRat_walk_16.png" id="1_p38jk"]
+[ext_resource type="Material" uid="uid://ccy0wram7ovxy" path="res://shaders/enemy_hurt_material.tres" id="2_k34ah"]
 [ext_resource type="PackedScene" uid="uid://xy3cvpwdy828" path="res://Utility/hurt_box.tscn" id="3_ivxq8"]
 [ext_resource type="PackedScene" uid="uid://uhr6mtuisqm1" path="res://Utility/hit_box.tscn" id="4_vdnsx"]
 [ext_resource type="AudioStream" uid="uid://bi7t7cjthnhhc" path="res://Audio/SoundEffect/enemy_hit.ogg" id="5_aknlk"]
@@ -52,6 +53,7 @@ script = ExtResource("1_d8g1e")
 movement_speed = 50.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+material = ExtResource("2_k34ah")
 scale = Vector2(3, 3)
 texture = ExtResource("1_p38jk")
 vframes = 16

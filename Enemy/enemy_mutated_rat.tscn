@@ -1,10 +1,16 @@
-[gd_scene load_steps=12 format=3 uid="uid://gvm5jcbbgwdv"]
+[gd_scene load_steps=14 format=3 uid="uid://gvm5jcbbgwdv"]
 
 [ext_resource type="Script" path="res://Enemy/enemy.gd" id="1_1bh7b"]
+[ext_resource type="Shader" path="res://shaders/enemy_hurt.gdshader" id="1_f2cg2"]
 [ext_resource type="Texture2D" uid="uid://dj66tx10003os" path="res://assets/enemy/MutatedRat/1/MutatedRat_walk_12.png" id="2_o5r43"]
 [ext_resource type="PackedScene" uid="uid://xy3cvpwdy828" path="res://Utility/hurt_box.tscn" id="3_gamcv"]
 [ext_resource type="PackedScene" uid="uid://uhr6mtuisqm1" path="res://Utility/hit_box.tscn" id="4_vdnsx"]
 [ext_resource type="AudioStream" uid="uid://bi7t7cjthnhhc" path="res://Audio/SoundEffect/enemy_hit.ogg" id="5_03jve"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1lrws"]
+resource_local_to_scene = true
+shader = ExtResource("1_f2cg2")
+shader_parameter/hurt_flash = 0.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_24u87"]
 radius = 6.0
@@ -88,6 +94,7 @@ script = ExtResource("1_1bh7b")
 movement_speed = 100.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_1lrws")
 position = Vector2(8, -59)
 scale = Vector2(3, 3)
 texture = ExtResource("2_o5r43")
