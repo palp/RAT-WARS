@@ -163,6 +163,14 @@ gradient = SubResource("Gradient_1vt5j")
 width = 128
 height = 16
 
+[sub_resource type="Gradient" id="Gradient_1vt5j"]
+colors = PackedColorArray(0.375023, 3.55284e-06, 1.81104e-06, 1, 0.494245, 7.23819e-07, 9.67411e-09, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_mdvl5"]
+gradient = SubResource("Gradient_1vt5j")
+width = 128
+height = 16
+
 [node name="enemy_boss_verminator" type="CharacterBody2D"]
 collision_layer = 5
 collision_mask = 5

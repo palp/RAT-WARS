@@ -1,0 +1,4 @@
+.gradle/
+assets/
+build/
+src/debug

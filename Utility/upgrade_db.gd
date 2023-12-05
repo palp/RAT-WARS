@@ -6,6 +6,38 @@ const RAT_ICON_PATH = "res://assets/player/upgrades/"
 const WEAPON_PATH = "res://Textures/Items/Weapons/"
 const RAT_WEAPON_PATH = "res://assets/player/attacks/"
 const UPGRADES = {
+	"plug1": {
+		"icon": RAT_WEAPON_PATH + "buttplug.png",
+		"displayname": "NC-17",
+		"details": "A powerful, pulsating ring of b-plugs orbits the player.",
+		"level": "Level: 1",
+		"prerequisite": [],
+		"type": "weapon"
+	},
+	"plug2": {
+		"icon": RAT_WEAPON_PATH + "buttplug.png",
+		"displayname": "NC-17",
+		"details": "An additional b-plug is created, knockback, damage and max radius are increased.",
+		"level": "Level: 2",
+		"prerequisite": ["plug1"],
+		"type": "weapon"
+	},
+	"plug3": {
+		"icon": RAT_WEAPON_PATH + "buttplug.png",
+		"displayname": "NC-17",
+		"details": "An additional b-plug is created, knockback, damage and max radius are increased.",
+		"level": "Level: 3",
+		"prerequisite": ["plug2"],
+		"type": "weapon"
+	},
+	"plug4": {
+		"icon": RAT_WEAPON_PATH + "buttplug.png",
+		"displayname": "NC-17",
+		"details": "An additional b-plug is created, knockback, damage and max radius are increased..",
+		"level": "Level: 4",
+		"prerequisite": ["plug3"],
+		"type": "weapon"
+	},
 	"stonefist1": {
 
 		"icon": RAT_WEAPON_PATH + "stonefist.png",
@@ -73,42 +105,42 @@ const UPGRADES = {
 		"prerequisite": ["javelin3"],
 		"type": "weapon"
 	},
-	"tornado1": {
-		"icon": WEAPON_PATH + "tornado.png",
-		"displayname": "Tornado",
-		"details": "A tornado is created and random heads somewhere in the players direction",
+	"deathmagic1": {
+		"icon": RAT_WEAPON_PATH + "death_magic.png",
+		"displayname": "DEATH MAGIC",
+		"details": "Harnessing death magic, a shattered projectile is thrown in a spiral, becoming more lethal over time",
 		"level": "Level: 1",
 		"prerequisite": [],
 		"type": "weapon"
 	},
-	"tornado2": {
-		"icon": WEAPON_PATH + "tornado.png",
-		"displayname": "Tornado",
-		"details": "An additional Tornado is created",
+	"deathmagic2": {
+		"icon": RAT_WEAPON_PATH + "death_magic.png",
+		"displayname": "DEATH MAGIC",
+		"details": "DEATH MAGIC can pass through more enemies, gains increased attack speed, and can charge for longer",
 		"level": "Level: 2",
-		"prerequisite": ["tornado1"],
+		"prerequisite": ["deathmagic1"],
 		"type": "weapon"
 	},
-	"tornado3": {
-		"icon": WEAPON_PATH + "tornado.png",
-		"displayname": "Tornado",
-		"details": "The Tornado cooldown is reduced by 0.5 seconds",
+	"deathmagic3": {
+		"icon": RAT_WEAPON_PATH + "death_magic.png",
+		"displayname": "DEATH MAGIC",
+		"details": "DEATH MAGIC can pass through more enemies, gains increased attack speed, and can charge for longer",
 		"level": "Level: 3",
-		"prerequisite": ["tornado2"],
+		"prerequisite": ["deathmagic2"],
 		"type": "weapon"
 	},
-	"tornado4": {
-		"icon": WEAPON_PATH + "tornado.png",
-		"displayname": "Tornado",
-		"details": "An additional tornado is created and the knockback is increased by 25%",
+	"deathmagic": {
+		"icon": RAT_WEAPON_PATH + "death_magic.png",
+		"displayname": "DEATH MAGIC",
+		"details": "An additional DEATH MAGIC is created",
 		"level": "Level: 4",
-		"prerequisite": ["tornado3"],
+		"prerequisite": ["deathmagic3"],
 		"type": "weapon"
 	},
 	"dieslow1": {
 		"icon": RAT_WEAPON_PATH + "die_slow.png",
 		"displayname": "DIE SLOW",
-		"details": "A burning pool of gas tossed from a can.",
+		"details": "A burning pool of gas is tossed from a can at a random enemy",
 		"level": "Level: 1",
 		"prerequisite": [],
 		"type": "weapon"
@@ -140,7 +172,7 @@ const UPGRADES = {
 	"vinyl1": {
 		"icon": RAT_WEAPON_PATH + "vinyl.png",
 		"displayname": "RAT WARS LP",
-		"details": "A deadly razor sharp vinyl that bounces.",
+		"details": "A deadly razor sharp vinyl that bounces back",
 		"level": "Level: 1",
 		"prerequisite": [],
 		"type": "weapon"
@@ -170,32 +202,32 @@ const UPGRADES = {
 		"type": "weapon"
 	},
 	"armor1": {
-		"icon": ICON_PATH + "helmet_1.png",
-		"displayname": "Armor",
+		"icon": RAT_ICON_PATH + "feel_nothing.png",
+		"displayname": "FEEL NOTHING",
 		"details": "Reduces Damage By 1 point",
 		"level": "Level: 1",
 		"prerequisite": [],
 		"type": "upgrade"
 	},
 	"armor2": {
-		"icon": ICON_PATH + "helmet_1.png",
-		"displayname": "Armor",
+		"icon": RAT_ICON_PATH + "feel_nothing.png",
+		"displayname": "FEEL NOTHING",
 		"details": "Reduces Damage By an additional 1 point",
 		"level": "Level: 2",
 		"prerequisite": ["armor1"],
 		"type": "upgrade"
 	},
 	"armor3": {
-		"icon": ICON_PATH + "helmet_1.png",
-		"displayname": "Armor",
+		"icon": RAT_ICON_PATH + "feel_nothing.png",
+		"displayname": "FEEL NOTHING",
 		"details": "Reduces Damage By an additional 1 point",
 		"level": "Level: 3",
 		"prerequisite": ["armor2"],
 		"type": "upgrade"
 	},
 	"armor4": {
-		"icon": ICON_PATH + "helmet_1.png",
-		"displayname": "Armor",
+		"icon": RAT_ICON_PATH + "feel_nothing.png",
+		"displayname": "FEEL NOTHING",
 		"details": "Reduces Damage By an additional 1 point",
 		"level": "Level: 4",
 		"prerequisite": ["armor3"],
@@ -234,64 +266,64 @@ const UPGRADES = {
 		"type": "upgrade"
 	},
 	"tome1": {
-		"icon": ICON_PATH + "thick_new.png",
-		"displayname": "Tome",
+		"icon": RAT_ICON_PATH + "rat_wars_cassette.png",
+		"displayname": "RAT WARS CASSETTE",
 		"details": "Increases the size of spells an additional 10% of their base size",
 		"level": "Level: 1",
 		"prerequisite": [],
 		"type": "upgrade"
 	},
 	"tome2": {
-		"icon": ICON_PATH + "thick_new.png",
-		"displayname": "Tome",
+		"icon": RAT_ICON_PATH + "rat_wars_cassette.png",
+		"displayname": "RAT WARS CASSETTE",
 		"details": "Increases the size of spells an additional 10% of their base size",
 		"level": "Level: 2",
 		"prerequisite": ["tome1"],
 		"type": "upgrade"
 	},
 	"tome3": {
-		"icon": ICON_PATH + "thick_new.png",
-		"displayname": "Tome",
+		"icon": RAT_ICON_PATH + "rat_wars_cassette.png",
+		"displayname": "RAT WARS CASSETTE",
 		"details": "Increases the size of spells an additional 10% of their base size",
 		"level": "Level: 3",
 		"prerequisite": ["tome2"],
 		"type": "upgrade"
 	},
 	"tome4": {
-		"icon": ICON_PATH + "thick_new.png",
-		"displayname": "Tome",
+		"icon": RAT_ICON_PATH + "rat_wars_cassette.png",
+		"displayname": "RAT WARS CASSETTE",
 		"details": "Increases the size of spells an additional 10% of their base size",
 		"level": "Level: 4",
 		"prerequisite": ["tome3"],
 		"type": "upgrade"
 	},
 	"scroll1": {
-		"icon": ICON_PATH + "scroll_old.png",
-		"displayname": "Scroll",
+		"icon": RAT_ICON_PATH + "glitter_pill.png",
+		"displayname": "GLITTER PILLS",
 		"details": "Decreases of the cooldown of spells by an additional 5% of their base time",
 		"level": "Level: 1",
 		"prerequisite": [],
 		"type": "upgrade"
 	},
 	"scroll2": {
-		"icon": ICON_PATH + "scroll_old.png",
-		"displayname": "Scroll",
+		"icon": RAT_ICON_PATH + "glitter_pill.png",
+		"displayname": "GLITTER PILLS",
 		"details": "Decreases of the cooldown of spells by an additional 5% of their base time",
 		"level": "Level: 2",
 		"prerequisite": ["scroll1"],
 		"type": "upgrade"
 	},
 	"scroll3": {
-		"icon": ICON_PATH + "scroll_old.png",
-		"displayname": "Scroll",
+		"icon": RAT_ICON_PATH + "glitter_pill.png",
+		"displayname": "GLITTER PILLS",
 		"details": "Decreases of the cooldown of spells by an additional 5% of their base time",
 		"level": "Level: 3",
 		"prerequisite": ["scroll2"],
 		"type": "upgrade"
 	},
 	"scroll4": {
-		"icon": ICON_PATH + "scroll_old.png",
-		"displayname": "Scroll",
+		"icon": RAT_ICON_PATH + "glitter_pill.png",
+		"displayname": "GLITTER PILLS",
 		"details": "Decreases of the cooldown of spells by an additional 5% of their base time",
 		"level": "Level: 4",
 		"prerequisite": ["scroll3"],

@@ -10,6 +10,8 @@ extends Control
 
 var in_loop = false
 
+var bonus_disabled = false
+
 signal video_started
 signal video_stopped
 
@@ -18,8 +20,9 @@ func _on_play_pressed():
 
 func close_submenus():
 	options_menu.visible = false
-	unlock_input.visible = false
-	unlock_button.visible = false
+	if not bonus_disabled:
+		unlock_input.visible = false
+		unlock_button.visible = false
 	leaderboard.visible = false
 
 func _on_options_pressed():
