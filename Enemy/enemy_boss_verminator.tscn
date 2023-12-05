@@ -11,8 +11,8 @@
 [ext_resource type="FontFile" uid="uid://dp2cnmaceqp74" path="res://Font/ARIALBD.TTF" id="8_o8yon"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_24u87"]
-radius = 102.59
-height = 205.18
+radius = 104.0
+height = 208.0
 
 [sub_resource type="Animation" id="Animation_xfnyu"]
 length = 0.001
@@ -150,10 +150,10 @@ _data = {
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rborl"]
-size = Vector2(211, 341)
+size = Vector2(211, 216)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ucec4"]
-size = Vector2(210, 337)
+size = Vector2(210, 216)
 
 [sub_resource type="Gradient" id="Gradient_1vt5j"]
 colors = PackedColorArray(0.375023, 3.55284e-06, 1.81104e-06, 1, 0.494245, 7.23819e-07, 9.67411e-09, 1)
@@ -176,11 +176,12 @@ enemy_damage = 20
 trigger_victory = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(5, 5)
+scale = Vector2(3, 3)
 texture = ExtResource("3_alh3u")
 vframes = 23
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(0.9, 0.9)
 shape = SubResource("CapsuleShape2D_24u87")
 disabled = true
 
@@ -194,14 +195,14 @@ collision_mask = 4
 HurtBoxType = 1
 
 [node name="CollisionShape2D" parent="HurtBox" index="0"]
-position = Vector2(1.5, 3.5)
+position = Vector2(1.5, -4)
 shape = SubResource("RectangleShape2D_rborl")
 
 [node name="HitBox" parent="." instance=ExtResource("4_kb0q2")]
 collision_layer = 2
 
 [node name="CollisionShape2D" parent="HitBox" index="0"]
-position = Vector2(2, 3.5)
+position = Vector2(2, -4)
 shape = SubResource("RectangleShape2D_ucec4")
 
 [node name="snd_hit" type="AudioStreamPlayer2D" parent="."]

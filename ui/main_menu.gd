@@ -72,7 +72,7 @@ func _on_credits_button_pressed():
 	video_player.play()
 
 
-func _on_video_stream_player_gui_input(event):
+func _on_video_stream_player_gui_input(_event):
 	if Input.is_action_just_pressed("click") and video_player.stream_position > 5:
 		get_tree().paused = false
 		# Make sure we end playback regardless of if we're in the loop
