@@ -10,7 +10,7 @@ on:
       push:
         description: 'Push to palp.itch.io'
         required: false
-        default: false
+        default: true
         type: boolean
 
 jobs:
