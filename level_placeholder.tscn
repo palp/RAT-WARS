@@ -93,8 +93,8 @@ script = ExtResource("5_jj7s8")
 time_start = 315
 time_end = 400
 enemy = ExtResource("4_detmb")
-enemy_num = 3
-enemy_spawn_delay = 0
+enemy_num = 20
+enemy_spawn_delay = 3
 
 [node name="World2" type="Node2D"]
 y_sort_enabled = true
