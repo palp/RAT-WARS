@@ -296,7 +296,7 @@ jobs:
           fi
 
       - name: Push to palp.itch.io (${{matrix.build.tag}})
-        if: ${{ success() && github.ref_name == 'main' }}
+        if: ${{ success() && (github.ref_name == 'main' || (github.event_name == 'workflow_dispatch' && inputs.push)) }}
         run: butler push ${{matrix.build.path}} palp/rat-wars:${{matrix.build.tag}} --userversion ${{steps.userversion.outputs.userversion}}
         env:
           BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
