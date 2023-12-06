@@ -54,6 +54,7 @@ var enemy_close = []
 @onready var collectedWeapons = get_node("%CollectedWeapons")
 @onready var collectedUpgrades = get_node("%CollectedUpgrades")
 @onready var itemContainer = preload("res://Player/GUI/item_container.tscn")
+@onready var dsmVLoop = preload("res://Audio/Music/DSM-V LOOP.mp3")
 
 @onready var winVideoPanel = get_node("%WinVideoPanel")
 @onready var videoWin = get_node("%video_win")
@@ -164,13 +165,19 @@ func _on_content_unlocked(content):
 	if content == "dsm-v":
 		var music_node = owner.get_node(NodePath("snd_Music"))
 		if music_node:
-			music_node.stream = load("res://Audio/Music/DSM-V LOOP.mp3")
-
+			music_node.stream = dsmVLoop
+			music_node.play()
 
 func _physics_process(delta):
+	var last_kill_counter = int(global_kill_counter)
 	if (Server.global_kills_per_hour > 0):		
 		global_kill_counter += (Server.global_kills_per_hour / 60.0 / 60.0) * delta
-	update_kill_counts()
+	if last_kill_counter != int(global_kill_counter) and int(global_kill_counter) % 1000 == 0:
+		await Server.get_global_kills()
+		global_kill_counter = Server.global_kills
+		update_kill_counts()
+	else:
+		update_kill_counts()
 
 
 func _on_hurt_box_hurt(damage, _angle, _knockback):
