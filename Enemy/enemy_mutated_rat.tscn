@@ -80,10 +80,10 @@ _data = {
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rborl"]
-size = Vector2(48.5, 89.75)
+size = Vector2(96, 143.875)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ucec4"]
-size = Vector2(29, 49)
+size = Vector2(48, 96)
 
 [node name="enemy_mutated_rat" type="CharacterBody2D"]
 position = Vector2(0, -45)
@@ -116,14 +116,14 @@ collision_mask = 4
 HurtBoxType = 1
 
 [node name="CollisionShape2D" parent="HurtBox" index="0"]
-position = Vector2(0, 8)
+position = Vector2(0, -19.0625)
 shape = SubResource("RectangleShape2D_rborl")
 
 [node name="HitBox" parent="." instance=ExtResource("4_vdnsx")]
 collision_layer = 2
 
 [node name="CollisionShape2D" parent="HitBox" index="0"]
-position = Vector2(1, 4)
+position = Vector2(0, -27)
 shape = SubResource("RectangleShape2D_ucec4")
 
 [node name="snd_hit" type="AudioStreamPlayer2D" parent="."]

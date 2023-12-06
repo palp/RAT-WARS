@@ -6,6 +6,12 @@ on:
     tags:
       - v*
   workflow_dispatch:
+    inputs:
+      push:
+        description: 'Push to palp.itch.io'
+        required: false
+        default: true
+        type: boolean
 
 jobs:
   create-release:
@@ -280,9 +286,18 @@ jobs:
         env:
           BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
 
+      - name: Determine userversion
+        id: userversion
+        run: |
+          if [[ "${{github.ref_type}}" == "tag" ]]; then
+            echo "userversion=${{github.ref_name}}-${{github.sha}}" >> $GITHUB_OUTPUT
+          else
+            echo "userversion=${{github.ref_name}}-${{github.sha}}" >> $GITHUB_OUTPUT
+          fi
+
       - name: Push to palp.itch.io (${{matrix.build.tag}})
-        if: ${{ success() && github.ref_name == 'main' }}
-        run: butler push ${{matrix.build.path}} palp/rat-wars:${{matrix.build.tag}} --userversion ${{github.sha}}
+        if: ${{ success() && (github.ref_name == 'main' || (github.event_name == 'workflow_dispatch' && inputs.push)) }}
+        run: butler push ${{matrix.build.path}} palp/rat-wars:${{matrix.build.tag}} --userversion ${{steps.userversion.outputs.userversion}}
         env:
           BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
 

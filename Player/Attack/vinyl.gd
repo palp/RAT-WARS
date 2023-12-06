@@ -3,7 +3,7 @@ extends Area2D
 var level = 1
 var hp = 999
 var speed = 150.0
-var damage = 10
+var damage = 4
 var attack_size = 1.0
 var knockback_amount = 100
 
@@ -29,13 +29,13 @@ func _ready():
 		1:
 			hp = 9999
 			speed = 150.0
-			damage = 2
+			damage = 4
 			knockback_amount = 100
 			attack_size = 1.0
 		2:
 			hp = 9999
 			speed = 150.0
-			damage = 4
+			damage = 6
 			knockback_amount = 100
 			attack_size = 1.0
 		3:

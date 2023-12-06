@@ -20,6 +20,7 @@ var tick_damage = 0
 @onready var hitBox = $HitBox
 @onready var dotTimer = $HurtBox/DOTTimer
 @onready var HealthBarBoss1 = get_node("%HealthBarBoss1")
+@onready var maxhp = hp
 
 @export var death_anim = preload("res://Enemy/explosion.tscn")
 var exp_gem = preload("res://Objects/experience_gem.tscn")
@@ -38,11 +39,6 @@ func _physics_process(_delta):
 	if dotTimer.time_left > 0:
 		velocity = direction*movement_speed*slow_percent
 		hp -= tick_damage
-#		print_debug("Slow:")
-#		print_debug(slow_percent)
-#		print_debug("HP:")
-#		print_debug(hp)
-#		print_debug(tick_damage)
 	else: 
 		velocity = direction*movement_speed
 	velocity += knockback
@@ -72,7 +68,7 @@ func _on_hurt_box_hurt(damage, angle, knockback_amount):
 	hp -= damage
 	knockback = angle * knockback_amount
 	if trigger_victory:
-		HealthBarBoss1.max_value = 5000
+		HealthBarBoss1.max_value = maxhp
 		HealthBarBoss1.value = hp
 	if hp <= 0:
 		death()

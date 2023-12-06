@@ -1,0 +1,106 @@
+[gd_scene load_steps=15 format=3 uid="uid://do7psyrvtghw3"]
+
+[ext_resource type="Script" path="res://TerrainGen.gd" id="1_rx2tr"]
+[ext_resource type="PackedScene" uid="uid://b854gcq3q7qme" path="res://assets/world/the_sprawl_terrain_packs.tscn" id="2_j6bcs"]
+[ext_resource type="PackedScene" uid="uid://6rkaprmq4ect" path="res://Player/player.tscn" id="3_hylqw"]
+[ext_resource type="PackedScene" uid="uid://ba2claihwes2y" path="res://Utility/enemy_spawner.tscn" id="4_jbaxa"]
+[ext_resource type="PackedScene" uid="uid://x87jrsdtky6u" path="res://Enemy/enemy_boss_verminator.tscn" id="5_2anfl"]
+[ext_resource type="Script" path="res://Utility/spawn_info.gd" id="6_1is6h"]
+[ext_resource type="PackedScene" uid="uid://dmricbg6s8ogx" path="res://Enemy/enemy_small_rat.tscn" id="7_a4s4v"]
+[ext_resource type="AudioStream" uid="uid://7xlmshasr1ic" path="res://Audio/Music/UNLOVED LOOP.mp3" id="8_oo1r8"]
+[ext_resource type="Script" path="res://Audio/Music/snd_Music.gd" id="9_us35o"]
+[ext_resource type="Theme" uid="uid://bwayc6rbhtvxj" path="res://assets/ui/theme/HEALTH_theme.tres" id="10_ke3af"]
+[ext_resource type="Script" path="res://ui/pause_button.gd" id="11_r48c7"]
+[ext_resource type="PackedScene" uid="uid://do8nu166getvr" path="res://ui/pause_menu.tscn" id="12_tv4dr"]
+
+[sub_resource type="Resource" id="Resource_t2np8"]
+script = ExtResource("6_1is6h")
+time_start = 0
+time_end = 0
+enemy = ExtResource("5_2anfl")
+enemy_num = 1
+enemy_spawn_delay = null
+
+[sub_resource type="Resource" id="Resource_8igqf"]
+script = ExtResource("6_1is6h")
+time_start = 0
+time_end = 100
+enemy = ExtResource("7_a4s4v")
+enemy_num = 20
+enemy_spawn_delay = 5
+
+[node name="level_boss_test" type="Node2D"]
+y_sort_enabled = true
+
+[node name="Background" type="Sprite2D" parent="."]
+z_index = -1
+texture_filter = 2
+texture_repeat = 2
+region_enabled = true
+region_rect = Rect2(-4000, -4000, 4000, 4000)
+
+[node name="TerrainGenOrigin" type="Node2D" parent="." node_paths=PackedStringArray("player")]
+script = ExtResource("1_rx2tr")
+packedscene_terrain_horizontal = ExtResource("2_j6bcs")
+player = NodePath("../Player")
+scroll_horizontal = true
+
+[node name="Player" parent="." instance=ExtResource("3_hylqw")]
+top_level = true
+z_index = 1
+position = Vector2(-117, -7)
+autopilot = false
+
+[node name="EnemySpawner" parent="." instance=ExtResource("4_jbaxa")]
+spawns = Array[ExtResource("6_1is6h")]([SubResource("Resource_t2np8"), SubResource("Resource_8igqf")])
+spawn_area = Rect2(0, -700, 2000, 1400)
+track_horizontal = true
+
+[node name="Loot" type="Node2D" parent="." groups=["loot"]]
+
+[node name="snd_Music" type="AudioStreamPlayer" parent="."]
+process_mode = 3
+stream = ExtResource("8_oo1r8")
+volume_db = -15.0
+autoplay = true
+bus = &"Music"
+script = ExtResource("9_us35o")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+process_mode = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer"]
+visible = false
+offset_left = 47.0
+offset_top = 10.0
+offset_right = 1471.0
+offset_bottom = 452.0
+scale = Vector2(0.167781, 0.323374)
+theme = ExtResource("10_ke3af")
+theme_override_font_sizes/normal_font_size = 255
+text = "RAT WARS"
+
+[node name="pause_button" type="Button" parent="CanvasLayer"]
+offset_left = 1423.0
+offset_top = 93.0
+offset_right = 1523.0
+offset_bottom = 149.0
+theme = ExtResource("10_ke3af")
+text = "Pause"
+script = ExtResource("11_r48c7")
+
+[node name="pause_menu" parent="CanvasLayer" instance=ExtResource("12_tv4dr")]
+unique_name_in_owner = true
+visible = false
+offset_left = 34.0
+offset_top = 82.0
+offset_right = -129.0
+offset_bottom = 86.0
+
+[connection signal="playerdeath" from="Player" to="snd_Music" method="_on_player_playerdeath"]
+[connection signal="playerdeath" from="Player" to="CanvasLayer/pause_button" method="_on_player_playerdeath"]
+[connection signal="playervictory" from="Player" to="snd_Music" method="_on_player_playervictory"]
+[connection signal="playervictory" from="Player" to="CanvasLayer/pause_button" method="_on_player_playervictory"]
+[connection signal="finished" from="snd_Music" to="snd_Music" method="_on_finished"]
+[connection signal="mouse_entered" from="CanvasLayer/pause_button" to="CanvasLayer/pause_button" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="CanvasLayer/pause_button" to="CanvasLayer/pause_button" method="_on_mouse_exited"]
