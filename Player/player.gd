@@ -157,8 +157,8 @@ func _on_content_unlocked(content):
 
 
 func _physics_process(delta):
-	if (Server.global_kills_per_hour > 0):
-		global_kill_counter += (Server.global_kills_per_hour / 60 / 60) * delta
+	if (Server.global_kills_per_hour > 0):		
+		global_kill_counter += (Server.global_kills_per_hour / 60.0 / 60.0) * delta
 	update_kill_counts()
 
 
