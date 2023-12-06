@@ -17,6 +17,9 @@ var experience = 0
 var experience_level = 1
 var collected_experience = 0
 var score = 0
+var kills = {}
+var global_kill_counter = 0.0
+var player_kill_counter = 0
 
 # Credits loop
 var credits_loop = false
@@ -51,6 +54,7 @@ var enemy_close = []
 @onready var collectedWeapons = get_node("%CollectedWeapons")
 @onready var collectedUpgrades = get_node("%CollectedUpgrades")
 @onready var itemContainer = preload("res://Player/GUI/item_container.tscn")
+@onready var dsmVLoop = preload("res://Audio/Music/DSM-V LOOP.mp3")
 
 @onready var winVideoPanel = get_node("%WinVideoPanel")
 @onready var videoWin = get_node("%video_win")
@@ -62,6 +66,8 @@ var enemy_close = []
 @onready var videoLose = get_node("%video_lose")
 @onready var videoCredits = get_node("%video_credits")
 @onready var leaderboardControl = get_node("%LeaderboardControl")
+@onready var deadRatsLabel = get_node("%lbl_dead_rats")
+@onready var globalDeadRatsLabel = get_node("%lbl_dead_rats_global")
 
 #Game session
 @onready var sessionUpdateTimer = get_node("%SessionUpdateTimer") as Timer
@@ -115,22 +121,35 @@ func get_pathing_target():
 
 
 func _ready():
+	var music_node = owner.get_node(NodePath("snd_Music"))
 	disable_pausing = false
 	disable_pathing_input = false
 	disable_upgrades = false
+	kills = {}
+	if music_node:
+		music_node.stop()
+	
+	await Server.get_global_kills()
+	global_kill_counter = Server.global_kills
+	update_kill_counts()
+	
 	upgrade_character(rand_starting_item())
 	set_expbar(experience, calculate_experiencecap())
 	_on_hurt_box_hurt(0, 0, 0)
 	for content in Unlocks.unlocked_content:
 		_on_content_unlocked(content)
 	Unlocks.content_unlocked.connect(_on_content_unlocked)		
-	update_player_character()
+	update_player_character()		
+	if music_node:
+		music_node.play()
 
 	if not autopilot:
 		game_session = await Server.create_game_session()
 		sessionUpdateTimer.start(45)	
-		
-	
+
+func update_kill_counts():
+	deadRatsLabel.text = str(player_kill_counter)
+	globalDeadRatsLabel.text = str(int(global_kill_counter) + player_kill_counter)
 
 func update_player_character():
 	if autopilot:
@@ -143,10 +162,22 @@ func _on_content_unlocked(content):
 		Unlocks.player_characters["john"].skins["plugsuit"].unlocked = true
 		Unlocks.player_characters["john"].set_current_skin("plugsuit")
 		update_player_character()
-
+	if content == "dsm-v":
+		var music_node = owner.get_node(NodePath("snd_Music"))
+		if music_node:
+			music_node.stream = dsmVLoop
+			music_node.play()
 
 func _physics_process(delta):
-	pass
+	var last_kill_counter = int(global_kill_counter)
+	if (Server.global_kills_per_hour > 0):		
+		global_kill_counter += (Server.global_kills_per_hour / 60.0 / 60.0) * delta
+	if last_kill_counter != int(global_kill_counter) and int(global_kill_counter) % 1000 == 0:
+		await Server.get_global_kills()
+		global_kill_counter = Server.global_kills
+		update_kill_counts()
+	else:
+		update_kill_counts()
 
 
 func _on_hurt_box_hurt(damage, _angle, _knockback):
@@ -309,15 +340,19 @@ func upgrade_character(upgrade):
 		"vinyl4":
 			attackManager.attacks["vinyl"].level = 4
 			attackManager.attacks["vinyl"].base_ammo += 1
-		"javelin1":
-			attackManager.attacks["javelin"].level = 1
-			attackManager.attacks["javelin"].ammo = 1
-		"javelin2":
-			attackManager.attacks["javelin"].level = 2
-		"javelin3":
-			attackManager.attacks["javelin"].level = 3
-		"javelin4":
-			attackManager.attacks["javelin"].level = 4
+		"blackstatic1":
+			attackManager.attacks["black_static"].level = 1
+			attackManager.attacks["black_static"].base_ammo = 1
+		"blackstatic2":
+			attackManager.attacks["black_static"].level = 2
+			attackManager.attacks["black_static"].attack_speed -= 1
+		"blackstatic3":
+			attackManager.attacks["black_static"].level = 3
+			attackManager.attacks["black_static"].base_ammo += 2
+		"blackstatic4":
+			attackManager.attacks["black_static"].level = 4
+			attackManager.attacks["black_static"].base_ammo += 3
+			attackManager.attacks["black_static"].attack_speed -= 1
 		"dieslow1":
 			attackManager.attacks["die_slow"].level = 1
 			attackManager.attacks["die_slow"].base_ammo += 1
@@ -344,8 +379,6 @@ func upgrade_character(upgrade):
 			hp += 20
 			hp = clamp(hp, 0, maxhp)
 	adjust_gui_collection(upgrade)
-	if attackManager.attacks["javelin"].level > 0:
-		attackManager.spawn_javelin()
 	var option_children = upgradeOptions.get_children()
 	for i in option_children:
 		i.queue_free()
@@ -421,14 +454,14 @@ func death():
 		get_tree().reload_current_scene()
 		return	
 	emit_signal("playerdeath")
-	get_tree().paused = true
-
+	get_tree().paused = true	
 	disable_pausing = true
 	disable_pathing_input = true
 	disable_upgrades = true	
 	loseVideoPanel.visible = true
 	videoLose.visible = true
 	videoLose.play()
+	Server.end_game_session(score, kills)
 		
 func victory():	
 	if autopilot:
@@ -459,7 +492,7 @@ func choose_name():
 
 func _on_session_update_timer_timeout():
 	if game_session.has("id"):
-		game_session = await Server.update_game_session(score)
+		game_session = await Server.update_game_session(score, kills)
 
 
 func _on_btn_submit_score_click_end():
@@ -470,7 +503,7 @@ func _on_btn_submit_score_click_end():
 		var name = scoreSubmitName.text
 		if name.length() < 2:
 			name = choose_name()
-		var leaderboard_scores = await Server.submit_game_session(score, name)
+		var leaderboard_scores = await Server.submit_game_session(score, kills, name)
 		if leaderboard_scores:
 			leaderboard.display(leaderboard_scores)
 	show_leaderboard()

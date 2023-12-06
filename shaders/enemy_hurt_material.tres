@@ -1,0 +1,8 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://ccy0wram7ovxy"]
+
+[ext_resource type="Shader" path="res://shaders/enemy_hurt.gdshader" id="1_qswrq"]
+
+[resource]
+resource_local_to_scene = true
+shader = ExtResource("1_qswrq")
+shader_parameter/hurt_flash = 0.0

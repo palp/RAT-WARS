@@ -4,7 +4,7 @@ extends Node
 var vinyl = preload("res://Player/Attack/vinyl.tscn")
 var stonefist = preload("res://Player/Attack/ice_spear.tscn")
 var death_magic = preload("res://Player/Attack/death_magic.tscn")
-var javelin = preload("res://Player/Attack/javelin.tscn")
+var black_static = preload("res://Player/Attack/black_static.tscn")
 var die_slow = preload("res://Player/Attack/die_slow.tscn")
 var plug = preload("res://Player/Attack/buttplug.tscn")
 
@@ -13,7 +13,6 @@ var spell_size = 0
 var additional_attacks = 0
 
 @onready var attacker = owner
-@onready var javelin_base = Node2D.new()
 @onready var plug_base = Node2D.new()
 
 class AttackType:
@@ -38,7 +37,7 @@ var attacks = {
 	"vinyl": AttackType.new(vinyl, 0.2, 3),
 	"stonefist": AttackType.new(stonefist, 0.075, 1.5),
 	"death_magic": AttackType.new(death_magic, 0.2, 3),
-	"javelin": AttackType.new(javelin, 0.5, 0.5),
+	"black_static": AttackType.new(black_static, 0.7, 4),
 	"die_slow": AttackType.new(die_slow, 0.5, 4.0),
 	"plug": AttackType.new(plug, 0.5, 4.0)
 }
@@ -46,7 +45,6 @@ var attacks = {
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	add_child(javelin_base)
 	add_child(plug_base)
 
 
@@ -57,14 +55,12 @@ func _process(delta):
 	if attacker.hp <= 0:
 		return
 	for attack_type in attacks.keys():
-		if attack_type == "javelin":
-			continue
-		if attack_type == "plug":
-			spawn_plug()
-			continue
 		var attack = attacks[attack_type]
 		if attack.level <= 0:
 			continue
+		if attack_type == "plug":
+			spawn_plug()
+			continue			
 		if attack.base_ammo > 0:
 			attack.elapsed_since_replenish += delta
 			if (
@@ -86,20 +82,6 @@ func _process(delta):
 			attack.ammo -= 1
 			attack.elapsed_since_attack = 0
 
-
-func spawn_javelin():
-	var get_javelin_total = javelin_base.get_child_count()
-	var calc_spawns = (attacks["javelin"].ammo + attacker.additional_attacks) - get_javelin_total
-	while calc_spawns > 0:
-		var javelin_spawn = javelin.instantiate()
-		javelin_spawn.global_position = attacker.global_position
-		javelin_base.add_child(javelin_spawn)
-		calc_spawns -= 1
-	#Upgrade Javelin
-	var get_javelins = javelin_base.get_children()
-	for i in get_javelins:
-		if i.has_method("update_javelin"):
-			i.update_javelin()
 
 func spawn_plug():
 	var get_plug_total = plug_base.get_child_count()

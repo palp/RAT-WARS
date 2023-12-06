@@ -73,36 +73,36 @@ const UPGRADES = {
 		"prerequisite": ["stonefist3"],
 		"type": "weapon"
 	},
-	"javelin1": {
-		"icon": WEAPON_PATH + "javelin_3_new_attack.png",
-		"displayname": "Javelin",
-		"details": "A magical javelin will follow you attacking enemies in a straight line",
+	"blackstatic1": {
+		"icon": RAT_WEAPON_PATH + "black_static.png",
+		"displayname": "BLACK STATIC",
+		"details": "Bolts of harsh noise smites random nearby enemies",
 		"level": "Level: 1",
 		"prerequisite": [],
 		"type": "weapon"
 	},
-	"javelin2": {
-		"icon": WEAPON_PATH + "javelin_3_new_attack.png",
-		"displayname": "Javelin",
-		"details": "The javelin will now attack an additional enemy per attack",
+	"blackstatic2": {
+		"icon": RAT_WEAPON_PATH + "black_static.png",
+		"displayname": "BLACK STATIC",
+		"details": "Time between attacks is decreased",
 		"level": "Level: 2",
-		"prerequisite": ["javelin1"],
+		"prerequisite": ["blackstatic1"],
 		"type": "weapon"
 	},
-	"javelin3": {
-		"icon": WEAPON_PATH + "javelin_3_new_attack.png",
-		"displayname": "Javelin",
-		"details": "The javelin will attack another additional enemy per attack",
+	"blackstatic3": {
+		"icon": RAT_WEAPON_PATH + "black_static.png",
+		"displayname": "BLACK STATIC",
+		"details": "More bolts are produced.",
 		"level": "Level: 3",
-		"prerequisite": ["javelin2"],
+		"prerequisite": ["blackstatic2"],
 		"type": "weapon"
 	},
-	"javelin4": {
-		"icon": WEAPON_PATH + "javelin_3_new_attack.png",
-		"displayname": "Javelin",
-		"details": "The javelin now does + 5 damage per attack and causes 20% additional knockback",
+	"blackstatic4": {
+		"icon": RAT_WEAPON_PATH + "black_static.png",
+		"displayname": "BLACK STATIC",
+		"details": "Number of bolts are increased and time between attacks is decreased",
 		"level": "Level: 4",
-		"prerequisite": ["javelin3"],
+		"prerequisite": ["blackstatic3"],
 		"type": "weapon"
 	},
 	"deathmagic1": {
@@ -330,17 +330,17 @@ const UPGRADES = {
 		"type": "upgrade"
 	},
 	"ring1": {
-		"icon": ICON_PATH + "urand_mage.png",
-		"displayname": "Ring",
-		"details": "Your spells now spawn 1 more additional attack",
+		"icon": RAT_ICON_PATH + "excess.png",
+		"displayname": "EXCESS",
+		"details": "Your weapons now spawn 1 more additional attack",
 		"level": "Level: 1",
 		"prerequisite": [],
 		"type": "upgrade"
 	},
 	"ring2": {
-		"icon": ICON_PATH + "urand_mage.png",
-		"displayname": "Ring",
-		"details": "Your spells now spawn an additional attack",
+		"icon": RAT_ICON_PATH + "excess.png",
+		"displayname": "EXCESS",
+		"details": "Your weapons now spawn 1 more additional attack",
 		"level": "Level: 2",
 		"prerequisite": ["ring1"],
 		"type": "upgrade"

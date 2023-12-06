@@ -1,6 +1,7 @@
-[gd_scene load_steps=11 format=3 uid="uid://dmricbg6s8ogx"]
+[gd_scene load_steps=12 format=3 uid="uid://dmricbg6s8ogx"]
 
 [ext_resource type="Script" path="res://Enemy/enemy.gd" id="1_5qb5b"]
+[ext_resource type="Material" uid="uid://ccy0wram7ovxy" path="res://shaders/enemy_hurt_material.tres" id="2_ddor4"]
 [ext_resource type="Texture2D" uid="uid://0x4q7pgy0i56" path="res://assets/enemy/SmallRat/smallRat_walk_4.png" id="2_ll5kp"]
 [ext_resource type="Texture2D" uid="uid://dnoh7mm84mror" path="res://assets/enemy/SmallRat/smallRat_death_9.png" id="3_41fg4"]
 [ext_resource type="PackedScene" uid="uid://xy3cvpwdy828" path="res://Utility/hurt_box.tscn" id="3_ryj0u"]
@@ -99,14 +100,16 @@ _data = {
 }
 
 [node name="enemy_small_rat" type="CharacterBody2D"]
-scale = Vector2(2, 2)
+scale = Vector2(3, 3)
 collision_layer = 5
 collision_mask = 5
 motion_mode = 1
 script = ExtResource("1_5qb5b")
 movement_speed = 50.0
+enemy_name = "small_rat"
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+material = ExtResource("2_ddor4")
 texture = ExtResource("2_ll5kp")
 vframes = 4
 

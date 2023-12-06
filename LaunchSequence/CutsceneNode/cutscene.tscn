@@ -1,0 +1,149 @@
+[gd_scene load_steps=17 format=3 uid="uid://defnd6dnswld6"]
+
+[ext_resource type="Script" path="res://LaunchSequence/CutsceneNode/cutscene.gd" id="1_56ynt"]
+[ext_resource type="Texture2D" uid="uid://cqqc35xxc1nb6" path="res://LaunchSequence/CutsceneNode/HEALTHRATWARS_Slide3TEST.png" id="2_o541v"]
+[ext_resource type="FontFile" uid="uid://dwsu4toemuoud" path="res://assets/ui/fonts/Kenney Pixel.ttf" id="3_fo016"]
+[ext_resource type="Texture2D" uid="uid://6ci01s73btcv" path="res://LaunchSequence/CutsceneNode/cutscene_frame_spritsheet.png" id="3_pdwwe"]
+[ext_resource type="PackedScene" uid="uid://busl4h5eoqytv" path="res://LaunchSequence/ScreenFadeInAndOut/screen_fade_in_and_out.tscn" id="4_77mdg"]
+[ext_resource type="Texture2D" uid="uid://21svelihi0r4" path="res://LaunchSequence/OpeningCutscene/Slides/slide_1.png" id="4_jf72y"]
+[ext_resource type="Texture2D" uid="uid://3jo5pmka0dj7" path="res://LaunchSequence/CutsceneNode/next_indicator.png" id="6_pp86k"]
+[ext_resource type="Texture2D" uid="uid://5s85pspimmq2" path="res://LaunchSequence/CutsceneNode/skip_button.png" id="9_5h4l7"]
+
+[sub_resource type="Shader" id="Shader_swic6"]
+code = "shader_type canvas_item;
+
+void vertex() {
+	// Called for every vertex the material is visible on.
+}
+
+void fragment() {
+	// Called for every pixel the material is visible on.
+}
+
+void light() {
+	// Called for every pixel for every light affecting the CanvasItem.
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vcmtu"]
+shader = SubResource("Shader_swic6")
+
+[sub_resource type="Shader" id="Shader_c071q"]
+code = "shader_type canvas_item;
+
+void vertex() {
+	// Called for every vertex the material is visible on.
+}
+
+void fragment() {
+	// Called for every pixel the material is visible on.
+}
+
+void light() {
+	// Called for every pixel for every light affecting the CanvasItem.
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_j5tdk"]
+shader = SubResource("Shader_c071q")
+
+[sub_resource type="Theme" id="Theme_egyf8"]
+default_font_size = 48
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xm5ch"]
+atlas = ExtResource("6_pp86k")
+region = Rect2(0, 0, 17, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sib21"]
+atlas = ExtResource("6_pp86k")
+region = Rect2(0, 20, 17, 20)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_s7oin"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xm5ch")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sib21")
+}],
+"loop": true,
+"name": &"default",
+"speed": 2.0
+}]
+
+[node name="cutscene" type="Node"]
+script = ExtResource("1_56ynt")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1536.0
+offset_bottom = 864.0
+
+[node name="BlackBackground" type="ColorRect" parent="Control"]
+visible = false
+material = SubResource("ShaderMaterial_vcmtu")
+layout_mode = 0
+offset_left = -25.0
+offset_top = -20.0
+offset_right = 1561.0
+offset_bottom = 884.0
+color = Color(0, 0, 0, 1)
+
+[node name="SlideImage" type="Sprite2D" parent="Control"]
+material = SubResource("ShaderMaterial_j5tdk")
+position = Vector2(768, 432)
+scale = Vector2(3, 3)
+texture = ExtResource("4_jf72y")
+
+[node name="CutsceneFrame" type="Sprite2D" parent="Control"]
+scale = Vector2(3, 3)
+texture = ExtResource("3_pdwwe")
+offset = Vector2(256, 144)
+vframes = 8
+frame = 7
+
+[node name="Text" type="RichTextLabel" parent="Control"]
+layout_mode = 2
+offset_left = 104.0
+offset_top = 704.0
+offset_right = 1408.0
+offset_bottom = 848.0
+theme = SubResource("Theme_egyf8")
+theme_override_fonts/normal_font = ExtResource("3_fo016")
+text = "Smaple text Smaple textSmaple textSmaple textSmaple textSmaple textSmaple textSmaple textSmaple textSmaple textSmaple textSmaple textSmaple "
+
+[node name="Timer" type="Timer" parent="Control/Text"]
+
+[node name="NextIndicator" type="AnimatedSprite2D" parent="Control"]
+position = Vector2(1448, 800)
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_s7oin")
+frame = 1
+frame_progress = 0.227442
+
+[node name="Button" type="Button" parent="Control"]
+layout_mode = 0
+offset_left = 1288.0
+offset_right = 1536.0
+offset_bottom = 128.0
+icon = ExtResource("9_5h4l7")
+expand_icon = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[node name="TimerIgnoreInput" type="Timer" parent="."]
+wait_time = 0.7
+one_shot = true
+
+[node name="ReferenceScreenshot" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(768, 432)
+scale = Vector2(3, 3)
+texture = ExtResource("2_o541v")
+
+[node name="ScreenFadeInAndOut" parent="." instance=ExtResource("4_77mdg")]
+position = Vector2(776, 440)
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]

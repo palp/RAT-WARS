@@ -8,6 +8,7 @@ class_name EnemyBase
 @export var experience = 1
 @export var enemy_damage = 1
 @export var trigger_victory = false
+@export var enemy_name = "rat"
 var knockback = Vector2.ZERO
 var slow_percent = 0.0
 var tick_damage = 0
@@ -15,11 +16,12 @@ var tick_damage = 0
 @onready var player = get_tree().get_first_node_in_group("player")
 @onready var loot_base = get_tree().get_first_node_in_group("loot")
 @onready var sprite = $Sprite2D
-@onready var anim = $AnimationPlayer
+@onready var anim = get_node("AnimationPlayer")
 @onready var snd_hit = $snd_hit
 @onready var hitBox = $HitBox
 @onready var dotTimer = $HurtBox/DOTTimer
 @onready var HealthBarBoss1 = get_node("%HealthBarBoss1")
+@onready var maxhp = hp
 
 @export var death_anim = preload("res://Enemy/explosion.tscn")
 var exp_gem = preload("res://Objects/experience_gem.tscn")
@@ -27,7 +29,7 @@ var exp_gem = preload("res://Objects/experience_gem.tscn")
 signal remove_from_array(object)
 
 
-func _ready():	
+func _ready():
 	anim.play("walk")
 	hitBox.damage = enemy_damage
 
@@ -38,11 +40,6 @@ func _physics_process(_delta):
 	if dotTimer.time_left > 0:
 		velocity = direction*movement_speed*slow_percent
 		hp -= tick_damage
-#		print_debug("Slow:")
-#		print_debug(slow_percent)
-#		print_debug("HP:")
-#		print_debug(hp)
-#		print_debug(tick_damage)
 	else: 
 		velocity = direction*movement_speed
 	velocity += knockback
@@ -54,7 +51,16 @@ func _physics_process(_delta):
 		sprite.flip_h = true
 
 func death():
-	emit_signal("remove_from_array",self)
+	emit_signal("remove_from_array",self)	
+	if player != null:
+		if player.kills == null:
+			player.kills = {}
+		player.player_kill_counter += 1
+		if not player.kills.has(enemy_name):
+			player.kills[enemy_name] = 1
+		else:
+			player.kills[enemy_name] += 1		
+
 	var enemy_death = death_anim.instantiate()
 	if trigger_victory:
 		enemy_death.connect("tree_exited", player.victory)
@@ -68,10 +74,11 @@ func death():
 	queue_free()
 
 func _on_hurt_box_hurt(damage, angle, knockback_amount):
+	hurt_show()
 	hp -= damage
 	knockback = angle * knockback_amount
 	if trigger_victory:
-		HealthBarBoss1.max_value = 5000
+		HealthBarBoss1.max_value = maxhp
 		HealthBarBoss1.value = hp
 	if hp <= 0:
 		death()
@@ -88,3 +95,16 @@ func _on_hurt_box_dot(damage, duration, slow):
 		death()
 	else:
 		snd_hit.play
+		
+# Red flash effect on enemy taking damage
+# The resources is at res://shaders/enemy_hurt_meterial.tres, uses enemy_hurt.gdshader
+# To set up
+# Go to [enemy_node_name]/Sprite2D
+# In "Inspector" window, under "CanvasItem" props
+# "Material" -> "Quick Load" -> "enemy_hurt_meterial.tres"
+func hurt_show():
+	var tween = get_tree().create_tween();
+	tween.tween_callback(sprite.material.set_shader_parameter.bind("hurt_flash",1))
+	tween.tween_interval(0.2)
+	tween.tween_callback(sprite.material.set_shader_parameter.bind("hurt_flash",0))
+	pass
