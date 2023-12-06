@@ -23,9 +23,12 @@ var unlocked_content = []
 func unlock(code):
 	var unlocks = await Server.unlock_content(code)
 	for content in unlocks:		
-		print_debug("Unlocking " + content)
-		unlocked_content.append(content)
-		emit_signal("content_unlocked", content)
+		_unlock(content)
+
+func _unlock(content):
+	print_debug("Unlocking " + content)
+	unlocked_content.append(content)
+	emit_signal("content_unlocked", content)
 
 func select_character(character_id:String):
 	if player_characters.has(character_id):

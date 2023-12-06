@@ -216,6 +216,9 @@ func _on_kills_response(result, response_code, headers, body):
 		var kill_result = JSON.parse_string(body_string)
 		global_kills = int(kill_result.total)
 		global_kills_per_hour = float(kill_result.last_hour)
+		if kill_result.has("unlocks"):
+			for unlock in kill_result.unlocks:
+				Unlocks._unlock(unlock)
 	elif response_code >= 400 and response_code < 500:
 		logger.warn(
 			"kills_error: ",
