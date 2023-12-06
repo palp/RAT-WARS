@@ -309,15 +309,19 @@ func upgrade_character(upgrade):
 		"vinyl4":
 			attackManager.attacks["vinyl"].level = 4
 			attackManager.attacks["vinyl"].base_ammo += 1
-		"javelin1":
-			attackManager.attacks["javelin"].level = 1
-			attackManager.attacks["javelin"].ammo = 1
-		"javelin2":
-			attackManager.attacks["javelin"].level = 2
-		"javelin3":
-			attackManager.attacks["javelin"].level = 3
-		"javelin4":
-			attackManager.attacks["javelin"].level = 4
+		"blackstatic1":
+			attackManager.attacks["black_static"].level = 1
+			attackManager.attacks["black_static"].base_ammo = 1
+		"blackstatic2":
+			attackManager.attacks["black_static"].level = 2
+			attackManager.attacks["black_static"].attack_speed -= 1
+		"blackstatic3":
+			attackManager.attacks["black_static"].level = 3
+			attackManager.attacks["black_static"].base_ammo += 2
+		"blackstatic4":
+			attackManager.attacks["black_static"].level = 4
+			attackManager.attacks["black_static"].base_ammo += 3
+			attackManager.attacks["black_static"].attack_speed -= 1
 		"dieslow1":
 			attackManager.attacks["die_slow"].level = 1
 			attackManager.attacks["die_slow"].base_ammo += 1
@@ -344,8 +348,6 @@ func upgrade_character(upgrade):
 			hp += 20
 			hp = clamp(hp, 0, maxhp)
 	adjust_gui_collection(upgrade)
-	if attackManager.attacks["javelin"].level > 0:
-		attackManager.spawn_javelin()
 	var option_children = upgradeOptions.get_children()
 	for i in option_children:
 		i.queue_free()
