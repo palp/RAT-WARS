@@ -55,12 +55,12 @@ func _process(delta):
 	if attacker.hp <= 0:
 		return
 	for attack_type in attacks.keys():
-		if attack_type == "plug":
-			spawn_plug()
-			continue
 		var attack = attacks[attack_type]
 		if attack.level <= 0:
 			continue
+		if attack_type == "plug":
+			spawn_plug()
+			continue			
 		if attack.base_ammo > 0:
 			attack.elapsed_since_replenish += delta
 			if (

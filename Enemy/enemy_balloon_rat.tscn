@@ -1,8 +1,9 @@
-[gd_scene load_steps=13 format=3 uid="uid://dhwhbsqu47ocn"]
+[gd_scene load_steps=14 format=3 uid="uid://dhwhbsqu47ocn"]
 
 [ext_resource type="Script" path="res://Enemy/enemy.gd" id="1_d8g1e"]
 [ext_resource type="PackedScene" uid="uid://elvgq35o6fbi" path="res://Enemy/balloon_explosion.tscn" id="2_6durt"]
 [ext_resource type="Texture2D" uid="uid://chjoqtsegrpiq" path="res://assets/enemy/BallonRat/ballon_rat_walk_7.png" id="2_6qfiv"]
+[ext_resource type="Material" uid="uid://ccy0wram7ovxy" path="res://shaders/enemy_hurt_material.tres" id="3_hl6bo"]
 [ext_resource type="PackedScene" uid="uid://xy3cvpwdy828" path="res://Utility/hurt_box.tscn" id="3_ivxq8"]
 [ext_resource type="Texture2D" uid="uid://c0uvv26j0d5fx" path="res://assets/enemy/BallonRat/ballon_rat_death_14.png" id="3_to1s2"]
 [ext_resource type="PackedScene" uid="uid://uhr6mtuisqm1" path="res://Utility/hit_box.tscn" id="4_vdnsx"]
@@ -114,6 +115,7 @@ death_anim = ExtResource("2_6durt")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 z_index = 1
+material = ExtResource("3_hl6bo")
 scale = Vector2(8, 8)
 texture = ExtResource("3_to1s2")
 offset = Vector2(0, -3.33333)

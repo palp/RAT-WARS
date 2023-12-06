@@ -1,10 +1,10 @@
 [gd_scene load_steps=16 format=3 uid="uid://gvm5jcbbgwdv"]
 
 [ext_resource type="Script" path="res://Enemy/enemy.gd" id="1_1bh7b"]
-[ext_resource type="Texture2D" path="res://assets/enemy/MutatedRat/1/MutatedRat_walk_12.png" id="2_36iry"]
+[ext_resource type="Texture2D" uid="uid://dj66tx10003os" path="res://assets/enemy/MutatedRat/1/MutatedRat_walk_12.png" id="2_36iry"]
 [ext_resource type="Texture2D" uid="uid://c5h3jnp0481rf" path="res://assets/enemy/MutatedRat/1/MutatedRat_attack_5.png" id="2_v4mn7"]
 [ext_resource type="PackedScene" uid="uid://xy3cvpwdy828" path="res://Utility/hurt_box.tscn" id="3_gamcv"]
-[ext_resource type="Texture2D" path="res://assets/enemy/MutatedRat/1/MutatedRat_death_17.png" id="4_300in"]
+[ext_resource type="Texture2D" uid="uid://bt5aw8gm8u34q" path="res://assets/enemy/MutatedRat/1/MutatedRat_death_17.png" id="4_300in"]
 [ext_resource type="PackedScene" uid="uid://uhr6mtuisqm1" path="res://Utility/hit_box.tscn" id="4_vdnsx"]
 [ext_resource type="AudioStream" uid="uid://bi7t7cjthnhhc" path="res://Audio/SoundEffect/enemy_hit.ogg" id="5_03jve"]
 

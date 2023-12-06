@@ -1,8 +1,9 @@
-[gd_scene load_steps=20 format=3 uid="uid://x87jrsdtky6u"]
+[gd_scene load_steps=22 format=3 uid="uid://x87jrsdtky6u"]
 
 [ext_resource type="Script" path="res://Enemy/enemy.gd" id="1_q3uwj"]
 [ext_resource type="Texture2D" uid="uid://b8qxkhg3epije" path="res://assets/enemy/Boss/Verminator/verminator_attack_21.png" id="2_e6j7j"]
 [ext_resource type="Texture2D" uid="uid://cygyd1sqluykd" path="res://assets/enemy/Boss/Verminator/verminator_idle_2.png" id="2_thtaq"]
+[ext_resource type="Shader" path="res://shaders/enemy_hurt.gdshader" id="2_usu3b"]
 [ext_resource type="PackedScene" uid="uid://xy3cvpwdy828" path="res://Utility/hurt_box.tscn" id="3_8jeyb"]
 [ext_resource type="Texture2D" uid="uid://ddrup734adh75" path="res://assets/enemy/Boss/Verminator/verminator_walk_23.png" id="3_alh3u"]
 [ext_resource type="PackedScene" uid="uid://uhr6mtuisqm1" path="res://Utility/hit_box.tscn" id="4_kb0q2"]
@@ -13,6 +14,11 @@
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_24u87"]
 radius = 104.0
 height = 208.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_j1mom"]
+resource_local_to_scene = true
+shader = ExtResource("2_usu3b")
+shader_parameter/hurt_flash = 0.0
 
 [sub_resource type="Animation" id="Animation_xfnyu"]
 length = 0.001
@@ -175,15 +181,16 @@ experience = 100
 enemy_damage = 20
 trigger_victory = true
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(3, 3)
-texture = ExtResource("3_alh3u")
-vframes = 23
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 scale = Vector2(0.9, 0.9)
 shape = SubResource("CapsuleShape2D_24u87")
 disabled = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_j1mom")
+scale = Vector2(3, 3)
+texture = ExtResource("3_alh3u")
+vframes = 23
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

@@ -15,7 +15,7 @@ var tick_damage = 0
 @onready var player = get_tree().get_first_node_in_group("player")
 @onready var loot_base = get_tree().get_first_node_in_group("loot")
 @onready var sprite = $Sprite2D
-@onready var anim = $AnimationPlayer
+@onready var anim = get_node("AnimationPlayer")
 @onready var snd_hit = $snd_hit
 @onready var hitBox = $HitBox
 @onready var dotTimer = $HurtBox/DOTTimer
@@ -28,7 +28,7 @@ var exp_gem = preload("res://Objects/experience_gem.tscn")
 signal remove_from_array(object)
 
 
-func _ready():	
+func _ready():
 	anim.play("walk")
 	hitBox.damage = enemy_damage
 
@@ -64,6 +64,7 @@ func death():
 	queue_free()
 
 func _on_hurt_box_hurt(damage, angle, knockback_amount):
+	hurt_show()
 	hp -= damage
 	knockback = angle * knockback_amount
 	if trigger_victory:
@@ -84,3 +85,16 @@ func _on_hurt_box_dot(damage, duration, slow):
 		death()
 	else:
 		snd_hit.play
+		
+# Red flash effect on enemy taking damage
+# The resources is at res://shaders/enemy_hurt_meterial.tres, uses enemy_hurt.gdshader
+# To set up
+# Go to [enemy_node_name]/Sprite2D
+# In "Inspector" window, under "CanvasItem" props
+# "Material" -> "Quick Load" -> "enemy_hurt_meterial.tres"
+func hurt_show():
+	var tween = get_tree().create_tween();
+	tween.tween_callback(sprite.material.set_shader_parameter.bind("hurt_flash",1))
+	tween.tween_interval(0.2)
+	tween.tween_callback(sprite.material.set_shader_parameter.bind("hurt_flash",0))
+	pass
