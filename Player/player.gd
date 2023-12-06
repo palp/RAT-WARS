@@ -18,6 +18,8 @@ var experience_level = 1
 var collected_experience = 0
 var score = 0
 var kills = {}
+var global_kill_counter = 0.0
+var player_kill_counter = 0
 
 # Credits loop
 var credits_loop = false
@@ -63,6 +65,8 @@ var enemy_close = []
 @onready var videoLose = get_node("%video_lose")
 @onready var videoCredits = get_node("%video_credits")
 @onready var leaderboardControl = get_node("%LeaderboardControl")
+@onready var deadRatsLabel = get_node("%lbl_dead_rats")
+@onready var globalDeadRatsLabel = get_node("%lbl_dead_rats_global")
 
 #Game session
 @onready var sessionUpdateTimer = get_node("%SessionUpdateTimer") as Timer
@@ -130,9 +134,14 @@ func _ready():
 
 	if not autopilot:
 		game_session = await Server.create_game_session()
-		sessionUpdateTimer.start(45)	
-		
-	
+		sessionUpdateTimer.start(45)
+	await Server.get_global_kills()
+	global_kill_counter = Server.global_kills
+	update_kill_counts()
+
+func update_kill_counts():
+	deadRatsLabel.text = str(player_kill_counter)
+	globalDeadRatsLabel.text = str(int(global_kill_counter) + player_kill_counter)
 
 func update_player_character():
 	if autopilot:
@@ -148,7 +157,9 @@ func _on_content_unlocked(content):
 
 
 func _physics_process(delta):
-	pass
+	if (Server.global_kills_per_hour > 0):
+		global_kill_counter += (Server.global_kills_per_hour / 60 / 60) * delta
+	update_kill_counts()
 
 
 func _on_hurt_box_hurt(damage, _angle, _knockback):

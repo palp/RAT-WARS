@@ -52,7 +52,10 @@ func _physics_process(_delta):
 
 func death():
 	emit_signal("remove_from_array",self)	
-	if player != null and player.kills != null:
+	if player != null:
+		if player.kills == null:
+			player.kills = {}
+		player.player_kill_counter += 1
 		if not player.kills.has(enemy_name):
 			player.kills[enemy_name] = 1
 		else:

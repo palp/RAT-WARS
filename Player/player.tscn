@@ -406,6 +406,40 @@ text = "Level: 1"
 horizontal_alignment = 1
 vertical_alignment = 2
 
+[node name="Label" type="Label" parent="GUILayer/GUI/ExperienceBar"]
+layout_mode = 0
+offset_left = 54.0
+offset_top = 11.0
+offset_right = 204.0
+offset_bottom = 46.0
+text = "DEAD RATS:"
+
+[node name="Label2" type="Label" parent="GUILayer/GUI/ExperienceBar"]
+layout_mode = 0
+offset_left = 314.0
+offset_top = 11.0
+offset_right = 427.0
+offset_bottom = 46.0
+text = "GLOBAL:"
+
+[node name="lbl_dead_rats" type="Label" parent="GUILayer/GUI/ExperienceBar"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 208.0
+offset_top = 11.0
+offset_right = 327.0
+offset_bottom = 40.0
+text = "0"
+
+[node name="lbl_dead_rats_global" type="Label" parent="GUILayer/GUI/ExperienceBar"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 436.0
+offset_top = 12.0
+offset_right = 707.0
+offset_bottom = 41.0
+text = "0"
+
 [node name="LevelUp" type="Panel" parent="GUILayer/GUI"]
 unique_name_in_owner = true
 process_mode = 2
