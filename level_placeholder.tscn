@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://b4kwl8s8nbbnh"]
+[gd_scene load_steps=26 format=3 uid="uid://b4kwl8s8nbbnh"]
 
 [ext_resource type="Script" path="res://TerrainGen.gd" id="1_qwf6y"]
 [ext_resource type="PackedScene" uid="uid://b854gcq3q7qme" path="res://assets/world/the_sprawl_terrain_packs.tscn" id="2_2dud3"]
@@ -88,6 +88,14 @@ enemy = ExtResource("9_iksbi")
 enemy_num = 1
 enemy_spawn_delay = null
 
+[sub_resource type="Resource" id="Resource_8igqf"]
+script = ExtResource("5_jj7s8")
+time_start = 315
+time_end = 400
+enemy = ExtResource("4_detmb")
+enemy_num = 20
+enemy_spawn_delay = 3
+
 [node name="World2" type="Node2D"]
 y_sort_enabled = true
 
@@ -111,7 +119,7 @@ position = Vector2(-117, -7)
 autopilot = false
 
 [node name="EnemySpawner" parent="." instance=ExtResource("3_p01g4")]
-spawns = Array[ExtResource("5_jj7s8")]([SubResource("Resource_03m25"), SubResource("Resource_ij20a"), SubResource("Resource_68oxv"), SubResource("Resource_l8y0x"), SubResource("Resource_daq1w"), SubResource("Resource_0gpiy"), SubResource("Resource_4teun"), SubResource("Resource_rx6id"), SubResource("Resource_t2np8")])
+spawns = Array[ExtResource("5_jj7s8")]([SubResource("Resource_03m25"), SubResource("Resource_ij20a"), SubResource("Resource_68oxv"), SubResource("Resource_l8y0x"), SubResource("Resource_daq1w"), SubResource("Resource_0gpiy"), SubResource("Resource_4teun"), SubResource("Resource_rx6id"), SubResource("Resource_t2np8"), SubResource("Resource_8igqf")])
 spawn_area = Rect2(0, -700, 2000, 1400)
 track_horizontal = true
 
