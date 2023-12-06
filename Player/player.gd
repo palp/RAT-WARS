@@ -118,8 +118,7 @@ func _ready():
 	disable_pausing = false
 	disable_pathing_input = false
 	disable_upgrades = false
-	#upgrade_character(rand_starting_item())
-	upgrade_character("blackstatic1")
+	upgrade_character(rand_starting_item())
 	set_expbar(experience, calculate_experiencecap())
 	_on_hurt_box_hurt(0, 0, 0)
 	for content in Unlocks.unlocked_content:
