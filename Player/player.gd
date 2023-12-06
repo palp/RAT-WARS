@@ -17,6 +17,9 @@ var experience = 0
 var experience_level = 1
 var collected_experience = 0
 var score = 0
+var kills = {}
+var global_kill_counter = 0.0
+var player_kill_counter = 0
 
 # Credits loop
 var credits_loop = false
@@ -62,6 +65,8 @@ var enemy_close = []
 @onready var videoLose = get_node("%video_lose")
 @onready var videoCredits = get_node("%video_credits")
 @onready var leaderboardControl = get_node("%LeaderboardControl")
+@onready var deadRatsLabel = get_node("%lbl_dead_rats")
+@onready var globalDeadRatsLabel = get_node("%lbl_dead_rats_global")
 
 #Game session
 @onready var sessionUpdateTimer = get_node("%SessionUpdateTimer") as Timer
@@ -118,6 +123,7 @@ func _ready():
 	disable_pausing = false
 	disable_pathing_input = false
 	disable_upgrades = false
+	kills = {}
 	upgrade_character(rand_starting_item())
 	set_expbar(experience, calculate_experiencecap())
 	_on_hurt_box_hurt(0, 0, 0)
@@ -128,9 +134,14 @@ func _ready():
 
 	if not autopilot:
 		game_session = await Server.create_game_session()
-		sessionUpdateTimer.start(45)	
-		
-	
+		sessionUpdateTimer.start(45)
+	await Server.get_global_kills()
+	global_kill_counter = Server.global_kills
+	update_kill_counts()
+
+func update_kill_counts():
+	deadRatsLabel.text = str(player_kill_counter)
+	globalDeadRatsLabel.text = str(int(global_kill_counter) + player_kill_counter)
 
 func update_player_character():
 	if autopilot:
@@ -146,7 +157,9 @@ func _on_content_unlocked(content):
 
 
 func _physics_process(delta):
-	pass
+	if (Server.global_kills_per_hour > 0):		
+		global_kill_counter += (Server.global_kills_per_hour / 60.0 / 60.0) * delta
+	update_kill_counts()
 
 
 func _on_hurt_box_hurt(damage, _angle, _knockback):
@@ -423,14 +436,14 @@ func death():
 		get_tree().reload_current_scene()
 		return	
 	emit_signal("playerdeath")
-	get_tree().paused = true
-
+	get_tree().paused = true	
 	disable_pausing = true
 	disable_pathing_input = true
 	disable_upgrades = true	
 	loseVideoPanel.visible = true
 	videoLose.visible = true
 	videoLose.play()
+	Server.end_game_session(score, kills)
 		
 func victory():	
 	if autopilot:
@@ -461,7 +474,7 @@ func choose_name():
 
 func _on_session_update_timer_timeout():
 	if game_session.has("id"):
-		game_session = await Server.update_game_session(score)
+		game_session = await Server.update_game_session(score, kills)
 
 
 func _on_btn_submit_score_click_end():
@@ -472,7 +485,7 @@ func _on_btn_submit_score_click_end():
 		var name = scoreSubmitName.text
 		if name.length() < 2:
 			name = choose_name()
-		var leaderboard_scores = await Server.submit_game_session(score, name)
+		var leaderboard_scores = await Server.submit_game_session(score, kills, name)
 		if leaderboard_scores:
 			leaderboard.display(leaderboard_scores)
 	show_leaderboard()

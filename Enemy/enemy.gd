@@ -8,6 +8,7 @@ class_name EnemyBase
 @export var experience = 1
 @export var enemy_damage = 1
 @export var trigger_victory = false
+@export var enemy_name = "rat"
 var knockback = Vector2.ZERO
 var slow_percent = 0.0
 var tick_damage = 0
@@ -50,7 +51,16 @@ func _physics_process(_delta):
 		sprite.flip_h = true
 
 func death():
-	emit_signal("remove_from_array",self)
+	emit_signal("remove_from_array",self)	
+	if player != null:
+		if player.kills == null:
+			player.kills = {}
+		player.player_kill_counter += 1
+		if not player.kills.has(enemy_name):
+			player.kills[enemy_name] = 1
+		else:
+			player.kills[enemy_name] += 1		
+
 	var enemy_death = death_anim.instantiate()
 	if trigger_victory:
 		enemy_death.connect("tree_exited", player.victory)

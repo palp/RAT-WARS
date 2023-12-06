@@ -42,7 +42,7 @@ func _on_area_entered(area):
 						emit_signal("hurt",damage, angle, knockback)
 					1:
 						emit_signal("dot", damage, area.dot_duration, area.slow)
-						print_debug(area.slow)
+						#print_debug(area.slow)
 			else:
 						emit_signal("hurt",damage, angle, knockback)
 			if area.has_method("enemy_hit"):
