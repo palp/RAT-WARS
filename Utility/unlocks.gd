@@ -26,6 +26,8 @@ func unlock(code):
 		_unlock(content)
 
 func _unlock(content):
+	if unlocked_content.has(content):
+		return
 	print_debug("Unlocking " + content)
 	unlocked_content.append(content)
 	emit_signal("content_unlocked", content)
