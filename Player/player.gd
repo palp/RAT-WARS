@@ -120,24 +120,31 @@ func get_pathing_target():
 
 
 func _ready():
+	var music_node = owner.get_node(NodePath("snd_Music"))
 	disable_pausing = false
 	disable_pathing_input = false
 	disable_upgrades = false
 	kills = {}
+	if music_node:
+		music_node.stop()
+	
+	await Server.get_global_kills()
+	global_kill_counter = Server.global_kills
+	update_kill_counts()
+	
 	upgrade_character(rand_starting_item())
 	set_expbar(experience, calculate_experiencecap())
 	_on_hurt_box_hurt(0, 0, 0)
 	for content in Unlocks.unlocked_content:
 		_on_content_unlocked(content)
 	Unlocks.content_unlocked.connect(_on_content_unlocked)		
-	update_player_character()
+	update_player_character()		
+	if music_node:
+		music_node.play()
 
 	if not autopilot:
 		game_session = await Server.create_game_session()
-		sessionUpdateTimer.start(45)
-	await Server.get_global_kills()
-	global_kill_counter = Server.global_kills
-	update_kill_counts()
+		sessionUpdateTimer.start(45)	
 
 func update_kill_counts():
 	deadRatsLabel.text = str(player_kill_counter)
@@ -154,6 +161,10 @@ func _on_content_unlocked(content):
 		Unlocks.player_characters["john"].skins["plugsuit"].unlocked = true
 		Unlocks.player_characters["john"].set_current_skin("plugsuit")
 		update_player_character()
+	if content == "dsm-v":
+		var music_node = owner.get_node(NodePath("snd_Music"))
+		if music_node:
+			music_node.stream = load("res://Audio/Music/DSM-V LOOP.mp3")
 
 
 func _physics_process(delta):
