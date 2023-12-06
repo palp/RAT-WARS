@@ -111,6 +111,7 @@ collision_mask = 5
 motion_mode = 1
 script = ExtResource("1_d8g1e")
 hp = 2
+enemy_name = "balloon_rat"
 death_anim = ExtResource("2_6durt")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

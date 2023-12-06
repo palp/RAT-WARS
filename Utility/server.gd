@@ -16,6 +16,7 @@ var unlocks: Array
 @onready var create_session_http_request = HTTPRequest.new()
 @onready var update_session_http_request = HTTPRequest.new()
 @onready var submit_session_http_request = HTTPRequest.new()
+@onready var abandon_session_http_request = HTTPRequest.new()
 @onready var unlock_http_request = HTTPRequest.new()
 
 func _ready():
@@ -31,11 +32,12 @@ func _ready():
 	unlock_http_request.request_completed.connect(_on_unlock_response)
 	add_child(unlock_http_request)
 
+	add_child(abandon_session_http_request)
+
 
 func create_game_session():
 	if session.has("id"):
 		logger.warn("create_session: replacing existing session!")
-		end_game_session()
 	create_session_http_request.request(
 		GameConfig.api_base_url + "/session", PackedStringArray([]), HTTPClient.METHOD_POST
 	)
@@ -43,7 +45,7 @@ func create_game_session():
 	return session
 
 
-func update_game_session(score):
+func update_game_session(score: int, kills: Dictionary):
 	if not session.has("id"):
 		logger.warn("update_game_session: No existing session!")
 		return {}
@@ -51,17 +53,27 @@ func update_game_session(score):
 		GameConfig.api_base_url + "/session/%s" % session.id,
 		PackedStringArray([]),
 		HTTPClient.METHOD_POST,
-		JSON.stringify({"score": score})
+		JSON.stringify({"score": score, "kills": kills})
 	)
 	await update_session_request_complete
 	return session
 
 
-func end_game_session():
+func end_game_session(score, kills):
+	if not session.has("id"):
+		logger.warn("end_game_session: No existing session!")
+		return {}
+	abandon_session_http_request.request(
+		GameConfig.api_base_url + "/session/%s/abandon" % session.id,
+		PackedStringArray([]),
+		HTTPClient.METHOD_POST,
+		JSON.stringify({"score": score, "kills": kills})
+	)	
 	session = {}
+	return session
 
 
-func submit_game_session(score, name):
+func submit_game_session(score, kills, name):
 	if not session.has("id"):
 		logger.warn("submit_game_session: No existing session!")
 		return {}

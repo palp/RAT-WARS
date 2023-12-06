@@ -180,6 +180,7 @@ knockback_recovery = 100.0
 experience = 100
 enemy_damage = 20
 trigger_victory = true
+enemy_name = "boss_verminator"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 scale = Vector2(0.9, 0.9)

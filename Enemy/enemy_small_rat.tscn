@@ -106,6 +106,7 @@ collision_mask = 5
 motion_mode = 1
 script = ExtResource("1_5qb5b")
 movement_speed = 50.0
+enemy_name = "small_rat"
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 material = ExtResource("2_ddor4")
