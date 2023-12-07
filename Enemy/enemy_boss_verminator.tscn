@@ -337,6 +337,9 @@ collision_mask = 4
 position = Vector2(0, 5.5)
 shape = SubResource("RectangleShape2D_rborl")
 
+[node name="DisableTimer" parent="HurtBox" index="1"]
+wait_time = 0.025
+
 [node name="HitBox" parent="." instance=ExtResource("4_kb0q2")]
 collision_layer = 2
 

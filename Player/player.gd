@@ -383,6 +383,7 @@ func upgrade_character(upgrade):
 		"food":
 			hp += 20
 			hp = clamp(hp, 0, maxhp)
+			healthBar.value = hp
 	adjust_gui_collection(upgrade)
 	var option_children = upgradeOptions.get_children()
 	for i in option_children:

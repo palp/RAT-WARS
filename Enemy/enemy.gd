@@ -23,6 +23,7 @@ var tick_damage = 0
 @onready var anim = get_node("AnimationPlayer")
 @onready var snd_hit = $snd_hit
 @onready var hitBox = $HitBox
+@onready var disableTimer = $HurtBox/DisableTimer
 @onready var dotTimer = $HurtBox/DOTTimer
 @onready var HealthBarBoss1 = get_node("%HealthBarBoss1")
 @onready var maxhp = hp
@@ -144,6 +145,6 @@ func _on_hurt_box_dot(damage, duration, slow):
 func hurt_show():
 	var tween = get_tree().create_tween();
 	tween.tween_callback(sprite.material.set_shader_parameter.bind("hurt_flash",1))
-	tween.tween_interval(0.2)
+	tween.tween_interval(disableTimer.wait_time)
 	tween.tween_callback(sprite.material.set_shader_parameter.bind("hurt_flash",0))
 	pass
