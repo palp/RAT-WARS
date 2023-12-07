@@ -128,14 +128,14 @@ func _ready():
 	kills = {}
 	if music_node:
 		music_node.stop()
+		
+	upgrade_character(rand_starting_item())
+	set_expbar(experience, calculate_experiencecap())
+	_on_hurt_box_hurt(0, 0, 0)
 	
 	await Server.get_global_kills()
 	global_kill_counter = Server.global_kills
 	update_kill_counts()
-	
-	upgrade_character(rand_starting_item())
-	set_expbar(experience, calculate_experiencecap())
-	_on_hurt_box_hurt(0, 0, 0)
 	for content in Unlocks.unlocked_content:
 		_on_content_unlocked(content)
 	Unlocks.content_unlocked.connect(_on_content_unlocked)		
@@ -162,7 +162,9 @@ func _on_content_unlocked(content):
 		Unlocks.player_characters["john"].skins["plugsuit"].unlocked = true
 		Unlocks.player_characters["john"].set_current_skin("plugsuit")
 		update_player_character()
-	if content == "dsm-v":
+
+func _on_enemy_spawned(enemy):	
+	if enemy.enemy_name.begins_with("boss_"):
 		var music_node = owner.get_node(NodePath("snd_Music"))
 		if music_node:
 			music_node.stream = dsmVLoop

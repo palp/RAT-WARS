@@ -11,6 +11,7 @@ extends Node2D
 @export var time = 0
 
 signal changetime(time)
+signal enemy_spawned(enemy_type)
 
 func spawn_enemies():
 	var enemy_spawns = spawns
@@ -31,14 +32,17 @@ func spawn_enemies():
 					var random_position = get_random_position()
 					var enemy_spawn = new_enemy.instantiate()
 					enemy_spawn.global_position = random_position
-					enemy_spawn.top_level = true
+					enemy_spawn.top_level = true					
 					add_sibling.call_deferred(enemy_spawn)
+					emit_signal("enemy_spawned",enemy_spawn)
 					counter += 1
 	
 
 func _ready():
+	connect("enemy_spawned",Callable(player,"_on_enemy_spawned"))
 	spawn_enemies()
 	connect("changetime",Callable(player,"change_time"))
+	
 
 func _on_timer_timeout():
 	time += 1
