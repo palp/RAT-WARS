@@ -302,7 +302,7 @@ collision_mask = 5
 motion_mode = 1
 script = ExtResource("1_q3uwj")
 movement_speed = 150.0
-hp = 17500
+hp = 40000
 knockback_recovery = 100.0
 experience = 100
 enemy_damage = 20
@@ -332,7 +332,6 @@ libraries = {
 
 [node name="HurtBox" parent="." instance=ExtResource("3_8jeyb")]
 collision_mask = 4
-HurtBoxType = 1
 
 [node name="CollisionShape2D" parent="HurtBox" index="0"]
 position = Vector2(0, 5.5)
