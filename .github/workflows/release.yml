@@ -1,0 +1,20 @@
+name: Release
+on:
+  workflow_dispatch:
+    inputs:
+      bump:
+        description: 'Bump version'
+        required: true
+        default: 'patch'
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+    
+jobs:
+  release:
+    name: Release ${{ github.event.inputs.bump }} version
+    runs-on: ubuntu-latest
+    environment: release-tags
+    
