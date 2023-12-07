@@ -156,10 +156,10 @@ _data = {
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rborl"]
-size = Vector2(211, 216)
+size = Vector2(182, 197)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ucec4"]
-size = Vector2(210, 216)
+size = Vector2(172, 197)
 
 [sub_resource type="Gradient" id="Gradient_1vt5j"]
 colors = PackedColorArray(0.375023, 3.55284e-06, 1.81104e-06, 1, 0.494245, 7.23819e-07, 9.67411e-09, 1)
@@ -181,6 +181,10 @@ experience = 100
 enemy_damage = 20
 trigger_victory = true
 enemy_name = "boss_verminator"
+attack_anim_distance = 250.0
+attack_slide_velocity = 1000.0
+attack_slide_start = 1.0
+attack_slide_stop = 0.2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 scale = Vector2(0.9, 0.9)
@@ -190,10 +194,12 @@ disabled = true
 [node name="Sprite2D" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_j1mom")
 scale = Vector2(3, 3)
-texture = ExtResource("3_alh3u")
-vframes = 23
+texture = ExtResource("2_e6j7j")
+vframes = 21
+frame = 20
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
 libraries = {
 "": SubResource("AnimationLibrary_regpg")
 }
@@ -203,14 +209,14 @@ collision_mask = 4
 HurtBoxType = 1
 
 [node name="CollisionShape2D" parent="HurtBox" index="0"]
-position = Vector2(1.5, -4)
+position = Vector2(0, 5.5)
 shape = SubResource("RectangleShape2D_rborl")
 
 [node name="HitBox" parent="." instance=ExtResource("4_kb0q2")]
 collision_layer = 2
 
 [node name="CollisionShape2D" parent="HitBox" index="0"]
-position = Vector2(2, -4)
+position = Vector2(0, 5.5)
 shape = SubResource("RectangleShape2D_ucec4")
 
 [node name="snd_hit" type="AudioStreamPlayer2D" parent="."]
