@@ -34,8 +34,8 @@ func spawn_enemies():
 				var counter = 0
 				var enemies_to_spawn = i.enemy_num
 				if spawn_cap > 0 and not i.ignore_spawn_cap:
-					enemies_to_spawn = min(i.enemy_num, spawn_cap - enemy_counter)
-				while  counter < i.enemy_num:
+					enemies_to_spawn = min(i.enemy_num, min(spawn_cap - enemy_counter, 0))
+				while counter < enemies_to_spawn:
 					var random_position = get_random_position()
 					var enemy_spawn = new_enemy.instantiate()
 					enemy_spawn.global_position = random_position
