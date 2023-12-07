@@ -557,3 +557,6 @@ func _on_video_credits_finished():
 func rand_starting_item():
 	var weapon_list = ["plug1", "deathmagic1", "vinyl1", "dieslow1", "stonefist1"]
 	return weapon_list[randi() % weapon_list.size()]
+
+func _update_enemy_counter(counter):
+	get_node("%lbl_live_rats").text = str(counter)

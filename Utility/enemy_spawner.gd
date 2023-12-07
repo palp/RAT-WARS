@@ -3,6 +3,7 @@ extends Node2D
 
 @export var spawns: Array[Spawn_info] = []
 @export var spawn_area: Rect2 = Rect2(0,0,0,0)
+@export var spawn_cap = 0
 @export var track_vertical = false
 @export var track_horizontal = false
 
@@ -12,6 +13,9 @@ extends Node2D
 
 signal changetime(time)
 signal enemy_spawned(enemy_type)
+signal update_enemy_counter(counter)
+
+var enemy_counter = 0
 
 func spawn_enemies():
 	var enemy_spawns = spawns
@@ -28,20 +32,31 @@ func spawn_enemies():
 				i.spawn_delay_counter = 0
 				var new_enemy = i.enemy
 				var counter = 0
+				var enemies_to_spawn = i.enemy_num
+				if spawn_cap > 0 and not i.ignore_spawn_cap:
+					enemies_to_spawn = min(i.enemy_num, spawn_cap - enemy_counter)
 				while  counter < i.enemy_num:
 					var random_position = get_random_position()
 					var enemy_spawn = new_enemy.instantiate()
 					enemy_spawn.global_position = random_position
-					enemy_spawn.top_level = true					
+					enemy_spawn.top_level = true
+					enemy_spawn.connect("tree_exited", _on_enemy_despawned)
 					add_sibling.call_deferred(enemy_spawn)
 					emit_signal("enemy_spawned",enemy_spawn)
 					counter += 1
+					enemy_counter += 1
+					emit_signal("update_enemy_counter", enemy_counter)
 	
+func _on_enemy_despawned():
+	enemy_counter -= 1
+	emit_signal("update_enemy_counter", enemy_counter)
 
 func _ready():
-	connect("enemy_spawned",Callable(player,"_on_enemy_spawned"))
+	connect("enemy_spawned",Callable(player,"_on_enemy_spawned"))	
+	connect("update_enemy_counter", Callable(player, "_update_enemy_counter"))
 	spawn_enemies()
 	connect("changetime",Callable(player,"change_time"))
+	
 	
 
 func _on_timer_timeout():

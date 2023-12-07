@@ -429,6 +429,14 @@ offset_right = 427.0
 offset_bottom = 45.0
 text = "GLOBAL:"
 
+[node name="Label4" type="Label" parent="GUILayer/GUI/ExperienceBar"]
+layout_mode = 0
+offset_left = 917.0
+offset_top = 10.0
+offset_right = 1036.0
+offset_bottom = 45.0
+text = "LIVE RATS:"
+
 [node name="lbl_dead_rats" type="Label" parent="GUILayer/GUI/ExperienceBar"]
 unique_name_in_owner = true
 layout_mode = 0
@@ -461,6 +469,15 @@ layout_mode = 0
 offset_left = 1249.0
 offset_top = 10.0
 offset_right = 1390.0
+offset_bottom = 34.0
+text = "0"
+
+[node name="lbl_live_rats" type="Label" parent="GUILayer/GUI/ExperienceBar"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 1043.0
+offset_top = 10.0
+offset_right = 1131.0
 offset_bottom = 34.0
 text = "0"
 
