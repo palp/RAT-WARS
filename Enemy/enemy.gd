@@ -9,6 +9,10 @@ class_name EnemyBase
 @export var enemy_damage = 1
 @export var trigger_victory = false
 @export var enemy_name = "rat"
+@export var attack_anim_distance = 0.0
+@export var attack_slide_velocity = 0.0
+@export var attack_slide_start = 0.0
+@export var attack_slide_stop = 0.0
 var knockback = Vector2.ZERO
 var slow_percent = 0.0
 var tick_damage = 0
@@ -26,30 +30,65 @@ var tick_damage = 0
 @export var death_anim = preload("res://Enemy/explosion.tscn")
 var exp_gem = preload("res://Objects/experience_gem.tscn")
 
+var is_attacking = false
+var is_attack_sliding = false
+var attack_slide_wait
+
 signal remove_from_array(object)
 
 
 func _ready():
 	anim.play("walk")
+	anim.connect("animation_finished", _on_animation_finished)
 	hitBox.damage = enemy_damage
+
+func _on_animation_finished(animation_name):
+	anim.play("walk")
+	
+	is_attacking = false
 
 func _physics_process(_delta):
 	knockback = knockback.move_toward(Vector2.ZERO, knockback_recovery)
 	var direction = global_position.direction_to(player.global_position)
 	
-	if dotTimer.time_left > 0:
-		velocity = direction*movement_speed*slow_percent
-		hp -= tick_damage
-	else: 
-		velocity = direction*movement_speed
-	velocity += knockback
-	move_and_slide()
-	
+	if not is_attacking:
+		if dotTimer.time_left > 0:
+			velocity = direction*movement_speed*slow_percent
+			hp -= tick_damage
+		else: 
+			velocity = direction*movement_speed
+		velocity += knockback
+		move_and_slide()
+				
+		if attack_anim_distance > 0:
+			var distance = global_position.distance_to(player.global_position)
+			if distance < attack_anim_distance:
+				anim.play("attack")
+				is_attacking = true
+				if attack_slide_velocity > 0 and attack_slide_start > 0:
+					attack_slide_wait = attack_slide_start
+	elif not is_attack_sliding:
+		if attack_slide_wait > 0:
+			attack_slide_wait -= _delta
+			if attack_slide_wait <= 0:
+				velocity = direction*attack_slide_velocity
+				is_attack_sliding = true
+				move_and_slide()
+				attack_slide_wait = attack_slide_stop
+	else:
+		if attack_slide_wait > 0:
+			attack_slide_wait -= _delta
+			if attack_slide_wait <= 0:
+				is_attack_sliding = false
+				velocity = Vector2(0,0)
+		move_and_slide()
+			
+				
 	if direction.x > 0.1:
 		sprite.flip_h = false
 	elif direction.x < -0.1:
 		sprite.flip_h = true
-
+	
 func death():
 	emit_signal("remove_from_array",self)	
 	if player != null:

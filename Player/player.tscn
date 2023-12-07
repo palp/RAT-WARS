@@ -395,49 +395,73 @@ value = 100.0
 texture_over = ExtResource("11_6u3jb")
 texture_progress = ExtResource("12_tesno")
 
+[node name="ColorRect" type="ColorRect" parent="GUILayer/GUI/ExperienceBar"]
+layout_mode = 0
+offset_right = 1534.0
+offset_bottom = 55.0
+color = Color(0, 0, 0, 0.396078)
+
 [node name="lbl_level" type="Label" parent="GUILayer/GUI/ExperienceBar"]
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 1400.0
+offset_top = 10.0
 offset_right = 1500.0
-offset_bottom = 20.0
+offset_bottom = 34.0
 theme = ExtResource("4_f6gen")
-text = "Level: 1"
+text = "LEVEL: 1"
 horizontal_alignment = 1
 vertical_alignment = 2
 
 [node name="Label" type="Label" parent="GUILayer/GUI/ExperienceBar"]
 layout_mode = 0
 offset_left = 54.0
-offset_top = 11.0
+offset_top = 10.0
 offset_right = 204.0
-offset_bottom = 46.0
+offset_bottom = 45.0
 text = "DEAD RATS:"
 
 [node name="Label2" type="Label" parent="GUILayer/GUI/ExperienceBar"]
 layout_mode = 0
 offset_left = 314.0
-offset_top = 11.0
+offset_top = 10.0
 offset_right = 427.0
-offset_bottom = 46.0
+offset_bottom = 45.0
 text = "GLOBAL:"
 
 [node name="lbl_dead_rats" type="Label" parent="GUILayer/GUI/ExperienceBar"]
 unique_name_in_owner = true
 layout_mode = 0
-offset_left = 208.0
-offset_top = 11.0
-offset_right = 327.0
-offset_bottom = 40.0
+offset_left = 199.0
+offset_top = 10.0
+offset_right = 318.0
+offset_bottom = 39.0
 text = "0"
 
 [node name="lbl_dead_rats_global" type="Label" parent="GUILayer/GUI/ExperienceBar"]
 unique_name_in_owner = true
 layout_mode = 0
-offset_left = 436.0
-offset_top = 12.0
-offset_right = 707.0
-offset_bottom = 41.0
+offset_left = 425.0
+offset_top = 10.0
+offset_right = 696.0
+offset_bottom = 39.0
+text = "0"
+
+[node name="Label3" type="Label" parent="GUILayer/GUI/ExperienceBar"]
+layout_mode = 0
+offset_left = 1148.0
+offset_top = 10.0
+offset_right = 1234.0
+offset_bottom = 34.0
+text = "SCORE:"
+
+[node name="lbl_score" type="Label" parent="GUILayer/GUI/ExperienceBar"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 1249.0
+offset_top = 10.0
+offset_right = 1390.0
+offset_bottom = 34.0
 text = "0"
 
 [node name="LevelUp" type="Panel" parent="GUILayer/GUI"]
@@ -478,9 +502,9 @@ bus = &"SFX"
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 768.0
-offset_top = 20.0
+offset_top = 10.0
 offset_right = 848.0
-offset_bottom = 44.0
+offset_bottom = 34.0
 theme = ExtResource("4_f6gen")
 text = "00:00"
 horizontal_alignment = 1

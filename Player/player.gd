@@ -68,6 +68,7 @@ var enemy_close = []
 @onready var leaderboardControl = get_node("%LeaderboardControl")
 @onready var deadRatsLabel = get_node("%lbl_dead_rats")
 @onready var globalDeadRatsLabel = get_node("%lbl_dead_rats_global")
+@onready var scoreLabel = get_node("%lbl_score")
 
 #Game session
 @onready var sessionUpdateTimer = get_node("%SessionUpdateTimer") as Timer
@@ -128,14 +129,14 @@ func _ready():
 	kills = {}
 	if music_node:
 		music_node.stop()
+		
+	upgrade_character(rand_starting_item())
+	set_expbar(experience, calculate_experiencecap())
+	_on_hurt_box_hurt(0, 0, 0)
 	
 	await Server.get_global_kills()
 	global_kill_counter = Server.global_kills
 	update_kill_counts()
-	
-	upgrade_character(rand_starting_item())
-	set_expbar(experience, calculate_experiencecap())
-	_on_hurt_box_hurt(0, 0, 0)
 	for content in Unlocks.unlocked_content:
 		_on_content_unlocked(content)
 	Unlocks.content_unlocked.connect(_on_content_unlocked)		
@@ -150,6 +151,7 @@ func _ready():
 func update_kill_counts():
 	deadRatsLabel.text = str(player_kill_counter)
 	globalDeadRatsLabel.text = str(int(global_kill_counter) + player_kill_counter)
+	scoreLabel.text = str(score)
 
 func update_player_character():
 	if autopilot:
@@ -162,13 +164,16 @@ func _on_content_unlocked(content):
 		Unlocks.player_characters["john"].skins["plugsuit"].unlocked = true
 		Unlocks.player_characters["john"].set_current_skin("plugsuit")
 		update_player_character()
-	if content == "dsm-v":
+
+func _on_enemy_spawned(enemy):	
+	if enemy.enemy_name.begins_with("boss_"):
 		var music_node = owner.get_node(NodePath("snd_Music"))
 		if music_node:
 			music_node.stream = dsmVLoop
 			music_node.play()
 
 func _physics_process(delta):
+	
 	var last_kill_counter = int(global_kill_counter)
 	if (Server.global_kills_per_hour > 0):		
 		global_kill_counter += (Server.global_kills_per_hour / 60.0 / 60.0) * delta
@@ -264,7 +269,7 @@ func _input(event):
 
 func levelup():	
 	sndLevelUp.play()
-	lblLevel.text = str("Level: ", experience_level)
+	lblLevel.text = str("LEVEL: ", experience_level)
 	if autopilot:
 		upgrade_character(get_random_item())
 		return
