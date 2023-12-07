@@ -259,6 +259,10 @@ collision_mask = 5
 motion_mode = 1
 script = ExtResource("1_1bh7b")
 movement_speed = 100.0
+hp = 25
+knockback_recovery = 7.0
+experience = 2
+enemy_damage = 2
 enemy_name = "mutated_rat"
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
