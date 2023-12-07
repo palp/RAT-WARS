@@ -68,6 +68,7 @@ var enemy_close = []
 @onready var leaderboardControl = get_node("%LeaderboardControl")
 @onready var deadRatsLabel = get_node("%lbl_dead_rats")
 @onready var globalDeadRatsLabel = get_node("%lbl_dead_rats_global")
+@onready var scoreLabel = get_node("%lbl_score")
 
 #Game session
 @onready var sessionUpdateTimer = get_node("%SessionUpdateTimer") as Timer
@@ -150,6 +151,7 @@ func _ready():
 func update_kill_counts():
 	deadRatsLabel.text = str(player_kill_counter)
 	globalDeadRatsLabel.text = str(int(global_kill_counter) + player_kill_counter)
+	scoreLabel.text = str(score)
 
 func update_player_character():
 	if autopilot:
@@ -171,6 +173,7 @@ func _on_enemy_spawned(enemy):
 			music_node.play()
 
 func _physics_process(delta):
+	
 	var last_kill_counter = int(global_kill_counter)
 	if (Server.global_kills_per_hour > 0):		
 		global_kill_counter += (Server.global_kills_per_hour / 60.0 / 60.0) * delta
@@ -266,7 +269,7 @@ func _input(event):
 
 func levelup():	
 	sndLevelUp.play()
-	lblLevel.text = str("Level: ", experience_level)
+	lblLevel.text = str("LEVEL: ", experience_level)
 	if autopilot:
 		upgrade_character(get_random_item())
 		return
