@@ -120,7 +120,7 @@ func _on_hurt_box_hurt(damage, angle, knockback_amount):
 		HealthBarBoss1.max_value = maxhp
 		HealthBarBoss1.value = hp
 	if hp <= 0:
-		death()
+		$AnimationPlayer.play("death")
 	else:
 		snd_hit.play()
 
@@ -131,7 +131,7 @@ func _on_hurt_box_dot(damage, duration, slow):
 	slow_percent = (1.0 - slow)
 	dotTimer.start()
 	if hp <= 0:
-		death()
+		$AnimationPlayer.play("death")
 	else:
 		snd_hit.play
 		
