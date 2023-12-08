@@ -2,6 +2,7 @@ class_name Player
 extends CharacterBody2D
 
 @export var autopilot = true
+@export var autopilot_bounds:Rect2 = Rect2(0,0,0,0)
 var disable_pathing_input = false
 var disable_pausing = false
 var disable_upgrades = false

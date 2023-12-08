@@ -48,6 +48,7 @@ func spawn_enemies():
 					enemy_spawn.global_position = random_position
 					enemy_spawn.top_level = true
 					enemy_spawn.connect("tree_exited", _on_enemy_despawned)
+					enemy_spawn.add_to_group("enemy")
 					add_sibling.call_deferred(enemy_spawn)
 					emit_signal("enemy_spawned",enemy_spawn)
 					counter += 1
