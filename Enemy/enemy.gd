@@ -47,12 +47,14 @@ func _ready():
 	hitBox.damage = enemy_damage
 
 func _on_animation_finished(animation_name):
-	anim.play("walk")
-	
+	anim.play("walk")	
 	is_attacking = false
-
-func _integrate_forces(_delta):	
 	
+func _physics_process(_delta):
+	if is_attacking:
+		attack_slide_wait -= _delta
+
+func _integrate_forces(_state):	
 	var direction = global_position.direction_to(player.global_position)
 		
 	if not is_attacking:
@@ -70,21 +72,16 @@ func _integrate_forces(_delta):
 				if attack_slide_velocity > 0 and attack_slide_start > 0:
 					attack_slide_wait = attack_slide_start
 	elif not is_attack_sliding:
-		set_freeze_enabled(true)
-		if attack_slide_wait > 0:
-			attack_slide_wait -= _delta
-			if attack_slide_wait <= 0:
-				linear_velocity = direction*attack_slide_velocity
-				is_attack_sliding = true				
-				attack_slide_wait = attack_slide_stop
+		linear_velocity = Vector2.ZERO
+		if attack_slide_wait <= 0:
+			linear_velocity = direction*attack_slide_velocity
+			is_attack_sliding = true
+			attack_slide_wait = attack_slide_stop
 	else:
-		if attack_slide_wait > 0:			
-			attack_slide_wait -= _delta
-			if attack_slide_wait <= 0:
-				set_freeze_enabled(false)
-				linear_velocity = Vector2.ZERO
-				is_attack_sliding = false
-				
+		if attack_slide_wait <= 0:
+			linear_velocity = Vector2.ZERO
+			is_attack_sliding = false
+			is_attacking = false
 
 	if direction.x > 0.1:
 		sprite.flip_h = false
