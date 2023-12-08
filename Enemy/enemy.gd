@@ -1,4 +1,4 @@
-extends CharacterBody2D
+extends RigidBody2D
 class_name EnemyBase
 
 
@@ -39,6 +39,9 @@ signal remove_from_array(object)
 
 
 func _ready():
+	gravity_scale = 0
+	freeze_mode = RigidBody2D.FREEZE_MODE_KINEMATIC
+	lock_rotation = true	
 	anim.play("walk")
 	anim.connect("animation_finished", _on_animation_finished)
 	hitBox.damage = enemy_damage
@@ -48,18 +51,17 @@ func _on_animation_finished(animation_name):
 	
 	is_attacking = false
 
-func _physics_process(_delta):
-	knockback = knockback.move_toward(Vector2.ZERO, knockback_recovery)
-	var direction = global_position.direction_to(player.global_position)
+func _physics_process(_delta):	
+	var direction = global_position.direction_to(player.global_position)	
 	
+	var impulse = Vector2.ZERO
 	if not is_attacking:
 		if dotTimer.time_left > 0:
-			velocity = direction*movement_speed*slow_percent
+			impulse = direction*movement_speed*slow_percent
 			hp -= tick_damage
 		else: 
-			velocity = direction*movement_speed
-		velocity += knockback
-		move_and_slide()
+			impulse = direction*movement_speed		
+		apply_central_force(impulse * 0.5)
 				
 		if attack_anim_distance > 0:
 			var distance = global_position.distance_to(player.global_position)
@@ -69,29 +71,35 @@ func _physics_process(_delta):
 				if attack_slide_velocity > 0 and attack_slide_start > 0:
 					attack_slide_wait = attack_slide_start
 	elif not is_attack_sliding:
+		set_freeze_enabled(true)
 		if attack_slide_wait > 0:
 			attack_slide_wait -= _delta
 			if attack_slide_wait <= 0:
-				velocity = direction*attack_slide_velocity
+				impulse = direction*attack_slide_velocity
 				is_attack_sliding = true
-				move_and_slide()
+				apply_central_impulse(impulse)
 				attack_slide_wait = attack_slide_stop
 	else:
-		if attack_slide_wait > 0:
+		if attack_slide_wait > 0:			
 			attack_slide_wait -= _delta
 			if attack_slide_wait <= 0:
+				set_freeze_enabled(false)
+				stop()
 				is_attack_sliding = false
-				velocity = Vector2(0,0)
-		move_and_slide()
-			
 				
+
 	if direction.x > 0.1:
 		sprite.flip_h = false
 	elif direction.x < -0.1:
 		sprite.flip_h = true
 	
+func stop():
+	apply_central_impulse(-linear_velocity)
+	
 func death():
-	emit_signal("remove_from_array",self)	
+	emit_signal("remove_from_array",self)
+	stop()
+	freeze = true
 	if player != null:
 		if player.kills == null:
 			player.kills = {}
@@ -117,6 +125,8 @@ func _on_hurt_box_hurt(damage, angle, knockback_amount):
 	hurt_show()
 	hp -= damage
 	knockback = angle * knockback_amount
+	knockback = knockback.move_toward(Vector2.ZERO, knockback_recovery)
+	apply_central_impulse(knockback * 0.5)
 	if trigger_victory:
 		HealthBarBoss1.max_value = maxhp
 		HealthBarBoss1.value = hp

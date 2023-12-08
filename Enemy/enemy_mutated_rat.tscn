@@ -252,11 +252,10 @@ size = Vector2(96, 143.875)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ucec4"]
 size = Vector2(48, 96)
 
-[node name="enemy_mutated_rat" type="CharacterBody2D"]
+[node name="enemy_mutated_rat" type="RigidBody2D"]
 position = Vector2(0, -45)
 collision_layer = 5
 collision_mask = 5
-motion_mode = 1
 script = ExtResource("1_1bh7b")
 movement_speed = 100.0
 hp = 25

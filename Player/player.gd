@@ -8,6 +8,7 @@ var disable_upgrades = false
 
 @export var movement_speed = 40.0
 @export var maxhp = 80
+@export var invincible = false
 var hp = maxhp
 var last_movement = Vector2.UP
 var time = 0
@@ -455,7 +456,10 @@ func adjust_gui_collection(upgrade):
 
 
 func death():
-	if autopilot:		
+	if invincible:
+		hp = maxhp
+		return
+	if autopilot:
 		emit_signal("playerdeath")
 		get_tree().reload_current_scene()
 		return	

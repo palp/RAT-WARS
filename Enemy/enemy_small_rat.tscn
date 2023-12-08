@@ -225,22 +225,23 @@ _data = {
 "walk": SubResource("Animation_w8hns")
 }
 
-[node name="enemy_small_rat" type="CharacterBody2D"]
-scale = Vector2(3, 3)
+[node name="enemy_small_rat" type="RigidBody2D"]
 collision_layer = 5
 collision_mask = 5
-motion_mode = 1
+linear_damp_mode = 1
 script = ExtResource("1_5qb5b")
 movement_speed = 50.0
 enemy_name = "small_rat"
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 material = ExtResource("2_ddor4")
+scale = Vector2(3, 3)
 texture = ExtResource("2_ll5kp")
 vframes = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(6.25, 1.5)
+scale = Vector2(3, 3)
 shape = SubResource("RectangleShape2D_yrkus")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -250,6 +251,7 @@ libraries = {
 }
 
 [node name="HurtBox" parent="." instance=ExtResource("3_ryj0u")]
+scale = Vector2(3, 3)
 collision_mask = 4
 HurtBoxType = 1
 
@@ -258,6 +260,7 @@ position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_yrkus")
 
 [node name="HitBox" parent="." instance=ExtResource("4_iihv1")]
+scale = Vector2(3, 3)
 collision_layer = 2
 
 [node name="CollisionShape2D" parent="HitBox" index="0"]

@@ -8,7 +8,7 @@
 [ext_resource type="AudioStream" uid="uid://bi7t7cjthnhhc" path="res://Audio/SoundEffect/enemy_hit.ogg" id="5_aknlk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yrkus"]
-size = Vector2(76, 45)
+size = Vector2(234, 136.5)
 
 [sub_resource type="Animation" id="Animation_g6rjq"]
 resource_name = "RESET"
@@ -223,14 +223,13 @@ _data = {
 "walk": SubResource("Animation_w0xri")
 }
 
-[node name="enemy_spitter_rat" type="CharacterBody2D"]
+[node name="enemy_spitter_rat" type="RigidBody2D"]
 collision_layer = 5
 collision_mask = 5
-motion_mode = 1
 script = ExtResource("1_d8g1e")
 movement_speed = 50.0
 hp = 40
-knockback_recovery = 12
+knockback_recovery = 12.0
 experience = 2
 enemy_damage = 4
 enemy_name = "spitter_rat"
@@ -242,7 +241,6 @@ texture = ExtResource("1_p38jk")
 vframes = 16
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-28, -12.5)
 shape = SubResource("RectangleShape2D_yrkus")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -263,7 +261,7 @@ shape = SubResource("RectangleShape2D_yrkus")
 collision_layer = 2
 
 [node name="CollisionShape2D" parent="HitBox" index="0"]
-position = Vector2(1, 4)
+position = Vector2(0, 28.75)
 shape = SubResource("RectangleShape2D_yrkus")
 
 [node name="snd_hit" type="AudioStreamPlayer2D" parent="."]
