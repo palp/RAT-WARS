@@ -534,7 +534,7 @@ func _on_video_lose_finished():
 	get_node("%video_lose_bg").visible = true
 
 func _on_give_up_button_pressed():
-	get_tree().change_scene_to_file("res://demo.tscn")
+	get_tree().change_scene_to_file("res://World/demo.tscn")
 
 func _on_video_win_finished():
 	winScoreForm.visible = true
