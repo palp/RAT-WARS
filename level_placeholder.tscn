@@ -130,8 +130,9 @@ autopilot = false
 
 [node name="EnemySpawner" parent="." instance=ExtResource("3_p01g4")]
 spawns = Array[ExtResource("5_jj7s8")]([SubResource("Resource_03m25"), SubResource("Resource_ij20a"), SubResource("Resource_68oxv"), SubResource("Resource_l8y0x"), SubResource("Resource_daq1w"), SubResource("Resource_0gpiy"), SubResource("Resource_4teun"), SubResource("Resource_rx6id"), SubResource("Resource_t2np8"), SubResource("Resource_8igqf")])
-spawn_area = Rect2(0, -700, 2000, 1400)
-spawn_cap = 300
+spawn_area = Rect2(0, -700, 1000, 1400)
+no_spawn_area = Rect2(0, 0, 500, 600)
+spawn_cap = 150
 track_horizontal = true
 
 [node name="Loot" type="Node2D" parent="." groups=["loot"]]
