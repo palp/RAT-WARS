@@ -51,17 +51,16 @@ func _on_animation_finished(animation_name):
 	
 	is_attacking = false
 
-func _physics_process(_delta):	
-	var direction = global_position.direction_to(player.global_position)	
+func _integrate_forces(_delta):	
 	
-	var impulse = Vector2.ZERO
+	var direction = global_position.direction_to(player.global_position)
+		
 	if not is_attacking:
 		if dotTimer.time_left > 0:
-			impulse = direction*movement_speed*slow_percent
+			linear_velocity = direction*movement_speed*slow_percent
 			hp -= tick_damage
 		else: 
-			impulse = direction*movement_speed		
-		apply_central_force(impulse * 0.5)
+			linear_velocity = direction*movement_speed				
 				
 		if attack_anim_distance > 0:
 			var distance = global_position.distance_to(player.global_position)
@@ -75,31 +74,25 @@ func _physics_process(_delta):
 		if attack_slide_wait > 0:
 			attack_slide_wait -= _delta
 			if attack_slide_wait <= 0:
-				impulse = direction*attack_slide_velocity
-				is_attack_sliding = true
-				apply_central_impulse(impulse)
+				linear_velocity = direction*attack_slide_velocity
+				is_attack_sliding = true				
 				attack_slide_wait = attack_slide_stop
 	else:
 		if attack_slide_wait > 0:			
 			attack_slide_wait -= _delta
 			if attack_slide_wait <= 0:
 				set_freeze_enabled(false)
-				stop()
+				linear_velocity = Vector2.ZERO
 				is_attack_sliding = false
 				
 
 	if direction.x > 0.1:
 		sprite.flip_h = false
 	elif direction.x < -0.1:
-		sprite.flip_h = true
-	
-func stop():
-	apply_central_impulse(-linear_velocity)
+		sprite.flip_h = true	
 	
 func death():
-	emit_signal("remove_from_array",self)
-	stop()
-	freeze = true
+	emit_signal("remove_from_array",self)	
 	if player != null:
 		if player.kills == null:
 			player.kills = {}
@@ -131,7 +124,8 @@ func _on_hurt_box_hurt(damage, angle, knockback_amount):
 		HealthBarBoss1.max_value = maxhp
 		HealthBarBoss1.value = hp
 	if hp <= 0:
-		$AnimationPlayer.play("death")
+		$AnimationPlayer.play("death")		
+		freeze = true
 	else:
 		snd_hit.play()
 
@@ -142,7 +136,8 @@ func _on_hurt_box_dot(damage, duration, slow):
 	slow_percent = (1.0 - slow)
 	dotTimer.start()
 	if hp <= 0:
-		$AnimationPlayer.play("death")
+		$AnimationPlayer.play("death")		
+		freeze = true
 	else:
 		snd_hit.play
 		
