@@ -14,6 +14,7 @@ var hp = maxhp
 var last_movement = Vector2.UP
 var time = 0
 
+@export var virtual_joystick : VirtualJoystick
 
 var experience = 0
 var experience_level = 1
@@ -83,7 +84,8 @@ signal playervictory
 # These could be abstracted to an input manager
 func check_movement_input():
 	return (
-		Input.is_action_just_pressed("up")
+		(virtual_joystick and virtual_joystick.is_pressed)
+		or Input.is_action_just_pressed("up")
 		or Input.is_action_just_pressed("down")
 		or Input.is_action_just_pressed("right")
 		or Input.is_action_just_pressed("left")
@@ -111,11 +113,13 @@ func set_facing():
 		sprite.offset.x = -sprite.offset.x
 
 
-func check_pathing_input():
-	return not disable_pathing_input and Input.is_action_pressed("click")
+func check_pathing_input():	
+	return (virtual_joystick and not virtual_joystick.is_pressed) and not disable_pathing_input and Input.is_action_pressed("click")
 
 
 func get_movement_vector():
+	if virtual_joystick and virtual_joystick.is_pressed:
+		return virtual_joystick.output
 	return Input.get_vector("left", "right", "up", "down")
 
 
@@ -534,7 +538,7 @@ func _on_video_lose_finished():
 	get_node("%video_lose_bg").visible = true
 
 func _on_give_up_button_pressed():
-	get_tree().change_scene_to_file("res://demo.tscn")
+	get_tree().change_scene_to_file("res://World/demo.tscn")
 
 func _on_video_win_finished():
 	winScoreForm.visible = true
