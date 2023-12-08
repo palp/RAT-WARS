@@ -45,7 +45,7 @@ func _ready():
 	anim.connect("animation_finished", _on_animation_finished)
 	hitBox.damage = enemy_damage
 
-func _on_animation_finished(animation_name):
+func _on_animation_finished(_animation_name):
 	anim.play("walk")	
 	is_attacking = false
 	
