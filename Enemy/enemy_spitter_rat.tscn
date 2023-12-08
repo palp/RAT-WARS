@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://cicd0plbiord6"]
+[gd_scene load_steps=13 format=3 uid="uid://cicd0plbiord6"]
 
 [ext_resource type="Script" path="res://Enemy/enemy.gd" id="1_d8g1e"]
 [ext_resource type="Texture2D" uid="uid://mt17x67goror" path="res://assets/enemy/SpitterRat/SpitterRat_walk_16.png" id="1_p38jk"]
@@ -7,8 +7,9 @@
 [ext_resource type="PackedScene" uid="uid://uhr6mtuisqm1" path="res://Utility/hit_box.tscn" id="4_vdnsx"]
 [ext_resource type="AudioStream" uid="uid://bi7t7cjthnhhc" path="res://Audio/SoundEffect/enemy_hit.ogg" id="5_aknlk"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_yrkus"]
-size = Vector2(234, 136.5)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_vnsxy"]
+radius = 54.63
+height = 198.54
 
 [sub_resource type="Animation" id="Animation_g6rjq"]
 resource_name = "RESET"
@@ -223,6 +224,9 @@ _data = {
 "walk": SubResource("Animation_w0xri")
 }
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yrkus"]
+size = Vector2(234, 136.5)
+
 [node name="enemy_spitter_rat" type="RigidBody2D"]
 collision_layer = 5
 collision_mask = 5
@@ -241,7 +245,9 @@ texture = ExtResource("1_p38jk")
 vframes = 16
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_yrkus")
+position = Vector2(0, 30)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_vnsxy")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../CollisionShape2D")

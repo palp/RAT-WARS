@@ -10,10 +10,10 @@
 [ext_resource type="AudioStream" uid="uid://bi7t7cjthnhhc" path="res://Audio/SoundEffect/enemy_hit.ogg" id="5_aknlk"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_6vuew"]
-radius = 249.15
+radius = 152.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_n3lwc"]
-radius = 226.887
+radius = 289.9
 
 [sub_resource type="Animation" id="Animation_yqh0e"]
 resource_name = "RESET"
