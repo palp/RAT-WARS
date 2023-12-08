@@ -15,6 +15,10 @@ on:
 jobs:
   release:
     name: Release ${{ github.event.inputs.bump }} version
-    runs-on: ubuntu-latest
-    environment: release-tags
-    
+    runs-on: ubuntu-latest    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      
