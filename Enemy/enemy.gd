@@ -56,6 +56,7 @@ func _physics_process(_delta):
 
 func _integrate_forces(_state):	
 	var direction = global_position.direction_to(player.global_position)
+	knockback = knockback.move_toward(Vector2.ZERO, knockback_recovery)	
 		
 	if not is_attacking:
 		if dotTimer.time_left > 0:
@@ -63,14 +64,14 @@ func _integrate_forces(_state):
 			hp -= tick_damage
 		else: 
 			linear_velocity = direction*movement_speed				
-				
+		linear_velocity += knockback
 		if attack_anim_distance > 0:
 			var distance = global_position.distance_to(player.global_position)
 			if distance < attack_anim_distance:
 				anim.play("attack")
 				is_attacking = true
 				if attack_slide_velocity > 0 and attack_slide_start > 0:
-					attack_slide_wait = attack_slide_start
+					attack_slide_wait = attack_slide_start	
 	elif not is_attack_sliding:
 		linear_velocity = Vector2.ZERO
 		if attack_slide_wait <= 0:
@@ -115,8 +116,6 @@ func _on_hurt_box_hurt(damage, angle, knockback_amount):
 	hurt_show()
 	hp -= damage
 	knockback = angle * knockback_amount
-	knockback = knockback.move_toward(Vector2.ZERO, knockback_recovery)
-	apply_central_impulse(knockback * 0.5)
 	if trigger_victory:
 		HealthBarBoss1.max_value = maxhp
 		HealthBarBoss1.value = hp
