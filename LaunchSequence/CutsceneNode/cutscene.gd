@@ -7,15 +7,16 @@ signal cutscene_finished()
 
 # @onready var animation_control: AnimationPlayer = $AnimationPlayer
 # @onready var control_node = $Control
+@export var scene_title: String
+# @export var music_format: String
+@export var text_speed = 0.02
+@export var frame_transition_speed: float = 1.2
 @onready var text_node: RichTextLabel = get_node("Text")
 @onready var indicator_next: AnimatedSprite2D = get_node("ButtonNext/AnimatedSprite2D")
 @onready var cutscene_frame: Sprite2D = get_node("CutsceneFrame")
 @onready var screen_fade_in_out: Node2D = get_node("ScreenFadeInAndOut")
 @onready var animationPlayer: AnimationPlayer = get_node("AnimationPlayer")
 @onready var music_stream: AudioStreamPlayer = get_node("AudioStreamPlayer")
-@export var scene_title = ""
-@export var text_speed = 0.02
-@export var frame_transition_speed: float = 1.2
 @onready var indicator_skip: Sprite2D = get_node("ButtonSkip/Sprite")
 var skip_visible: bool
 var string_index: int
@@ -24,7 +25,6 @@ var text_array = []
 var img_array = []
 @onready var slide_image: Sprite2D = get_node("SlideImage")
 @onready var ignore_player_input: bool = true
-@export var music_format = ""
 
 # TODO There needs to be a way to provide an instances cutscene node with
 # The title of a requested cutscene
@@ -41,17 +41,19 @@ func _ready():
 	indicator_next.visible = false
 	skip_visible = false
 	current_scene_state = CutsceneState.begin
-
-	Log.info("Cutscene node ready")	
+	launch_scene()
+	Log.info(scene_title)
+	Log.info("Cutscene node ready")
 	pass 
 
 func launch_scene():
+	scene_title.to_lower()
 	img_array = get_slides_array("opening")
 	text_array = get_scene_text("opening")
-	get_music(music_format, scene_title)
+	get_music("opening")
 	test_text_array(text_array)
 	test_img_array(img_array)
-
+	music_stream.play()
 	text_processing(text_array[string_index])
 	pass
 func test_text_array(array):
@@ -106,16 +108,18 @@ func get_slides_array(cutscene_name) -> Array:
 	img_dir.list_dir_end()
 	return image_array
 
+# * Load Music
+func get_music(cutscene_name: String):
+	music_stream.stream = load("res://CutsceneData/Music/" + cutscene_name +".ogg")
+	pass
+
 # This is meant to be called from inside the script/self
 func show_next_slide(next_slide: Resource):
 	Log.info("show next slide")
 	slide_image.texture = next_slide
 	pass
 
-		# * Load Music
-func get_music(format: String, cutscene_name: String):
-	music_stream.stream = load("res://CutsceneData/Music/" + cutscene_name +"." + format)
-	pass
+		
 		# * SIGNAL PROCESSING
 
 	#// ? Why are there funcitions in this section, that start both with "_on..." and "on"?
