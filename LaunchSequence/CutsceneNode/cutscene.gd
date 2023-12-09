@@ -41,16 +41,16 @@ func _ready():
 	indicator_next.visible = false
 	skip_visible = false
 	current_scene_state = CutsceneState.begin
-	launch_scene()
 	Log.info(scene_title)
+	launch_scene()
 	Log.info("Cutscene node ready")
 	pass 
 
 func launch_scene():
 	scene_title.to_lower()
-	img_array = get_slides_array("opening")
-	text_array = get_scene_text("opening")
-	get_music("opening")
+	img_array = get_slides_array(scene_title)
+	text_array = get_scene_text(scene_title)
+	get_music(scene_title)
 	test_text_array(text_array)
 	test_img_array(img_array)
 	music_stream.play()
@@ -118,7 +118,6 @@ func show_next_slide(next_slide: Resource):
 	Log.info("show next slide")
 	slide_image.texture = next_slide
 	pass
-
 		
 		# * SIGNAL PROCESSING
 
@@ -154,7 +153,6 @@ func on_screen_transition_finished():
 	Log.info("scene state: " + str(current_scene_state))
 	match current_scene_state:
 		CutsceneState.transition_to_screen, CutsceneState.transition_frame:
-			Log.info("should be called also also")
 			ignore_player_input = false
 			current_scene_state = CutsceneState.transition_frame
 			var tween = get_tree().create_tween()
@@ -208,7 +206,6 @@ func text_processing(string_from_array):
 
 # Called if a string says "SHOWSLIDE"
 func text_command_showslide():
-	Log.info("SHOWSLIDE instruction from the .json")
 	match current_scene_state:
 		CutsceneState.begin:
 			current_scene_state = CutsceneState.transition_to_screen
