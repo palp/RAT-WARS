@@ -40,7 +40,7 @@ func _ready():
 	img_index = 0
 	indicator_next.visible = false
 	skip_visible = false
-	current_scene_state = CutsceneState.begin
+	current_scene_state = CutsceneState.begin	
 	Log.info(scene_title)
 	launch_scene()
 	Log.info("Cutscene node ready")
@@ -155,7 +155,7 @@ func on_screen_transition_finished():
 		CutsceneState.transition_to_screen, CutsceneState.transition_frame:
 			ignore_player_input = false
 			current_scene_state = CutsceneState.transition_frame
-			var tween = get_tree().create_tween()
+			var tween = create_tween()			
 			tween.tween_interval(frame_transition_speed)
 			tween.tween_property(cutscene_frame, "frame", 7, frame_transition_speed)
 			# tween.tween_interval(frame_transition_speed)
