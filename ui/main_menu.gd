@@ -96,14 +96,16 @@ func _on_cutscenes_button_pressed():
 		cutscenes_container.visible = true
 		
 func play_cutscene(name):
-	get_tree().paused = true
 	emit_signal("video_started")
+	get_tree().paused = true
+	get_tree().get_first_node_in_group('player').get_node(NodePath('GUILayer')).visible = false
 	var cutscene_player = cutscene_scene.instantiate()
 	cutscene_player.connect("tree_exited", _on_cutscene_ended)
 	cutscene_player.scene_title = name	
 	add_child(cutscene_player)
 
-func _on_cutscene_ended():
-	get_tree().paused = false
+func _on_cutscene_ended():	
 	emit_signal("video_stopped")
+	get_tree().paused = false
+	get_tree().get_first_node_in_group('player').get_node(NodePath('GUILayer')).visible = true
 	pass

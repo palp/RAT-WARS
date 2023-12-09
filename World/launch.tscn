@@ -124,7 +124,6 @@ track_horizontal = true
 [node name="Loot" type="Node2D" parent="." groups=["loot"]]
 
 [node name="snd_Music" type="AudioStreamPlayer" parent="."]
-process_mode = 1
 stream = ExtResource("12_ayp3p")
 volume_db = -15.0
 autoplay = true
@@ -132,6 +131,16 @@ bus = &"Music"
 script = ExtResource("13_047la")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="label_title" type="Label" parent="CanvasLayer"]
+unique_name_in_owner = true
+offset_left = 225.0
+offset_top = 426.0
+offset_right = 1325.0
+offset_bottom = 530.0
+theme = ExtResource("14_hwhml")
+theme_override_font_sizes/font_size = 96
+text = "RAT WARS :: SURVIVORS"
 
 [node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer"]
 visible = false
