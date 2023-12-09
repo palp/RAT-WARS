@@ -113,6 +113,7 @@ volume_db = -3.0
 
 [node name="BlackBackground" type="ColorRect" parent="."]
 material = SubResource("ShaderMaterial_vcmtu")
+layout_mode = 0
 offset_left = -25.0
 offset_top = -20.0
 offset_right = 1561.0
@@ -131,6 +132,7 @@ offset = Vector2(256, 144)
 vframes = 8
 
 [node name="Text" type="RichTextLabel" parent="."]
+layout_mode = 0
 offset_left = 104.0
 offset_top = 704.0
 offset_right = 1360.0

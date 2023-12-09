@@ -5,5 +5,5 @@ extends Node2D
 func _ready():
 	if not UserSettings.config.get_value("cutscene", "opening_played", false):		
 		get_node("%main_menu").play_cutscene("opening")		
-		UserSettings.config.set_value("cutscene", "opening_played]", true)
+		UserSettings.config.set_value("cutscene", "opening_played", true)
 		UserSettings.save_config()
