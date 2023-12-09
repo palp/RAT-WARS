@@ -15,7 +15,7 @@ func physics_update(delta: float) -> void:
 
 func get_autopilot_velocity(dir: Vector2, enemies: Array):
 
-	if player.autopilot_bounds.size.y > 0:
+	if player.autopilot_bounds and player.autopilot_bounds.size.y > 0:
 		var distance_to_top = player.global_position.y - player.autopilot_bounds.position.y
 		var distance_to_bottom = (player.autopilot_bounds.position.y + player.autopilot_bounds.size.y) - player.global_position.y
 		if distance_to_top < 50:

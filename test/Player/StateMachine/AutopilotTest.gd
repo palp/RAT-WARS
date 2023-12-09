@@ -13,10 +13,10 @@ func before_test():
 	autopilot = auto_free(load(__source).new())
 	autopilot.player = mock(Player, CALL_REAL_FUNC)
 
-
 func test_get_autopilot_velocity_one_enemy() -> void:
 	var enemies = Array()
-	var enemy_1 = Node2D.new()
+	var enemy_1 = mock(EnemyBase)
+	enemy_1.name = "small_rat"
 	auto_free(enemy_1)
 	enemy_1.global_position = Vector2(0, 0.1)
 	enemies.append(enemy_1)
