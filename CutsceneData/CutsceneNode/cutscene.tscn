@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://CutsceneData/CutsceneNode/cutscene.gd" id="1_56ynt"]
 [ext_resource type="Texture2D" uid="uid://cqqc35xxc1nb6" path="res://CutsceneData/CutsceneNode/HEALTHRATWARS_Slide3TEST.png" id="2_o541v"]
-[ext_resource type="FontFile" uid="uid://dwsu4toemuoud" path="res://assets/ui/fonts/Kenney Pixel.ttf" id="3_fo016"]
+[ext_resource type="FontFile" uid="uid://137y5w3oiafy" path="res://assets/ui/fonts/Kenney Pixel.ttf" id="3_fo016"]
 [ext_resource type="Texture2D" uid="uid://6ci01s73btcv" path="res://CutsceneData/CutsceneNode/cutscene_frame_spritsheet.png" id="3_pdwwe"]
 [ext_resource type="PackedScene" uid="uid://busl4h5eoqytv" path="res://CutsceneData/ScreenFadeInAndOut/screen_fade_in_and_out.tscn" id="4_77mdg"]
 [ext_resource type="Texture2D" uid="uid://3jo5pmka0dj7" path="res://CutsceneData/CutsceneNode/next_indicator.png" id="6_pp86k"]
@@ -92,7 +92,9 @@ _data = {
 "music_fade_out": SubResource("Animation_x6nsb")
 }
 
-[node name="cutscene" type="Node"]
+[node name="cutscene" type="Control"]
+layout_mode = 3
+anchors_preset = 0
 script = ExtResource("1_56ynt")
 scene_title = "opening"
 

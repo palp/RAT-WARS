@@ -14,6 +14,9 @@ func hide_visual():
 	$Sprite2D.frame = 0
 	pass
 
+func show_visual():
+	$Sprite2D.frame = 8
+
 func fadeToScreen(_animation_name = "type_1"):
 	player.play_backwards(_animation_name)
 	pass

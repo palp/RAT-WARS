@@ -7,6 +7,8 @@ extends Control
 @onready var leaderboard = get_node("%leaderboard")
 @onready var video_player = get_node("%VideoStreamPlayer")
 @onready var rat_loop = preload("res://Video/big_rat_loop.ogv")
+@onready var cutscenes_container = get_node("%cutscenes_container")
+@onready var cutscene_scene = preload('res://CutsceneData/CutsceneNode/cutscene.tscn')
 
 var in_loop = false
 
@@ -14,7 +16,7 @@ var bonus_disabled = false
 
 signal video_started
 signal video_stopped
-
+	
 func _on_play_pressed():
 	get_tree().change_scene_to_file("res://Player/player_select.tscn")
 
@@ -24,6 +26,7 @@ func close_submenus():
 		unlock_input.visible = false
 		unlock_button.visible = false
 	leaderboard.visible = false
+	cutscenes_container.visible = false
 
 func _on_options_pressed():
 	if options_menu.visible:
@@ -83,3 +86,16 @@ func _on_video_stream_player_gui_input(_event):
 func _on_options_menu_hidden():
 	print_debug("Saving")
 	UserSettings.save_volumes(["Master", "Music", "SFX"])
+
+
+func _on_cutscenes_button_pressed():
+	if cutscenes_container.visible:
+		close_submenus()
+	else:
+		close_submenus()
+		cutscenes_container.visible = true
+		
+func play_cutscene(name):
+	var cutscene_player = cutscene_scene.instantiate()
+	cutscene_player.scene_title = name	
+	add_child(cutscene_player)
