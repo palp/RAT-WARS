@@ -88,7 +88,23 @@ offset_top = -191.0
 offset_right = 797.0
 offset_bottom = 497.0
 
-[node name="credits_button" type="Button" parent="MarginContainer/VBoxContainer"]
+[node name="cutscenes_button" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "CUTSCENES"
+
+[node name="cutscenes_container" type="VBoxContainer" parent="MarginContainer/VBoxContainer/cutscenes_button"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+offset_left = 183.0
+offset_right = 354.0
+offset_bottom = 116.0
+
+[node name="intro_button" type="Button" parent="MarginContainer/VBoxContainer/cutscenes_button/cutscenes_container"]
+layout_mode = 2
+text = "INTRO"
+
+[node name="credits_button" type="Button" parent="MarginContainer/VBoxContainer/cutscenes_button/cutscenes_container"]
 layout_mode = 2
 text = "CREDITS"
 
@@ -109,5 +125,7 @@ offset_bottom = -449.0
 [connection signal="text_changed" from="MarginContainer/VBoxContainer/bonus_button/unlock_input" to="." method="_on_unlock_input_text_changed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/bonus_button/unlock_button" to="." method="_on_unlock_button_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/scores_button" to="." method="_on_scores_button_pressed"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/credits_button" to="." method="_on_credits_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/cutscenes_button" to="." method="_on_cutscenes_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/cutscenes_button/cutscenes_container/intro_button" to="." method="play_cutscene" binds= ["opening"]]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/cutscenes_button/cutscenes_container/credits_button" to="." method="_on_credits_button_pressed"]
 [connection signal="hidden" from="options_menu" to="." method="_on_options_menu_hidden"]
