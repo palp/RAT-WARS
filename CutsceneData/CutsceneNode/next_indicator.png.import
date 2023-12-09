@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://5s85pspimmq2"
-path="res://.godot/imported/skip_button.png-823ac304783e5e22dc0b691503ca2edd.ctex"
+uid="uid://3jo5pmka0dj7"
+path="res://.godot/imported/next_indicator.png-919e052af5315300de88f9370fdff147.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://LaunchSequence/CutsceneNode/skip_button.png"
-dest_files=["res://.godot/imported/skip_button.png-823ac304783e5e22dc0b691503ca2edd.ctex"]
+source_file="res://CutsceneData/CutsceneNode/next_indicator.png"
+dest_files=["res://.godot/imported/next_indicator.png-919e052af5315300de88f9370fdff147.ctex"]
 
 [params]
 

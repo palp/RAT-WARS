@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://6ci01s73btcv"
-path="res://.godot/imported/cutscene_frame_spritsheet.png-18b4a30c9b2ab86b2d8ef5818dd1559d.ctex"
+uid="uid://cqqc35xxc1nb6"
+path="res://.godot/imported/HEALTHRATWARS_Slide3TEST.png-b813b5c2f4718a81db0c8ddc8e746e74.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://LaunchSequence/CutsceneNode/cutscene_frame_spritsheet.png"
-dest_files=["res://.godot/imported/cutscene_frame_spritsheet.png-18b4a30c9b2ab86b2d8ef5818dd1559d.ctex"]
+source_file="res://CutsceneData/CutsceneNode/HEALTHRATWARS_Slide3TEST.png"
+dest_files=["res://.godot/imported/HEALTHRATWARS_Slide3TEST.png-b813b5c2f4718a81db0c8ddc8e746e74.ctex"]
 
 [params]
 

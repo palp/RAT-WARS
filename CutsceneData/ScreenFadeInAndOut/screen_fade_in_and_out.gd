@@ -6,8 +6,8 @@ signal transition_in_progress(boolean)
 @onready var anim_type = "type_1"
 @onready var in_progress: bool = false
 
-func fadeToBlack(_animation_name = "type_1"):
-	player.play(_animation_name)
+func fadeToBlack(_animation_name = "type_1", _speed = 1 ):
+	player.play(_animation_name, -1, _speed)
 	pass
 
 func hide_visual():

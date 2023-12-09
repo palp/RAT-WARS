@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://busl4h5eoqytv"]
 
-[ext_resource type="Script" path="res://LaunchSequence/ScreenFadeInAndOut/screen_fade_in_and_out.gd" id="1_idgwl"]
-[ext_resource type="Texture2D" uid="uid://cm61vrx60v2no" path="res://LaunchSequence/ScreenFadeInAndOut/ScreenFadeInAndOut.png" id="1_vd3ja"]
+[ext_resource type="Script" path="res://CutsceneData/ScreenFadeInAndOut/screen_fade_in_and_out.gd" id="1_idgwl"]
+[ext_resource type="Texture2D" uid="uid://cm61vrx60v2no" path="res://CutsceneData/ScreenFadeInAndOut/ScreenFadeInAndOut.png" id="1_vd3ja"]
 
 [sub_resource type="Animation" id="Animation_7d2ew"]
 resource_name = "type_1"

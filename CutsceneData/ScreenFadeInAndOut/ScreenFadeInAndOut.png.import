@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cm61vrx60v2no"
-path="res://.godot/imported/ScreenFadeInAndOut.png-1c3c7424b52243836448f90288e7f3cf.ctex"
+path="res://.godot/imported/ScreenFadeInAndOut.png-73813286e2635f6896b8cb3833d3ac77.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://LaunchSequence/ScreenFadeInAndOut/ScreenFadeInAndOut.png"
-dest_files=["res://.godot/imported/ScreenFadeInAndOut.png-1c3c7424b52243836448f90288e7f3cf.ctex"]
+source_file="res://CutsceneData/ScreenFadeInAndOut/ScreenFadeInAndOut.png"
+dest_files=["res://.godot/imported/ScreenFadeInAndOut.png-73813286e2635f6896b8cb3833d3ac77.ctex"]
 
 [params]
 

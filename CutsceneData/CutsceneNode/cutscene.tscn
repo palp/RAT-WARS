@@ -1,12 +1,12 @@
-[gd_scene load_steps=16 format=3 uid="uid://defnd6dnswld6"]
+[gd_scene load_steps=18 format=3 uid="uid://defnd6dnswld6"]
 
-[ext_resource type="Script" path="res://LaunchSequence/CutsceneNode/cutscene.gd" id="1_56ynt"]
-[ext_resource type="Texture2D" uid="uid://cqqc35xxc1nb6" path="res://LaunchSequence/CutsceneNode/HEALTHRATWARS_Slide3TEST.png" id="2_o541v"]
+[ext_resource type="Script" path="res://CutsceneData/CutsceneNode/cutscene.gd" id="1_56ynt"]
+[ext_resource type="Texture2D" uid="uid://cqqc35xxc1nb6" path="res://CutsceneData/CutsceneNode/HEALTHRATWARS_Slide3TEST.png" id="2_o541v"]
 [ext_resource type="FontFile" uid="uid://dwsu4toemuoud" path="res://assets/ui/fonts/Kenney Pixel.ttf" id="3_fo016"]
-[ext_resource type="Texture2D" uid="uid://6ci01s73btcv" path="res://LaunchSequence/CutsceneNode/cutscene_frame_spritsheet.png" id="3_pdwwe"]
-[ext_resource type="PackedScene" uid="uid://busl4h5eoqytv" path="res://LaunchSequence/ScreenFadeInAndOut/screen_fade_in_and_out.tscn" id="4_77mdg"]
-[ext_resource type="Texture2D" uid="uid://3jo5pmka0dj7" path="res://LaunchSequence/CutsceneNode/next_indicator.png" id="6_pp86k"]
-[ext_resource type="Texture2D" uid="uid://5s85pspimmq2" path="res://LaunchSequence/CutsceneNode/skip_button.png" id="9_5h4l7"]
+[ext_resource type="Texture2D" uid="uid://6ci01s73btcv" path="res://CutsceneData/CutsceneNode/cutscene_frame_spritsheet.png" id="3_pdwwe"]
+[ext_resource type="PackedScene" uid="uid://busl4h5eoqytv" path="res://CutsceneData/ScreenFadeInAndOut/screen_fade_in_and_out.tscn" id="4_77mdg"]
+[ext_resource type="Texture2D" uid="uid://3jo5pmka0dj7" path="res://CutsceneData/CutsceneNode/next_indicator.png" id="6_pp86k"]
+[ext_resource type="Texture2D" uid="uid://5s85pspimmq2" path="res://CutsceneData/CutsceneNode/skip_button.png" id="9_5h4l7"]
 
 [sub_resource type="Shader" id="Shader_swic6"]
 code = "shader_type canvas_item;
@@ -71,8 +71,30 @@ animations = [{
 "speed": 2.0
 }]
 
+[sub_resource type="Animation" id="Animation_x6nsb"]
+resource_name = "music_fade_out"
+length = 5.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AudioStreamPlayer:volume_db")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [-3.0, -80.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_bn8pt"]
+_data = {
+"music_fade_out": SubResource("Animation_x6nsb")
+}
+
 [node name="cutscene" type="Node"]
 script = ExtResource("1_56ynt")
+scene_title = "opening"
 
 [node name="TimerIgnoreInput" type="Timer" parent="."]
 wait_time = 0.7
@@ -85,7 +107,7 @@ scale = Vector2(3, 3)
 texture = ExtResource("2_o541v")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-volume_db = -2.0
+volume_db = -3.0
 
 [node name="BlackBackground" type="ColorRect" parent="."]
 material = SubResource("ShaderMaterial_vcmtu")
@@ -155,6 +177,9 @@ frame_progress = 0.682845
 position = Vector2(768, 431)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_bn8pt")
+}
 
 [connection signal="texture_changed" from="SlideImage" to="." method="_on_slide_changed"]
 [connection signal="timeout" from="Text/TextSpeedTimer" to="." method="_on_text_speed_timer_timeout"]

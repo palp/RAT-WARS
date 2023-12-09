@@ -198,7 +198,8 @@ func text_processing(string_from_array):
 			text_command_showslide()
 		"FADETOBLACK":
 			current_scene_state = CutsceneState.fade_to_black
-			screen_fade_in_out.fadeToBlack()
+			animationPlayer.play("music_fade_out")
+			screen_fade_in_out.fadeToBlack("type_1", 0.5)
 		_:
 			# default case is a block of text_node that is to be printed out
 			ignore_player_input = false
