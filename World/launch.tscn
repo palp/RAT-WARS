@@ -61,6 +61,7 @@ enemy_spawn_delay = 5
 ignore_spawn_cap = false
 
 [node name="World" type="Node2D"]
+process_mode = 1
 script = ExtResource("1_gkfpm")
 
 [node name="Background" type="Sprite2D" parent="."]
