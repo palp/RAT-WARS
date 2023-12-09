@@ -100,11 +100,11 @@ func get_slides_array(cutscene_name) -> Array:
 	# Begin listing all files in the directory
 	img_dir.list_dir_begin()
 	while true:
-		var file_name = img_dir.get_next()
+		var file_name = img_dir.get_next()		
 		if file_name == "":
 			break
-		elif !file_name.begins_with(".") and !file_name.ends_with(".import"):
-			image_array.append(load(cutscene_slides_path + "/" + file_name))
+		elif !file_name.begins_with(".") and file_name.ends_with(".import"):
+			image_array.append(load(cutscene_slides_path + "/" + file_name.replace(".import", "")))
 	img_dir.list_dir_end()
 	return image_array
 
