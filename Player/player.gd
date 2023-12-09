@@ -153,8 +153,6 @@ func _ready():
 	disable_pathing_input = false
 	disable_upgrades = false
 	kills = {}
-	if music_node:
-		music_node.stop()
 	update_player_character()
 	upgrade_character(rand_starting_item())
 	set_expbar(experience, calculate_experiencecap())
@@ -166,8 +164,6 @@ func _ready():
 	for content in Unlocks.unlocked_content:
 		_on_content_unlocked(content)
 	Unlocks.content_unlocked.connect(_on_content_unlocked)
-	if music_node:
-		music_node.play()
 
 	if not autopilot:
 		game_session = await Server.create_game_session()
