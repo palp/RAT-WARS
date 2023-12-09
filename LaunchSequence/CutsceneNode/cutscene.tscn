@@ -85,6 +85,7 @@ scale = Vector2(3, 3)
 texture = ExtResource("2_o541v")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+volume_db = -2.0
 
 [node name="BlackBackground" type="ColorRect" parent="."]
 material = SubResource("ShaderMaterial_vcmtu")
@@ -117,6 +118,7 @@ text = "Sample Text
 "
 
 [node name="TextSpeedTimer" type="Timer" parent="Text"]
+one_shot = true
 
 [node name="ButtonSkip" type="Control" parent="."]
 layout_mode = 3
@@ -133,6 +135,7 @@ offset = Vector2(30, 15)
 
 [node name="ButtonSkipHideTimer" type="Timer" parent="ButtonSkip"]
 wait_time = 2.0
+one_shot = true
 
 [node name="ButtonNext" type="Control" parent="."]
 layout_mode = 3
@@ -150,6 +153,8 @@ frame_progress = 0.682845
 
 [node name="ScreenFadeInAndOut" parent="." instance=ExtResource("4_77mdg")]
 position = Vector2(768, 431)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 
 [connection signal="texture_changed" from="SlideImage" to="." method="_on_slide_changed"]
 [connection signal="timeout" from="Text/TextSpeedTimer" to="." method="_on_text_speed_timer_timeout"]
