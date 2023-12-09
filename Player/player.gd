@@ -4,6 +4,7 @@ extends CharacterBody2D
 @export var autopilot = true
 @export var autopilot_bounds:Rect2 = Rect2(0,0,0,0)
 var disable_pathing_input = false
+var disable_pathing = false
 var disable_pausing = false
 var disable_upgrades = false
 
@@ -114,7 +115,7 @@ func set_facing():
 
 
 func check_pathing_input():	
-	return (virtual_joystick and not virtual_joystick.is_pressed) and not disable_pathing_input and Input.is_action_pressed("click")
+	return (virtual_joystick and not virtual_joystick.is_pressed) and not disable_pathing and not disable_pathing_input and Input.is_action_pressed("click")
 
 
 func get_movement_vector():
@@ -127,7 +128,17 @@ func get_pathing_target():
 	return get_global_mouse_position()
 
 
+func configure_virtual_joystick(mode):
+	if mode == "always":
+		virtual_joystick.visible = true
+	elif mode == "never":
+		virtual_joystick.visible = false
+	elif mode == "auto":
+		virtual_joystick.visible = DisplayServer.is_touchscreen_available()
+
 func _ready():
+	configure_virtual_joystick(UserSettings.config.get_value("control", "virtual_joystick", "auto"))	
+	disable_pathing = !UserSettings.config.get_value("control", "click_to_move", true)
 	var music_node = owner.get_node(NodePath("snd_Music"))
 	disable_pausing = false
 	disable_pathing_input = false
@@ -135,7 +146,7 @@ func _ready():
 	kills = {}
 	if music_node:
 		music_node.stop()
-		
+	update_player_character()
 	upgrade_character(rand_starting_item())
 	set_expbar(experience, calculate_experiencecap())
 	_on_hurt_box_hurt(0, 0, 0)
@@ -145,8 +156,7 @@ func _ready():
 	update_kill_counts()
 	for content in Unlocks.unlocked_content:
 		_on_content_unlocked(content)
-	Unlocks.content_unlocked.connect(_on_content_unlocked)		
-	update_player_character()		
+	Unlocks.content_unlocked.connect(_on_content_unlocked)
 	if music_node:
 		music_node.play()
 

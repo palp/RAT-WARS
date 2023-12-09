@@ -596,6 +596,7 @@ offset_left = 1236.0
 offset_top = -304.0
 offset_right = 1536.0
 offset_bottom = -4.0
+visibility_mode = 1
 
 [node name="SessionUpdateTimer" type="Timer" parent="."]
 unique_name_in_owner = true

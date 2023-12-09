@@ -15,3 +15,4 @@ dist/*
 ratwars-prod.cfg
 ratwars.cfg.prod
 config.key
+user_settings.ini
