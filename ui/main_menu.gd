@@ -97,8 +97,7 @@ func _on_cutscenes_button_pressed():
 		
 func play_cutscene(name):
 	emit_signal("video_started")
-	get_tree().paused = true
-	get_tree().get_first_node_in_group('player').get_node(NodePath('GUILayer')).visible = false
+	get_tree().paused = true	
 	var cutscene_player = cutscene_scene.instantiate()
 	cutscene_player.connect("tree_exited", _on_cutscene_ended)
 	cutscene_player.scene_title = name	
@@ -106,6 +105,5 @@ func play_cutscene(name):
 
 func _on_cutscene_ended():	
 	emit_signal("video_stopped")
-	get_tree().paused = false
-	get_tree().get_first_node_in_group('player').get_node(NodePath('GUILayer')).visible = true
+	get_tree().paused = false	
 	pass

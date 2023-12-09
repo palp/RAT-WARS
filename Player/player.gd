@@ -521,7 +521,7 @@ func choose_name():
 	return name
 
 func _on_session_update_timer_timeout():
-	if game_session.has("id"):
+	if game_session.has("id") and not autopilot:
 		game_session = await Server.update_game_session(score, kills)
 
 

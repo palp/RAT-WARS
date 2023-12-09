@@ -29,10 +29,10 @@ stream = ExtResource("3_dkdyw")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 0
-offset_left = 94.0
-offset_top = 113.0
-offset_right = 230.0
-offset_bottom = 408.0
+offset_left = 30.0
+offset_top = 30.0
+offset_right = 203.0
+offset_bottom = 326.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
@@ -58,20 +58,20 @@ text = "CHEATS"
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
-offset_left = 152.0
+offset_left = 189.0
 offset_top = 3.0
-offset_right = 462.0
-offset_bottom = 53.0
+offset_right = 481.0
+offset_bottom = 57.0
 placeholder_text = "Enter cheat code"
 
 [node name="unlock_button" type="Button" parent="MarginContainer/VBoxContainer/bonus_button"]
 unique_name_in_owner = true
 visible = false
-layout_mode = 0
-offset_left = 152.0
-offset_top = 65.0
-offset_right = 267.0
-offset_bottom = 121.0
+layout_mode = 2
+offset_left = 189.0
+offset_top = 59.0
+offset_right = 256.0
+offset_bottom = 115.0
 text = "OK"
 
 [node name="scores_button" type="Button" parent="MarginContainer/VBoxContainer"]
@@ -83,9 +83,9 @@ text = "SCORES"
 unique_name_in_owner = true
 visible = false
 layout_mode = 1
-offset_left = 433.0
+offset_left = 514.0
 offset_top = -191.0
-offset_right = 797.0
+offset_right = 846.0
 offset_bottom = 497.0
 
 [node name="cutscenes_button" type="Button" parent="MarginContainer/VBoxContainer"]
@@ -112,10 +112,10 @@ text = "CREDITS"
 unique_name_in_owner = true
 visible = false
 layout_mode = 1
-offset_left = 245.0
-offset_top = 132.0
-offset_right = -944.0
-offset_bottom = -449.0
+offset_left = 221.0
+offset_top = 91.0
+offset_right = -1024.0
+offset_bottom = -272.0
 
 [connection signal="finished" from="VideoStreamPlayer" to="." method="_on_video_stream_player_finished"]
 [connection signal="gui_input" from="VideoStreamPlayer" to="." method="_on_video_stream_player_gui_input"]

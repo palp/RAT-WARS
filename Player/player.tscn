@@ -51,7 +51,7 @@ position = Vector2(2.08165e-12, 2.08165e-12)
 motion_mode = 1
 script = ExtResource("1_37q80")
 movement_speed = 200.0
-virtual_joystick = NodePath("GUILayer/GUI/Virtual Joystick")
+virtual_joystick = NodePath("GUILayer/GUI/VirtualJoystick")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, -2.08165e-12)
@@ -127,6 +127,7 @@ shape = SubResource("CircleShape2D_6vwp8")
 [node name="GUILayer" type="CanvasLayer" parent="."]
 
 [node name="GUI" type="Control" parent="GUILayer"]
+unique_name_in_owner = true
 layout_mode = 3
 anchors_preset = 0
 offset_right = 1536.0
@@ -590,7 +591,7 @@ offset_right = 1457.0
 offset_bottom = 841.0
 text = "MAIN MENU"
 
-[node name="Virtual Joystick" parent="GUILayer/GUI" instance=ExtResource("22_4q0ra")]
+[node name="VirtualJoystick" parent="GUILayer/GUI" instance=ExtResource("22_4q0ra")]
 layout_mode = 1
 offset_left = 1236.0
 offset_top = -304.0

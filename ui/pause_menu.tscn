@@ -52,3 +52,4 @@ grow_vertical = 1
 
 [connection signal="pressed" from="MarginContainer/VBoxContainer/options_button" to="." method="_on_options_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/main_menu_button" to="." method="_on_main_menu_pressed"]
+[connection signal="hidden" from="options_menu" to="." method="_on_options_menu_hidden"]
