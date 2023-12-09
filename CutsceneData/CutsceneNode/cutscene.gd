@@ -40,7 +40,7 @@ func _ready():
 	img_index = 0
 	indicator_next.visible = false
 	skip_visible = false
-	current_scene_state = CutsceneState.begin
+	current_scene_state = CutsceneState.begin	
 	Log.info(scene_title)
 	launch_scene()
 	Log.info("Cutscene node ready")
@@ -155,7 +155,7 @@ func on_screen_transition_finished():
 		CutsceneState.transition_to_screen, CutsceneState.transition_frame:
 			ignore_player_input = false
 			current_scene_state = CutsceneState.transition_frame
-			var tween = get_tree().create_tween()
+			var tween = create_tween()			
 			tween.tween_interval(frame_transition_speed)
 			tween.tween_property(cutscene_frame, "frame", 7, frame_transition_speed)
 			# tween.tween_interval(frame_transition_speed)
@@ -284,14 +284,14 @@ func _input_skip_button(event: InputEvent):
 func show_skip():
 	match skip_visible:
 		true:
-			var tween = get_tree().create_tween()
+			var tween = create_tween()
 			tween.tween_property(indicator_skip, "position", Vector2(indicator_skip.position.x, -122), 0.1)
 			tween.tween_interval(0.2)
 			tween.tween_property(self,"skip_visible",false, 0)
 			pass
 		false:
 			skip_visible = true
-			var tween = get_tree().create_tween()
+			var tween = create_tween()
 			tween.tween_property(indicator_skip, "position", Vector2(indicator_skip.position.x, 24), 0.25)
 			tween.tween_interval(0.25)
 			tween.tween_callback(get_node("ButtonSkip/ButtonSkipHideTimer").start.bind(2))
