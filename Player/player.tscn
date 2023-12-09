@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://6rkaprmq4ect"]
+[gd_scene load_steps=30 format=3 uid="uid://6rkaprmq4ect"]
 
 [ext_resource type="Script" path="res://Player/player.gd" id="1_37q80"]
 [ext_resource type="Texture2D" uid="uid://bd1dsmqbq3l7" path="res://assets/player/character/john/john_placeholder.png" id="2_1lecr"]
@@ -21,6 +21,7 @@
 [ext_resource type="PackedScene" uid="uid://i4j5o8gkuyr0" path="res://ui/leaderboard.tscn" id="19_7sjgu"]
 [ext_resource type="VideoStream" path="res://Video/RAT_WARS_Fail.ogv" id="19_xptxg"]
 [ext_resource type="VideoStream" path="res://Video/Credits_Final.ogv" id="20_vi8j1"]
+[ext_resource type="PackedScene" uid="uid://dmr0fcamx7t56" path="res://joystick/virtual_joystick.tscn" id="22_4q0ra"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_nffdp"]
 height = 36.0
@@ -45,11 +46,12 @@ gradient = SubResource("Gradient_6mfm5")
 width = 128
 height = 16
 
-[node name="Player" type="CharacterBody2D" groups=["player"]]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("virtual_joystick") groups=["player"]]
 position = Vector2(2.08165e-12, 2.08165e-12)
 motion_mode = 1
 script = ExtResource("1_37q80")
 movement_speed = 200.0
+virtual_joystick = NodePath("GUILayer/GUI/Virtual Joystick")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, -2.08165e-12)
@@ -395,49 +397,90 @@ value = 100.0
 texture_over = ExtResource("11_6u3jb")
 texture_progress = ExtResource("12_tesno")
 
+[node name="ColorRect" type="ColorRect" parent="GUILayer/GUI/ExperienceBar"]
+layout_mode = 0
+offset_right = 1534.0
+offset_bottom = 55.0
+color = Color(0, 0, 0, 0.396078)
+
 [node name="lbl_level" type="Label" parent="GUILayer/GUI/ExperienceBar"]
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 1400.0
+offset_top = 10.0
 offset_right = 1500.0
-offset_bottom = 20.0
+offset_bottom = 34.0
 theme = ExtResource("4_f6gen")
-text = "Level: 1"
+text = "LEVEL: 1"
 horizontal_alignment = 1
 vertical_alignment = 2
 
 [node name="Label" type="Label" parent="GUILayer/GUI/ExperienceBar"]
 layout_mode = 0
 offset_left = 54.0
-offset_top = 11.0
+offset_top = 10.0
 offset_right = 204.0
-offset_bottom = 46.0
+offset_bottom = 45.0
 text = "DEAD RATS:"
 
 [node name="Label2" type="Label" parent="GUILayer/GUI/ExperienceBar"]
 layout_mode = 0
 offset_left = 314.0
-offset_top = 11.0
+offset_top = 10.0
 offset_right = 427.0
-offset_bottom = 46.0
+offset_bottom = 45.0
 text = "GLOBAL:"
+
+[node name="Label4" type="Label" parent="GUILayer/GUI/ExperienceBar"]
+layout_mode = 0
+offset_left = 917.0
+offset_top = 10.0
+offset_right = 1036.0
+offset_bottom = 45.0
+text = "LIVE RATS:"
 
 [node name="lbl_dead_rats" type="Label" parent="GUILayer/GUI/ExperienceBar"]
 unique_name_in_owner = true
 layout_mode = 0
-offset_left = 208.0
-offset_top = 11.0
-offset_right = 327.0
-offset_bottom = 40.0
+offset_left = 199.0
+offset_top = 10.0
+offset_right = 318.0
+offset_bottom = 39.0
 text = "0"
 
 [node name="lbl_dead_rats_global" type="Label" parent="GUILayer/GUI/ExperienceBar"]
 unique_name_in_owner = true
 layout_mode = 0
-offset_left = 436.0
-offset_top = 12.0
-offset_right = 707.0
-offset_bottom = 41.0
+offset_left = 425.0
+offset_top = 10.0
+offset_right = 696.0
+offset_bottom = 39.0
+text = "0"
+
+[node name="Label3" type="Label" parent="GUILayer/GUI/ExperienceBar"]
+layout_mode = 0
+offset_left = 1148.0
+offset_top = 10.0
+offset_right = 1234.0
+offset_bottom = 34.0
+text = "SCORE:"
+
+[node name="lbl_score" type="Label" parent="GUILayer/GUI/ExperienceBar"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 1249.0
+offset_top = 10.0
+offset_right = 1390.0
+offset_bottom = 34.0
+text = "0"
+
+[node name="lbl_live_rats" type="Label" parent="GUILayer/GUI/ExperienceBar"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 1043.0
+offset_top = 10.0
+offset_right = 1131.0
+offset_bottom = 34.0
 text = "0"
 
 [node name="LevelUp" type="Panel" parent="GUILayer/GUI"]
@@ -478,9 +521,9 @@ bus = &"SFX"
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 768.0
-offset_top = 20.0
+offset_top = 10.0
 offset_right = 848.0
-offset_bottom = 44.0
+offset_bottom = 34.0
 theme = ExtResource("4_f6gen")
 text = "00:00"
 horizontal_alignment = 1
@@ -546,6 +589,14 @@ offset_top = 782.0
 offset_right = 1457.0
 offset_bottom = 841.0
 text = "MAIN MENU"
+
+[node name="Virtual Joystick" parent="GUILayer/GUI" instance=ExtResource("22_4q0ra")]
+layout_mode = 1
+offset_left = 1236.0
+offset_top = -304.0
+offset_right = 1536.0
+offset_bottom = -4.0
+visibility_mode = 1
 
 [node name="SessionUpdateTimer" type="Timer" parent="."]
 unique_name_in_owner = true

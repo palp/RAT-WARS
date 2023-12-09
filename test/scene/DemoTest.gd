@@ -2,7 +2,7 @@ class_name DemoSceneTest
 extends GdUnitTestSuite
 @warning_ignore("unused_parameter")
 @warning_ignore("return_value_discarded")
-const __source = "res://demo.tscn"
+const __source = "res://World/demo.tscn"
 
 
 func test_attract_mode() -> void:

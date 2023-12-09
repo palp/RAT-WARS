@@ -17,4 +17,4 @@ func _process(delta):
 
 func _on_select_character(extra_arg_0):
 	Unlocks.select_character(extra_arg_0)
-	get_tree().change_scene_to_file("res://level_placeholder.tscn")
+	get_tree().change_scene_to_file("res://World/level_placeholder.tscn")

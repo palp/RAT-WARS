@@ -14,8 +14,8 @@ shader = ExtResource("1_f2cg2")
 shader_parameter/hurt_flash = 0.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_24u87"]
-radius = 6.0
-height = 26.0
+radius = 17.79
+height = 116.54
 
 [sub_resource type="Animation" id="Animation_xfnyu"]
 length = 0.001
@@ -252,13 +252,16 @@ size = Vector2(96, 143.875)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ucec4"]
 size = Vector2(48, 96)
 
-[node name="enemy_mutated_rat" type="CharacterBody2D"]
+[node name="enemy_mutated_rat" type="RigidBody2D"]
 position = Vector2(0, -45)
 collision_layer = 5
 collision_mask = 5
-motion_mode = 1
 script = ExtResource("1_1bh7b")
 movement_speed = 100.0
+hp = 25
+knockback_recovery = 7.0
+experience = 2
+enemy_damage = 2
 enemy_name = "mutated_rat"
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -269,9 +272,7 @@ texture = ExtResource("2_o5r43")
 vframes = 12
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-2.41304e-13, 44)
-rotation = 1.5708
-scale = Vector2(1.805, 1.45247)
+scale = Vector2(1, 0.804)
 shape = SubResource("CapsuleShape2D_24u87")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://dhwhbsqu47ocn"]
+[gd_scene load_steps=15 format=3 uid="uid://dhwhbsqu47ocn"]
 
 [ext_resource type="Script" path="res://Enemy/enemy.gd" id="1_d8g1e"]
 [ext_resource type="PackedScene" uid="uid://elvgq35o6fbi" path="res://Enemy/balloon_explosion.tscn" id="2_6durt"]
@@ -10,10 +10,73 @@
 [ext_resource type="AudioStream" uid="uid://bi7t7cjthnhhc" path="res://Audio/SoundEffect/enemy_hit.ogg" id="5_aknlk"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_6vuew"]
-radius = 249.15
+radius = 152.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_n3lwc"]
-radius = 226.887
+radius = 289.9
+
+[sub_resource type="Animation" id="Animation_yqh0e"]
+resource_name = "RESET"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CollisionShape2D:disabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("HurtBox/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("HitBox/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Sprite2D:texture")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("2_6qfiv")]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Sprite2D:vframes")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [7]
+}
 
 [sub_resource type="Animation" id="Animation_htcwb"]
 resource_name = "death"
@@ -54,6 +117,56 @@ tracks/2/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [ExtResource("3_to1s2")]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CollisionShape2D:disabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("HurtBox/CollisionShape2D:disabled")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("HitBox/CollisionShape2D:disabled")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/6/type = "method"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath(".")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(1.16667),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"death"
+}]
 }
 
 [sub_resource type="Animation" id="Animation_lqp1w"]
@@ -100,33 +213,37 @@ tracks/2/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_2bjk2"]
 _data = {
+"RESET": SubResource("Animation_yqh0e"),
 "death": SubResource("Animation_htcwb"),
 "walk": SubResource("Animation_lqp1w")
 }
 
-[node name="balloon_rat" type="CharacterBody2D"]
-scale = Vector2(0.3, 0.3)
+[node name="balloon_rat" type="RigidBody2D"]
 collision_layer = 5
 collision_mask = 5
-motion_mode = 1
 script = ExtResource("1_d8g1e")
-hp = 2
+hp = 30
+knockback_recovery = 7.0
+experience = 3
+enemy_damage = 6
 enemy_name = "balloon_rat"
 death_anim = ExtResource("2_6durt")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 z_index = 1
 material = ExtResource("3_hl6bo")
-scale = Vector2(8, 8)
-texture = ExtResource("3_to1s2")
+scale = Vector2(2.4, 2.4)
+texture = ExtResource("2_6qfiv")
 offset = Vector2(0, -3.33333)
-vframes = 14
+vframes = 7
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(2.08165e-12, 2.08165e-12)
+scale = Vector2(0.3, 0.3)
 shape = SubResource("CircleShape2D_6vuew")
 
 [node name="HurtBox" parent="." instance=ExtResource("3_ivxq8")]
+scale = Vector2(0.3, 0.3)
 collision_layer = 5
 collision_mask = 5
 HurtBoxType = 1
@@ -135,6 +252,7 @@ HurtBoxType = 1
 shape = SubResource("CircleShape2D_n3lwc")
 
 [node name="HitBox" parent="." instance=ExtResource("4_vdnsx")]
+scale = Vector2(0.3, 0.3)
 collision_layer = 2
 
 [node name="CollisionShape2D" parent="HitBox" index="0"]

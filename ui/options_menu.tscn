@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://t6pr3p1c7edy"]
+[gd_scene load_steps=4 format=3 uid="uid://t6pr3p1c7edy"]
 
 [ext_resource type="Theme" uid="uid://bwayc6rbhtvxj" path="res://assets/ui/theme/HEALTH_theme.tres" id="1_6cp3m"]
+[ext_resource type="Script" path="res://ui/options_menu.gd" id="2_2kxdm"]
 [ext_resource type="PackedScene" uid="uid://cvh55nd5sh70x" path="res://ui/volume_slider.tscn" id="2_t1n0s"]
 
 [node name="Control" type="Control"]
@@ -11,6 +12,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_6cp3m")
+script = ExtResource("2_2kxdm")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 0
@@ -23,6 +25,14 @@ layout_mode = 2
 color = Color(0, 0, 0, 0.705882)
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Volume
+"
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 
 [node name="master_label" type="Label" parent="MarginContainer/VBoxContainer"]
@@ -48,3 +58,63 @@ text = "SFX Volume"
 [node name="sfx_slider" parent="MarginContainer/VBoxContainer" instance=ExtResource("2_t1n0s")]
 layout_mode = 2
 bus_name = "SFX"
+
+[node name="HSeparator2" type="HSeparator" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="control_label" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Control"
+
+[node name="HSeparator3" type="HSeparator" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="click_to_move_button" type="CheckButton" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+button_pressed = true
+text = "Touch/Click to Move"
+
+[node name="show_joystick_label" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Enable Virtual Joystick"
+
+[node name="virtual_joystick_mode" type="ItemList" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+allow_search = false
+auto_height = true
+item_count = 3
+item_0/text = "Auto"
+item_1/text = "Always"
+item_2/text = "Never"
+
+[node name="joystick_pos_label" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Virtual Joystick Position"
+
+[node name="joystick_pos_slider" type="HSlider" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+value = 100.0
+tick_count = 9
+ticks_on_borders = true
+
+[node name="joystick_scale_label" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Virtual Joystick Size"
+
+[node name="joystick_scale_slider" type="HSlider" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+min_value = 0.25
+max_value = 1.75
+step = 0.1
+value = 0.95
+tick_count = 9
+ticks_on_borders = true
+
+[connection signal="toggled" from="MarginContainer/VBoxContainer/click_to_move_button" to="." method="_on_click_to_move_button_toggled"]
+[connection signal="item_selected" from="MarginContainer/VBoxContainer/virtual_joystick_mode" to="." method="_on_virtual_joystick_mode_item_selected"]
+[connection signal="value_changed" from="MarginContainer/VBoxContainer/joystick_pos_slider" to="." method="_on_joystick_pos_slider_value_changed"]
+[connection signal="value_changed" from="MarginContainer/VBoxContainer/joystick_scale_slider" to="." method="_on_joystick_scale_slider_value_changed"]

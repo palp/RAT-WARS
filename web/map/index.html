@@ -1,0 +1,70 @@
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="https://d3js.org/topojson.v2.min.js"></script>
+<script>
+    d3.json("https://ratwars-server.palp.workers.dev/api/kills/locations", function(error, data) {
+        if (error) throw error;
+        width = window.innerWidth;
+        height = window.innerHeight;
+
+        var svg = d3.select("body").append("svg")
+            .attr("width", width)
+            .attr("height", height);
+
+        var totalKills = 0;
+        Object.values(data).forEach(function(d) {
+            totalKills += Number(d.kills.total);
+        });
+        console.log(totalKills);
+
+        var projection = d3.geoMercator()
+            .scale(width / 2 / Math.PI)
+            .translate([width / 2, height / 2]);
+
+        var path = d3.geoPath()
+            .projection(projection);
+
+        d3.json("https://d3js.org/world-110m.v1.json", function(error, world) {
+            if (error) throw error;
+
+            svg.append("path")
+                .datum(topojson.feature(world, world.objects.land))
+                .attr("class", "land")
+                .attr("d", path);
+
+            let tooltip = d3.select("body")
+                .append("div")
+                .style("position", "absolute")
+                .style("text-align", "center")
+                .style("padding", "15px")
+                .style("font", "12px sans-serif")
+                .style("background", "#03bafc")
+                .style("border", "0px")
+                .style("border-radius", "8px")
+                .style("z-index", "10")
+                .style("visibility", "hidden")
+                .text("a simple tooltip");
+
+            svg.selectAll(".pin")
+                .data(Object.values(data))
+                .enter().append("circle", ".pin")
+                .attr("r", function(d) {
+                    return (d.kills.total / totalKills) * 200;
+                })                
+                .attr("fill", "red")
+                .attr("transform", function(d) {                    
+                    return "translate(" + projection([
+                        Number(d.latitude),
+                        Number(d.longitude)
+                    ]) + ")";
+                })
+                .on("mouseover", function(d) {
+                    tooltip.text(`${d.city}, ${d.region}, ${d.country} ${d.kills.total} DEAD RATS`);
+                    return tooltip.style("visibility", "visible");
+                })
+                .on("mousemove", function() {
+                    return tooltip.style("top", (d3.event.pageY - 10) + "px")
+                        .style("left", (d3.event.pageX + 10) + "px");
+                })
+        });
+    });
+</script>

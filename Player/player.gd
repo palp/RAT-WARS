@@ -2,16 +2,20 @@ class_name Player
 extends CharacterBody2D
 
 @export var autopilot = true
+@export var autopilot_bounds:Rect2 = Rect2(0,0,0,0)
 var disable_pathing_input = false
+var disable_pathing = false
 var disable_pausing = false
 var disable_upgrades = false
 
 @export var movement_speed = 40.0
 @export var maxhp = 80
+@export var invincible = false
 var hp = maxhp
 var last_movement = Vector2.UP
 var time = 0
 
+@export var virtual_joystick : VirtualJoystick
 
 var experience = 0
 var experience_level = 1
@@ -68,6 +72,7 @@ var enemy_close = []
 @onready var leaderboardControl = get_node("%LeaderboardControl")
 @onready var deadRatsLabel = get_node("%lbl_dead_rats")
 @onready var globalDeadRatsLabel = get_node("%lbl_dead_rats_global")
+@onready var scoreLabel = get_node("%lbl_score")
 
 #Game session
 @onready var sessionUpdateTimer = get_node("%SessionUpdateTimer") as Timer
@@ -80,7 +85,8 @@ signal playervictory
 # These could be abstracted to an input manager
 func check_movement_input():
 	return (
-		Input.is_action_just_pressed("up")
+		(virtual_joystick and virtual_joystick.is_pressed)
+		or Input.is_action_just_pressed("up")
 		or Input.is_action_just_pressed("down")
 		or Input.is_action_just_pressed("right")
 		or Input.is_action_just_pressed("left")
@@ -108,11 +114,13 @@ func set_facing():
 		sprite.offset.x = -sprite.offset.x
 
 
-func check_pathing_input():
-	return not disable_pathing_input and Input.is_action_pressed("click")
+func check_pathing_input():	
+	return (virtual_joystick and not virtual_joystick.is_pressed) and not disable_pathing and not disable_pathing_input and Input.is_action_pressed("click")
 
 
 func get_movement_vector():
+	if virtual_joystick and virtual_joystick.is_pressed:
+		return virtual_joystick.output
 	return Input.get_vector("left", "right", "up", "down")
 
 
@@ -120,7 +128,26 @@ func get_pathing_target():
 	return get_global_mouse_position()
 
 
+func configure_virtual_joystick():
+	var mode = UserSettings.config.get_value("control", "virtual_joystick", "auto")
+	if mode == "always":
+		virtual_joystick.visible = true
+	elif mode == "never":
+		virtual_joystick.visible = false
+	elif mode == "auto":
+		virtual_joystick.visible = DisplayServer.is_touchscreen_available()
+		
+	if virtual_joystick.visible:
+		var scale = UserSettings.config.get_value("control", "virtual_joystick_scale", 1)
+		virtual_joystick.scale = Vector2(scale, scale)
+		
+		var x = UserSettings.config.get_value("control", "virtual_joystick_position_x", 100)
+		virtual_joystick.global_position.x = max(0,((x / 100) * get_viewport_rect().size.x) - (virtual_joystick.size.x * scale))
+		virtual_joystick.global_position.y = get_viewport_rect().size.y - (virtual_joystick.size.y * scale)
+
 func _ready():
+	configure_virtual_joystick()	
+	disable_pathing = !UserSettings.config.get_value("control", "click_to_move", not DisplayServer.is_touchscreen_available())
 	var music_node = owner.get_node(NodePath("snd_Music"))
 	disable_pausing = false
 	disable_pathing_input = false
@@ -128,18 +155,17 @@ func _ready():
 	kills = {}
 	if music_node:
 		music_node.stop()
+	update_player_character()
+	upgrade_character(rand_starting_item())
+	set_expbar(experience, calculate_experiencecap())
+	_on_hurt_box_hurt(0, 0, 0)
 	
 	await Server.get_global_kills()
 	global_kill_counter = Server.global_kills
 	update_kill_counts()
-	
-	upgrade_character(rand_starting_item())
-	set_expbar(experience, calculate_experiencecap())
-	_on_hurt_box_hurt(0, 0, 0)
 	for content in Unlocks.unlocked_content:
 		_on_content_unlocked(content)
-	Unlocks.content_unlocked.connect(_on_content_unlocked)		
-	update_player_character()		
+	Unlocks.content_unlocked.connect(_on_content_unlocked)
 	if music_node:
 		music_node.play()
 
@@ -150,6 +176,7 @@ func _ready():
 func update_kill_counts():
 	deadRatsLabel.text = str(player_kill_counter)
 	globalDeadRatsLabel.text = str(int(global_kill_counter) + player_kill_counter)
+	scoreLabel.text = str(score)
 
 func update_player_character():
 	if autopilot:
@@ -162,13 +189,16 @@ func _on_content_unlocked(content):
 		Unlocks.player_characters["john"].skins["plugsuit"].unlocked = true
 		Unlocks.player_characters["john"].set_current_skin("plugsuit")
 		update_player_character()
-	if content == "dsm-v":
+
+func _on_enemy_spawned(enemy):	
+	if enemy.enemy_name.begins_with("boss_"):
 		var music_node = owner.get_node(NodePath("snd_Music"))
 		if music_node:
 			music_node.stream = dsmVLoop
 			music_node.play()
 
 func _physics_process(delta):
+	
 	var last_kill_counter = int(global_kill_counter)
 	if (Server.global_kills_per_hour > 0):		
 		global_kill_counter += (Server.global_kills_per_hour / 60.0 / 60.0) * delta
@@ -264,7 +294,7 @@ func _input(event):
 
 func levelup():	
 	sndLevelUp.play()
-	lblLevel.text = str("Level: ", experience_level)
+	lblLevel.text = str("LEVEL: ", experience_level)
 	if autopilot:
 		upgrade_character(get_random_item())
 		return
@@ -378,6 +408,7 @@ func upgrade_character(upgrade):
 		"food":
 			hp += 20
 			hp = clamp(hp, 0, maxhp)
+			healthBar.value = hp
 	adjust_gui_collection(upgrade)
 	var option_children = upgradeOptions.get_children()
 	for i in option_children:
@@ -449,7 +480,10 @@ func adjust_gui_collection(upgrade):
 
 
 func death():
-	if autopilot:		
+	if invincible:
+		hp = maxhp
+		return
+	if autopilot:
 		emit_signal("playerdeath")
 		get_tree().reload_current_scene()
 		return	
@@ -523,7 +557,7 @@ func _on_video_lose_finished():
 	get_node("%video_lose_bg").visible = true
 
 func _on_give_up_button_pressed():
-	get_tree().change_scene_to_file("res://demo.tscn")
+	get_tree().change_scene_to_file("res://World/demo.tscn")
 
 func _on_video_win_finished():
 	winScoreForm.visible = true
@@ -551,3 +585,6 @@ func _on_video_credits_finished():
 func rand_starting_item():
 	var weapon_list = ["plug1", "deathmagic1", "vinyl1", "dieslow1", "stonefist1"]
 	return weapon_list[randi() % weapon_list.size()]
+
+func _update_enemy_counter(counter):
+	get_node("%lbl_live_rats").text = str(counter)
