@@ -2,6 +2,8 @@ extends Control
 
 @onready var virtual_joystick_mode:ItemList = get_node("%virtual_joystick_mode")
 @onready var click_to_move_button = get_node("%click_to_move_button")
+@onready var joystick_pos_slider = get_node("%joystick_pos_slider")
+@onready var joystick_scale_slider = get_node("%joystick_scale_slider")
 @onready var player:Player = get_tree().get_first_node_in_group("player")
 
 # Called when the node enters the scene tree for the first time.
@@ -13,6 +15,9 @@ func _ready():
 		virtual_joystick_mode.select(1)
 	elif mode == "never":
 		virtual_joystick_mode.select(2)
+	joystick_pos_slider.value = UserSettings.config.get_value("control", "virtual_joystick_position_x", 100)
+	joystick_scale_slider.value = UserSettings.config.get_value("control", "virtual_joystick_scale", 1.0)
+	
 
 func _on_click_to_move_button_toggled(toggled_on):
 	UserSettings.config.set_value("control", "click_to_move", toggled_on)
@@ -26,4 +31,14 @@ func _on_virtual_joystick_mode_item_selected(index):
 	elif index == 2:
 		mode = "never"
 	UserSettings.config.set_value("control", "virtual_joystick", mode)
-	player.configure_virtual_joystick(mode)
+	player.configure_virtual_joystick()
+
+
+func _on_joystick_pos_slider_value_changed(value):
+	UserSettings.config.set_value("control", "virtual_joystick_position_x", value)
+	player.configure_virtual_joystick()
+
+
+func _on_joystick_scale_slider_value_changed(value):
+	UserSettings.config.set_value("control", "virtual_joystick_scale", value)
+	player.configure_virtual_joystick()

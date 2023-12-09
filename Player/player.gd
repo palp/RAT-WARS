@@ -128,17 +128,26 @@ func get_pathing_target():
 	return get_global_mouse_position()
 
 
-func configure_virtual_joystick(mode):
+func configure_virtual_joystick():
+	var mode = UserSettings.config.get_value("control", "virtual_joystick", "auto")
 	if mode == "always":
 		virtual_joystick.visible = true
 	elif mode == "never":
 		virtual_joystick.visible = false
 	elif mode == "auto":
 		virtual_joystick.visible = DisplayServer.is_touchscreen_available()
+		
+	if virtual_joystick.visible:
+		var scale = UserSettings.config.get_value("control", "virtual_joystick_scale", 1)
+		virtual_joystick.scale = Vector2(scale, scale)
+		
+		var x = UserSettings.config.get_value("control", "virtual_joystick_position_x", 100)
+		virtual_joystick.global_position.x = max(0,((x / 100) * get_viewport_rect().size.x) - (virtual_joystick.size.x * scale))
+		virtual_joystick.global_position.y = get_viewport_rect().size.y - (virtual_joystick.size.y * scale)
 
 func _ready():
-	configure_virtual_joystick(UserSettings.config.get_value("control", "virtual_joystick", "auto"))	
-	disable_pathing = !UserSettings.config.get_value("control", "click_to_move", true)
+	configure_virtual_joystick()	
+	disable_pathing = !UserSettings.config.get_value("control", "click_to_move", not DisplayServer.is_touchscreen_available())
 	var music_node = owner.get_node(NodePath("snd_Music"))
 	disable_pausing = false
 	disable_pathing_input = false
