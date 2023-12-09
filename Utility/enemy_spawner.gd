@@ -3,6 +3,8 @@ extends Node2D
 
 @export var spawns: Array[Spawn_info] = []
 @export var spawn_area: Rect2 = Rect2(0,0,0,0)
+@export var no_spawn_area: Rect2 = Rect2(0,0,0,0)
+@export var spawn_cap = 0
 @export var track_vertical = false
 @export var track_horizontal = false
 
@@ -12,13 +14,19 @@ extends Node2D
 
 signal changetime(time)
 signal enemy_spawned(enemy_type)
+signal update_enemy_counter(counter)
+
+var enemy_counter = 0
 
 func spawn_enemies():
 	var enemy_spawns = spawns
 	if track_vertical:
-		spawn_area.position.y = player.global_position.y
+		spawn_area.position.y = player.global_position.y		
 	if track_horizontal:
 		spawn_area.position.x = player.global_position.x	
+	# "no spawn area" always tracks
+	no_spawn_area.position = player.global_position
+		
 
 	for i in enemy_spawns:
 		if time >= i.time_start and time <= i.time_end:
@@ -28,20 +36,35 @@ func spawn_enemies():
 				i.spawn_delay_counter = 0
 				var new_enemy = i.enemy
 				var counter = 0
-				while  counter < i.enemy_num:
+				var enemies_to_spawn = i.enemy_num
+				if spawn_cap > 0 and not i.ignore_spawn_cap:
+					enemies_to_spawn = min(i.enemy_num, max(spawn_cap - enemy_counter, 0))
+				while counter < enemies_to_spawn:
 					var random_position = get_random_position()
+					if no_spawn_area.get_area() != 0:
+						while no_spawn_area.has_point(random_position):
+							random_position = get_random_position()
 					var enemy_spawn = new_enemy.instantiate()
 					enemy_spawn.global_position = random_position
-					enemy_spawn.top_level = true					
+					enemy_spawn.top_level = true
+					enemy_spawn.connect("tree_exited", _on_enemy_despawned)
+					enemy_spawn.add_to_group("enemy")
 					add_sibling.call_deferred(enemy_spawn)
 					emit_signal("enemy_spawned",enemy_spawn)
 					counter += 1
+					enemy_counter += 1
+					emit_signal("update_enemy_counter", enemy_counter)
 	
+func _on_enemy_despawned():
+	enemy_counter -= 1
+	emit_signal("update_enemy_counter", enemy_counter)
 
 func _ready():
-	connect("enemy_spawned",Callable(player,"_on_enemy_spawned"))
+	connect("enemy_spawned",Callable(player,"_on_enemy_spawned"))	
+	connect("update_enemy_counter", Callable(player, "_update_enemy_counter"))
 	spawn_enemies()
 	connect("changetime",Callable(player,"change_time"))
+	
 	
 
 func _on_timer_timeout():
@@ -105,5 +128,5 @@ func get_random_position():
 			spawn_pos2 = bottom_left
 	
 	var x_spawn = randf_range(spawn_pos1.x, spawn_pos2.x)
-	var y_spawn = randf_range(spawn_pos1.y,spawn_pos2.y)
+	var y_spawn = randf_range(spawn_pos1.y,spawn_pos2.y)	
 	return Vector2(x_spawn,y_spawn)

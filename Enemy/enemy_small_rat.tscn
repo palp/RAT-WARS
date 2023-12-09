@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://dmricbg6s8ogx"]
+[gd_scene load_steps=14 format=3 uid="uid://dmricbg6s8ogx"]
 
 [ext_resource type="Script" path="res://Enemy/enemy.gd" id="1_5qb5b"]
 [ext_resource type="Material" uid="uid://ccy0wram7ovxy" path="res://shaders/enemy_hurt_material.tres" id="2_ddor4"]
@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://uhr6mtuisqm1" path="res://Utility/hit_box.tscn" id="4_iihv1"]
 [ext_resource type="AudioStream" uid="uid://bi7t7cjthnhhc" path="res://Audio/SoundEffect/enemy_hit.ogg" id="5_aknlk"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_yrkus"]
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5768e"]
 
 [sub_resource type="Animation" id="Animation_u7jco"]
 resource_name = "RESET"
@@ -225,23 +225,27 @@ _data = {
 "walk": SubResource("Animation_w8hns")
 }
 
-[node name="enemy_small_rat" type="CharacterBody2D"]
-scale = Vector2(3, 3)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yrkus"]
+size = Vector2(22, 14.4167)
+
+[node name="enemy_small_rat" type="RigidBody2D"]
 collision_layer = 5
 collision_mask = 5
-motion_mode = 1
+linear_damp_mode = 1
 script = ExtResource("1_5qb5b")
 movement_speed = 50.0
 enemy_name = "small_rat"
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 material = ExtResource("2_ddor4")
+scale = Vector2(3, 3)
 texture = ExtResource("2_ll5kp")
 vframes = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(6.25, 1.5)
-shape = SubResource("RectangleShape2D_yrkus")
+position = Vector2(6.25, 12.25)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_5768e")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../CollisionShape2D")
@@ -250,14 +254,16 @@ libraries = {
 }
 
 [node name="HurtBox" parent="." instance=ExtResource("3_ryj0u")]
+scale = Vector2(3, 3)
 collision_mask = 4
 HurtBoxType = 1
 
 [node name="CollisionShape2D" parent="HurtBox" index="0"]
-position = Vector2(0, 8)
+position = Vector2(1, 7.20833)
 shape = SubResource("RectangleShape2D_yrkus")
 
 [node name="HitBox" parent="." instance=ExtResource("4_iihv1")]
+scale = Vector2(3, 3)
 collision_layer = 2
 
 [node name="CollisionShape2D" parent="HitBox" index="0"]
