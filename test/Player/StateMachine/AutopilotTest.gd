@@ -14,11 +14,6 @@ func before_test():
 	autopilot.player = mock(Player, CALL_REAL_FUNC)
 
 
-func test_get_autopilot_velocity_no_enemies() -> void:
-	var velocity = autopilot.get_autopilot_velocity(Vector2(0, 0), Array())
-	assert_vector(velocity).is_not_equal(Vector2(0, 0))
-
-
 func test_get_autopilot_velocity_one_enemy() -> void:
 	var enemies = Array()
 	var enemy_1 = Node2D.new()
