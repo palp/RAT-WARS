@@ -1,11 +1,10 @@
-[gd_scene load_steps=17 format=3 uid="uid://defnd6dnswld6"]
+[gd_scene load_steps=16 format=3 uid="uid://defnd6dnswld6"]
 
 [ext_resource type="Script" path="res://LaunchSequence/CutsceneNode/cutscene.gd" id="1_56ynt"]
 [ext_resource type="Texture2D" uid="uid://cqqc35xxc1nb6" path="res://LaunchSequence/CutsceneNode/HEALTHRATWARS_Slide3TEST.png" id="2_o541v"]
 [ext_resource type="FontFile" uid="uid://dwsu4toemuoud" path="res://assets/ui/fonts/Kenney Pixel.ttf" id="3_fo016"]
 [ext_resource type="Texture2D" uid="uid://6ci01s73btcv" path="res://LaunchSequence/CutsceneNode/cutscene_frame_spritsheet.png" id="3_pdwwe"]
 [ext_resource type="PackedScene" uid="uid://busl4h5eoqytv" path="res://LaunchSequence/ScreenFadeInAndOut/screen_fade_in_and_out.tscn" id="4_77mdg"]
-[ext_resource type="Texture2D" uid="uid://21svelihi0r4" path="res://LaunchSequence/OpeningCutscene/Slides/slide_1.png" id="4_jf72y"]
 [ext_resource type="Texture2D" uid="uid://3jo5pmka0dj7" path="res://LaunchSequence/CutsceneNode/next_indicator.png" id="6_pp86k"]
 [ext_resource type="Texture2D" uid="uid://5s85pspimmq2" path="res://LaunchSequence/CutsceneNode/skip_button.png" id="9_5h4l7"]
 
@@ -75,64 +74,6 @@ animations = [{
 [node name="cutscene" type="Node"]
 script = ExtResource("1_56ynt")
 
-[node name="Control" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 1536.0
-offset_bottom = 864.0
-
-[node name="BlackBackground" type="ColorRect" parent="Control"]
-visible = false
-material = SubResource("ShaderMaterial_vcmtu")
-layout_mode = 0
-offset_left = -25.0
-offset_top = -20.0
-offset_right = 1561.0
-offset_bottom = 884.0
-color = Color(0, 0, 0, 1)
-
-[node name="SlideImage" type="Sprite2D" parent="Control"]
-material = SubResource("ShaderMaterial_j5tdk")
-position = Vector2(768, 432)
-scale = Vector2(3, 3)
-texture = ExtResource("4_jf72y")
-
-[node name="CutsceneFrame" type="Sprite2D" parent="Control"]
-scale = Vector2(3, 3)
-texture = ExtResource("3_pdwwe")
-offset = Vector2(256, 144)
-vframes = 8
-frame = 7
-
-[node name="Text" type="RichTextLabel" parent="Control"]
-layout_mode = 2
-offset_left = 104.0
-offset_top = 704.0
-offset_right = 1408.0
-offset_bottom = 848.0
-theme = SubResource("Theme_egyf8")
-theme_override_fonts/normal_font = ExtResource("3_fo016")
-text = "Smaple text Smaple textSmaple textSmaple textSmaple textSmaple textSmaple textSmaple textSmaple textSmaple textSmaple textSmaple textSmaple "
-
-[node name="Timer" type="Timer" parent="Control/Text"]
-
-[node name="NextIndicator" type="AnimatedSprite2D" parent="Control"]
-position = Vector2(1448, 800)
-scale = Vector2(3, 3)
-sprite_frames = SubResource("SpriteFrames_s7oin")
-frame = 1
-frame_progress = 0.227442
-
-[node name="Button" type="Button" parent="Control"]
-layout_mode = 0
-offset_left = 1288.0
-offset_right = 1536.0
-offset_bottom = 128.0
-icon = ExtResource("9_5h4l7")
-expand_icon = true
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-
 [node name="TimerIgnoreInput" type="Timer" parent="."]
 wait_time = 0.7
 one_shot = true
@@ -143,7 +84,76 @@ position = Vector2(768, 432)
 scale = Vector2(3, 3)
 texture = ExtResource("2_o541v")
 
-[node name="ScreenFadeInAndOut" parent="." instance=ExtResource("4_77mdg")]
-position = Vector2(776, 440)
-
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+
+[node name="BlackBackground" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_vcmtu")
+offset_left = -25.0
+offset_top = -20.0
+offset_right = 1561.0
+offset_bottom = 884.0
+color = Color(0, 0, 0, 1)
+
+[node name="SlideImage" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_j5tdk")
+position = Vector2(768, 432)
+scale = Vector2(3, 3)
+
+[node name="CutsceneFrame" type="Sprite2D" parent="."]
+scale = Vector2(3, 3)
+texture = ExtResource("3_pdwwe")
+offset = Vector2(256, 144)
+vframes = 8
+
+[node name="Text" type="RichTextLabel" parent="."]
+offset_left = 104.0
+offset_top = 704.0
+offset_right = 1360.0
+offset_bottom = 848.0
+theme = SubResource("Theme_egyf8")
+theme_override_fonts/normal_font = ExtResource("3_fo016")
+theme_override_font_sizes/normal_font_size = 48
+text = "Sample Text
+"
+
+[node name="TextSpeedTimer" type="Timer" parent="Text"]
+
+[node name="ButtonSkip" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 1216.0
+offset_right = 1536.0
+offset_bottom = 200.0
+
+[node name="Sprite" type="Sprite2D" parent="ButtonSkip"]
+position = Vector2(128, -112)
+scale = Vector2(3, 3)
+texture = ExtResource("9_5h4l7")
+offset = Vector2(30, 15)
+
+[node name="ButtonSkipHideTimer" type="Timer" parent="ButtonSkip"]
+wait_time = 2.0
+
+[node name="ButtonNext" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 1280.0
+offset_top = 640.0
+offset_right = 1536.0
+offset_bottom = 863.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="ButtonNext"]
+position = Vector2(128, 136)
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_s7oin")
+frame_progress = 0.682845
+
+[node name="ScreenFadeInAndOut" parent="." instance=ExtResource("4_77mdg")]
+position = Vector2(768, 431)
+
+[connection signal="texture_changed" from="SlideImage" to="." method="_on_slide_changed"]
+[connection signal="timeout" from="Text/TextSpeedTimer" to="." method="_on_text_speed_timer_timeout"]
+[connection signal="gui_input" from="ButtonSkip" to="." method="_input_skip_button"]
+[connection signal="timeout" from="ButtonSkip/ButtonSkipHideTimer" to="." method="show_skip"]
+[connection signal="gui_input" from="ButtonNext" to="." method="_input_next_button"]
+[connection signal="transition_in_progress" from="ScreenFadeInAndOut" to="." method="_on_transition_in_progress"]
