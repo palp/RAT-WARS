@@ -132,7 +132,7 @@ autopilot = false
 spawns = Array[ExtResource("6_pkriu")]([SubResource("Resource_03m25"), SubResource("Resource_ij20a"), SubResource("Resource_68oxv"), SubResource("Resource_l8y0x"), SubResource("Resource_daq1w"), SubResource("Resource_0gpiy"), SubResource("Resource_4teun"), SubResource("Resource_rx6id"), SubResource("Resource_t2np8"), SubResource("Resource_8igqf")])
 spawn_area = Rect2(0, -700, 1000, 1400)
 no_spawn_area = Rect2(0, 0, 500, 600)
-spawn_cap = 500
+spawn_cap = 275
 track_horizontal = true
 
 [node name="Loot" type="Node2D" parent="." groups=["loot"]]
