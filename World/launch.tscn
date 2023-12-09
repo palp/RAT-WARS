@@ -124,7 +124,7 @@ track_horizontal = true
 [node name="Loot" type="Node2D" parent="." groups=["loot"]]
 
 [node name="snd_Music" type="AudioStreamPlayer" parent="."]
-process_mode = 3
+process_mode = 1
 stream = ExtResource("12_ayp3p")
 volume_db = -15.0
 autoplay = true
