@@ -284,14 +284,14 @@ func _input_skip_button(event: InputEvent):
 func show_skip():
 	match skip_visible:
 		true:
-			var tween = get_tree().create_tween()
+			var tween = create_tween()
 			tween.tween_property(indicator_skip, "position", Vector2(indicator_skip.position.x, -122), 0.1)
 			tween.tween_interval(0.2)
 			tween.tween_property(self,"skip_visible",false, 0)
 			pass
 		false:
 			skip_visible = true
-			var tween = get_tree().create_tween()
+			var tween = create_tween()
 			tween.tween_property(indicator_skip, "position", Vector2(indicator_skip.position.x, 24), 0.25)
 			tween.tween_interval(0.25)
 			tween.tween_callback(get_node("ButtonSkip/ButtonSkipHideTimer").start.bind(2))
