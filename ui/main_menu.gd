@@ -96,6 +96,13 @@ func _on_cutscenes_button_pressed():
 		cutscenes_container.visible = true
 		
 func play_cutscene(name):
+	# cutscene player does not currently work when paused
+	#get_tree().paused = true
 	var cutscene_player = cutscene_scene.instantiate()
+	cutscene_player.connect("tree_exited", _on_cutscene_ended)
 	cutscene_player.scene_title = name	
 	add_child(cutscene_player)
+
+func _on_cutscene_ended():
+	#get_tree().paused = false
+	pass
