@@ -1,7 +1,6 @@
 extends RigidBody2D
 class_name EnemyBase
 
-
 @export var movement_speed = 20.0
 @export var hp = 10
 @export var knockback_recovery = 3.5
@@ -40,29 +39,32 @@ signal remove_from_array(object)
 func _ready():
 	gravity_scale = 0
 	freeze_mode = RigidBody2D.FREEZE_MODE_KINEMATIC
-	lock_rotation = true	
+	lock_rotation = true
 	anim.play("walk")
 	anim.connect("animation_finished", _on_animation_finished)
 	hitBox.damage = enemy_damage
 
+
 func _on_animation_finished(_animation_name):
-	anim.play("walk")	
+	anim.play("walk")
 	is_attacking = false
-	
+
+
 func _physics_process(_delta):
 	if is_attacking:
 		attack_slide_wait -= _delta
 
-func _integrate_forces(_state):	
+
+func _integrate_forces(_state):
 	var direction = global_position.direction_to(player.global_position)
-	knockback = knockback.move_toward(Vector2.ZERO, knockback_recovery)	
-		
+	knockback = knockback.move_toward(Vector2.ZERO, knockback_recovery)
+
 	if not is_attacking:
 		if dotTimer.time_left > 0:
-			linear_velocity = direction*movement_speed*slow_percent
+			linear_velocity = direction * movement_speed * slow_percent
 			hp -= tick_damage
-		else: 
-			linear_velocity = direction*movement_speed				
+		else:
+			linear_velocity = direction * movement_speed
 		linear_velocity += knockback
 		if attack_anim_distance > 0:
 			var distance = global_position.distance_to(player.global_position)
@@ -70,11 +72,11 @@ func _integrate_forces(_state):
 				anim.play("attack")
 				is_attacking = true
 				if attack_slide_velocity > 0 and attack_slide_start > 0:
-					attack_slide_wait = attack_slide_start	
+					attack_slide_wait = attack_slide_start
 	elif not is_attack_sliding:
 		linear_velocity = Vector2.ZERO
 		if attack_slide_wait <= 0:
-			linear_velocity = direction*attack_slide_velocity
+			linear_velocity = direction * attack_slide_velocity
 			is_attack_sliding = true
 			attack_slide_wait = attack_slide_stop
 	else:
@@ -86,10 +88,11 @@ func _integrate_forces(_state):
 	if direction.x > 0.1:
 		sprite.flip_h = false
 	elif direction.x < -0.1:
-		sprite.flip_h = true	
-	
+		sprite.flip_h = true
+
+
 func death():
-	emit_signal("remove_from_array",self)	
+	emit_signal("remove_from_array", self)
 	if player != null:
 		if player.kills == null:
 			player.kills = {}
@@ -97,19 +100,20 @@ func death():
 		if not player.kills.has(enemy_name):
 			player.kills[enemy_name] = 1
 		else:
-			player.kills[enemy_name] += 1		
+			player.kills[enemy_name] += 1
 
 	var enemy_death = death_anim.instantiate()
 	if trigger_victory:
 		enemy_death.connect("tree_exited", player.victory)
 	enemy_death.scale = sprite.scale
 	enemy_death.global_position = global_position
-	get_parent().call_deferred("add_child",enemy_death)
+	get_parent().call_deferred("add_child", enemy_death)
 	var new_gem = exp_gem.instantiate()
 	new_gem.global_position = global_position
 	new_gem.experience = experience
-	loot_base.call_deferred("add_child",new_gem)	
+	loot_base.call_deferred("add_child", new_gem)
 	queue_free()
+
 
 func _on_hurt_box_hurt(damage, angle, knockback_amount):
 	hurt_show()
@@ -120,7 +124,7 @@ func _on_hurt_box_hurt(damage, angle, knockback_amount):
 		HealthBarBoss1.max_value = maxhp
 		HealthBarBoss1.value = hp
 	if hp <= 0:
-		$AnimationPlayer.play("death")		
+		$AnimationPlayer.play("death")
 		freeze = true
 	else:
 		snd_hit.play()
@@ -132,11 +136,12 @@ func _on_hurt_box_dot(damage, duration, slow):
 	slow_percent = (1.0 - slow)
 	dotTimer.start()
 	if hp <= 0:
-		$AnimationPlayer.play("death")		
+		$AnimationPlayer.play("death")
 		freeze = true
 	else:
 		snd_hit.play
-		
+
+
 # Red flash effect on enemy taking damage
 # The resources is at res://shaders/enemy_hurt_meterial.tres, uses enemy_hurt.gdshader
 # To set up
@@ -144,8 +149,8 @@ func _on_hurt_box_dot(damage, duration, slow):
 # In "Inspector" window, under "CanvasItem" props
 # "Material" -> "Quick Load" -> "enemy_hurt_meterial.tres"
 func hurt_show():
-	var tween = get_tree().create_tween();
-	tween.tween_callback(sprite.material.set_shader_parameter.bind("hurt_flash",1))
+	var tween = get_tree().create_tween()
+	tween.tween_callback(sprite.material.set_shader_parameter.bind("hurt_flash", 1))
 	tween.tween_interval(disableTimer.wait_time)
-	tween.tween_callback(sprite.material.set_shader_parameter.bind("hurt_flash",0))
+	tween.tween_callback(sprite.material.set_shader_parameter.bind("hurt_flash", 0))
 	pass
