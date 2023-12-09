@@ -12,6 +12,7 @@ var speed = -1
 @onready var sprite = $Sprite2D
 @onready var collision = $CollisionShape2D
 @onready var sound = $snd_collected
+@onready var player = get_tree().get_first_node_in_group("player")
 
 func _ready():
 	if experience < 5:
@@ -27,7 +28,8 @@ func _physics_process(delta):
 		speed += 2*delta
 
 func collect():
-	sound.play()
+	if not player.autopilot:
+		sound.play()
 	collision.call_deferred("set","disabled",true)
 	sprite.visible = false
 	return experience

@@ -288,12 +288,12 @@ func _input(event):
 	if disable_upgrades and event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and not event.is_pressed():
 		disable_upgrades = false
 
-func levelup():	
-	sndLevelUp.play()
+func levelup():		
 	lblLevel.text = str("LEVEL: ", experience_level)
 	if autopilot:
 		upgrade_character(get_random_item())
 		return
+	sndLevelUp.play()
 	disable_pathing_input = true
 	disable_pausing = true
 	if Input.is_action_pressed("click"):
