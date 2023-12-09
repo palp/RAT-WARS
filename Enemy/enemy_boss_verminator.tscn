@@ -296,10 +296,9 @@ gradient = SubResource("Gradient_1vt5j")
 width = 128
 height = 16
 
-[node name="enemy_boss_verminator" type="CharacterBody2D"]
+[node name="enemy_boss_verminator" type="RigidBody2D"]
 collision_layer = 5
 collision_mask = 5
-motion_mode = 1
 script = ExtResource("1_q3uwj")
 movement_speed = 150.0
 hp = 40000

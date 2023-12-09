@@ -110,3 +110,4 @@ offset_bottom = -449.0
 [connection signal="pressed" from="MarginContainer/VBoxContainer/bonus_button/unlock_button" to="." method="_on_unlock_button_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/scores_button" to="." method="_on_scores_button_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/credits_button" to="." method="_on_credits_button_pressed"]
+[connection signal="hidden" from="options_menu" to="." method="_on_options_menu_hidden"]

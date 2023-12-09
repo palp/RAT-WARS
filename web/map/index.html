@@ -31,6 +31,19 @@
                 .attr("class", "land")
                 .attr("d", path);
 
+            let tooltip = d3.select("body")
+                .append("div")
+                .style("position", "absolute")
+                .style("text-align", "center")
+                .style("padding", "15px")
+                .style("font", "12px sans-serif")
+                .style("background", "#03bafc")
+                .style("border", "0px")
+                .style("border-radius", "8px")
+                .style("z-index", "10")
+                .style("visibility", "hidden")
+                .text("a simple tooltip");
+
             svg.selectAll(".pin")
                 .data(Object.values(data))
                 .enter().append("circle", ".pin")
@@ -43,6 +56,14 @@
                         Number(d.latitude),
                         Number(d.longitude)
                     ]) + ")";
+                })
+                .on("mouseover", function(d) {
+                    tooltip.text(`${d.city}, ${d.region}, ${d.country} ${d.kills.total} DEAD RATS`);
+                    return tooltip.style("visibility", "visible");
+                })
+                .on("mousemove", function() {
+                    return tooltip.style("top", (d3.event.pageY - 10) + "px")
+                        .style("left", (d3.event.pageX + 10) + "px");
                 })
         });
     });

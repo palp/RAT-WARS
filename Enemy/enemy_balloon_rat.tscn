@@ -10,10 +10,10 @@
 [ext_resource type="AudioStream" uid="uid://bi7t7cjthnhhc" path="res://Audio/SoundEffect/enemy_hit.ogg" id="5_aknlk"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_6vuew"]
-radius = 249.15
+radius = 152.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_n3lwc"]
-radius = 226.887
+radius = 289.9
 
 [sub_resource type="Animation" id="Animation_yqh0e"]
 resource_name = "RESET"
@@ -218,14 +218,12 @@ _data = {
 "walk": SubResource("Animation_lqp1w")
 }
 
-[node name="balloon_rat" type="CharacterBody2D"]
-scale = Vector2(0.3, 0.3)
+[node name="balloon_rat" type="RigidBody2D"]
 collision_layer = 5
 collision_mask = 5
-motion_mode = 1
 script = ExtResource("1_d8g1e")
 hp = 30
-knockback_recovery = 7
+knockback_recovery = 7.0
 experience = 3
 enemy_damage = 6
 enemy_name = "balloon_rat"
@@ -234,16 +232,18 @@ death_anim = ExtResource("2_6durt")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 z_index = 1
 material = ExtResource("3_hl6bo")
-scale = Vector2(8, 8)
+scale = Vector2(2.4, 2.4)
 texture = ExtResource("2_6qfiv")
 offset = Vector2(0, -3.33333)
 vframes = 7
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(2.08165e-12, 2.08165e-12)
+scale = Vector2(0.3, 0.3)
 shape = SubResource("CircleShape2D_6vuew")
 
 [node name="HurtBox" parent="." instance=ExtResource("3_ivxq8")]
+scale = Vector2(0.3, 0.3)
 collision_layer = 5
 collision_mask = 5
 HurtBoxType = 1
@@ -252,6 +252,7 @@ HurtBoxType = 1
 shape = SubResource("CircleShape2D_n3lwc")
 
 [node name="HitBox" parent="." instance=ExtResource("4_vdnsx")]
+scale = Vector2(0.3, 0.3)
 collision_layer = 2
 
 [node name="CollisionShape2D" parent="HitBox" index="0"]

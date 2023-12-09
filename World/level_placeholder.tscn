@@ -1,107 +1,107 @@
 [gd_scene load_steps=26 format=3 uid="uid://b4kwl8s8nbbnh"]
 
-[ext_resource type="Script" path="res://TerrainGen.gd" id="1_qwf6y"]
-[ext_resource type="PackedScene" uid="uid://b854gcq3q7qme" path="res://assets/world/the_sprawl_terrain_packs.tscn" id="2_2dud3"]
-[ext_resource type="PackedScene" uid="uid://6rkaprmq4ect" path="res://Player/player.tscn" id="2_40uwv"]
-[ext_resource type="Theme" uid="uid://bwayc6rbhtvxj" path="res://assets/ui/theme/HEALTH_theme.tres" id="3_8j42b"]
-[ext_resource type="PackedScene" uid="uid://ba2claihwes2y" path="res://Utility/enemy_spawner.tscn" id="3_p01g4"]
-[ext_resource type="PackedScene" uid="uid://dmricbg6s8ogx" path="res://Enemy/enemy_small_rat.tscn" id="4_detmb"]
-[ext_resource type="PackedScene" uid="uid://gvm5jcbbgwdv" path="res://Enemy/enemy_mutated_rat.tscn" id="4_ee8bm"]
-[ext_resource type="PackedScene" uid="uid://do8nu166getvr" path="res://ui/pause_menu.tscn" id="5_e8x4x"]
-[ext_resource type="Script" path="res://Utility/spawn_info.gd" id="5_jj7s8"]
-[ext_resource type="PackedScene" uid="uid://cicd0plbiord6" path="res://Enemy/enemy_spitter_rat.tscn" id="7_pxitb"]
-[ext_resource type="PackedScene" uid="uid://dhwhbsqu47ocn" path="res://Enemy/enemy_balloon_rat.tscn" id="8_rm5oc"]
-[ext_resource type="PackedScene" uid="uid://x87jrsdtky6u" path="res://Enemy/enemy_boss_verminator.tscn" id="9_iksbi"]
-[ext_resource type="AudioStream" uid="uid://7xlmshasr1ic" path="res://Audio/Music/UNLOVED LOOP.mp3" id="11_jv7o4"]
-[ext_resource type="Script" path="res://Audio/Music/snd_Music.gd" id="11_ovtx6"]
-[ext_resource type="Script" path="res://ui/pause_button.gd" id="13_wx351"]
+[ext_resource type="Script" path="res://TerrainGen.gd" id="1_viojc"]
+[ext_resource type="PackedScene" uid="uid://b854gcq3q7qme" path="res://assets/world/the_sprawl_terrain_packs.tscn" id="2_2ymm1"]
+[ext_resource type="PackedScene" uid="uid://6rkaprmq4ect" path="res://Player/player.tscn" id="3_k8jt8"]
+[ext_resource type="PackedScene" uid="uid://ba2claihwes2y" path="res://Utility/enemy_spawner.tscn" id="4_3n8hx"]
+[ext_resource type="PackedScene" uid="uid://dmricbg6s8ogx" path="res://Enemy/enemy_small_rat.tscn" id="5_yax7c"]
+[ext_resource type="Script" path="res://Utility/spawn_info.gd" id="6_pkriu"]
+[ext_resource type="PackedScene" uid="uid://gvm5jcbbgwdv" path="res://Enemy/enemy_mutated_rat.tscn" id="7_s01tw"]
+[ext_resource type="PackedScene" uid="uid://cicd0plbiord6" path="res://Enemy/enemy_spitter_rat.tscn" id="8_m0oqi"]
+[ext_resource type="PackedScene" uid="uid://dhwhbsqu47ocn" path="res://Enemy/enemy_balloon_rat.tscn" id="9_xxbhv"]
+[ext_resource type="PackedScene" uid="uid://x87jrsdtky6u" path="res://Enemy/enemy_boss_verminator.tscn" id="10_o0l3f"]
+[ext_resource type="AudioStream" uid="uid://7xlmshasr1ic" path="res://Audio/Music/UNLOVED LOOP.mp3" id="11_eh58p"]
+[ext_resource type="Script" path="res://Audio/Music/snd_Music.gd" id="12_8hgxh"]
+[ext_resource type="Theme" uid="uid://bwayc6rbhtvxj" path="res://assets/ui/theme/HEALTH_theme.tres" id="13_ifjt7"]
+[ext_resource type="Script" path="res://ui/pause_button.gd" id="14_1dwss"]
+[ext_resource type="PackedScene" uid="uid://do8nu166getvr" path="res://ui/pause_menu.tscn" id="15_kiind"]
 
 [sub_resource type="Resource" id="Resource_03m25"]
-script = ExtResource("5_jj7s8")
+script = ExtResource("6_pkriu")
 time_start = 0
 time_end = 30
-enemy = ExtResource("4_detmb")
+enemy = ExtResource("5_yax7c")
 enemy_num = 1
 enemy_spawn_delay = 0
 ignore_spawn_cap = false
 
 [sub_resource type="Resource" id="Resource_ij20a"]
-script = ExtResource("5_jj7s8")
+script = ExtResource("6_pkriu")
 time_start = 30
 time_end = 210
-enemy = ExtResource("4_detmb")
+enemy = ExtResource("5_yax7c")
 enemy_num = 2
 enemy_spawn_delay = 0
 ignore_spawn_cap = false
 
 [sub_resource type="Resource" id="Resource_68oxv"]
-script = ExtResource("5_jj7s8")
+script = ExtResource("6_pkriu")
 time_start = 60
 time_end = 180
-enemy = ExtResource("4_ee8bm")
+enemy = ExtResource("7_s01tw")
 enemy_num = 1
 enemy_spawn_delay = 1
 ignore_spawn_cap = false
 
 [sub_resource type="Resource" id="Resource_l8y0x"]
-script = ExtResource("5_jj7s8")
+script = ExtResource("6_pkriu")
 time_start = 180
 time_end = 210
-enemy = ExtResource("7_pxitb")
+enemy = ExtResource("8_m0oqi")
 enemy_num = 1
 enemy_spawn_delay = 2
 ignore_spawn_cap = false
 
 [sub_resource type="Resource" id="Resource_daq1w"]
-script = ExtResource("5_jj7s8")
+script = ExtResource("6_pkriu")
 time_start = 210
 time_end = 240
-enemy = ExtResource("4_ee8bm")
+enemy = ExtResource("7_s01tw")
 enemy_num = 2
 enemy_spawn_delay = 0
 ignore_spawn_cap = false
 
 [sub_resource type="Resource" id="Resource_0gpiy"]
-script = ExtResource("5_jj7s8")
+script = ExtResource("6_pkriu")
 time_start = 240
 time_end = 400
-enemy = ExtResource("7_pxitb")
+enemy = ExtResource("8_m0oqi")
 enemy_num = 2
 enemy_spawn_delay = 2
 ignore_spawn_cap = false
 
 [sub_resource type="Resource" id="Resource_4teun"]
-script = ExtResource("5_jj7s8")
+script = ExtResource("6_pkriu")
 time_start = 240
 time_end = 400
-enemy = ExtResource("8_rm5oc")
+enemy = ExtResource("9_xxbhv")
 enemy_num = 2
 enemy_spawn_delay = 1
 ignore_spawn_cap = false
 
 [sub_resource type="Resource" id="Resource_rx6id"]
-script = ExtResource("5_jj7s8")
+script = ExtResource("6_pkriu")
 time_start = 270
 time_end = 400
-enemy = ExtResource("4_ee8bm")
+enemy = ExtResource("7_s01tw")
 enemy_num = 4
 enemy_spawn_delay = 0
 ignore_spawn_cap = false
 
 [sub_resource type="Resource" id="Resource_t2np8"]
-script = ExtResource("5_jj7s8")
+script = ExtResource("6_pkriu")
 time_start = 300
 time_end = 300
-enemy = ExtResource("9_iksbi")
+enemy = ExtResource("10_o0l3f")
 enemy_num = 1
 enemy_spawn_delay = 0
 ignore_spawn_cap = true
 
 [sub_resource type="Resource" id="Resource_8igqf"]
-script = ExtResource("5_jj7s8")
+script = ExtResource("6_pkriu")
 time_start = 315
 time_end = 400
-enemy = ExtResource("4_detmb")
+enemy = ExtResource("5_yax7c")
 enemy_num = 15
 enemy_spawn_delay = 2
 ignore_spawn_cap = false
@@ -117,33 +117,33 @@ region_enabled = true
 region_rect = Rect2(-4000, -4000, 4000, 4000)
 
 [node name="TerrainGenOrigin" type="Node2D" parent="." node_paths=PackedStringArray("player")]
-script = ExtResource("1_qwf6y")
-packedscene_terrain_horizontal = ExtResource("2_2dud3")
+script = ExtResource("1_viojc")
+packedscene_terrain_horizontal = ExtResource("2_2ymm1")
 player = NodePath("../Player")
 scroll_horizontal = true
 
-[node name="Player" parent="." instance=ExtResource("2_40uwv")]
+[node name="Player" parent="." instance=ExtResource("3_k8jt8")]
 top_level = true
 z_index = 1
 position = Vector2(-117, -7)
 autopilot = false
 
-[node name="EnemySpawner" parent="." instance=ExtResource("3_p01g4")]
-spawns = Array[ExtResource("5_jj7s8")]([SubResource("Resource_03m25"), SubResource("Resource_ij20a"), SubResource("Resource_68oxv"), SubResource("Resource_l8y0x"), SubResource("Resource_daq1w"), SubResource("Resource_0gpiy"), SubResource("Resource_4teun"), SubResource("Resource_rx6id"), SubResource("Resource_t2np8"), SubResource("Resource_8igqf")])
+[node name="EnemySpawner" parent="." instance=ExtResource("4_3n8hx")]
+spawns = Array[ExtResource("6_pkriu")]([SubResource("Resource_03m25"), SubResource("Resource_ij20a"), SubResource("Resource_68oxv"), SubResource("Resource_l8y0x"), SubResource("Resource_daq1w"), SubResource("Resource_0gpiy"), SubResource("Resource_4teun"), SubResource("Resource_rx6id"), SubResource("Resource_t2np8"), SubResource("Resource_8igqf")])
 spawn_area = Rect2(0, -700, 1000, 1400)
 no_spawn_area = Rect2(0, 0, 500, 600)
-spawn_cap = 150
+spawn_cap = 500
 track_horizontal = true
 
 [node name="Loot" type="Node2D" parent="." groups=["loot"]]
 
 [node name="snd_Music" type="AudioStreamPlayer" parent="."]
 process_mode = 3
-stream = ExtResource("11_jv7o4")
+stream = ExtResource("11_eh58p")
 volume_db = -15.0
 autoplay = true
 bus = &"Music"
-script = ExtResource("11_ovtx6")
+script = ExtResource("12_8hgxh")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 process_mode = 3
@@ -155,7 +155,7 @@ offset_top = 10.0
 offset_right = 1471.0
 offset_bottom = 452.0
 scale = Vector2(0.167781, 0.323374)
-theme = ExtResource("3_8j42b")
+theme = ExtResource("13_ifjt7")
 theme_override_font_sizes/normal_font_size = 255
 text = "RAT WARS"
 
@@ -164,11 +164,11 @@ offset_left = 1423.0
 offset_top = 93.0
 offset_right = 1523.0
 offset_bottom = 149.0
-theme = ExtResource("3_8j42b")
+theme = ExtResource("13_ifjt7")
 text = "Pause"
-script = ExtResource("13_wx351")
+script = ExtResource("14_1dwss")
 
-[node name="pause_menu" parent="CanvasLayer" instance=ExtResource("5_e8x4x")]
+[node name="pause_menu" parent="CanvasLayer" instance=ExtResource("15_kiind")]
 unique_name_in_owner = true
 visible = false
 offset_left = 34.0

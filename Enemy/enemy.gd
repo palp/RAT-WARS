@@ -1,4 +1,4 @@
-extends CharacterBody2D
+extends RigidBody2D
 class_name EnemyBase
 
 
@@ -25,7 +25,6 @@ var tick_damage = 0
 @onready var hitBox = $HitBox
 @onready var disableTimer = $HurtBox/DisableTimer
 @onready var dotTimer = $HurtBox/DOTTimer
-@onready var HealthBarBoss1 = get_node("%HealthBarBoss1")
 @onready var maxhp = hp
 
 @export var death_anim = preload("res://Enemy/explosion.tscn")
@@ -39,56 +38,55 @@ signal remove_from_array(object)
 
 
 func _ready():
+	gravity_scale = 0
+	freeze_mode = RigidBody2D.FREEZE_MODE_KINEMATIC
+	lock_rotation = true	
 	anim.play("walk")
 	anim.connect("animation_finished", _on_animation_finished)
 	hitBox.damage = enemy_damage
 
-func _on_animation_finished(animation_name):
-	anim.play("walk")
-	
+func _on_animation_finished(_animation_name):
+	anim.play("walk")	
 	is_attacking = false
-
-func _physics_process(_delta):
-	knockback = knockback.move_toward(Vector2.ZERO, knockback_recovery)
-	var direction = global_position.direction_to(player.global_position)
 	
+func _physics_process(_delta):
+	if is_attacking:
+		attack_slide_wait -= _delta
+
+func _integrate_forces(_state):	
+	var direction = global_position.direction_to(player.global_position)
+	knockback = knockback.move_toward(Vector2.ZERO, knockback_recovery)	
+		
 	if not is_attacking:
 		if dotTimer.time_left > 0:
-			velocity = direction*movement_speed*slow_percent
+			linear_velocity = direction*movement_speed*slow_percent
 			hp -= tick_damage
 		else: 
-			velocity = direction*movement_speed
-		velocity += knockback
-		move_and_slide()
-				
+			linear_velocity = direction*movement_speed				
+		linear_velocity += knockback
 		if attack_anim_distance > 0:
 			var distance = global_position.distance_to(player.global_position)
 			if distance < attack_anim_distance:
 				anim.play("attack")
 				is_attacking = true
 				if attack_slide_velocity > 0 and attack_slide_start > 0:
-					attack_slide_wait = attack_slide_start
+					attack_slide_wait = attack_slide_start	
 	elif not is_attack_sliding:
-		if attack_slide_wait > 0:
-			attack_slide_wait -= _delta
-			if attack_slide_wait <= 0:
-				velocity = direction*attack_slide_velocity
-				is_attack_sliding = true
-				move_and_slide()
-				attack_slide_wait = attack_slide_stop
+		linear_velocity = Vector2.ZERO
+		if attack_slide_wait <= 0:
+			linear_velocity = direction*attack_slide_velocity
+			is_attack_sliding = true
+			attack_slide_wait = attack_slide_stop
 	else:
-		if attack_slide_wait > 0:
-			attack_slide_wait -= _delta
-			if attack_slide_wait <= 0:
-				is_attack_sliding = false
-				velocity = Vector2(0,0)
-		move_and_slide()
-			
-				
+		if attack_slide_wait <= 0:
+			linear_velocity = Vector2.ZERO
+			is_attack_sliding = false
+			is_attacking = false
+
 	if direction.x > 0.1:
 		sprite.flip_h = false
 	elif direction.x < -0.1:
-		sprite.flip_h = true
+		sprite.flip_h = true	
 	
 func death():
 	emit_signal("remove_from_array",self)	
@@ -118,10 +116,12 @@ func _on_hurt_box_hurt(damage, angle, knockback_amount):
 	hp -= damage
 	knockback = angle * knockback_amount
 	if trigger_victory:
+		var HealthBarBoss1 = get_node("%HealthBarBoss1")
 		HealthBarBoss1.max_value = maxhp
 		HealthBarBoss1.value = hp
 	if hp <= 0:
-		$AnimationPlayer.play("death")
+		$AnimationPlayer.play("death")		
+		freeze = true
 	else:
 		snd_hit.play()
 
@@ -132,7 +132,8 @@ func _on_hurt_box_dot(damage, duration, slow):
 	slow_percent = (1.0 - slow)
 	dotTimer.start()
 	if hp <= 0:
-		$AnimationPlayer.play("death")
+		$AnimationPlayer.play("death")		
+		freeze = true
 	else:
 		snd_hit.play
 		
