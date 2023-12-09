@@ -2,8 +2,10 @@ class_name DemoSceneTest
 extends GdUnitTestSuite
 @warning_ignore("unused_parameter")
 @warning_ignore("return_value_discarded")
-const __source = "res://World/demo.tscn"
+const __source = "res://World/launch.tscn"
 
+# Ensure opening cutscene does not play
+UserSettings.config.set_value("cutscene", "opening_played", true)
 
 func test_attract_mode() -> void:
 	var runner := scene_runner(__source)

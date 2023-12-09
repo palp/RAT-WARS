@@ -1,11 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://eno7xtkdwasd"]
+[gd_scene load_steps=6 format=3 uid="uid://eno7xtkdwasd"]
 
 [ext_resource type="Theme" uid="uid://bwayc6rbhtvxj" path="res://assets/ui/theme/HEALTH_theme.tres" id="1_6g7a4"]
 [ext_resource type="Script" path="res://ui/main_menu.gd" id="1_d8lo5"]
 [ext_resource type="PackedScene" uid="uid://t6pr3p1c7edy" path="res://ui/options_menu.tscn" id="2_ij7nk"]
 [ext_resource type="VideoStream" path="res://Video/Credits_Final.ogv" id="3_dkdyw"]
 [ext_resource type="PackedScene" uid="uid://i4j5o8gkuyr0" path="res://ui/leaderboard.tscn" id="3_m6ake"]
-[ext_resource type="PackedScene" uid="uid://defnd6dnswld6" path="res://CutsceneData/CutsceneNode/cutscene.tscn" id="6_dptte"]
 
 [node name="menu" type="Control"]
 layout_mode = 3
@@ -118,10 +117,6 @@ offset_top = 132.0
 offset_right = -944.0
 offset_bottom = -449.0
 
-[node name="cutscene" parent="." instance=ExtResource("6_dptte")]
-unique_name_in_owner = true
-visible = false
-
 [connection signal="finished" from="VideoStreamPlayer" to="." method="_on_video_stream_player_finished"]
 [connection signal="gui_input" from="VideoStreamPlayer" to="." method="_on_video_stream_player_gui_input"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/play_button" to="." method="_on_play_pressed"]
@@ -134,4 +129,3 @@ visible = false
 [connection signal="pressed" from="MarginContainer/VBoxContainer/cutscenes_button/cutscenes_container/intro_button" to="." method="play_cutscene" binds= ["opening"]]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/cutscenes_button/cutscenes_container/credits_button" to="." method="_on_credits_button_pressed"]
 [connection signal="hidden" from="options_menu" to="." method="_on_options_menu_hidden"]
-[connection signal="cutscene_finished" from="cutscene" to="." method="_on_cutscene_cutscene_finished"]
