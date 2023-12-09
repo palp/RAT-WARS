@@ -78,3 +78,8 @@ func _on_video_stream_player_gui_input(_event):
 		# Make sure we end playback regardless of if we're in the loop
 		in_loop = true
 		video_player.stop()
+
+
+func _on_options_menu_hidden():
+	print_debug("Saving")
+	UserSettings.save_volumes(["Master", "Music", "SFX"])

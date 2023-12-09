@@ -39,15 +39,14 @@ text = "Main Menu"
 
 [node name="options_menu" parent="." instance=ExtResource("2_p7c3u")]
 unique_name_in_owner = true
-visible = false
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_bottom = 0.0
-offset_left = -356.0
+offset_left = -462.0
 offset_top = 8.0
-offset_right = -171.0
-offset_bottom = 204.0
+offset_right = -175.0
+offset_bottom = 413.0
 grow_horizontal = 0
 grow_vertical = 1
 

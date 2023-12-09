@@ -4,6 +4,7 @@ extends CharacterBody2D
 @export var autopilot = true
 @export var autopilot_bounds:Rect2 = Rect2(0,0,0,0)
 var disable_pathing_input = false
+var disable_pathing = false
 var disable_pausing = false
 var disable_upgrades = false
 
@@ -14,6 +15,7 @@ var hp = maxhp
 var last_movement = Vector2.UP
 var time = 0
 
+@export var virtual_joystick : VirtualJoystick
 
 var experience = 0
 var experience_level = 1
@@ -83,7 +85,8 @@ signal playervictory
 # These could be abstracted to an input manager
 func check_movement_input():
 	return (
-		Input.is_action_just_pressed("up")
+		(virtual_joystick and virtual_joystick.is_pressed)
+		or Input.is_action_just_pressed("up")
 		or Input.is_action_just_pressed("down")
 		or Input.is_action_just_pressed("right")
 		or Input.is_action_just_pressed("left")
@@ -111,11 +114,13 @@ func set_facing():
 		sprite.offset.x = -sprite.offset.x
 
 
-func check_pathing_input():
-	return not disable_pathing_input and Input.is_action_pressed("click")
+func check_pathing_input():	
+	return (virtual_joystick and not virtual_joystick.is_pressed) and not disable_pathing and not disable_pathing_input and Input.is_action_pressed("click")
 
 
 func get_movement_vector():
+	if virtual_joystick and virtual_joystick.is_pressed:
+		return virtual_joystick.output
 	return Input.get_vector("left", "right", "up", "down")
 
 
@@ -123,7 +128,17 @@ func get_pathing_target():
 	return get_global_mouse_position()
 
 
+func configure_virtual_joystick(mode):
+	if mode == "always":
+		virtual_joystick.visible = true
+	elif mode == "never":
+		virtual_joystick.visible = false
+	elif mode == "auto":
+		virtual_joystick.visible = DisplayServer.is_touchscreen_available()
+
 func _ready():
+	configure_virtual_joystick(UserSettings.config.get_value("control", "virtual_joystick", "auto"))	
+	disable_pathing = !UserSettings.config.get_value("control", "click_to_move", true)
 	var music_node = owner.get_node(NodePath("snd_Music"))
 	disable_pausing = false
 	disable_pathing_input = false
@@ -131,7 +146,7 @@ func _ready():
 	kills = {}
 	if music_node:
 		music_node.stop()
-		
+	update_player_character()
 	upgrade_character(rand_starting_item())
 	set_expbar(experience, calculate_experiencecap())
 	_on_hurt_box_hurt(0, 0, 0)
@@ -141,8 +156,7 @@ func _ready():
 	update_kill_counts()
 	for content in Unlocks.unlocked_content:
 		_on_content_unlocked(content)
-	Unlocks.content_unlocked.connect(_on_content_unlocked)		
-	update_player_character()		
+	Unlocks.content_unlocked.connect(_on_content_unlocked)
 	if music_node:
 		music_node.play()
 
