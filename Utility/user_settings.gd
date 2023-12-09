@@ -3,8 +3,8 @@ extends Node
 @onready var config = ConfigFile.new()
 
 func _ready():
-	if FileAccess.file_exists("user_settings.ini"):
-		config.load("user_settings.ini")
+	if FileAccess.file_exists("user://user_settings.ini"):
+		config.load("user://user_settings.ini")
 		load_volumes()
 
 func load_volumes():
@@ -23,4 +23,4 @@ func save_volumes(bus_names:Array):
 	save_config()
 
 func save_config():
-	config.save("user_settings.ini")
+	config.save("user://user_settings.ini")
