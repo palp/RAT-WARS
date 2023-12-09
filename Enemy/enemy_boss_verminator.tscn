@@ -326,6 +326,7 @@ shape = SubResource("CapsuleShape2D_24u87")
 disabled = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_j1mom")
 scale = Vector2(3, 3)
 texture = ExtResource("3_alh3u")
 vframes = 23
