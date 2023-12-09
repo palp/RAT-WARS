@@ -160,7 +160,6 @@ size = Vector2(211, 216)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ucec4"]
 size = Vector2(210, 216)
-<<<<<<< HEAD
 
 [sub_resource type="Gradient" id="Gradient_1vt5j"]
 colors = PackedColorArray(0.375023, 3.55284e-06, 1.81104e-06, 1, 0.494245, 7.23819e-07, 9.67411e-09, 1)
@@ -169,8 +168,6 @@ colors = PackedColorArray(0.375023, 3.55284e-06, 1.81104e-06, 1, 0.494245, 7.238
 gradient = SubResource("Gradient_1vt5j")
 width = 128
 height = 16
-=======
->>>>>>> main
 
 [sub_resource type="Gradient" id="Gradient_1vt5j"]
 colors = PackedColorArray(0.375023, 3.55284e-06, 1.81104e-06, 1, 0.494245, 7.23819e-07, 9.67411e-09, 1)
@@ -191,15 +188,7 @@ knockback_recovery = 100.0
 experience = 100
 enemy_damage = 20
 trigger_victory = true
-<<<<<<< HEAD
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(3, 3)
-texture = ExtResource("3_alh3u")
-vframes = 23
-=======
 enemy_name = "boss_verminator"
->>>>>>> main
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 scale = Vector2(0.9, 0.9)
@@ -207,7 +196,6 @@ shape = SubResource("CapsuleShape2D_24u87")
 disabled = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-material = SubResource("ShaderMaterial_j1mom")
 scale = Vector2(3, 3)
 texture = ExtResource("3_alh3u")
 vframes = 23
