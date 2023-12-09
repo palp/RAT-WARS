@@ -1,0 +1,65 @@
+[gd_scene load_steps=5 format=3 uid="uid://busl4h5eoqytv"]
+
+[ext_resource type="Script" path="res://CutsceneData/ScreenFadeInAndOut/screen_fade_in_and_out.gd" id="1_idgwl"]
+[ext_resource type="Texture2D" uid="uid://cm61vrx60v2no" path="res://CutsceneData/ScreenFadeInAndOut/ScreenFadeInAndOut.png" id="1_vd3ja"]
+
+[sub_resource type="Animation" id="Animation_7d2ew"]
+resource_name = "type_1"
+length = 0.9
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.9),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [ExtResource("1_vd3ja"), ExtResource("1_vd3ja")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:vframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.9),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [9, 9]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hp6p0"]
+_data = {
+"type_1": SubResource("Animation_7d2ew")
+}
+
+[node name="ScreenFadeInAndOut" type="Node2D"]
+script = ExtResource("1_idgwl")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(3, 3)
+texture = ExtResource("1_vd3ja")
+vframes = 9
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_hp6p0")
+}
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_finished"]
+[connection signal="animation_started" from="AnimationPlayer" to="." method="_on_animation_started"]
