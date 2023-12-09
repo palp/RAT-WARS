@@ -4,8 +4,9 @@ extends GdUnitTestSuite
 @warning_ignore("return_value_discarded")
 const __source = "res://World/launch.tscn"
 
-# Ensure opening cutscene does not play
-UserSettings.config.set_value("cutscene", "opening_played", true)
+func before_test():
+	# Ensure opening cutscene does not play
+	UserSettings.config.set_value("cutscene", "opening_played", true)
 
 func test_attract_mode() -> void:
 	var runner := scene_runner(__source)
