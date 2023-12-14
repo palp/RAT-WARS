@@ -180,8 +180,7 @@ func update_player_character():
 	get_node(NodePath("Sprite2D")).texture = Unlocks.get_player_character().get_current_skin().texture
 
 func _on_content_unlocked(content):
-	if content == "plugsuit":
-		Unlocks.select_character("john")
+	if content == "plugsuit":		
 		Unlocks.player_characters["john"].skins["plugsuit"].unlocked = true
 		Unlocks.player_characters["john"].set_current_skin("plugsuit")
 		update_player_character()
