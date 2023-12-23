@@ -1,6 +1,7 @@
 extends Node2D
 
 var api_base_url 
+var board_id = 1
 
 var logger = LogStream.new("config")
 
@@ -9,6 +10,7 @@ func _ready():
 
 func set_values(config):
 	api_base_url = config.get_value("server", "api_base_url")
+	board_id = config.get_value("server", "board_id")
 
 func load_config():
 	var config = ConfigFile.new()	

@@ -107,7 +107,7 @@ func death():
 		player.combo_multiplier += 1		
 		var score_deduction = (50.0 - min(30,player.experience_level))/50.0
 		var computed_score = max(1, ceil(maxhp * (score_deduction)))
-		print_debug("computed_score: " + str(computed_score) + " score_deduction:" + str(score_deduction) + " combo_multiplier: " + str(player.combo_multiplier))
+		#print_debug("computed_score: " + str(computed_score) + " score_deduction:" + str(score_deduction) + " combo_multiplier: " + str(player.combo_multiplier))
 		player.score += computed_score * player.combo_multiplier
 
 		player.comboTimer.stop()
