@@ -55,7 +55,7 @@ var boss_music_playing = false
 
 func _ready():
 	add_child(audio_player)	
-	audio_player.volume_db = -10
+	audio_player.volume_db = -5
 	audio_player.process_mode = Node.PROCESS_MODE_ALWAYS
 	audio_player.finished.connect(_on_audio_player_finished)
 	audio_player.bus = "Music"	
