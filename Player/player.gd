@@ -147,8 +147,7 @@ func configure_virtual_joystick():
 
 func _ready():
 	configure_virtual_joystick()	
-	disable_pathing = !UserSettings.config.get_value("control", "click_to_move", not DisplayServer.is_touchscreen_available())
-	var music_node = owner.get_node(NodePath("snd_Music"))
+	disable_pathing = !UserSettings.config.get_value("control", "click_to_move", not DisplayServer.is_touchscreen_available())	
 	disable_pausing = false
 	disable_pathing_input = false
 	disable_upgrades = false
@@ -187,10 +186,7 @@ func _on_content_unlocked(content):
 
 func _on_enemy_spawned(enemy):	
 	if enemy.enemy_name.begins_with("boss_"):
-		var music_node = owner.get_node(NodePath("snd_Music"))
-		if music_node:
-			music_node.stream = dsmVLoop
-			music_node.play()
+		BackgroundMusic._on_boss_fight_start()
 
 func _physics_process(delta):
 	
@@ -478,6 +474,7 @@ func death():
 	if invincible:
 		hp = maxhp
 		return
+	BackgroundMusic._on_boss_fight_end()
 	if autopilot:
 		emit_signal("playerdeath")
 		get_tree().reload_current_scene()
@@ -492,7 +489,8 @@ func death():
 	videoLose.play()
 	Server.end_game_session(score, kills)
 		
-func victory():	
+func victory():
+	BackgroundMusic._on_boss_fight_end()
 	if autopilot:
 		get_tree().reload_current_scene()
 		return

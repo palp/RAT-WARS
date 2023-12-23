@@ -48,7 +48,7 @@
                 .data(Object.values(data))
                 .enter().append("circle", ".pin")
                 .attr("r", function(d) {
-                    return (d.kills.total / totalKills) * 200;
+                    return Math.max(1, (d.kills.total / totalKills) * 200);
                 })                
                 .attr("fill", "red")
                 .attr("transform", function(d) {                    

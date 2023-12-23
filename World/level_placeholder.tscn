@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://b4kwl8s8nbbnh"]
+[gd_scene load_steps=24 format=3 uid="uid://b4kwl8s8nbbnh"]
 
 [ext_resource type="Script" path="res://TerrainGen.gd" id="1_viojc"]
 [ext_resource type="PackedScene" uid="uid://b854gcq3q7qme" path="res://assets/world/the_sprawl_terrain_packs.tscn" id="2_2ymm1"]
@@ -10,8 +10,6 @@
 [ext_resource type="PackedScene" uid="uid://cicd0plbiord6" path="res://Enemy/enemy_spitter_rat.tscn" id="8_m0oqi"]
 [ext_resource type="PackedScene" uid="uid://dhwhbsqu47ocn" path="res://Enemy/enemy_balloon_rat.tscn" id="9_xxbhv"]
 [ext_resource type="PackedScene" uid="uid://x87jrsdtky6u" path="res://Enemy/enemy_boss_verminator.tscn" id="10_o0l3f"]
-[ext_resource type="AudioStream" uid="uid://7xlmshasr1ic" path="res://Audio/Music/UNLOVED LOOP.mp3" id="11_eh58p"]
-[ext_resource type="Script" path="res://Audio/Music/snd_Music.gd" id="12_8hgxh"]
 [ext_resource type="Theme" uid="uid://bwayc6rbhtvxj" path="res://assets/ui/theme/HEALTH_theme.tres" id="13_ifjt7"]
 [ext_resource type="Script" path="res://ui/pause_button.gd" id="14_1dwss"]
 [ext_resource type="PackedScene" uid="uid://do8nu166getvr" path="res://ui/pause_menu.tscn" id="15_kiind"]
@@ -137,14 +135,6 @@ track_horizontal = true
 
 [node name="Loot" type="Node2D" parent="." groups=["loot"]]
 
-[node name="snd_Music" type="AudioStreamPlayer" parent="."]
-process_mode = 3
-stream = ExtResource("11_eh58p")
-volume_db = -15.0
-autoplay = true
-bus = &"Music"
-script = ExtResource("12_8hgxh")
-
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 process_mode = 3
 
@@ -176,10 +166,7 @@ offset_top = 82.0
 offset_right = -129.0
 offset_bottom = 86.0
 
-[connection signal="playerdeath" from="Player" to="snd_Music" method="_on_player_playerdeath"]
 [connection signal="playerdeath" from="Player" to="CanvasLayer/pause_button" method="_on_player_playerdeath"]
-[connection signal="playervictory" from="Player" to="snd_Music" method="_on_player_playervictory"]
 [connection signal="playervictory" from="Player" to="CanvasLayer/pause_button" method="_on_player_playervictory"]
-[connection signal="finished" from="snd_Music" to="snd_Music" method="_on_finished"]
 [connection signal="mouse_entered" from="CanvasLayer/pause_button" to="CanvasLayer/pause_button" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="CanvasLayer/pause_button" to="CanvasLayer/pause_button" method="_on_mouse_exited"]
