@@ -248,7 +248,8 @@ func _on_collect_area_area_entered(area):
 
 func calculate_experience(gem_exp):
 	var exp_required = calculate_experiencecap()
-	collected_experience += gem_exp	
+	collected_experience += gem_exp
+	score += gem_exp * combo_multiplier	
 	if experience + collected_experience >= exp_required:  #level up
 		collected_experience -= exp_required - experience
 		experience_level += 1

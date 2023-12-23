@@ -115,7 +115,7 @@ func death():
 		if player.combo_tween:
 			player.combo_tween.stop()
 		player.combo_tween = player.comboControls.create_tween()		
-		player.combo_tween.tween_property(player.comboControls, "modulate:a", 0.0, player.combo_window_ms/1000).from(1.0).set_ease(Tween.EASE_IN)
+		player.combo_tween.tween_property(player.comboControls, "modulate", Color(1.0, 0.0, 0.0, 0.0), player.combo_window_ms/1000).from(Color(1.0, 1.0, 1.0, 1.0)).set_ease(Tween.EASE_IN)
 
 	var enemy_death = death_anim.instantiate()
 	if trigger_victory:
