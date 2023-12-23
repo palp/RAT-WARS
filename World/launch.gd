@@ -4,7 +4,8 @@ extends Node2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready():	
-	BackgroundMusic.shuffle()	
+	BackgroundMusic.shuffle()
+	BackgroundMusic.audio_player.play()
 	var player_gui = player.get_node(NodePath("GUILayer"))
 	player_gui.visible = false	
 	while player.experience_level < 10:
