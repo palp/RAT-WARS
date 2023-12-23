@@ -145,8 +145,7 @@ func configure_virtual_joystick():
 		virtual_joystick.global_position.x = max(0,((x / 100) * get_viewport_rect().size.x) - (virtual_joystick.size.x * joystick_scale))
 		virtual_joystick.global_position.y = get_viewport_rect().size.y - (virtual_joystick.size.y * joystick_scale)
 
-func _ready():
-	BackgroundMusic.select_track(randi() % BackgroundMusic.tracks.size())
+func _ready():	
 	configure_virtual_joystick()	
 	disable_pathing = !UserSettings.config.get_value("control", "click_to_move", not DisplayServer.is_touchscreen_available())	
 	disable_pausing = false
@@ -541,6 +540,7 @@ func show_leaderboard():
 
 func _on_play_again_button_pressed():
 	get_tree().paused = false
+	BackgroundMusic.shuffle()
 	get_tree().reload_current_scene()
 
 
@@ -550,7 +550,7 @@ func _on_video_lose_finished():
 	get_node("%video_lose_bg_loop").visible = false
 	get_node("%video_lose_bg").visible = true
 
-func _on_give_up_button_pressed():
+func _on_give_up_button_pressed():	
 	get_tree().change_scene_to_file("res://World/launch.tscn")
 
 func _on_video_win_finished():

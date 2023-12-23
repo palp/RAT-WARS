@@ -54,12 +54,14 @@ var next_track:AudioStream
 var boss_music_playing = false
 
 func _ready():
-	add_child(audio_player)
-	current_track_index = randi() % tracks.size()
+	add_child(audio_player)	
 	audio_player.volume_db = -10
 	audio_player.process_mode = Node.PROCESS_MODE_ALWAYS
 	audio_player.finished.connect(_on_audio_player_finished)
-	audio_player.bus = "Music"
+	audio_player.bus = "Music"	
+
+func shuffle():
+	current_track_index = randi() % tracks.size()
 	select_track(current_track_index)
 
 func _on_audio_player_finished():

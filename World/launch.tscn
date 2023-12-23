@@ -89,8 +89,14 @@ track_horizontal = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="label_title" type="Label" parent="CanvasLayer"]
+[node name="label_title" type="Control" parent="CanvasLayer"]
 unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="main_title" type="Label" parent="CanvasLayer/label_title"]
 offset_left = 225.0
 offset_top = 400.0
 offset_right = 1325.0
@@ -98,6 +104,17 @@ offset_bottom = 504.0
 theme = ExtResource("14_hwhml")
 theme_override_font_sizes/font_size = 96
 text = "RAT WARS :: SURVIVORS"
+
+[node name="track_title" type="Label" parent="CanvasLayer/label_title"]
+unique_name_in_owner = true
+offset_left = 433.0
+offset_top = 512.0
+offset_right = 1061.0
+offset_bottom = 556.0
+theme_override_font_sizes/font_size = 26
+text = "TRACK TITLE"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer"]
 visible = false
