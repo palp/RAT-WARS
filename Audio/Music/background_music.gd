@@ -5,7 +5,7 @@ var audio_player:AudioStreamPlayer = AudioStreamPlayer.new()
 var tracks = [
 {
 	"name": "DEMIGODS",
-	"resource": "DEMIGODS LOOP.mp3"	
+	"resource": "DEMIGODS Loop.mp3"	
 },
 {
 	"name": "FUTURE OF HELL",

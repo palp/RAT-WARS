@@ -33,6 +33,7 @@ func _on_options_pressed():
 		close_submenus()
 	else:
 		close_submenus()
+		options_menu.load_tracks()
 		options_menu.visible = true
 
 func _on_bonus_button_pressed():

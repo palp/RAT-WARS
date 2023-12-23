@@ -5,6 +5,9 @@ extends Control
 @onready var track_options = get_node("%track_select_button")
 
 func _ready():
+	load_tracks()
+
+func load_tracks():
 	track_options.clear()
 	var track_ix = 0
 	for track in BackgroundMusic.tracks:
@@ -12,8 +15,8 @@ func _ready():
 		track_ix += 1
 	track_options.selected = BackgroundMusic.current_track_index
 
-
 func _on_options_pressed():
+	options_menu.load_tracks()
 	track_select_panel.visible = false
 	options_menu.visible = !options_menu.visible
 
@@ -34,5 +37,6 @@ func _on_track_select_button_item_selected(index):
 
 
 func _on_music_select_button_pressed():
+	load_tracks()
 	options_menu.visible = false
 	track_select_panel.visible = !track_select_panel.visible

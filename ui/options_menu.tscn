@@ -16,8 +16,8 @@ script = ExtResource("2_2kxdm")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 334.0
+offset_bottom = 584.0
 
 [node name="ColorRect" type="ColorRect" parent="MarginContainer"]
 z_index = -1
