@@ -17,14 +17,16 @@ func _ready():
 	elif mode == "never":
 		virtual_joystick_mode.select(2)
 	joystick_pos_slider.value = UserSettings.config.get_value("control", "virtual_joystick_position_x", 100)
-	joystick_scale_slider.value = UserSettings.config.get_value("control", "virtual_joystick_scale", 1.0)
+	joystick_scale_slider.value = UserSettings.config.get_value("control", "virtual_joystick_scale", 1.0)	
+	load_tracks()
+	
+func load_tracks():
 	track_options.clear()
 	var track_ix = 0
 	for track in BackgroundMusic.tracks:
 		track_options.add_item(track["name"], track_ix)
 		track_ix += 1
 	track_options.selected = BackgroundMusic.current_track_index
-	
 
 func _on_click_to_move_button_toggled(toggled_on):
 	UserSettings.config.set_value("control", "click_to_move", toggled_on)
