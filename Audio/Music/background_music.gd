@@ -77,7 +77,7 @@ func _on_boss_fight_end():
 	if boss_music_playing:
 		boss_music_playing = false
 		play_current_track()
-		audio_player.stream_paused = true
+	audio_player.stream_paused = true
 	
 func select_track(index):	
 	if index < len(tracks):
