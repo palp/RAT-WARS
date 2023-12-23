@@ -60,7 +60,7 @@ func _on_scores_button_pressed():
 
 func _on_video_stream_player_finished():
 	if in_loop:
-		emit_signal("video_stopped")
+		BackgroundMusic.audio_player.stream_paused = false
 		get_tree().paused = false
 		video_player.visible = false
 	else:
@@ -69,7 +69,7 @@ func _on_video_stream_player_finished():
 		video_player.play()
 
 func _on_credits_button_pressed():
-	emit_signal("video_started")
+	BackgroundMusic.audio_player.stream_paused = true
 	video_player.visible = true
 	get_tree().paused = true
 	video_player.play()
@@ -77,6 +77,7 @@ func _on_credits_button_pressed():
 
 func _on_video_stream_player_gui_input(_event):
 	if Input.is_action_just_pressed("click") and video_player.stream_position > 5:
+		BackgroundMusic.audio_player.stream_paused = false
 		get_tree().paused = false
 		# Make sure we end playback regardless of if we're in the loop
 		in_loop = true
@@ -96,7 +97,7 @@ func _on_cutscenes_button_pressed():
 		cutscenes_container.visible = true
 		
 func play_cutscene(name):
-	emit_signal("video_started")
+	BackgroundMusic.audio_player.stream_paused = true
 	get_tree().paused = true	
 	var cutscene_player = cutscene_scene.instantiate()
 	cutscene_player.connect("tree_exited", _on_cutscene_ended)
@@ -104,6 +105,6 @@ func play_cutscene(name):
 	add_child(cutscene_player)
 
 func _on_cutscene_ended():	
-	emit_signal("video_stopped")
+	BackgroundMusic.audio_player.stream_paused = false
 	get_tree().paused = false	
 	pass

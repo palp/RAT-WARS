@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://2xick52tonpq"
+path="res://.godot/imported/SICKO LOOP.mp3-91169f46317f25f3cf937f86f5d7c334.mp3str"
+
+[deps]
+
+source_file="res://Audio/Music/SICKO LOOP.mp3"
+dest_files=["res://.godot/imported/SICKO LOOP.mp3-91169f46317f25f3cf937f86f5d7c334.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -138,17 +138,16 @@ func configure_virtual_joystick():
 		virtual_joystick.visible = DisplayServer.is_touchscreen_available()
 		
 	if virtual_joystick.visible:
-		var scale = UserSettings.config.get_value("control", "virtual_joystick_scale", 1)
-		virtual_joystick.scale = Vector2(scale, scale)
+		var joystick_scale = UserSettings.config.get_value("control", "virtual_joystick_scale", 1)
+		virtual_joystick.scale = Vector2(joystick_scale, joystick_scale)
 		
 		var x = UserSettings.config.get_value("control", "virtual_joystick_position_x", 100)
-		virtual_joystick.global_position.x = max(0,((x / 100) * get_viewport_rect().size.x) - (virtual_joystick.size.x * scale))
-		virtual_joystick.global_position.y = get_viewport_rect().size.y - (virtual_joystick.size.y * scale)
+		virtual_joystick.global_position.x = max(0,((x / 100) * get_viewport_rect().size.x) - (virtual_joystick.size.x * joystick_scale))
+		virtual_joystick.global_position.y = get_viewport_rect().size.y - (virtual_joystick.size.y * joystick_scale)
 
-func _ready():
+func _ready():	
 	configure_virtual_joystick()	
-	disable_pathing = !UserSettings.config.get_value("control", "click_to_move", not DisplayServer.is_touchscreen_available())
-	var music_node = owner.get_node(NodePath("snd_Music"))
+	disable_pathing = !UserSettings.config.get_value("control", "click_to_move", not DisplayServer.is_touchscreen_available())	
 	disable_pausing = false
 	disable_pathing_input = false
 	disable_upgrades = false
@@ -187,10 +186,7 @@ func _on_content_unlocked(content):
 
 func _on_enemy_spawned(enemy):	
 	if enemy.enemy_name.begins_with("boss_"):
-		var music_node = owner.get_node(NodePath("snd_Music"))
-		if music_node:
-			music_node.stream = dsmVLoop
-			music_node.play()
+		BackgroundMusic._on_boss_fight_start()
 
 func _physics_process(delta):
 	
@@ -478,6 +474,7 @@ func death():
 	if invincible:
 		hp = maxhp
 		return
+	BackgroundMusic._on_boss_fight_end()
 	if autopilot:
 		emit_signal("playerdeath")
 		get_tree().reload_current_scene()
@@ -492,7 +489,8 @@ func death():
 	videoLose.play()
 	Server.end_game_session(score, kills)
 		
-func victory():	
+func victory():
+	BackgroundMusic._on_boss_fight_end()
 	if autopilot:
 		get_tree().reload_current_scene()
 		return
@@ -542,6 +540,7 @@ func show_leaderboard():
 
 func _on_play_again_button_pressed():
 	get_tree().paused = false
+	BackgroundMusic.shuffle()
 	get_tree().reload_current_scene()
 
 
@@ -551,7 +550,7 @@ func _on_video_lose_finished():
 	get_node("%video_lose_bg_loop").visible = false
 	get_node("%video_lose_bg").visible = true
 
-func _on_give_up_button_pressed():
+func _on_give_up_button_pressed():	
 	get_tree().change_scene_to_file("res://World/launch.tscn")
 
 func _on_video_win_finished():

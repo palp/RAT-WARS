@@ -1,0 +1,60 @@
+[gd_scene load_steps=4 format=3 uid="uid://mbo55nll211x"]
+
+[ext_resource type="Theme" uid="uid://bwayc6rbhtvxj" path="res://assets/ui/theme/HEALTH_theme.tres" id="2_khaff"]
+
+[sub_resource type="GDScript" id="GDScript_imsqv"]
+script/source = "extends Control
+
+@onready var track_options = $Panel/TrackOptions
+
+# Called when the node enters the scene tree for the first time.
+func _ready():	
+	track_options.clear()
+	var track_ix = 0
+	for track in BackgroundMusic.tracks:
+		track_options.add_item(track[\"name\"], track_ix)
+		track_ix += 1
+	track_options.selected = BackgroundMusic.current_track_index
+
+
+
+func _on_track_options_item_selected(index):
+	BackgroundMusic.select_track(index)
+"
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_tusng"]
+blend_mode = 2
+
+[node name="MusicPlayer" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_imsqv")
+
+[node name="Panel" type="Panel" parent="."]
+material = SubResource("CanvasItemMaterial_tusng")
+layout_mode = 0
+offset_top = 8.0
+offset_right = 193.0
+offset_bottom = 101.0
+theme = ExtResource("2_khaff")
+
+[node name="TrackOptions" type="OptionButton" parent="Panel"]
+layout_mode = 0
+offset_left = 11.0
+offset_top = 36.0
+offset_right = 182.0
+offset_bottom = 80.0
+
+[node name="Label" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 2.0
+offset_right = 184.0
+offset_bottom = 34.0
+text = "TRACK SELECT"
+
+[connection signal="item_selected" from="Panel/TrackOptions" to="." method="_on_track_options_item_selected"]

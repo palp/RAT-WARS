@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://bbkmjcn6ordk6"]
+[gd_scene load_steps=18 format=3 uid="uid://bbkmjcn6ordk6"]
 
 [ext_resource type="Script" path="res://World/launch.gd" id="1_gkfpm"]
 [ext_resource type="Script" path="res://TerrainGen.gd" id="2_a5fp2"]
@@ -10,8 +10,6 @@
 [ext_resource type="PackedScene" uid="uid://gvm5jcbbgwdv" path="res://Enemy/enemy_mutated_rat.tscn" id="8_0t7bs"]
 [ext_resource type="PackedScene" uid="uid://cicd0plbiord6" path="res://Enemy/enemy_spitter_rat.tscn" id="9_xl60n"]
 [ext_resource type="PackedScene" uid="uid://dhwhbsqu47ocn" path="res://Enemy/enemy_balloon_rat.tscn" id="10_6kjty"]
-[ext_resource type="AudioStream" uid="uid://7xlmshasr1ic" path="res://Audio/Music/UNLOVED LOOP.mp3" id="12_ayp3p"]
-[ext_resource type="Script" path="res://Audio/Music/snd_Music.gd" id="13_047la"]
 [ext_resource type="Theme" uid="uid://bwayc6rbhtvxj" path="res://assets/ui/theme/HEALTH_theme.tres" id="14_hwhml"]
 [ext_resource type="PackedScene" uid="uid://eno7xtkdwasd" path="res://ui/main_menu.tscn" id="15_x31no"]
 
@@ -89,17 +87,16 @@ track_horizontal = true
 
 [node name="Loot" type="Node2D" parent="." groups=["loot"]]
 
-[node name="snd_Music" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("12_ayp3p")
-volume_db = -15.0
-autoplay = true
-bus = &"Music"
-script = ExtResource("13_047la")
-
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="label_title" type="Label" parent="CanvasLayer"]
+[node name="label_title" type="Control" parent="CanvasLayer"]
 unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="main_title" type="Label" parent="CanvasLayer/label_title"]
 offset_left = 225.0
 offset_top = 400.0
 offset_right = 1325.0
@@ -107,6 +104,17 @@ offset_bottom = 504.0
 theme = ExtResource("14_hwhml")
 theme_override_font_sizes/font_size = 96
 text = "RAT WARS :: SURVIVORS"
+
+[node name="track_title" type="Label" parent="CanvasLayer/label_title"]
+unique_name_in_owner = true
+offset_left = 433.0
+offset_top = 512.0
+offset_right = 1061.0
+offset_bottom = 556.0
+theme_override_font_sizes/font_size = 26
+text = "TRACK TITLE"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer"]
 visible = false
@@ -121,7 +129,3 @@ text = "RAT WARS"
 
 [node name="main_menu" parent="CanvasLayer" instance=ExtResource("15_x31no")]
 unique_name_in_owner = true
-
-[connection signal="finished" from="snd_Music" to="snd_Music" method="_on_finished"]
-[connection signal="video_started" from="CanvasLayer/main_menu" to="snd_Music" method="pause_audio"]
-[connection signal="video_stopped" from="CanvasLayer/main_menu" to="snd_Music" method="unpause_audio"]
