@@ -7,6 +7,10 @@ var disable_pathing_input = false
 var disable_pathing = false
 var disable_pausing = false
 var disable_upgrades = false
+var combo_multiplier = 0
+var last_kill_ticks_ms = 0
+var combo_tween:Tween
+@export var combo_window_ms = 1000
 
 @export var movement_speed = 40.0
 @export var maxhp = 80
@@ -73,6 +77,9 @@ var enemy_close = []
 @onready var deadRatsLabel = get_node("%lbl_dead_rats")
 @onready var globalDeadRatsLabel = get_node("%lbl_dead_rats_global")
 @onready var scoreLabel = get_node("%lbl_score")
+@onready var comboControls = get_node("%combo_controls")
+@onready var comboLabel = get_node("%lbl_combo")
+@onready var comboTimer = get_node("%ComboTimer") as Timer
 
 #Game session
 @onready var sessionUpdateTimer = get_node("%SessionUpdateTimer") as Timer
@@ -145,8 +152,10 @@ func configure_virtual_joystick():
 		virtual_joystick.global_position.x = max(0,((x / 100) * get_viewport_rect().size.x) - (virtual_joystick.size.x * joystick_scale))
 		virtual_joystick.global_position.y = get_viewport_rect().size.y - (virtual_joystick.size.y * joystick_scale)
 
-func _ready():	
-	configure_virtual_joystick()	
+func _ready():
+	comboControls.modulate.a = 0.0
+	comboTimer.wait_time = combo_window_ms / 1000.0
+	configure_virtual_joystick()
 	disable_pathing = !UserSettings.config.get_value("control", "click_to_move", not DisplayServer.is_touchscreen_available())	
 	disable_pausing = false
 	disable_pathing_input = false
@@ -172,6 +181,8 @@ func update_kill_counts():
 	deadRatsLabel.text = str(player_kill_counter)
 	globalDeadRatsLabel.text = str(int(global_kill_counter) + player_kill_counter)
 	scoreLabel.text = str(score)
+	comboLabel.text = str(combo_multiplier)
+	
 
 func update_player_character():
 	if autopilot:
@@ -188,8 +199,7 @@ func _on_enemy_spawned(enemy):
 	if enemy.enemy_name.begins_with("boss_"):
 		BackgroundMusic._on_boss_fight_start()
 
-func _physics_process(delta):
-	
+func _physics_process(delta):	
 	var last_kill_counter = int(global_kill_counter)
 	if (Server.global_kills_per_hour > 0):		
 		global_kill_counter += (Server.global_kills_per_hour / 60.0 / 60.0) * delta
@@ -238,8 +248,7 @@ func _on_collect_area_area_entered(area):
 
 func calculate_experience(gem_exp):
 	var exp_required = calculate_experiencecap()
-	collected_experience += gem_exp
-	score += collected_experience
+	collected_experience += gem_exp	
 	if experience + collected_experience >= exp_required:  #level up
 		collected_experience -= exp_required - experience
 		experience_level += 1
@@ -582,3 +591,7 @@ func rand_starting_item():
 
 func _update_enemy_counter(counter):
 	get_node("%lbl_live_rats").text = str(counter)
+
+
+func _on_combo_timer_timeout():
+	combo_multiplier = 0
