@@ -475,29 +475,6 @@ offset_right = 1385.0
 offset_bottom = 31.0
 text = "0"
 
-[node name="combo_controls" type="Control" parent="GUILayer/GUI/ExperienceBar"]
-unique_name_in_owner = true
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="lbl_combo_text" type="Label" parent="GUILayer/GUI/ExperienceBar/combo_controls"]
-layout_mode = 2
-offset_left = 1139.0
-offset_top = 30.0
-offset_right = 1238.0
-offset_bottom = 54.0
-text = "COMBO:"
-
-[node name="lbl_combo" type="Label" parent="GUILayer/GUI/ExperienceBar/combo_controls"]
-unique_name_in_owner = true
-layout_mode = 2
-offset_left = 1244.0
-offset_top = 30.0
-offset_right = 1385.0
-offset_bottom = 54.0
-text = "0"
-
 [node name="lbl_live_rats" type="Label" parent="GUILayer/GUI/ExperienceBar"]
 unique_name_in_owner = true
 layout_mode = 0
@@ -636,6 +613,24 @@ offset_bottom = 106.0
 theme = ExtResource("4_f6gen")
 value = 50.0
 texture_progress = SubResource("GradientTexture2D_ca7jc")
+
+[node name="combo_controls" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 0
+offset_left = -23.0
+offset_top = -61.0
+offset_right = 17.0
+offset_bottom = -21.0
+
+[node name="lbl_combo" type="Label" parent="combo_controls"]
+unique_name_in_owner = true
+layout_mode = 2
+offset_left = -21.0
+offset_top = 2.0
+offset_right = 69.0
+offset_bottom = 26.0
+text = "COMBO X1"
 
 [node name="ComboTimer" type="Timer" parent="."]
 unique_name_in_owner = true

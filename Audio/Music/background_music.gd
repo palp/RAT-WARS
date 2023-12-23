@@ -56,23 +56,20 @@ var boss_music_playing = false
 func _ready():
 	add_child(audio_player)	
 	audio_player.volume_db = -5
-	audio_player.process_mode = Node.PROCESS_MODE_ALWAYS
-	audio_player.finished.connect(_on_audio_player_finished)
+	audio_player.process_mode = Node.PROCESS_MODE_ALWAYS	
 	audio_player.bus = "Music"	
 
 func shuffle():
 	current_track_index = randi() % tracks.size()
 	select_track(current_track_index)
 
-func _on_audio_player_finished():
-	audio_player.play()
-	
 func _on_boss_fight_start(index=0):
 	if not boss_music_playing:
 		boss_music_playing = true
 		if index >= len(tracks):
 			index = 0
 		audio_player.stream = load("res://Audio/Music/" + boss_tracks[index]["resource"])
+		audio_player.stream.loop = true
 		audio_player.play()
 
 func _on_boss_fight_end():
@@ -90,5 +87,6 @@ func select_track(index):
 func play_current_track():
 	if not boss_music_playing:
 		audio_player.stream = load("res://Audio/Music/" + tracks[current_track_index]["resource"])
+		audio_player.stream.loop = true
 		if not audio_player.stream_paused:
 			audio_player.play()
