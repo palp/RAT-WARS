@@ -138,14 +138,15 @@ func configure_virtual_joystick():
 		virtual_joystick.visible = DisplayServer.is_touchscreen_available()
 		
 	if virtual_joystick.visible:
-		var scale = UserSettings.config.get_value("control", "virtual_joystick_scale", 1)
-		virtual_joystick.scale = Vector2(scale, scale)
+		var joystick_scale = UserSettings.config.get_value("control", "virtual_joystick_scale", 1)
+		virtual_joystick.scale = Vector2(joystick_scale, joystick_scale)
 		
 		var x = UserSettings.config.get_value("control", "virtual_joystick_position_x", 100)
-		virtual_joystick.global_position.x = max(0,((x / 100) * get_viewport_rect().size.x) - (virtual_joystick.size.x * scale))
-		virtual_joystick.global_position.y = get_viewport_rect().size.y - (virtual_joystick.size.y * scale)
+		virtual_joystick.global_position.x = max(0,((x / 100) * get_viewport_rect().size.x) - (virtual_joystick.size.x * joystick_scale))
+		virtual_joystick.global_position.y = get_viewport_rect().size.y - (virtual_joystick.size.y * joystick_scale)
 
 func _ready():
+	BackgroundMusic.select_track(randi() % BackgroundMusic.tracks.size())
 	configure_virtual_joystick()	
 	disable_pathing = !UserSettings.config.get_value("control", "click_to_move", not DisplayServer.is_touchscreen_available())	
 	disable_pausing = false

@@ -55,7 +55,7 @@ var boss_music_playing = false
 
 func _ready():
 	add_child(audio_player)
-	current_track_index = randi_range(0, len(tracks))
+	current_track_index = randi() % tracks.size()
 	audio_player.volume_db = -10
 	audio_player.process_mode = Node.PROCESS_MODE_ALWAYS
 	audio_player.finished.connect(_on_audio_player_finished)
