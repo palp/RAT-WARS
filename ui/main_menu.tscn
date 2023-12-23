@@ -83,11 +83,12 @@ text = "SCORES"
 [node name="leaderboard" parent="MarginContainer/VBoxContainer/scores_button" instance=ExtResource("3_m6ake")]
 unique_name_in_owner = true
 visible = false
+clip_children = 1
 layout_mode = 1
-offset_left = 514.0
-offset_top = -191.0
-offset_right = 846.0
-offset_bottom = 497.0
+offset_left = 473.0
+offset_top = -82.0
+offset_right = 805.0
+offset_bottom = 587.0
 
 [node name="cutscenes_button" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
