@@ -461,18 +461,41 @@ text = "0"
 [node name="Label3" type="Label" parent="GUILayer/GUI/ExperienceBar"]
 layout_mode = 0
 offset_left = 1148.0
-offset_top = 10.0
+offset_top = 7.0
 offset_right = 1234.0
-offset_bottom = 34.0
+offset_bottom = 31.0
 text = "SCORE:"
 
 [node name="lbl_score" type="Label" parent="GUILayer/GUI/ExperienceBar"]
 unique_name_in_owner = true
 layout_mode = 0
-offset_left = 1249.0
-offset_top = 10.0
-offset_right = 1390.0
-offset_bottom = 34.0
+offset_left = 1244.0
+offset_top = 7.0
+offset_right = 1385.0
+offset_bottom = 31.0
+text = "0"
+
+[node name="combo_controls" type="Control" parent="GUILayer/GUI/ExperienceBar"]
+unique_name_in_owner = true
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="lbl_combo_text" type="Label" parent="GUILayer/GUI/ExperienceBar/combo_controls"]
+layout_mode = 2
+offset_left = 1139.0
+offset_top = 30.0
+offset_right = 1238.0
+offset_bottom = 54.0
+text = "COMBO:"
+
+[node name="lbl_combo" type="Label" parent="GUILayer/GUI/ExperienceBar/combo_controls"]
+unique_name_in_owner = true
+layout_mode = 2
+offset_left = 1244.0
+offset_top = 30.0
+offset_right = 1385.0
+offset_bottom = 54.0
 text = "0"
 
 [node name="lbl_live_rats" type="Label" parent="GUILayer/GUI/ExperienceBar"]
@@ -614,6 +637,10 @@ theme = ExtResource("4_f6gen")
 value = 50.0
 texture_progress = SubResource("GradientTexture2D_ca7jc")
 
+[node name="ComboTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+one_shot = true
+
 [connection signal="hurt" from="HurtBox" to="." method="_on_hurt_box_hurt"]
 [connection signal="body_entered" from="EnemyDetectionArea" to="." method="_on_enemy_detection_area_body_entered"]
 [connection signal="body_exited" from="EnemyDetectionArea" to="." method="_on_enemy_detection_area_body_exited"]
@@ -630,5 +657,6 @@ texture_progress = SubResource("GradientTexture2D_ca7jc")
 [connection signal="pressed" from="GUILayer/GUI/LeaderboardControl/play_again_button" to="." method="_on_play_again_button_pressed"]
 [connection signal="pressed" from="GUILayer/GUI/LeaderboardControl/main_menu_button" to="." method="_on_give_up_button_pressed"]
 [connection signal="timeout" from="SessionUpdateTimer" to="." method="_on_session_update_timer_timeout"]
+[connection signal="timeout" from="ComboTimer" to="." method="_on_combo_timer_timeout"]
 
 [editable path="HurtBox"]

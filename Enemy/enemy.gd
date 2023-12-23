@@ -16,7 +16,7 @@ var knockback = Vector2.ZERO
 var slow_percent = 0.0
 var tick_damage = 0
 
-@onready var player = get_tree().get_first_node_in_group("player")
+@onready var player = get_tree().get_first_node_in_group("player") as Player
 @onready var loot_base = get_tree().get_first_node_in_group("loot")
 @onready var sprite = $Sprite2D
 @onready var anim = get_node("AnimationPlayer")
@@ -101,6 +101,21 @@ func death():
 			player.kills[enemy_name] = 1
 		else:
 			player.kills[enemy_name] += 1
+		
+		# Handle combo multiplier and scoring
+		var current_ticks_ms = Time.get_ticks_msec()		
+		player.combo_multiplier += 1		
+		var score_deduction = (50.0 - min(30,player.experience_level))/50.0
+		var computed_score = max(1, ceil(maxhp * (score_deduction)))
+		#print_debug("computed_score: " + str(computed_score) + " score_deduction:" + str(score_deduction) + " combo_multiplier: " + str(player.combo_multiplier))
+		player.score += computed_score * player.combo_multiplier
+
+		player.comboTimer.stop()
+		player.comboTimer.start()
+		if player.combo_tween:
+			player.combo_tween.stop()
+		player.combo_tween = player.comboControls.create_tween()		
+		player.combo_tween.tween_property(player.comboControls, "modulate", Color(1.0, 0.0, 0.0, 0.0), player.combo_window_ms/1000).from(Color(1.0, 1.0, 1.0, 1.0)).set_ease(Tween.EASE_IN)
 
 	var enemy_death = death_anim.instantiate()
 	if trigger_victory:

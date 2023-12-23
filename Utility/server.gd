@@ -46,7 +46,7 @@ func create_game_session():
 	if session.has("id"):
 		logger.warn("create_session: replacing existing session!")
 	create_session_http_request.request(
-		GameConfig.api_base_url + "/session", PackedStringArray([]), HTTPClient.METHOD_POST
+		GameConfig.api_base_url + "/session", PackedStringArray([]), HTTPClient.METHOD_POST, JSON.stringify({"board_id": GameConfig.board_id})
 	)
 	await create_session_request_complete
 	return session
@@ -96,7 +96,7 @@ func submit_game_session(score, kills, name):
 
 
 func get_leaderboard():
-	get_leaderboard_http_request.request(GameConfig.api_base_url + "/leaderboard")
+	get_leaderboard_http_request.request(GameConfig.api_base_url + "/leaderboard/" + str(GameConfig.board_id), PackedStringArray([]), HTTPClient.METHOD_GET)
 	await get_leaderboard_request_complete
 
 	return leaderboard
