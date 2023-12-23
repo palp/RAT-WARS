@@ -225,11 +225,12 @@ jobs:
         run: |
           echo -n "${{ secrets.PROD_CONFIG_BASE64 }}" | base64 --decode >ratwars.cfg.prod
           echo -n "${{ secrets.CONFIG_KEY_BASE64 }}" | base64 --decode >config.key
+          cp ratwars.prod.cfg ratwars.cfg       
 
       - name: Build
         if: ${{ !cancelled() }}
         timeout-minutes: 10
-        run: |
+        run: |        
           mkdir -v -p ${{matrix.build.path}}
           godot -v --headless --audio-driver Dummy --export-release "${{matrix.build.preset}}" "${{matrix.build.output}}"
 
