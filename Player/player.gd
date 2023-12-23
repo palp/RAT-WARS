@@ -181,7 +181,7 @@ func update_kill_counts():
 	deadRatsLabel.text = str(player_kill_counter)
 	globalDeadRatsLabel.text = str(int(global_kill_counter) + player_kill_counter)
 	scoreLabel.text = str(score)
-	comboLabel.text = str(combo_multiplier)
+	comboLabel.text = "COMBO X" + str(combo_multiplier)
 	
 
 func update_player_character():
@@ -487,6 +487,7 @@ func death():
 	BackgroundMusic._on_boss_fight_end()
 	if autopilot:
 		emit_signal("playerdeath")
+		#UserSettings.config.set_value("cutscene", "opening_played", false)
 		get_tree().reload_current_scene()
 		return	
 	emit_signal("playerdeath")
