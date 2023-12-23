@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bobro1qydkmoa"
+path="res://.godot/imported/DEMIGODS Loop.mp3-fa5890488f6c8c3b64f9f79e1c9dbdca.mp3str"
+
+[deps]
+
+source_file="res://Audio/Music/DEMIGODS Loop.mp3"
+dest_files=["res://.godot/imported/DEMIGODS Loop.mp3-fa5890488f6c8c3b64f9f79e1c9dbdca.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
