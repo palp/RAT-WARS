@@ -66,12 +66,12 @@ jobs:
           # import certificate to keychain
           security import $CERTIFICATE_PATH -P "$P12_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
           security list-keychain -d user -s $KEYCHAIN_PATH
-      - name: "Download and Install Godot 4.2"
+      - name: "Download and Install Godot 4.3"
         continue-on-error: false
         shell: bash
         run: |
-          GODOT_VERSION=4.2
-          brew install --cask https://raw.githubusercontent.com/Homebrew/homebrew-cask/b0945f65719f9f1743684d182def989252dd9d95/Casks/g/godot.rb
+          GODOT_VERSION=4.3
+          brew install --cask https://raw.githubusercontent.com/Homebrew/homebrew-cask/83c65eee142d41cbef5de9b2026a33a353819ffe/Casks/g/godot.rb
 
           mkdir -v -p "/Users/runner/Library/Application Support/Godot/export_templates"
           GODOT_TEMPLATES_PACKAGE=Godot_v$GODOT_VERSION-stable_export_templates.tpz          
@@ -172,7 +172,7 @@ jobs:
     name: Export ${{matrix.build.preset}}
     runs-on: ubuntu-20.04
     container:
-      image: barichello/godot-ci:4.2
+      image: barichello/godot-ci:4.3
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -182,7 +182,7 @@ jobs:
       - name: Setup
         run: |
           mkdir -v -p ~/.local/share/godot/export_templates
-          mv /root/.local/share/godot/export_templates/4.2.stable ~/.local/share/godot/export_templates/4.2.stable
+          mv /root/.local/share/godot/export_templates/4.3.stable ~/.local/share/godot/export_templates/4.3.stable
           
       - name: "Update Project"
         if: ${{ !cancelled() }}
