@@ -46,12 +46,15 @@ jobs:
           GODOT_VERSION=4.3
           wget https://raw.githubusercontent.com/Homebrew/homebrew-cask/83c65eee142d41cbef5de9b2026a33a353819ffe/Casks/g/godot.rb
           brew install --HEAD -s godot.rb
-
+      - name: "Download Export Templates"
+        run: |
+          GODOT_VERSION=4.3
           mkdir -v -p "/Users/runner/Library/Application Support/Godot/export_templates"
           GODOT_TEMPLATES_PACKAGE=Godot_v$GODOT_VERSION-stable_export_templates.tpz          
           wget -q https://github.com/godotengine/godot/releases/download/$GODOT_VERSION-stable/$GODOT_TEMPLATES_PACKAGE -P ${{ runner.temp }}
           unzip ${{ runner.temp }}/$GODOT_TEMPLATES_PACKAGE -d "/Users/runner/Library/Application Support/Godot/export_templates"
           mv "/Users/runner/Library/Application Support/Godot/export_templates/templates" "/Users/runner/Library/Application Support/Godot/export_templates/$GODOT_VERSION.stable"
+
       - name: "Update Project"
         if: ${{ !cancelled() }}
         timeout-minutes: 1

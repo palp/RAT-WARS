@@ -73,7 +73,9 @@ jobs:
           GODOT_VERSION=4.3
           wget https://raw.githubusercontent.com/Homebrew/homebrew-cask/83c65eee142d41cbef5de9b2026a33a353819ffe/Casks/g/godot.rb
           brew install --HEAD -s godot.rb
-
+      - name: "Download Export Templates"
+        run: |
+          GODOT_VERSION=4.3
           mkdir -v -p "/Users/runner/Library/Application Support/Godot/export_templates"
           GODOT_TEMPLATES_PACKAGE=Godot_v$GODOT_VERSION-stable_export_templates.tpz          
           wget -q https://github.com/godotengine/godot/releases/download/$GODOT_VERSION-stable/$GODOT_TEMPLATES_PACKAGE -P ${{ runner.temp }}
@@ -251,7 +253,7 @@ jobs:
         run: |
           if [ ! -f "${{matrix.build.output}}" ]; then
             echo "Build failed"
-            tree build
+            find ./build
             exit 1
           fi
 
