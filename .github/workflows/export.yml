@@ -234,19 +234,19 @@ jobs:
           mkdir -v -p ${{matrix.build.path}}
           godot -v --headless --audio-driver Dummy --export-release "${{matrix.build.preset}}" "${{matrix.build.output}}" --quit-after 5
 
-      - name: Build (Android Play Store)        
-        timeout-minutes: 10
-        if: ${{ matrix.build.preset == 'android' }}
-        shell: bash         
-        continue-on-error: true
-        run: |                       
-          mkdir -v -p build/android-aab          
-          sed 's@gradle_build/export_format=.*@gradle_build/export_format=1@g' -i export_presets.cfg          
-          godot -v --headless --audio-driver Dummy --export-release "${{matrix.build.preset}}" "build/android-aab/RatWars.aab" --quit-after 5
-          if [ ! -f "build/android-aab/RatWars.aab" ]; then
-            echo "Build failed"
-            exit 1
-          fi
+      # - name: Build (Android Play Store)        
+      #   timeout-minutes: 10
+      #   if: ${{ matrix.build.preset == 'android' }}
+      #   shell: bash         
+      #   continue-on-error: true
+      #   run: |                       
+      #     mkdir -v -p build/android-aab          
+      #     sed 's@gradle_build/export_format=.*@gradle_build/export_format=1@g' -i export_presets.cfg          
+      #     godot -v --headless --audio-driver Dummy --export-release "${{matrix.build.preset}}" "build/android-aab/RatWars.aab" --quit-after 5
+      #     if [ ! -f "build/android-aab/RatWars.aab" ]; then
+      #       echo "Build failed"
+      #       exit 1
+      #     fi
 
       - name: Check build
         if: ${{ !cancelled() }}
@@ -270,12 +270,12 @@ jobs:
           name: ratwars-${{matrix.build.tag}}
           path: ${{matrix.build.path}}
 
-      - name: Publish Artifact (Android Play Store)
-        if: ${{ success() && matrix.build.preset == 'android' }}
-        uses: actions/upload-artifact@v4
-        with:
-          name: ratwars-${{matrix.build.tag}}-aab
-          path: build/android-aab/RatWars.aab
+      # - name: Publish Artifact (Android Play Store)
+      #   if: ${{ success() && matrix.build.preset == 'android' }}
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: ratwars-${{matrix.build.tag}}-aab
+      #     path: build/android-aab/RatWars.aab
 
       - name: Upload Release Asset
         if: ${{ github.ref_type == 'tag' && startsWith(github.ref, 'refs/tags/v') && success() }}
