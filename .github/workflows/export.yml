@@ -72,7 +72,7 @@ jobs:
         run: |
           GODOT_VERSION=4.3
           wget https://raw.githubusercontent.com/Homebrew/homebrew-cask/83c65eee142d41cbef5de9b2026a33a353819ffe/Casks/g/godot.rb
-          brew install --HEAD -s godot.rb
+          brew install --cask --HEAD -s godot.rb
 
           mkdir -v -p "/Users/runner/Library/Application Support/Godot/export_templates"
           GODOT_TEMPLATES_PACKAGE=Godot_v$GODOT_VERSION-stable_export_templates.tpz          
@@ -208,7 +208,7 @@ jobs:
           sed 's@keystore/release_password=".*"@keystore/release_password="'${{ secrets.ANDROID_RELEASE_KEYSTORE_PASSWORD }}'"@g' -i export_presets.cfg
           sed 's|export/android/android_sdk_path = ".*"|export/android/android_sdk_path = "'/usr/lib/android-sdk'"|g' -i /root/.config/godot/editor_settings-4.tres
           mkdir -v -p ~/.config/godot
-          cp -v /root/.config/godot/editor_settings-4.tres ~/.config/godot/
+          cp -v /root/.config/godot/editor_settings-4.3.tres ~/.config/godot/
 
       - name: Setup (Windows)
         if: ${{matrix.build.preset == 'win' }}
@@ -233,7 +233,7 @@ jobs:
         timeout-minutes: 10
         run: |        
           mkdir -v -p ${{matrix.build.path}}
-          godot -v --headless --audio-driver Dummy --export-release "${{matrix.build.preset}}" "${{matrix.build.output}}"
+          godot -v --headless --audio-driver Dummy --export-release "${{matrix.build.preset}}" "${{matrix.build.output}}" --quit-after 5
 
       - name: Build (Android Play Store)        
         timeout-minutes: 10

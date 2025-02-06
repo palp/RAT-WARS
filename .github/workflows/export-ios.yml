@@ -45,7 +45,7 @@ jobs:
         run: |
           GODOT_VERSION=4.3
           wget https://raw.githubusercontent.com/Homebrew/homebrew-cask/83c65eee142d41cbef5de9b2026a33a353819ffe/Casks/g/godot.rb
-          brew install --HEAD -s godot.rb
+          brew install --cask --HEAD -s godot.rb
 
           mkdir -v -p "/Users/runner/Library/Application Support/Godot/export_templates"
           GODOT_TEMPLATES_PACKAGE=Godot_v$GODOT_VERSION-stable_export_templates.tpz          
