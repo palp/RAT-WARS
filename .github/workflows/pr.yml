@@ -19,7 +19,6 @@ jobs:
 
     name: "CI Unit Test 🐧 v${{ matrix.godot-version }}"
     runs-on: "ubuntu-22.04"
-    timeout-minutes: 10 # The overall timeout
 
     steps:
       - name: "Checkout your Repository"
@@ -31,7 +30,7 @@ jobs:
         uses: MikeSchulze/gdUnit4-action@v1.1.5
         with:
           godot-version: ${{ matrix.godot-version }}
-          version: "latest"
+          version: "4.5.0"
           paths: |
             res://test/
           timeout: 10
