@@ -18,6 +18,7 @@ signal cutscene_finished()
 @onready var animationPlayer: AnimationPlayer = get_node("AnimationPlayer")
 @onready var music_stream: AudioStreamPlayer = get_node("AudioStreamPlayer")
 @onready var indicator_skip: Sprite2D = get_node("ButtonSkip/Sprite")
+@onready var timer_next: Timer = get_node("TimerNext")
 var skip_visible: bool
 var string_index: int
 var img_index: int
@@ -238,6 +239,7 @@ func _on_text_speed_timer_timeout():
 		indicator_next.visible = true
 		ignore_player_input = false
 		current_scene_state = CutsceneState.idle
+		timer_next.start(5)
 		pass
 
 func print_whole_text(string):
@@ -301,3 +303,8 @@ func show_skip():
 # next slide or do some stuff by having it look at
 # a next string in text_array. 
 # ? Writing a JSON file https://youtu.be/GzPvN5wsp7Y?si=FsdQJkgZum61_ScA&t=243
+
+
+func _on_timer_next_timeout():
+	indicator_next.visible = false
+	text_processing(text_array[string_index])

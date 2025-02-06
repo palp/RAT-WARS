@@ -39,12 +39,12 @@ jobs:
           # apply provisioning profile
           mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
           cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
-      - name: "Download and Install Godot 4.2"
+      - name: "Download and Install Godot 4.3"
         continue-on-error: false
         shell: bash
         run: |
-          GODOT_VERSION=4.2
-          brew install --cask https://raw.githubusercontent.com/Homebrew/homebrew-cask/b0945f65719f9f1743684d182def989252dd9d95/Casks/g/godot.rb
+          GODOT_VERSION=4.3
+          brew install --cask https://raw.githubusercontent.com/Homebrew/homebrew-cask/83c65eee142d41cbef5de9b2026a33a353819ffe/Casks/g/godot.rb
 
           mkdir -v -p "/Users/runner/Library/Application Support/Godot/export_templates"
           GODOT_TEMPLATES_PACKAGE=Godot_v$GODOT_VERSION-stable_export_templates.tpz          
@@ -84,7 +84,7 @@ jobs:
           fi
       - name: Publish Artifact
         if: ${{ success() }}
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: ratwars-ios
           path: build/ios

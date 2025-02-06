@@ -186,9 +186,14 @@ libraries = {
 "": SubResource("AnimationLibrary_bn8pt")
 }
 
+[node name="TimerNext" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true
+
 [connection signal="texture_changed" from="SlideImage" to="." method="_on_slide_changed"]
 [connection signal="timeout" from="Text/TextSpeedTimer" to="." method="_on_text_speed_timer_timeout"]
 [connection signal="gui_input" from="ButtonSkip" to="." method="_input_skip_button"]
 [connection signal="timeout" from="ButtonSkip/ButtonSkipHideTimer" to="." method="show_skip"]
 [connection signal="gui_input" from="ButtonNext" to="." method="_input_next_button"]
 [connection signal="transition_in_progress" from="ScreenFadeInAndOut" to="." method="_on_transition_in_progress"]
+[connection signal="timeout" from="TimerNext" to="." method="_on_timer_next_timeout"]

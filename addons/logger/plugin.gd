@@ -1,15 +1,15 @@
 @tool
 extends EditorPlugin
 
-var loadSingletonPlugin = {
-	"Log" : "res://addons/logger/logger.gd",
-}
-
-func _enter_tree():
-	for names in loadSingletonPlugin.keys():
-		add_autoload_singleton(names, loadSingletonPlugin[names])
 
 
-func _exit_tree():
-	for names in loadSingletonPlugin.keys():
-		remove_autoload_singleton(names)
+func _enable_plugin():
+	
+	
+	#make sure log-stream is loaded to prevent godot error.
+	preload("res://addons/logger/log-stream.gd")
+	add_autoload_singleton("Log", "res://addons/logger/logger.gd")
+
+
+func _disable_plugin():
+	remove_autoload_singleton("Log")
