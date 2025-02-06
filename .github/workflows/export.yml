@@ -214,12 +214,8 @@ jobs:
       - name: Setup (Windows)
         if: ${{matrix.build.preset == 'win' }}
         run: |
-          WINE_PATH=$(which wine64)
-          cp .github/rcedit-x64.exe $RUNNER_TEMP/
-          sed 's|export/windows/rcedit = ".*"|export/windows/rcedit = "'$RUNNER_TEMP/rcedit-x64.exe'"|g' -i /root/.config/godot/editor_settings-4.3.tres
-          sed 's|export/windows/wine = ".*"|export/windows/wine = "$WINE_PATH"|g' -i /root/.config/godot/editor_settings-4.3.tres
-          mkdir -v -p ~/.config/godot
-          cp -v /root/.config/godot/editor_settings-4.3.tres ~/.config/godot
+          mkdir -v -p ~/.config/
+          mv /root/.config/godot ~/.config/godot
 
       - name: Install production config
         if: ${{ !cancelled() && github.ref_type == 'tag' && startsWith(github.ref, 'refs/tags/v') }}
@@ -255,7 +251,7 @@ jobs:
         run: |
           if [ ! -f "${{matrix.build.output}}" ]; then
             echo "Build failed"
-            ls -lar build
+            tree build
             exit 1
           fi
 
