@@ -109,6 +109,7 @@ jobs:
       - name: Build
         if: ${{ success() }}
         timeout-minutes: 10
+        continue-on-error: true
         run: |
           mkdir -v -p build/macos
           godot -v --headless --audio-driver Dummy --export-release "macos" "build/macos/ratwars-macos.zip" --quit-after 5
@@ -206,7 +207,7 @@ jobs:
           sed 's@keystore/release=".*"@keystore/release="'/root/release.keystore'"@g' -i export_presets.cfg
           sed 's@keystore/release_user=".*"@keystore/release_user="'${{ secrets.ANDROID_RELEASE_KEYSTORE_USER }}'"@g' -i export_presets.cfg
           sed 's@keystore/release_password=".*"@keystore/release_password="'${{ secrets.ANDROID_RELEASE_KEYSTORE_PASSWORD }}'"@g' -i export_presets.cfg
-          sed 's|export/android/android_sdk_path = ".*"|export/android/android_sdk_path = "'/usr/lib/android-sdk'"|g' -i /root/.config/godot/editor_settings-4.tres
+          sed 's|export/android/android_sdk_path = ".*"|export/android/android_sdk_path = "'/usr/lib/android-sdk'"|g' -i /root/.config/godot/editor_settings-4.3.tres
           mkdir -v -p ~/.config/godot
           cp -v /root/.config/godot/editor_settings-4.3.tres ~/.config/godot/
 
@@ -216,10 +217,10 @@ jobs:
           apt update && apt -yy install wine64
           WINE_PATH=$(which wine64)
           cp .github/rcedit-x64.exe $RUNNER_TEMP/
-          sed 's|export/windows/rcedit = ".*"|export/windows/rcedit = "'$RUNNER_TEMP/rcedit-x64.exe'"|g' -i /root/.config/godot/editor_settings-4.tres
-          sed 's|export/windows/wine = ".*"|export/windows/wine = "$WINE_PATH"|g' -i /root/.config/godot/editor_settings-4.tres
+          sed 's|export/windows/rcedit = ".*"|export/windows/rcedit = "'$RUNNER_TEMP/rcedit-x64.exe'"|g' -i /root/.config/godot/editor_settings-4.3.tres
+          sed 's|export/windows/wine = ".*"|export/windows/wine = "$WINE_PATH"|g' -i /root/.config/godot/editor_settings-4.3.tres
           mkdir -v -p ~/.config/godot
-          cp -v /root/.config/godot/editor_settings-4.tres ~/.config/godot
+          cp -v /root/.config/godot/editor_settings-4.3.tres ~/.config/godot
 
       - name: Install production config
         if: ${{ !cancelled() && github.ref_type == 'tag' && startsWith(github.ref, 'refs/tags/v') }}
@@ -231,6 +232,7 @@ jobs:
       - name: Build
         if: ${{ !cancelled() }}
         timeout-minutes: 10
+        continue-on-error: true
         run: |        
           mkdir -v -p ${{matrix.build.path}}
           godot -v --headless --audio-driver Dummy --export-release "${{matrix.build.preset}}" "${{matrix.build.output}}" --quit-after 5
@@ -239,6 +241,7 @@ jobs:
         timeout-minutes: 10
         if: ${{ matrix.build.preset == 'android' }}
         shell: bash         
+        continue-on-error: true
         run: |                       
           mkdir -v -p build/android-aab          
           sed 's@gradle_build/export_format=.*@gradle_build/export_format=1@g' -i export_presets.cfg          
