@@ -40,24 +40,28 @@ jobs:
           mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
           cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
       - name: "Download and Install Godot 4.3"
-        continue-on-error: false
+        continue-on-error: true
         shell: bash
         run: |
           GODOT_VERSION=4.3
-          brew install --cask https://raw.githubusercontent.com/Homebrew/homebrew-cask/83c65eee142d41cbef5de9b2026a33a353819ffe/Casks/g/godot.rb
-
+          wget https://raw.githubusercontent.com/Homebrew/homebrew-cask/83c65eee142d41cbef5de9b2026a33a353819ffe/Casks/g/godot.rb
+          brew install --HEAD -s godot.rb
+      - name: "Download Export Templates"
+        run: |
+          GODOT_VERSION=4.3
           mkdir -v -p "/Users/runner/Library/Application Support/Godot/export_templates"
           GODOT_TEMPLATES_PACKAGE=Godot_v$GODOT_VERSION-stable_export_templates.tpz          
           wget -q https://github.com/godotengine/godot/releases/download/$GODOT_VERSION-stable/$GODOT_TEMPLATES_PACKAGE -P ${{ runner.temp }}
           unzip ${{ runner.temp }}/$GODOT_TEMPLATES_PACKAGE -d "/Users/runner/Library/Application Support/Godot/export_templates"
           mv "/Users/runner/Library/Application Support/Godot/export_templates/templates" "/Users/runner/Library/Application Support/Godot/export_templates/$GODOT_VERSION.stable"
+
       - name: "Update Project"
         if: ${{ !cancelled() }}
         timeout-minutes: 1
         continue-on-error: true # we still ignore the timeout, the script is not quit and we run into a timeout
         shell: bash
         run: |
-          godot -e --path . -s res://addons/gdUnit4/bin/ProjectScanner.gd --headless --audio-driver Dummy
+          godot --headless --audio-driver Dummy --import --editor --quit-after 2  
       - name: Install release presets
         run: |
           rm export_presets.cfg
@@ -74,7 +78,7 @@ jobs:
         continue-on-error: true
         run: |
           mkdir -v -p build/ios
-          godot -v --headless --audio-driver Dummy --export-release "ios" "build/ios/ratwars-ios.ipa"
+          godot -v --headless --audio-driver Dummy --export-release "ios" "build/ios/ratwars-ios.ipa" --quit-after 5
       - name: Check build
         if: ${{ !cancelled() }}
         run: |

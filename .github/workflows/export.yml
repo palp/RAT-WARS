@@ -67,12 +67,15 @@ jobs:
           security import $CERTIFICATE_PATH -P "$P12_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
           security list-keychain -d user -s $KEYCHAIN_PATH
       - name: "Download and Install Godot 4.3"
-        continue-on-error: false
+        continue-on-error: true
         shell: bash
         run: |
           GODOT_VERSION=4.3
-          brew install --cask https://raw.githubusercontent.com/Homebrew/homebrew-cask/83c65eee142d41cbef5de9b2026a33a353819ffe/Casks/g/godot.rb
-
+          wget https://raw.githubusercontent.com/Homebrew/homebrew-cask/83c65eee142d41cbef5de9b2026a33a353819ffe/Casks/g/godot.rb
+          brew install --HEAD -s godot.rb
+      - name: "Download Export Templates"
+        run: |
+          GODOT_VERSION=4.3
           mkdir -v -p "/Users/runner/Library/Application Support/Godot/export_templates"
           GODOT_TEMPLATES_PACKAGE=Godot_v$GODOT_VERSION-stable_export_templates.tpz          
           wget -q https://github.com/godotengine/godot/releases/download/$GODOT_VERSION-stable/$GODOT_TEMPLATES_PACKAGE -P ${{ runner.temp }}
@@ -97,9 +100,9 @@ jobs:
           brew install gnu-sed
           PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
           echo -n "$APPSTORE_KEY" >$RUNNER_TEMP/appstore.p8
-          sed 's@notarization/api_uuid=".*"@notarization/api_uuid="'${{ secrets.APPSTORE_ISSUER_ID }}'"@g' -i export_presets.cfg
-          sed 's@notarization/api_key=".*"@notarization/api_key="'$RUNNER_TEMP/appstore.p8'"@g' -i export_presets.cfg
-          sed 's@notarization/api_key_id=".*"@notarization/api_key_id="'${{ secrets.APPSTORE_API_KEY_ID }}'"@g' -i export_presets.cfg
+          gsed 's@notarization/api_uuid=".*"@notarization/api_uuid="'${{ secrets.APPSTORE_ISSUER_ID }}'"@g' -i export_presets.cfg
+          gsed 's@notarization/api_key=".*"@notarization/api_key="'$RUNNER_TEMP/appstore.p8'"@g' -i export_presets.cfg
+          gsed 's@notarization/api_key_id=".*"@notarization/api_key_id="'${{ secrets.APPSTORE_API_KEY_ID }}'"@g' -i export_presets.cfg
       - name: Install production config
         if: ${{ success() }}
         run: |
@@ -108,9 +111,10 @@ jobs:
       - name: Build
         if: ${{ success() }}
         timeout-minutes: 10
+        continue-on-error: true
         run: |
           mkdir -v -p build/macos
-          godot -v --headless --audio-driver Dummy --export-release "macos" "build/macos/ratwars-macos.zip"
+          godot -v --headless --audio-driver Dummy --export-release "macos" "build/macos/ratwars-macos.zip" --quit-after 5
       - name: Check build
         if: ${{ !cancelled() }}
         run: |
@@ -135,7 +139,7 @@ jobs:
           asset_name: ratwars-macos.zip
           asset_content_type: application/octet-stream
       - name: Set up butler
-        uses: jdno/setup-butler@v1          
+        uses: remarkablegames/setup-butler@v1          
       - name: Push to healthnoise.itch.io
         if: ${{ github.ref_type == 'tag' && startsWith(github.ref, 'refs/tags/v') && success() }}
         run: butler push build/macos/ratwars-macos.zip healthnoise/ratwars:macos --userversion ${{github.ref_name}}
@@ -190,7 +194,7 @@ jobs:
         continue-on-error: true # we still ignore the timeout, the script is not quit and we run into a timeout
         shell: bash
         run: |
-          godot -e --path . -s res://addons/gdUnit4/bin/ProjectScanner.gd --headless --audio-driver Dummy   
+          godot --headless --audio-driver Dummy --import --editor --quit-after 2  
 
       - name: Install release presets
         run: |
@@ -205,20 +209,15 @@ jobs:
           sed 's@keystore/release=".*"@keystore/release="'/root/release.keystore'"@g' -i export_presets.cfg
           sed 's@keystore/release_user=".*"@keystore/release_user="'${{ secrets.ANDROID_RELEASE_KEYSTORE_USER }}'"@g' -i export_presets.cfg
           sed 's@keystore/release_password=".*"@keystore/release_password="'${{ secrets.ANDROID_RELEASE_KEYSTORE_PASSWORD }}'"@g' -i export_presets.cfg
-          sed 's|export/android/android_sdk_path = ".*"|export/android/android_sdk_path = "'/usr/lib/android-sdk'"|g' -i /root/.config/godot/editor_settings-4.tres
+          sed 's|export/android/android_sdk_path = ".*"|export/android/android_sdk_path = "'/usr/lib/android-sdk'"|g' -i /root/.config/godot/editor_settings-4.3.tres
           mkdir -v -p ~/.config/godot
-          cp -v /root/.config/godot/editor_settings-4.tres ~/.config/godot/
+          cp -v /root/.config/godot/editor_settings-4.3.tres ~/.config/godot/
 
       - name: Setup (Windows)
         if: ${{matrix.build.preset == 'win' }}
         run: |
-          apt update && apt -yy install wine64
-          WINE_PATH=$(which wine64)
-          cp .github/rcedit-x64.exe $RUNNER_TEMP/
-          sed 's|export/windows/rcedit = ".*"|export/windows/rcedit = "'$RUNNER_TEMP/rcedit-x64.exe'"|g' -i /root/.config/godot/editor_settings-4.tres
-          sed 's|export/windows/wine = ".*"|export/windows/wine = "$WINE_PATH"|g' -i /root/.config/godot/editor_settings-4.tres
-          mkdir -v -p ~/.config/godot
-          cp -v /root/.config/godot/editor_settings-4.tres ~/.config/godot
+          mkdir -v -p ~/.config/
+          mv /root/.config/godot ~/.config/godot
 
       - name: Install production config
         if: ${{ !cancelled() && github.ref_type == 'tag' && startsWith(github.ref, 'refs/tags/v') }}
@@ -230,28 +229,34 @@ jobs:
       - name: Build
         if: ${{ !cancelled() }}
         timeout-minutes: 10
+        continue-on-error: true
         run: |        
           mkdir -v -p ${{matrix.build.path}}
-          godot -v --headless --audio-driver Dummy --export-release "${{matrix.build.preset}}" "${{matrix.build.output}}"
-
-      - name: Build (Android Play Store)        
-        timeout-minutes: 10
-        if: ${{ matrix.build.preset == 'android' }}
-        shell: bash         
-        run: |                       
-          mkdir -v -p build/android-aab          
-          sed 's@gradle_build/export_format=.*@gradle_build/export_format=1@g' -i export_presets.cfg          
-          godot -v --headless --audio-driver Dummy --export-release "${{matrix.build.preset}}" "build/android-aab/RatWars.aab"
-          if [ ! -f "build/android-aab/RatWars.aab" ]; then
-            echo "Build failed"
-            exit 1
+          godot -v --headless --export-release "${{matrix.build.preset}}" "${{matrix.build.output}}" || true
+          if [ ! -f "${{matrix.build.output}}" ]; then
+            godot -v --headless --export-release "${{matrix.build.preset}}" "${{matrix.build.output}}"
           fi
+
+      # - name: Build (Android Play Store)        
+      #   timeout-minutes: 10
+      #   if: ${{ matrix.build.preset == 'android' }}
+      #   shell: bash         
+      #   continue-on-error: true
+      #   run: |                       
+      #     mkdir -v -p build/android-aab          
+      #     sed 's@gradle_build/export_format=.*@gradle_build/export_format=1@g' -i export_presets.cfg          
+      #     godot -v --headless --audio-driver Dummy --export-release "${{matrix.build.preset}}" "build/android-aab/RatWars.aab" --quit-after 5
+      #     if [ ! -f "build/android-aab/RatWars.aab" ]; then
+      #       echo "Build failed"
+      #       exit 1
+      #     fi
 
       - name: Check build
         if: ${{ !cancelled() }}
         run: |
           if [ ! -f "${{matrix.build.output}}" ]; then
             echo "Build failed"
+            ls -laR ./build
             exit 1
           fi
 
@@ -268,12 +273,12 @@ jobs:
           name: ratwars-${{matrix.build.tag}}
           path: ${{matrix.build.path}}
 
-      - name: Publish Artifact (Android Play Store)
-        if: ${{ success() && matrix.build.preset == 'android' }}
-        uses: actions/upload-artifact@v4
-        with:
-          name: ratwars-${{matrix.build.tag}}-aab
-          path: build/android-aab/RatWars.aab
+      # - name: Publish Artifact (Android Play Store)
+      #   if: ${{ success() && matrix.build.preset == 'android' }}
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: ratwars-${{matrix.build.tag}}-aab
+      #     path: build/android-aab/RatWars.aab
 
       - name: Upload Release Asset
         if: ${{ github.ref_type == 'tag' && startsWith(github.ref, 'refs/tags/v') && success() }}
