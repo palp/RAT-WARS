@@ -120,7 +120,7 @@ jobs:
           fi
       - name: Publish Artifact
         if: ${{ success() }}
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: ratwars-macos
           path: build/macos/ratwars-macos.zip
@@ -263,14 +263,14 @@ jobs:
 
       - name: Publish Artifact
         if: ${{ success() }}
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: ratwars-${{matrix.build.tag}}
           path: ${{matrix.build.path}}
 
       - name: Publish Artifact (Android Play Store)
         if: ${{ success() && matrix.build.preset == 'android' }}
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: ratwars-${{matrix.build.tag}}-aab
           path: build/android-aab/RatWars.aab
