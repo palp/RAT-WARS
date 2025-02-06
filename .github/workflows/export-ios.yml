@@ -75,7 +75,7 @@ jobs:
         continue-on-error: true
         run: |
           mkdir -v -p build/ios
-          godot -v --headless --audio-driver Dummy --export-release "ios" "build/ios/ratwars-ios.ipa"
+          godot -v --headless --audio-driver Dummy --export-release "ios" "build/ios/ratwars-ios.ipa" --quit-after 5
       - name: Check build
         if: ${{ !cancelled() }}
         run: |

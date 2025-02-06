@@ -73,7 +73,7 @@ jobs:
           GODOT_VERSION=4.3
           wget https://raw.githubusercontent.com/Homebrew/homebrew-cask/83c65eee142d41cbef5de9b2026a33a353819ffe/Casks/g/godot.rb
           brew install --HEAD -s godot.rb
-          
+
           mkdir -v -p "/Users/runner/Library/Application Support/Godot/export_templates"
           GODOT_TEMPLATES_PACKAGE=Godot_v$GODOT_VERSION-stable_export_templates.tpz          
           wget -q https://github.com/godotengine/godot/releases/download/$GODOT_VERSION-stable/$GODOT_TEMPLATES_PACKAGE -P ${{ runner.temp }}
@@ -111,7 +111,7 @@ jobs:
         timeout-minutes: 10
         run: |
           mkdir -v -p build/macos
-          godot -v --headless --audio-driver Dummy --export-release "macos" "build/macos/ratwars-macos.zip"
+          godot -v --headless --audio-driver Dummy --export-release "macos" "build/macos/ratwars-macos.zip" --quit-after 5
       - name: Check build
         if: ${{ !cancelled() }}
         run: |
@@ -242,7 +242,7 @@ jobs:
         run: |                       
           mkdir -v -p build/android-aab          
           sed 's@gradle_build/export_format=.*@gradle_build/export_format=1@g' -i export_presets.cfg          
-          godot -v --headless --audio-driver Dummy --export-release "${{matrix.build.preset}}" "build/android-aab/RatWars.aab"
+          godot -v --headless --audio-driver Dummy --export-release "${{matrix.build.preset}}" "build/android-aab/RatWars.aab" --quit-after 5
           if [ ! -f "build/android-aab/RatWars.aab" ]; then
             echo "Build failed"
             exit 1
