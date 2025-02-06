@@ -214,7 +214,6 @@ jobs:
       - name: Setup (Windows)
         if: ${{matrix.build.preset == 'win' }}
         run: |
-          apt update && apt -yy install wine64
           WINE_PATH=$(which wine64)
           cp .github/rcedit-x64.exe $RUNNER_TEMP/
           sed 's|export/windows/rcedit = ".*"|export/windows/rcedit = "'$RUNNER_TEMP/rcedit-x64.exe'"|g' -i /root/.config/godot/editor_settings-4.3.tres
