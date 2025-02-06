@@ -190,11 +190,11 @@ jobs:
           
       - name: "Update Project"
         if: ${{ !cancelled() }}
-        timeout-minutes: 1
+        timeout-minutes: 2
         continue-on-error: true # we still ignore the timeout, the script is not quit and we run into a timeout
         shell: bash
         run: |
-          godot -e --path . -s res://addons/gdUnit4/bin/ProjectScanner.gd --headless --audio-driver Dummy   
+          godot -e --path . -s res://addons/gdUnit4/bin/ProjectScanner.gd --headless --audio-driver Dummy --import --editor --quit-after 2  
 
       - name: Install release presets
         run: |
