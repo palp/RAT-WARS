@@ -139,7 +139,7 @@ jobs:
           asset_name: ratwars-macos.zip
           asset_content_type: application/octet-stream
       - name: Set up butler
-        uses: jdno/setup-butler@v1          
+        uses: remarkablegames/setup-butler@v1          
       - name: Push to healthnoise.itch.io
         if: ${{ github.ref_type == 'tag' && startsWith(github.ref, 'refs/tags/v') && success() }}
         run: butler push build/macos/ratwars-macos.zip healthnoise/ratwars:macos --userversion ${{github.ref_name}}
