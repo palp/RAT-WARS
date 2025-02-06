@@ -255,6 +255,7 @@ jobs:
         run: |
           if [ ! -f "${{matrix.build.output}}" ]; then
             echo "Build failed"
+            ls -lar build
             exit 1
           fi
 
