@@ -232,7 +232,10 @@ jobs:
         continue-on-error: true
         run: |        
           mkdir -v -p ${{matrix.build.path}}
-          godot -v --headless --audio-driver Dummy --export-release "${{matrix.build.preset}}" "${{matrix.build.output}}" --quit-after 5
+          godot -v --headless --export-release "${{matrix.build.preset}}" "${{matrix.build.output}}" || true
+          if [ ! -f "${{matrix.build.output}}" ]; then
+            godot -v --headless --export-release "${{matrix.build.preset}}" "${{matrix.build.output}}"
+          fi
 
       # - name: Build (Android Play Store)        
       #   timeout-minutes: 10
